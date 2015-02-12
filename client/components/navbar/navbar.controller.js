@@ -4,8 +4,8 @@ angular.module('puanJaiApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
     $scope.menu = [
     {
-      'title': 'หน้าหลัก',
-      'link': '/'
+      'title': 'เรื่องราวดีๆ',
+      'link': '/news'
     },
     {
       'title': 'มารู้จักกับเรา',
@@ -38,4 +38,16 @@ angular.module('puanJaiApp')
     $scope.isActive = function(route) {
       return route === $location.path();
     };
+
+    $scope.displayName = function(){
+      if (Auth.isLoggedIn()) {
+        if (Auth.getCurrentUser().username) {
+          return Auth.getCurrentUser().username;
+        } else {
+          var full = Auth.getCurrentUser().name.first + " " + Auth.getCurrentUser().name.last;
+          return full;
+        }
+      }
+    }
+
   });

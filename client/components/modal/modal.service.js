@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('puanJaiApp')
-  .factory('Modal', function ($rootScope, $modal) {
+  .factory('Modal', function Modal($rootScope, $modal) {
     /**
      * Opens a modal
      * @param  {Object} scope      - an object to be merged with modal's scope
@@ -9,6 +9,7 @@ angular.module('puanJaiApp')
      * @return {Object}            - the instance $modal.open() returns
      */
     function openModal(scope, modalClass) {
+      debugger;
       var modalScope = $rootScope.$new();
       scope = scope || {};
       modalClass = modalClass || 'modal-default';

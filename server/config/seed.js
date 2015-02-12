@@ -10,6 +10,7 @@
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
 var Question = require('../api/question/question.model');
+var Article = require('../api/article/article.model');
 
 
 // Seeds
@@ -36,13 +37,16 @@ Thing.find({}).remove(function() {
 });
 
 User.find({}).remove(function() {
-  for (var i = 0; i < 10; i++) {
+  for (var c = 0; c < 10; c++) {
     User.create({
       provider: 'local',
       name: {
         first: Faker.name.firstName(),
         last: Faker.name.lastName()
       },
+      coverimg: Faker.image.avatar(),
+      summary: Faker.lorem.sentence(),
+      reason: Faker.lorem.sentences(),
       email: Faker.internet.email(),
       username: Faker.internet.userName(),
       password: 'test'
@@ -54,34 +58,61 @@ User.find({}).remove(function() {
       first: Faker.name.firstName(),
       last: Faker.name.lastName()
     },
+    coverimg: Faker.image.avatar(),
+    summary: Faker.lorem.sentence(),
+    reason: Faker.lorem.sentences(),
     email: 'test@test.com',
+    username: Faker.internet.userName(),
     password: 'test'
   }, {
     provider: 'local',
+    name: {
+      first: 'Supakorn',
+      last: 'Laohasongkram'
+    },
+    coverimg: Faker.image.avatar(),
+    summary: Faker.lorem.sentence(),
+    reason: Faker.lorem.sentences(),
     role: 'admin',
-    name: 'Admin',
     email: 'admin@admin.com',
+    username: Faker.internet.userName(),
     password: 'admin'
   }, function() {
     User.find(function(err, users){
-        Question.find({}).remove(function(){        
       for (var i in users) {
-        for (var i = 0; i < 10; i++) {
-          Question.create({
-            name: Faker.lorem.words(),
-            body: Faker.lorem.paragraph(),
-            coverImg: Faker.image.nature(),
-            owner: {
-              _ownerId: users[i]._id,
-              username: users[i].username,
-              role: users[i].role
-            }
+        for (var yo = 0; yo < 10; yo++) {
+          Article.find({}).remove(function(){    
+            Article.create({
+              name: Faker.lorem.sentence(),
+              importance: Faker.lorem.sentence(),
+              summary: Faker.lorem.sentences(),
+              body: Faker.lorem.paragraphs() + Faker.lorem.paragraphs(),
+              coverImg: Faker.image.nature(),
+              owner: {
+                _ownerId: users[i]._id,
+                username: users[i].username,
+                summary: users[i].summary,
+                role: users[i].role
+              }
+            })
           })
-        };
+          Question.find({}).remove(function(){        
+            Question.create({
+              name: Faker.lorem.sentence(),
+              body: Faker.lorem.paragraph(),
+              coverImg: Faker.image.nature(),
+              owner: {
+                _ownerId: users[i]._id,
+                username: users[i].username,
+                summary: users[i].summary,
+                role: users[i].role
+              }
+            })
+          })  
+        }
       }
-    })    
     })
-  });
+});
 });
 
 

@@ -4,18 +4,22 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
+var random = require('mongoose-simple-random');
 
 var UserSchema = new Schema({
   name: {
     first: String,
     last: String
   },
+  coverimg: String,
   email: { type: String, lowercase: true },
   username: String,
   role: {
     type: String,
     default: 'user'
   },
+  summary: String,
+  reason: String,
   hashedPassword: String,
   provider: String,
   salt: String,
@@ -23,8 +27,10 @@ var UserSchema = new Schema({
   twitter: {},
   google: {},
   github: {},
-  questions: [{type: Schema.Types.ObjectId, ref: 'Question'}]
+  questions_id: [{type: Schema.Types.ObjectId, ref: 'Question'}]
 });
+
+UserSchema.plugin(random);
 
 /**
  * Virtuals
@@ -46,7 +52,10 @@ UserSchema
   .get(function() {
     return {
       'name': this.name,
-      'role': this.role
+      'role': this.role,
+      'coverimg': this.coverimg,
+      'summary': this.summary,
+      'reason': this.reason
     };
   });
 
