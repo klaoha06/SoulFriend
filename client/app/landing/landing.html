@@ -1,0 +1,70 @@
+<div class="container" ng-controller="LandingCtrl">
+  
+ <!--  <div id="MainCarousel">
+    <h1 id="mainTitle">เพื่อนใจ</h1>
+    <h1 id="lead">ชุมชนเพื่อช่วยเหลือจิตใจของกันและกัน</h1>
+  </div> -->
+
+<div id="MainCarousel">
+<div style="position: absolute; left: 50%;">
+    <div id="mainTitle" style="position: relative; left: -50%;">
+      <h1>เพื่อนใจ</h1>
+    </div>
+</div>
+  <carousel interval="myInterval">
+    <slide ng-repeat="slide in slides" active="slide.active">
+      <!-- <img ng-src="{{slide.image}}" style="margin:auto;"> -->
+        <h1 class="mainLead">{{slide.lead}}</h1>
+      <div class="carousel-button-main">
+        <a ng-href="{{slide.link}}" class="btn btn-success">{{slide.text}}</a>
+      </div>
+    </slide>
+  </carousel>
+</div>
+
+
+<script id="template/carousel/carousel.html" type="text/ng-template">
+<div ng-mouseenter="play()" ng-mouseleave="play()" class="carousel" ng-swipe-right="prev()" ng-swipe-left="next()">
+    <ol class="carousel-indicators" ng-show="slides.length > 1">
+        <li ng-repeat="slide in slides track by $index" ng-class="{active: isActive(slide)}" ng-click="select(slide)"></li>
+    </ol>
+    <div class="carousel-inner" ng-transclude></div>
+    <a class="left carousel-control" ng-click="prev()" ng-show="slides.length > 1"><span class="glyphicon glyphicon-chevron-left"></span></a>
+    <a class="right carousel-control" ng-click="next()" ng-show="slides.length > 1"><span class="glyphicon glyphicon-chevron-right"></span></a>
+</div>
+</script>
+
+<!--  <div class="row">
+   <div class="col-lg-12 no-gutter">
+     <header class="hero-unit" id="banner">
+       <h1>เพื่อนใจ</h1>
+       <p class="lead">ชุมชนเพื่อช่วยเหลือจิตใจของกันและกัน</p>
+       <img class="main-logo" src="assets/images/logo-fixed.png" alt="เพื่อนใจ">
+       <div id="askQuestion" class="input-group input-group-lg">
+        <input type="text" class="form-control" placeholder="ถาม ปํญหาในใจ...">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">หาคําตอบ</button>
+        </span>
+      </div>
+    </header>
+  </div>
+</div> -->
+
+<a id="bigFB" class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
+  <i class="fa fa-facebook"></i> Connect with Facebook
+</a>
+  
+</div>
+
+<!-- <ul rn-carousel class="image">
+  <li ng-repeat="slide in slides">
+    <div class="layer"><img ng-src="{{slide.image}}" style="margin:auto;"></div>
+  </li>
+</ul> -->
+<div class="clearfix"  
+ slick-slider="{dots: false, arrows: true, draggable: 
+ false, slidesToShow:3, infinite:false}" ng-repeat="slide in slides">
+             <div class="my-slide">
+                 <a><img ng-src="{{slide.image}}"/></a>
+             </div>
+   </div>

@@ -1,0 +1,67 @@
+#mainCarousel {
+	margin: 0 auto;
+	display:block;
+}
+#mainTitle h1 {
+	font-size: 15em;
+}
+
+#mainTitle {
+	width:590px;
+}
+
+@media(max-width: 600px) {
+  #mainTitle h1{
+    font-size: 9em;
+    font-style: bold;
+    text-align: center;
+  }
+  #mainTitle {
+  	width:400px;
+  }
+}
+
+.mainLead {
+	font-size: 5em;
+	color:black;
+	margin-top: 300px;
+}
+
+
+#mainInnerCarousel {
+	min-height: 500px;
+}
+
+#bigFB {
+	margin: 20px auto;
+	font-size: 22px;
+	width: 270px;
+	display: block;
+}
+
+#landingBtn {
+	margin-top: 400px;
+}
+
+.carousel-button-main{
+	
+}
+
+    #slides_control > div{
+    height: 200px;
+}
+img{
+    margin:auto;
+    width: 400px;
+}
+#slides_control {
+    position:absolute;
+    width: 400px;
+    left:50%;
+    top:20px;
+   margin-left:-200px;
+}
+#MainCarousel li {
+	display: none;
+}
+

@@ -1,75 +1,115 @@
+<div ng-controller="MainCtrl" class="container">
 
 
-      <!--   <carousel interval="myInterval">
-          <slide ng-repeat="slide in slides" active="slide.active">
-            <img ng-src="{{slide.image}}" style="margin:auto;">
-            <div class="carousel-caption">
-              <h4>Slide {{$index}}</h4>
-              <p>{{slide.text}}</p>
+<!--          <div style="height: 400px;">
+          <carousel id="sampleusers" interval="3000">
+           <slide  class="samplequotes" ng-repeat="user in sampleusers" active="slide.active">
+            <blockquote>
+             <div class="row">
+               <div class="col-sm-10 col-sm-offset-1">
+                 <p>{{user.reason}}</p>
+                 <small>{{user.username}}</small>
+               </div>
+             </div>
+           </blockquote>
+         </slide>
+       </carousel>
+       {{setCurrentSlide()}}
+     </div> -->
+     <div id="findAnswer">
+        <h2>หาคําตอบใจ</h2> 
+     <div class="input-group input-group-lg">
+       <input ng-model="searchInput" type="text" class="form-control" placeholder="ถามปัญหาใจ..." aria-describedby="basic-addon2">
+       <span class="input-group-addon" id="basic-addon2">หาคําตอบ</span>
+     </div>
+     </div>
+
+     <div ng-repeat="result in searchResults">
+         <p>{{result}}</p>
+     </div>
+
+     <!-- <div class='container-fluid' ng-controller="TypeaheadCtrl"> -->
+
+
+
+         <h4>Asynchronous results</h4>
+         <pre>Model: {{asyncSelected | json}}</pre>
+         <input type="text" ng-model="asyncSelected" placeholder="Locations loaded via $http" typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" class="form-control" typeahead-on-select="onSelect($item)" typeahead-template-url="customTemplate.html">
+         <p>{{address}}</p>
+         <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+
+             <h4>Custom templates for results</h4>
+             <pre>Model: {{customSelected | json}}</pre>
+             <input type="text" ng-model="customSelected" placeholder="Custom template" typeahead="state as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" class="form-control">
+         </div>
+
+    <!--      <h4>Custom templates for results</h4>
+         <pre>Model: {{customSelected | json}}</pre>
+         <input type="text" ng-model="customSelected" placeholder="Custom template" typeahead="state as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" class="form-control"> -->
+     <!-- </div> -->
+     <script type="text/ng-template" id="customTemplate.html">
+       <a>
+           <span bind-html-unsafe="match.label.obj.name | typeaheadHighlight:query"></span>
+       </a>
+     </script>
+
+     <div class="row">
+       <h2 class="col-md-12">มีคนต้องการความช่วยเหลือ มาช่วยกับตอบปัญหาใจกัน!</h2>
+     </div>
+     <tabset>
+       <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled" ng-click="order(tab.orderBy, tab.reverse)">
+  </tab>
+
+      <div class="questions row container" ng-model="questions">
+
+        <div class="col-md-6" ng-repeat="question in questions">
+          <div class="question panel panel-default">
+            <div class="panel-default">
+              <h2>{{question.name}}</h2>
+              <hr/> 
             </div>
-          </slide>
-        </carousel> -->
+            <div class="clearfix">
+            </div>
+          <div class="panel questionPanel inline">
+            <label>กําลังใจ {{question.jais}}</label>
+            <p>ความช่วยเหลือจากเพื่อนใจ {{question.answers.length}}</p>
+            <p>มีคําตอบ {{question.answered}}</p>
+            <p>votes: {{question.votes}}</p>
+          </div>
 
-            <!-- <div>
-              <h1 class="page-header">Questions:</h1>
-              <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in awesomeThings">
-                <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="deleteThing(thing)">&times;</button></a></li>
+            <img class="questionImg img-responsive" ng-src="{{question.coverImg}}" />
+            <p>{{question.body}}</p>
+            <p>tags: {{question.tags}}</p>
+            <p>{{$element}}</p>
+            <div class="clearfix">
+            </div>
+
+            <div>
+              <ul class="nav nav-pills">
+                <li>
+                  <a ng-click="">แชร์</a>
+                </li>
+                <li>
+                  <a ng-click="">เก็บใจ</a>
+                </li>
+                <li>
+                  <a ng-href="/questions/{{question._id}}">ช่วยเพื่อนใจ</a>
+                </li>
+                <li>
+                  <a ng-click="addJai(question._id, $element)"> ให้ใจ</a>
+                </li>
               </ul>
             </div>
-
-          <form class="thing-form">
-            <label>Syncs in realtime across clients</label>
-            <p class="input-group">
-              <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="newThing">
-              <span class="input-group-btn">
-                <button type="submit" class="btn btn-primary" ng-click="addThing()">Add New</button>
-              </span>
-            </p>
-          </form> -->
-
-<!--           <div id="articleList" class="row">
-            <div class="no-gutter col-sm-6 col-md-4" ng-repeat="article in articles">
-              <div class="mythumbnail" back-img="{{article.coverImg}}" id="{{article._id}}" ng-click="goToArticle(article.id)">
-                <div class="caption">
-                  <h3>{{article.name}}</h3>
-                  <p>{{article.summary}}</p>
-                  <p><a href="#" class="btn btn-primary" role="button" ng-click="openModal()">Comment</a> <a href="#" class="btn btn-default" role="button">Read More</a></p>
-                </div>
-              </div>
             </div>
-          </div>  -->
 
-          <div class="row">
-            <div class="col-lg-12">
-<!--               <header class="hero-unit" id="banner">
-                  <h1>เพื่อนใจ</h1>
-                  <p class="lead">ชุมชนเพื่อช่วยเหลือและเกื้อกูลจิตใจของกันและกัน</p>
-                  <img class="main-logo" src="assets/images/logo-fixed.png" alt="เพื่อนใจ">
-                </header> -->
-                <div id="askQuestion" class="input-group input-group-lg">
-                 <input type="text" class="form-control" placeholder="ถาม ปํญหาในใจ...">
-                 <span class="input-group-btn">
-                   <button class="btn btn-default" type="button">ขอใจ</button>
-                 </span>
-               </div><!-- /input-group -->
-             </div><!-- /.col-lg-6 -->
-           </div>
-
-           <div style="height: 400px;">
-             <carousel interval="3000">
-               <slide  class="samplequotes" ng-repeat="user in sampleusers" active="slide.active">
-                <blockquote>
-                 <div class="row">
-                   <div class="col-sm-10 col-sm-offset-1">
-                     <h3>{{user.reason}}</h3>
-                     <small>{{user.username}}</small>
-                   </div>
-                 </div>
-               </blockquote>
-             </slide>
-     <!--         <div ng-repeat="user in sampleusers" style="display: inline;">
-               <img indicator ng-src="{{user.coverimg}}" class="sampleusers" imgnum="{{$index}}" style="border-radius: 100px">
-             </div> -->
-           </carousel>
-          {{setCurrentSlide()}}
         </div>
+        
+
+      </div>
+
+
+     </tabset>
+
+
+     
+</div>

@@ -6,13 +6,10 @@ angular.module('puanJaiApp', [
   'ngSanitize',
   'btford.socket-io',
   'ui.router',
-  'ui.bootstrap',
-  'ngTouch'
-])
+  'ui.bootstrap'])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
       .otherwise('/');
-
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
   })
@@ -48,8 +45,14 @@ angular.module('puanJaiApp', [
     $rootScope.$on('$stateChangeStart', function (event, next) {
       Auth.isLoggedInAsync(function(loggedIn) {
         if (next.authenticate && !loggedIn) {
+          alert('กรุณาเข้าระบบก่อนนะครับ :)');
           $location.path('/login');
         }
       });
     });
+
+    // $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+    //    debugger;
+    // });
+
   });

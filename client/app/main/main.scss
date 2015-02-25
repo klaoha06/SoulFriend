@@ -3,8 +3,56 @@
     src:url(/assets/fonts/1.ttf);
 }
 
+@font-face {
+    font-family: font2;
+    src:url(/assets/fonts/Nithan.ttf);
+}
+
+@font-face {
+    font-family: font3;
+    src:url(/assets/fonts/ASGMatrathanLight.ttf);
+}
+
+@font-face {
+    font-family: font4;
+    src:url(/assets/fonts/CSPraJad.otf);
+}
+
+@font-face {
+    font-family: font5;
+    src:url(/assets/fonts/DRdeco.ttf);
+}
+@font-face {
+    font-family: font6;
+    src:url(/assets/fonts/EDPenSook.ttf);
+}
+@font-face {
+    font-family: font7;
+    src:url(/assets/fonts/kruengprung.ttf);
+}
+@font-face {
+    font-family: font8;
+    src:url(/assets/fonts/PGVIM.ttf);
+}
+@font-face {
+    font-family: font9;
+    src:url(/assets/fonts/Quark-light.otf);
+}
+@font-face {
+    font-family: font10;
+    src:url(/assets/fonts/torsilp-wadkhen.ttf);
+}
+@font-face {
+    font-family: font11;
+    src:url(/assets/fonts/WDB_Bangna.ttf);
+}
+@font-face {
+    font-family: font12;
+    src:url(/assets/fonts/LayijiRuDuuRon.ttf);
+}
+
 * {
-    font-family: font1;
+    font-family: font6;
     font-size:18px;
 }
 
@@ -42,8 +90,7 @@
 }
 
 #main-view {
-  border-left: 1px solid black;
-  padding: 0 15px;
+  margin-top:50px;
 }
 
 .mythumbnail {
@@ -95,7 +142,7 @@
   bottom:0;
 }
 
-.carousel-indicators li {
+#sampleusers ol li {
   width: 70px;
   height: 70px;
   margin: 5px;
@@ -106,10 +153,147 @@
   transition: all 0.7s;
 }
 
-.carousel-indicators .active {
+#sampleusers .carousel-indicators .active {
 width: 150px;
 height: 150px;
 border-radius: 100px;
 border-color: #F5DC25;
 opacity: 1;
 }
+
+.panel
+{
+    position: relative;
+    -webkit-box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
+    box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
+}
+
+.panel-default > .panel-leftheading
+{
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+.panel-primary > .panel-leftheading
+{
+    color: #fff;
+    background-color: #428bca;
+    border-color: #428bca;
+}
+
+.panel-success > .panel-leftheading
+{
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.panel-info > .panel-leftheading
+{
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.panel-warning > .panel-leftheading
+{
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.panel-danger > .panel-leftheading
+{
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.panel-leftheading
+{
+    width: 42px;
+    padding: 10px 15px;
+    border-right: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    float: left;
+    height: 100%;
+    position: absolute;
+}
+
+.panel-lefttitle
+{
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 15px;
+    font-size: 16px;
+    color: inherit;
+    -webkit-transform: rotate(90deg);
+    -webkit-transform-origin: left top;
+    -moz-transform: rotate(90deg);
+    -moz-transform-origin: left top;
+    -ms-transform: rotate(90deg);
+    -ms-transform-origin: left top;
+    -o-transform: rotate(90deg);
+    -o-transform-origin: left top;
+    transform: rotate(90deg);
+    transform-origin: left top;
+    position: absolute;
+    white-space: nowrap;
+}
+
+.panel-rightbody
+{
+    float: left;
+    margin-left: 45px;
+    padding: 15px;
+}
+
+.nav-pills li {
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -ms-user-select: none;
+}
+
+.questionPanel {
+  position: absolute;
+  min-height: 50px;
+  top: 40px;
+  right: -10px;
+  padding:10px;
+}
+
+.questionPanel p {
+  margin-top: 10px;
+  display:inline;
+}
+
+.questionImg {
+  max-height: 400px;
+  max-width:90%;
+  margin: 10px auto;
+}
+
+.questions {
+  padding-top: 20px;
+}
+
+.question {
+  height: 700px;
+}
+
+
+.question h3 {
+  margin:20px;
+}
+
+#findAnswer {
+  margin: 20px;
+}
+
+

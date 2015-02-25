@@ -2,7 +2,7 @@
 
 angular.module('puanJaiApp')
   .controller('articleCtrl', function ($scope, $http, socket, $stateParams, Auth, $location) {
-    $scope.awesomeThings = [];
+    // $scope.awesomeThings = [];
     // var location = $location;
     // debugger;
     // Getting Things
@@ -10,15 +10,20 @@ angular.module('puanJaiApp')
     //   $scope.awesomeThings = awesomeThings;
     //   socket.syncUpdates('thing', $scope.awesomeThings);
     // });
-    // Getting Articles
+
+    // Getting the Article
+
     $http.get('/api/articles/' + $stateParams.id).success(function(article) {
       $scope.article = article;
-      socket.syncUpdates('article', $scope.article);
-    });
+      socket.syncUpdates('article', $scope.article, function(event, oldArticle, newArticle){
+        $scope.article = newArticle;
+      });
+    });    
+
 
     $http.get('/api/articles').success(function(articles) {
       $scope.articles = articles;
-      socket.syncUpdates('article', $scope.articles);
+      // socket.syncUpdates('article', $scope.articles);
     });
 
     $scope.addComment = function() {
@@ -27,7 +32,7 @@ angular.module('puanJaiApp')
       }
       if (Auth.isLoggedIn()) {
         var user = Auth.getCurrentUser();
-        $http.post('/api/articles/' +  $stateParams.id + '/comments', { 
+        var newComment = { 
           content: $scope.newComment,
           user: {
             username: user.username,
@@ -35,10 +40,10 @@ angular.module('puanJaiApp')
             _id: user._id,
             coverimg: user.coverimg
           },
-          createAt: Date.now()
-        }).success(function(comments){
-          $scope.article.comments = comments;
-        });
+          created: Date.now()
+        };
+        $scope.article.comments.push(newComment);
+        $http.post('/api/articles/' +  $stateParams.id + '/comments', newComment);
         $scope.newComment = '';
       } else {
         $location.path('/login');
@@ -46,28 +51,21 @@ angular.module('puanJaiApp')
       }
     };
 
+
+    // $scope.addThing = function() {
+    //   if($scope.newThing === '') {
+    //     return;
+    //   }
+    //   $http.post('/api/things', { name: $scope.newThing });
+    //   $scope.newThing = '';
+    // };
+
     // $scope.deleteThing = function(thing) {
     //   $http.delete('/api/things/' + thing._id);
     // };
 
-
-    // Slider
-    $scope.myInterval = 3000;
-     var slides = $scope.slides = [];
-     $scope.addSlide = function() {
-       var newWidth = 850 + slides.length + 1;
-       slides.push({
-         image: 'http://placekitten.com/' + newWidth + '/300',
-         text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
-           ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]
-       });
-     };
-     for (var i=0; i<4; i++) {
-       $scope.addSlide();
-     }
-
      // On leave page
     $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('thing');
+      socket.unsyncUpdates('article');
     });
   });

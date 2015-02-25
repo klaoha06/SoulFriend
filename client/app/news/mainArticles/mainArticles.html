@@ -17,7 +17,7 @@
           </slide>
         </carousel>
 
-            <!-- <div>
+      <!--       <div>
               <h1 class="page-header">Questions:</h1>
               <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in awesomeThings">
                 <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="deleteThing(thing)">&times;</button></a></li>
@@ -36,7 +36,7 @@
 
           <div id="articleList" class="row">
             <div class="no-gutter col-sm-6 col-md-4" ng-repeat="article in articles">
-              <div class="mythumbnail" back-img="{{article.coverImg}}" id="{{article._id}}" ng-click="goToArticle(article.id)">
+              <div class="mythumbnail" article="{{article.coverImg}}" id="{{article._id}}" ng-click="goToArticle(article)">
                 <div class="caption">
                   <h3>{{article.name}}</h3>
                   <p>{{article.summary}}</p>

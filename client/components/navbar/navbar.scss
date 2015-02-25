@@ -5,3 +5,13 @@
 .navbar {
 	border: 0;
 }
+
+.navbar-nav li span a {
+	color: #777777;
+	line-height: 20px;
+	position: relative;
+	display: block;
+	padding: 15px 15px;
+	text-decoration: none;
+	background: transparent;
+}

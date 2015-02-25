@@ -51,6 +51,20 @@ exports.update = function(req, res) {
   });
 };
 
+// Add Comment.
+exports.addComment = function(req, res) {
+  if(req.body._id) { delete req.body._id; }
+  Article.findById(req.params.id, function (err, article) {
+    if (err) { return handleError(res, err); }
+    if(!article) { return res.send(404); }
+    article.comments.push(req.body);
+    article.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, article);
+    });
+  });
+};
+
 // Deletes a thing from the DB.
 exports.destroy = function(req, res) {
   Article.findById(req.params.id, function (err, article) {
@@ -63,19 +77,6 @@ exports.destroy = function(req, res) {
   });
 };
 
-// Add Comment.
-exports.addComment = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
-  Article.findById(req.params.id, function (err, article) {
-    if (err) { return handleError(res, err); }
-    if(!article) { return res.send(404); }
-    article.comments.push(req.body)
-    article.save(function (err) {
-      if (err) { return handleError(res, err); }
-      return res.json(200, article.comments);
-    });
-  });
-};
 
 function handleError(res, err) {
   return res.send(500, err);

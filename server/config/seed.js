@@ -98,9 +98,12 @@ User.find({}).remove(function() {
           })
           Question.find({}).remove(function(){        
             Question.create({
-              name: Faker.lorem.sentence(),
+              name: 'สวัสดี|ครับ| |ผม|ชื่อ|กร|ครับ| |ยิน|ดี|ที่|ได้|รู้|จัก',
               body: Faker.lorem.paragraph(),
               coverImg: Faker.image.nature(),
+              jais: Faker.random.number(100),
+              votes: Faker.random.number(100),
+              views: Faker.random.number(100),
               owner: {
                 _ownerId: users[i]._id,
                 username: users[i].username,

@@ -1,20 +1,50 @@
 'use strict';
 
+// angular.module('puanJaiApp').factory('articleStore', function() {
+//  var articles = {};
+//  function set(data) {
+//    articles = data;
+//  }
+//  function get() {
+//   return articles;
+//  }
+
+//  function getById(id) {
+//   var article;
+//   // debugger;
+//   for (var i = 0; i < articles.length; i++) {
+//     if (articles[i]._id === id) {
+//       return article;
+//     }
+//   }
+//  }
+
+//  return {
+//   set: set,
+//   get: get,
+//   getById: getById
+//  };
+
+// });
+
 angular.module('puanJaiApp')
-  .controller('MainArtCtrl', function ($scope, $http, socket) {
-    $scope.awesomeThings = [];
+  .controller('MainArtCtrl', function ($scope, $http, socket, $location, $window) {
+    // $scope.awesomeThings = [];
     // var location = $location;
     // debugger;
+    
     // Getting Things
     // $http.get('/api/things').success(function(awesomeThings) {
     //   $scope.awesomeThings = awesomeThings;
     //   socket.syncUpdates('thing', $scope.awesomeThings);
     // });
 
-    // Getting Articles
+    // // Getting Articles
     if (!$scope.articles) {
       $http.get('/api/articles').success(function(articles) {
         $scope.articles = articles;
+        // articleStore.set(articles);
+        // localStorage.set('articles', articles);
         socket.syncUpdates('article', $scope.articles);
       });
     }
@@ -32,7 +62,7 @@ angular.module('puanJaiApp')
     // };
 
     $scope.goToArticle = function(){
-      window.location='/articles/' + event.currentTarget.id;
+      $location.path('/articles/' + event.currentTarget.id);
     };
 
 
@@ -53,15 +83,16 @@ angular.module('puanJaiApp')
 
      // On leave page
     $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('thing');
+      socket.unsyncUpdates('article');
     });
+
   });
 
-angular.module('puanJaiApp').directive('backImg', function(){
+angular.module('puanJaiApp').directive('article', function(){
 return function(scope, element, attrs){
     var articleId = attrs.id;
     element.css({
-        'background-image': 'url(' + attrs.backImg +')',
+        'background-image': 'url(' + attrs.article +')',
         'background-size' : 'cover'
     });
     element.bind('mouseover', function(){
@@ -73,26 +104,6 @@ return function(scope, element, attrs){
     });
     // element.bind('click', function(e){
     //   $location.path('/articles/' + e.target.id);
-    //   debugger;
     // });
   };
 });
-
-// angular.module('puanJaiApp').directive('myarticle', function() {
-//   return {
-//     restrict: 'AE',
-//     replace: true,
-//     template: '<a ng-href="/login"><div class="thumbnail" " id="{{article._id}}"><div class="caption"><h3>{{article.name}}</h3><p>{{article.summary}}</p><p><a href="#" class="btn btn-primary" role="button" ng-click="openModal()">Comment</a> <a href="#" class="btn btn-default" role="button">Read More</a></p></div></div></a>',
-//     link: function(scope, elem, attrs) {
-//       elem.bind('click', function() {
-//         elem.css('background-color', 'black');
-//         scope.$apply(function() {
-//           scope.color = "black";
-//         });
-//       });
-//       elem.bind('mouseover', function() {
-//         elem.css('cursor', 'pointer');
-//       });
-//     }
-//   };
-// });

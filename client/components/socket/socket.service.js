@@ -28,26 +28,33 @@ angular.module('puanJaiApp')
        * @param {Array} array
        * @param {Function} cb
        */
+
       syncUpdates: function (modelName, array, cb) {
         cb = cb || angular.noop;
-
         /**
          * Syncs item creation/updates on 'model:save'
          */
         socket.on(modelName + ':save', function (item) {
-          var oldItem = _.find(array, {_id: item._id});
-          var index = array.indexOf(oldItem);
-          var event = 'created';
-
-          // replace oldItem if it exists
-          // otherwise just add item to the collection
-          if (oldItem) {
-            array.splice(index, 1, item);
-            event = 'updated';
+          var oldItem;
+          var index;
+          var event;
+          if (typeof array.length === 'undefined'){
+              array = item;
+              event = 'updated';
           } else {
-            array.push(item);
-          }
+            oldItem = _.find(array, {_id: item._id});
+            index = array.indexOf(oldItem);
+            event = 'created';
 
+            // replace oldItem if it exists
+            // otherwise just add item to the collection
+            if (oldItem) {
+              array.splice(index, 1, item);
+              event = 'updated';
+            } else {
+              array.push(item);
+            }    
+          }
           cb(event, item, array);
         });
 

@@ -1,16 +1,25 @@
-<div class="row">
+<div class="row" style="padding: 0 25px;">
 	<div class="col-md-9 no-gutter">
 		<header class="hero-unit" id="banner" style="background-image: url({{article.coverImg}}); background-size: cover;">
 			<h1>{{article.name}}</h1>
 			<p class="lead">{{article.summary}}</p>
 		</header>
+		<div>
+			{{article.owner}}
+			vote:{{article.votes}}
+		</div>
+		<h2>บทความนี้มีความสําคัญอย่างไร</h2>
+		<p>{{article.importance}}</p>
+		<hr/>
+		<h2>ใจความหลัก</h2>
+		<p>{{article.summary}}</p>
+		<hr/>
+		<h2>เนื้อความ</h2>
 		<p>{{article.body}}</p>
-
+		<hr/>
 		<div ng-repeat="comment in article.comments">
-<!-- 			{{comment.user}}
-			{{comment}} -->
 
-			<article class="row">
+			<comment class="row">
 			  <div class="col-md-2 col-sm-2 hidden-xs">
 			    <figure class="thumbnail">
 			      <img class="img-responsive" ng-src="{{comment.user.coverimg}}" />
@@ -33,39 +42,14 @@
 			      </div>
 			    </div>
 			  </div>
-			</article>
+			</comment>
 			<hr/>
 	
 
 		</div>
 
-<!-- 		<article class="row">
-		  <div class="col-md-2 col-sm-2 hidden-xs">
-		    <figure class="thumbnail">
-		      <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
-		      <figcaption class="text-center">username</figcaption>
-		    </figure>
-		  </div>
-		  <div class="col-md-10 col-sm-10">
-		    <div class="panel panel-default arrow left">
-		      <div class="panel-body">
-		        <header class="text-left">
-		          <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-		          <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-		        </header>
-		        <div class="comment-post">
-		          <p>
-		            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-		          </p>
-		        </div>
-		        <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
-		      </div>
-		    </div>
-		  </div>
-		</article> -->
-
 		<form class="comment-form">
-		  <label>Syncs in realtime across clients</label>
+		  <label>ร่วมสนทนา</label>
 		  <p class="input-group">
 		    <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="newComment">
 		    <span class="input-group-btn">
@@ -83,7 +67,7 @@
 	<div class="col-md-3 no-gutter">
 		<div id="articleList" class="row">
 		  <div class="no-gutter col-sm-12" ng-repeat="article in articles">
-		    <div class="mythumbnail" back-img="{{article.coverImg}}" id="{{article._id}}" ng-click="goToArticle(article.id)">
+		    <div class="mythumbnail" article="{{article.coverImg}}" id="{{article._id}}" ng-click="goToArticle(article.id)">
 		      <div class="caption">
 		        <h3>{{article.name}}</h3>
 		        <p>{{article.summary}}</p>
@@ -93,4 +77,23 @@
 		  </div>
 		</div> 
 	</div>	
+
+
+<!-- 	      <div>
+	        <h1 class="page-header">Questions:</h1>
+	        <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in awesomeThings">
+	          <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="deleteThing(thing)">&times;</button></a></li>
+	        </ul>
+	      </div>
+
+	    <form class="thing-form">
+	      <label>Syncs in realtime across clients</label>
+	      <p class="input-group">
+	        <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="newThing">
+	        <span class="input-group-btn">
+	          <button type="submit" class="btn btn-primary" ng-click="addThing()">Add New</button>
+	        </span>
+	      </p>
+	    </form>
+ -->
 </div>

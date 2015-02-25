@@ -1,17 +1,3 @@
-@font-face {
-    font-family: font1;
-    src:url(/assets/fonts/1.ttf);
-}
-
-* {
-    font-family: font1;
-    font-size:18px;
-}
-
-.thing-form {
-    margin: 20px 0;
-}
-
 #banner {
     border-bottom: none;
     margin-top: -20px;
@@ -39,11 +25,6 @@
 
 .main-logo {
   width: 150px;
-}
-
-#main-view {
-  border-left: 1px solid black;
-  padding: 0 15px;
 }
 
 .mythumbnail {

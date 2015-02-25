@@ -14,7 +14,6 @@
     <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
       <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
-      <link rel="stylesheet" href="bower_components/angular-carousel/dist/angular-carousel.css" />
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
@@ -31,16 +30,9 @@
     <div ng-include="'components/navbar/navbar.html'"></div>
 
     <!-- Add your site or application content here -->
-    <div class="container" style="margin-top:51px;">
-      <div class="row">
-        <div class="col-md-2 no-gutter">
-          <div ng-include="'components/sidebar/sidebar.html'"></div>
-        </div>
-        <div class="col-md-10 no-gutter">
-          <div id="main-view" ui-view=""></div>
-        </div>
+      <div id="main-view">
+          <div ui-view=""></div>
       </div>
-    </div>
 
     <div ng-include="'components/footer/footer.html'"></div>
 
@@ -66,12 +58,10 @@
       <script src="bower_components/angular-resource/angular-resource.js"></script>
       <script src="bower_components/angular-cookies/angular-cookies.js"></script>
       <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-      <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
       <script src="bower_components/angular-socket-io/socket.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-      <script src="bower_components/angular-touch/angular-touch.js"></script>
-      <script src="bower_components/angular-carousel/dist/angular-carousel.js"></script>
+      <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
       <!-- endbower -->
       <script src="socket.io-client/socket.io.js"></script>
     <!-- endbuild -->
@@ -85,6 +75,8 @@
           <script src="app/account/signup/signup.controller.js"></script>
           <script src="app/admin/admin.controller.js"></script>
           <script src="app/admin/admin.js"></script>
+          <script src="app/landing/landing.controller.js"></script>
+          <script src="app/landing/landing.js"></script>
           <script src="app/main/main.controller.js"></script>
           <script src="app/main/main.js"></script>
           <script src="app/news/mainArticles/mainArticles.controller.js"></script>

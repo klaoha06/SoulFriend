@@ -18,7 +18,7 @@ var ArticleSchema = new Schema({
   body: String,
   inHouse: { type: Boolean, default: false},
   coverImg: String,
-  votes: { type: Number, default: 0},
+  likes: { type: Number, default: 0},
   views: { type: Number, default: 0},
   comments: Array,
   tag_ids: Array,
