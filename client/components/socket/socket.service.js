@@ -2,8 +2,8 @@
 'use strict';
 
 angular.module('puanJaiApp')
-  .factory('socket', function(socketFactory) {
-
+  .factory('socket', function(socketFactory, $filter) {
+    var orderBy = $filter('orderBy');
     // socket.io now auto-configures its connection when we ommit a connection url
     var ioSocket = io('', {
       // Send auth token on connection, you will need to DI the Auth service above
@@ -48,12 +48,13 @@ angular.module('puanJaiApp')
 
             // replace oldItem if it exists
             // otherwise just add item to the collection
+              // debugger;
             if (oldItem) {
               array.splice(index, 1, item);
               event = 'updated';
             } else {
               array.push(item);
-            }    
+            }
           }
           cb(event, item, array);
         });

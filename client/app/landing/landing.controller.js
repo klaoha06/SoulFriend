@@ -10,11 +10,11 @@ angular.module('puanJaiApp')
        var newWidth = 1360 + slides.length + 1;
        slides.push({
          image: 'http://placekitten.com/' + newWidth + '/500',
-         lead: ['ชุมชนเพื่อช่วยเหลือจิตใจของกันและกัน','','ชุมชนเพื่อช่วยเหลือจิตใจของกันและกัน','ชุมชนเพื่อช่วยเหลือจิตใจของกันและกัน'][slides.length % 4],
-         text: ['More','Extra','Lots of','Surplus'][slides.length % 4]
+         lead: ['ชุมชนเพื่อช่วยเหลือจิตใจของกันและกัน','สร้างด้วยใจและความรักต่อส่วนรวม','ศูนย์กลางในการเผยแผ่ปัญญาสู่ความสุข'][slides.length % 3],
+         text: ['มารู้จักเรา','มารู้จักกับผู้ริเริ่ม','สมัครเป็นนักเขียนเพื่อนใจ'][slides.length % 3]
        });
      };
-     for (var i=0; i<4; i++) {
+     for (var i=0; i<3; i++) {
        $scope.addSlide();
      }
 

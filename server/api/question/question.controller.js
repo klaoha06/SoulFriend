@@ -9,80 +9,69 @@
 
 'use strict';
 
+var Promise = require('bluebird');
 var _ = require('lodash');
+Promise.promisifyAll(_);
 var Question = require('./question.model');
-// var thaiWords = require('./thai-words')
-// var fs =require('fs');
+var Tag = require('../tag/tag.model');
 var wordcut = require("wordcut");
 
-wordcut.init();
-
+wordcut.init('./node_modules/wordcut/data/tdict-std.txt');
 
 // Get list of questions
 exports.index = function(req, res) {
-  Question.find({},{},{ skip:10, limit: 9},function (err, questions) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, questions);
-  });
+  var topic = null;
+  if (req.query.topic) {
+    topic = {topic: req.query.topic}
+  } else {
+    topic = {};
+  }
+  switch(req.query.category){
+    case 'views':
+      Question.find(topic).sort({views: -1}).limit(20).exec(function (err, questions){
+       if(err) { return handleError(res, err); }
+       return res.status(200).json(questions);
+      })
+      break;
+    case 'votes_count':
+      Question.find(topic).sort('-votes_count').limit(20).exec(function (err, questions){
+          if(err) { return handleError(res, err); }
+             return res.status(200).json(questions);
+      })
+      break;
+    case 'created':
+    Question.find(topic).sort('-created').limit(20).exec(function (err, questions){
+        if(err) { return handleError(res, err); }
+         return res.status(200).json(questions);
+    })
+      break;
+    case 'noAnswer':
+      topic.answers_count = 0;
+      Question.find(topic).sort('created').limit(20).exec(function (err, questions){
+          if(err) { return handleError(res, err); }
+            return res.status(200).json(questions);
+      })
+      break;
+    case 'jais':
+      Question.find(topic).sort('-jais_count').limit(20).exec(function (err, questions){
+          if(err) { return handleError(res, err); }
+             return res.status(200).json(questions);
+      })
+      break;
+    default:
+      Question.find(topic).sort({views: -1}).limit(20).exec(function (err, questions){
+       if(err) { return handleError(res, err); }
+       return res.status(200).json(questions);
+      })
+  }
 };
 
 // Text Search
 exports.search = function(req, res) {
-//   Question.sync(function (err, numSynced) {
-//   console.log('number of cats synced:', numSynced)
-// })
-  console.log(req.query.userInput);
-  console.log(wordcut.cut(req.query.userInput));
-  var queryArray = wordcut.cut(req.query.userInput).split('|')
-  // Question.search({ query: req.query.userInput, fields: ['name'] }, function (err, results) {
-  //        if(err) { return handleError(res, err); }
-  //             return res.json(200, results)
-  // })
-// Question.createMapping({
-//   "mappings": {
-//     "question": {
-//       "properties": {
-//         "name": {
-//           "type":     "string",
-//           "analyzer": "thai" 
-//         }
-//       }
-//     }
-//   }
-// },function(err, mapping){
-//   console.log(mapping)
-//   // do neat things here
-  Question.search({ query_string: { query: wordcut.cut(req.query.userInput)}}, function (err, results) {
-         if(err) { return handleError(res, err); }
-              return res.json(200, results.hits.hits)
+  Question.search({ query: wordcut.cut(req.query.userInput), fuzziness: 0.5, fields: ['searchname'], pageSize: 10 }, function (err, results) {
+    if(err) { return handleError(res, err); }
+      return res.json(200, results)
   })
-// });
-
-
-  // console.log(req.query.userInput);
-  // var input = req.query.userInput.replace(/\s/g, '')
-  // console.log(input)
-  // Question.search(input, {name:1}, {
-  //   limit:10
-  // }, function(err, result){
-  //    if(err) { return handleError(res, err); }
-  //         return res.json(200, result)
-  // })
-  // Question.textSearch(req.query.userInput, function(err,result){
-  //   if(err) { return handleError(res, err); }
-  //   return res.json(200, result.results)
-  // })
-// var query = new RegExp(req.query.userInput, 'i');
-// console.log(query)
-//   Question.find({name: query}, function(err,result){
-//       if(err) { return handleError(res, err); }
-//       return res.json(200, result)
-//   })
-
-// Question.db.db.executeDbCommand( "text", { search : req.query.userInput }, function(err, results){
-//   if(err) { return handleError(res, err); }
-//      return res.json(200, results)
-// } );
 };
 
 // Get a single question
@@ -96,19 +85,103 @@ exports.show = function(req, res) {
 
 // Creates a new thing in the DB.
 exports.create = function(req, res) {
-  Question.create(req.body, function(err, question) {
-    if(err) { return handleError(res, err); }
-    return res.json(201, question);
-  });
+  var incomingTags = req.body.tags;
+  var join = Promise.join;
+  
+
+  _(incomingTags).forEach(function(tag){
+    if (!_.has(tag, '_id')) {
+
+    }
+  })
+
+  // var tags = req.body.tags
+  // var promisifiedMap = Promise.promisify(_.map)
+  // promisifiedMap(req.body.tags, function(tag){
+  //             if (!_.has(tag, '_id')) {
+  //                Tag.create({name: tag.name}, function(err, newTag){
+  //                   // console.log(newTag);
+  //                   tag = newTag;
+  //                   return {name: newTag.name, _id: newTag._id}
+  //                });
+  //             }
+  //             return tag;
+  // }).then(function(result){
+  //   console.log(result)
+  //   console.log('hi')
+  // })
 };
+//   var question = new Question(req.body);
+//   question.searchname = wordcut.cut(question.name);
+//   // question.tags = _.map(question.tags, function(tag){
+//   //     if (!_.has(tag, '_id')) {
+//   //       var tagId;
+//   //        Tag.create({name: tag.name}, function(err, newTag){
+//   //           tagId = newTag._id
+//   //           console.log(newTag);
+//   //           return {'name': newTag.name, '_id': tagId}
+//   //        });
+//   //     }
+//   //     return tag;
+//   //   })
+//   var promisifiedMap = Promise.promisify(_.map)
+  // function generateTags(){
+  //   return new Promise(function(resolve){
+  //     tags = _.map(question.tags, function(tag){
+  //                 if (!_.has(tag, '_id')) {
+  //                    Tag.create({name: tag.name}, function(err, newTag){
+  //                       console.log(newTag);
+  //                       tag = newTag;
+  //                       return {name: newTag.name, _id: newTag._id}
+  //                    });
+  //                 }
+  //                 return tag;
+  //               })
+  //       resolve()
+  //   })
+  // }
+//   // question.tags = _.map(question.tags, function(tag){
+//   //             if (!_.has(tag, '_id')) {
+//   //                Tag.create({name: tag.name}, function(err, newTag){
+//   //                   console.log(newTag);
+//   //                   return {'name': newTag.name, '_id': newTag._id}
+//   //                });
+//   //             }
+//   //             return tag;
+//   //           })
+//   generateTags().then(function(){
+//     // console.log(question)
+//     question.save(function(err, question) {
+//     // console.log(question)
+//     if(err) { return handleError(res, err); }
+//     return res.status(201).json(question)
+//   });
+//   })
+// };
 
 // Increment Vote for Question in the DB.
-exports.addVote = function(req, res) {
+exports.upVote = function(req, res) {
   if(req.body._id) { delete req.body._id; }
   Question.findById(req.params.id, function (err, question) {
     if (err) { return handleError(res, err); }
     if(!question) { return res.send(404); }
-    question.votes++;
+    question.upvotes.push(req.body.userId);
+    question.votes_count++;
+    question.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, question);
+    });
+  });
+};
+
+// Decrement Vote for Question in the DB.
+exports.downVote = function(req, res) {
+  if(req.body._id) { delete req.body._id; }
+  Question.findById(req.params.id, function (err, question) {
+    if (err) { return handleError(res, err); }
+    if(!question) { return res.send(404); }
+    question.downvotes.push(req.body.userId);
+    question.votes_count--;
     question.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, question);
@@ -122,7 +195,8 @@ exports.addJai = function(req, res) {
   Question.findById(req.params.id, function (err, question) {
     if (err) { return handleError(res, err); }
     if(!question) { return res.send(404); }
-    question.jais++;
+    question.jais.push(req.body.userId);
+    question.jais_count++;
     question.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, question);
@@ -137,7 +211,37 @@ exports.update = function(req, res) {
     if (err) { return handleError(res, err); }
     if(!question) { return res.send(404); }
     var updated = _.merge(question, req.body);
+    updated.markModified('answers');
     updated.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, question);
+    });
+  });
+};
+
+// Updates an existing thing in the DB.
+exports.addAnswer = function(req, res) {
+  if(req.body._id) { delete req.body._id; }
+  Question.findById(req.params.id, function (err, question) {
+    if (err) { return handleError(res, err); }
+    if(!question) { return res.send(404); }
+    console.log(req.body)
+    question.answers.push(req.body)
+    question.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, question);
+    });
+  });
+};
+
+// Decrement Vote for Question in the DB.
+exports.updateAns = function(req, res) {
+  Question.findById(req.params.id, function (err, question) {
+    if (err) { return handleError(res, err); }
+    if(!question) { return res.send(404); }
+
+      question.markModified('answers');
+    question.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, question);
     });

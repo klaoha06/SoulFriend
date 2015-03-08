@@ -20,10 +20,12 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 // injector
 @import 'account/login/login.scss';
 @import 'admin/admin.scss';
+@import 'ask/ask.scss';
 @import 'landing/landing.scss';
 @import 'main/main.scss';
 @import 'news/mainArticles/mainArticles.scss';
 @import 'news/singleArticle/singleArticle.scss';
+@import 'question/question.scss';
 @import 'footer/footer.scss';
 @import 'modal/modal.scss';
 @import 'navbar/navbar.scss';

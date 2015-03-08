@@ -1,115 +1,178 @@
 <div ng-controller="MainCtrl" class="container">
 
-
-<!--          <div style="height: 400px;">
-          <carousel id="sampleusers" interval="3000">
-           <slide  class="samplequotes" ng-repeat="user in sampleusers" active="slide.active">
-            <blockquote>
-             <div class="row">
-               <div class="col-sm-10 col-sm-offset-1">
-                 <p>{{user.reason}}</p>
-                 <small>{{user.username}}</small>
+  <!--          <div style="height: 400px;">
+            <carousel id="sampleusers" interval="3000">
+             <slide  class="samplequotes" ng-repeat="user in sampleusers" active="slide.active">
+              <blockquote>
+               <div class="row">
+                 <div class="col-sm-10 col-sm-offset-1">
+                   <p>{{user.reason}}</p>
+                   <small>{{user.username}}</small>
+                 </div>
                </div>
-             </div>
-           </blockquote>
-         </slide>
-       </carousel>
-       {{setCurrentSlide()}}
-     </div> -->
-     <div id="findAnswer">
-        <h2>หาคําตอบใจ</h2> 
-     <div class="input-group input-group-lg">
-       <input ng-model="searchInput" type="text" class="form-control" placeholder="ถามปัญหาใจ..." aria-describedby="basic-addon2">
-       <span class="input-group-addon" id="basic-addon2">หาคําตอบ</span>
+             </blockquote>
+           </slide>
+         </carousel>
+         {{setCurrentSlide()}}
+       </div> -->
+
+  <div id="questionSearch"class="input-group input-group-lg">
+   <input type="text" ng-model="customSelected" placeholder="ถามปัญหาใจ" typeahead="question as question.name for question in searchQuestions($viewValue) | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" typeahead-on-select="goToQuestion($item, $model)" class="form-control" aria-describedby="basic-addon2">
+   <a class="input-group-addon button" id="basic-addon2" href="" ng-click="onSubmitSearch()">หาคําตอบ</a>
+  </div>
+
+   <script type="text/ng-template" id="customTemplate.html">
+     <a>
+        <b class="yellow">ชื่อ:</b>
+       <span ng-bind-html="match.model._source.name | typeaheadHighlight:query"></span>
+       -
+       <b class="yellow">หัวข้อ:</b>
+       <span ng-bind-html="match.model._source.topic | typeaheadHighlight:query"></span> -
+       <b class="yellow">โหวต:</b>
+       <span ng-bind-html="match.model._source.votes_count | typeaheadHighlight:query"></span> -
+       <b class="yellow">การช่วยเหลือ:</b>
+       <span ng-bind-html="match.model._source.answers_count | typeaheadHighlight:query"></span> -
+       <b class="yellow">ได้คําตอบแล้ว:</b>
+       <span ng-bind-html="match.model._source.answered | typeaheadHighlight:query"></span>
+     </a>
+   </script>
+
+   <div class="row">
+     <div class="col-md-2">
+        <table class="table table-hover">
+           <h2 style="text-align: center; font-size: 2.4em; ">หัวข้อ</h2>
+           <tbody>
+                 <tr ng-repeat="topic in topics" class="nav nav-stacked" ng-class="{true: 'active', false: ''}[topic.active]">
+                     <td>
+           <a class="mainTopic" ng-click="selectTopic(topic.title); getQuestions(null,null,null,topic.title);" href=''>
+                     <i class="fa {{topic.icon}}" style="font-size: 0.7em;"></i><br/>
+                         {{topic.title}}
+                 </a>
+                     </td>
+                 </tr>
+         </tbody>
+      </table>
+
+      <div id="popTags">
+         <h2 style="text-align: center; font-size: 2.4em; ">pop tags</h2>
+          <table class="btn-group table table-hover">
+              <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Left'">Left</label>
+              <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Middle'">Middle</label>
+              <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Right'">Right</label>
+          </table>
+          
+      </div>
      </div>
-     </div>
+   <tabset class="col-md-8">
+      <!-- <h2>มีคนต้องการความช่วยเหลือ มาช่วยกับตอบปัญหาใจกัน!</h2> -->
+         <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled" ng-click="getQuestions(tab.category, tab.orderBy, tab.reverse);">
+         </tab>
 
-     <div ng-repeat="result in searchResults">
-         <p>{{result}}</p>
-     </div>
+       <div class="clearfix">
+       </div>
 
-     <!-- <div class='container-fluid' ng-controller="TypeaheadCtrl"> -->
+     <div class="questions row" ng-model="questions">
+      <div class="col-md-12" ng-repeat="question in questions" ng-class="questionAni">
+        <div ng-mouseover="onQuestion='animated swing'" ng-mouseleave="onQuestion=''" class="panel panel-default animated fadeIn">
+          <!-- <div class="panel-default"> -->
 
+            <div class="topPanel">
 
+              <div class="panel qStatusPanel">
+                  <!-- <p>ได้คําตอบแล้ว {{question.answered}}</p> -->
+                  <p ng-show="{{question.answered}}">ได้ความช่วยเหลือจากเพื่อนใจเแล้ว <i class="fa fa-smile-o blue" ng-class="onQuestion"></i></p>
+                  <p class="bigger" ng-hide="{{question.answered}}">ยังไม่ได้คําตอบที่โดนใจ <i class="fa fa-frown-o blue" ng-class="onQuestion"></i></p>
+              </div>
 
-         <h4>Asynchronous results</h4>
-         <pre>Model: {{asyncSelected | json}}</pre>
-         <input type="text" ng-model="asyncSelected" placeholder="Locations loaded via $http" typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" class="form-control" typeahead-on-select="onSelect($item)" typeahead-template-url="customTemplate.html">
-         <p>{{address}}</p>
-         <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
-
-             <h4>Custom templates for results</h4>
-             <pre>Model: {{customSelected | json}}</pre>
-             <input type="text" ng-model="customSelected" placeholder="Custom template" typeahead="state as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" class="form-control">
-         </div>
-
-    <!--      <h4>Custom templates for results</h4>
-         <pre>Model: {{customSelected | json}}</pre>
-         <input type="text" ng-model="customSelected" placeholder="Custom template" typeahead="state as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" class="form-control"> -->
-     <!-- </div> -->
-     <script type="text/ng-template" id="customTemplate.html">
-       <a>
-           <span bind-html-unsafe="match.label.obj.name | typeaheadHighlight:query"></span>
-       </a>
-     </script>
-
-     <div class="row">
-       <h2 class="col-md-12">มีคนต้องการความช่วยเหลือ มาช่วยกับตอบปัญหาใจกัน!</h2>
-     </div>
-     <tabset>
-       <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled" ng-click="order(tab.orderBy, tab.reverse)">
-  </tab>
-
-      <div class="questions row container" ng-model="questions">
-
-        <div class="col-md-6" ng-repeat="question in questions">
-          <div class="question panel panel-default">
-            <div class="panel-default">
-              <h2>{{question.name}}</h2>
-              <hr/> 
+            <div style="width: 170px;">
+              <i class="fa fa-tag"></i>
+              <a class="topic" ng-href="/topics/{{question.topic}}">{{question.topic}} -</a>
+              <a style="display:inline;" ng-repeat="tag in question.tags" ng-href="/topics/{{tag}}"><small>{{tag+" "}}</small></a> 
             </div>
+            <h2 style='font-size: 2.2em;'>{{question.name}}</h2>
+          <a style="float:right;"href="" ng-click="isCollapsed = !isCollapsed">...อ่านต่อ</a>
+            </div>
+
             <div class="clearfix">
             </div>
-          <div class="panel questionPanel inline">
-            <label>กําลังใจ {{question.jais}}</label>
-            <p>ความช่วยเหลือจากเพื่อนใจ {{question.answers.length}}</p>
-            <p>มีคําตอบ {{question.answered}}</p>
-            <p>votes: {{question.votes}}</p>
-          </div>
 
+
+          <div class="questionContent" collapse="isCollapsed" >
             <img class="questionImg img-responsive" ng-src="{{question.coverImg}}" />
             <p>{{question.body}}</p>
-            <p>tags: {{question.tags}}</p>
-            <p>{{$element}}</p>
-            <div class="clearfix">
+            <a ng-mouseover="shake='animated rubberBand'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" href="/questions/{{question._id}}" role="button"><i ng-class="shake" class="fa fa-heart red"></i> ให้ความช่วยเหลือ</a>
+            <br/>
+            <li style="text-align: center;">
+              <a ng-href="/questions/{{question._id}}">ดูทั่งหมด</a>
+            </li>
+          </div>
+
+          <div class="clearfix">
+          </div>
+
+          <div class="questionPanel inline row">
+
+            <div class="userPanel col-md-4">
+              <div class="row" style="border-right: 1px solid #dddddd;">
+                <div class="col-md-4 no-gutter" style="margin: 15px 0;">
+                  <img class="userIcon" ng-src="{{question.owner.coverimg}}" />
+                </div>
+                <div class="col-md-8 no-gutter" style="margin: 15px 0; text-align: center; font-size:0.9em;">
+                  <a ng-href="/users/{{question.owner._ownerId}}"><small>{{question.owner.username}}</small></a><br/>
+                  <small>{{question.created | timeAgo}}</small><br/>
+                  <!-- <small>{{question.created | date:'MMM d, y h:mm a'}}</small> -->
+                </div>
+              </div>
             </div>
 
-            <div>
-              <ul class="nav nav-pills">
-                <li>
-                  <a ng-click="">แชร์</a>
-                </li>
-                <li>
-                  <a ng-click="">เก็บใจ</a>
-                </li>
-                <li>
-                  <a ng-href="/questions/{{question._id}}">ช่วยเพื่อนใจ</a>
-                </li>
-                <li>
-                  <a ng-click="addJai(question._id, $element)"> ให้ใจ</a>
-                </li>
-              </ul>
+            <div class="col-md-8">
+            <div class="row" style="text-align:center;">
+              <p class="col-lg-3 col-sm-6 col-xs-12">ความช่วยเหลือ<br/>
+              <strong class="blue bigger"> {{question.answers_count | thousandSuffix}}</strong></p>
+              <p class="col-lg-3 col-sm-6 col-xs-12">ได้ความสําคัญ<br/>
+              <strong class="blue bigger"> {{question.votes_count | thousandSuffix}}</strong></p>
+              <p class="col-lg-3 col-sm-6 col-xs-12">ผู้เข้าชม<br/>
+              <strong class="blue bigger"> {{question.views | thousandSuffix}}</strong></p>
+              <p class="col-lg-3 col-sm-6 col-xs-12">ได้กําลังใจ <br/>
+              <strong class="blue bigger">{{question.jais_count | thousandSuffix}}</strong></p>
             </div>
             </div>
+          </div>
 
-        </div>
-        
+          <div>
+            <ul class="nav nav-pills">
+              <li>
+                <a ng-click=""><i class="fa fa-share"></i> แชร์</a>
+              </li>
+              <li>
+                <a ng-click=""><i class="fa fa-gratipay"></i> เก็บใจ</a>
+              </li>
+              <li>
+                <a ng-href="/questions/{{question._id}}"><i class="fa fa-child"></i> ช่วยเพื่อน</a>
+              </li>
+              <li>
+                <a ng-click="addJai(question._id, $element)"><i class="fa fa-gift"></i> ให้กําลังใจ</a>
+              </li>
+              <li>
+                <a ng-click="downVote(question._id, $element)"><i class="fa fa-thumbs-down"></i> โหวตลง</a>
+              </li>
+              <li>
+                <a ng-click="upVote(question._id, $element)"><i class="fa fa-thumbs-up"></i> โหวตขึ้น</a>
+              </li>
+            </ul>
+          </div>
+        <!-- </div> -->
 
       </div>
+    </div>
+    </div>
+    <a class="btn btn-default" style="display:block">ดูเพิ่ม</a>
+    </tabset>
 
+    <div class="col-md-2">
+      <div ng-include="'components/sidebar/rightSidebar.html'"></div>
+    </div>
 
-     </tabset>
-
-
-     
+   </div>
+        
 </div>

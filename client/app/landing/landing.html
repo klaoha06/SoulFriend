@@ -8,7 +8,7 @@
 <div id="MainCarousel">
 <div style="position: absolute; left: 50%;">
     <div id="mainTitle" style="position: relative; left: -50%;">
-      <h1>เพื่อนใจ</h1>
+      <h1 class="animated fadeIn">เพื่อนใจ</h1>
     </div>
 </div>
   <carousel interval="myInterval">
@@ -16,7 +16,7 @@
       <!-- <img ng-src="{{slide.image}}" style="margin:auto;"> -->
         <h1 class="mainLead">{{slide.lead}}</h1>
       <div class="carousel-button-main">
-        <a ng-href="{{slide.link}}" class="btn btn-success">{{slide.text}}</a>
+        <a ng-href="{{slide.link}}" class="btn btn-success btn-lg">{{slide.text}}</a>
       </div>
     </slide>
   </carousel>
@@ -51,7 +51,7 @@
 </div> -->
 
 <a id="bigFB" class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
-  <i class="fa fa-facebook"></i> Connect with Facebook
+  <i class="fa fa-facebook" style="color:white;"></i> Connect with Facebook
 </a>
   
 </div>

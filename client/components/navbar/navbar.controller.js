@@ -17,7 +17,7 @@ angular.module('puanJaiApp')
     $scope.logout = function() {
       Auth.logout();
       $location.path('/');
-      // window.location.reload();
+      window.location.reload();
     };
 
     $scope.isActive = function(route) {

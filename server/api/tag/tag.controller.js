@@ -14,10 +14,19 @@ var Tag = require('./tag.model');
 
 // Get list of tags
 exports.index = function(req, res) {
-  Tag.find(function (err, tags) {
+  Tag.find({limit:15, sort:{}},function (err, tags) {
     if(err) { return handleError(res, err); }
     return res.json(200, tags);
   });
+};
+
+// Text Search
+exports.search = function(req, res) {
+  var q = req.query.userInput.toLowerCase();
+  Tag.find({'name': {'$regex': q}}).sort('popular_count').limit(5).select('name').exec(function(err, results){
+      if(err) { return handleError(res, err); }
+        return res.status(200).json(results)
+  })
 };
 
 // Get a single tag

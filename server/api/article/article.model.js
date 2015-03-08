@@ -20,7 +20,9 @@ var ArticleSchema = new Schema({
   coverImg: String,
   likes: { type: Number, default: 0},
   views: { type: Number, default: 0},
+  share_count: { type: Number, default: 0},
   comments: Array,
+  comments_count: { type: Number, default: 0},
   tag_ids: Array,
 });
 

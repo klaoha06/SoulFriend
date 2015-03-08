@@ -6,7 +6,10 @@ angular.module('puanJaiApp', [
   'ngSanitize',
   'btford.socket-io',
   'ui.router',
-  'ui.bootstrap'])
+  'ui.bootstrap',
+  'timeAgo',
+  'textAngular',
+  'ngTagsInput'])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
       .otherwise('/');
@@ -50,9 +53,10 @@ angular.module('puanJaiApp', [
         }
       });
     });
+    $rootScope.$on("$routeChangeSuccess", function (event, currentRoute, previousRoute) {
 
-    // $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-    //    debugger;
-    // });
+        $window.scrollTo(0, 0);
+
+    });
 
   });

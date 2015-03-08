@@ -1,3 +1,7 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 @font-face {
     font-family: font1;
     src:url(/assets/fonts/1.ttf);
@@ -55,6 +59,62 @@
     font-family: font6;
     font-size:18px;
 }
+
+p {
+  word-wrap: break-word;
+}
+
+i {
+  color:#FFF577; text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
+}
+
+img {
+    -webkit-box-shadow: 1px 2px 3px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 2px 3px 1px rgba(0,0,0,0.75);
+    box-shadow: 1px 2px 3px 1px rgba(0,0,0,0.75);
+}
+
+mark {
+  border: 1px dotted #dddddd;
+  -webkit-box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
+  box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.background-blue {
+  background: aliceblue;
+}
+
+.background-yellow {
+  background: #FFF9AA;
+}
+
+.background-white {
+  background: white;
+}
+
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > th {
+  background-color: aliceblue;
+  cursor: pointer;
+}
+
+.table-hover > tbody > tr > td,
+.table-hover > thead > tr > th,
+.table-hover > tbody > tr > th,
+ {
+  text-align: center;
+}
+
+.table-hover > thead > tr > th
+ {
+  font-size: 1.1em;
+}
+
 
 .thing-form {
     margin: 20px 0;
@@ -163,7 +223,7 @@ opacity: 1;
 
 .panel
 {
-    position: relative;
+    /*position: relative;*/
     -webkit-box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
     box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
@@ -261,16 +321,48 @@ opacity: 1;
 }
 
 .questionPanel {
-  position: absolute;
-  min-height: 50px;
-  top: 40px;
-  right: -10px;
-  padding:10px;
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  background-color: #FFF9AA;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.qStatusPanel {
+    position: absolute;
+    top: 10px;
+    right: 7px;
+    padding:10px;
+    background-color: #FFF9AA;
+    border: 0.5px solid #dddddd;
+}
+
+.qStatusPanel p {
+  margin: 0;
 }
 
 .questionPanel p {
   margin-top: 10px;
   display:inline;
+}
+
+.nav-pills {
+  display:table;
+  margin: 0 auto;
+}
+
+.nav-pills > li > a {
+  border-radius: 0;
+  margin: 0 10px;
+}
+
+.nav-tabs {
+  border: 0;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  border: 0;
+  font-size: 1.2em;
 }
 
 .questionImg {
@@ -283,8 +375,46 @@ opacity: 1;
   padding-top: 20px;
 }
 
+.blue {
+  color:#428bca;
+}
+
+.yellow {
+  color:#FFF577;
+}
+
+.red {
+  color:#EF6879;
+}
+
+.green {
+  color:rgb(102, 195, 102);
+}
+
+.bigger {
+  font-size: 1.2em;
+}
+
+.bol {
+  color:#428bca;
+}
 .question {
-  height: 700px;
+  /*height: 700px;*/
+}
+
+.topPanel {
+  padding:15px;
+}
+
+.userIcon {
+  display: block;
+  margin: 0 auto;
+  border-radius: 4px;
+   height: 45px; 
+   width:45px;     
+  -webkit-box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
+    box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
 }
 
 
@@ -292,8 +422,52 @@ opacity: 1;
   margin:20px;
 }
 
+.questionContent {
+  padding:10px;
+}
+
+.questionContent p {
+  padding:20px;
+}
+
+.questionHelpBtn {
+  display: block;
+  width:200px;
+  margin: 10px auto;
+  font-size: 1.5em;
+  /*background-color: #FFF9AA;*/
+  color: #428bca;
+  font-weight: bold;
+  -webkit-box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
+  box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
+  background: -webkit-linear-gradient(white, #FFF9AA); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(white, #FFF9AA); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(white, #FFF9AA); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(white, #FFF9AA); /* Standard syntax */
+}
+
+.userPanel {
+  /*padding: 10px;*/
+}
+
 #findAnswer {
   margin: 20px;
 }
 
+#questionSearch{
+  margin: 40px;
+}
+
+.selectedTopic {
+  font-size: 2em;
+  /*background-color: red;*/
+}
+.mainTopic{
+  text-align: center; display:block; margin: 0 auto; width:100%; height:100%; font-size: 1.2em;
+}
+
+/*.mainTopic.active{
+  text-align: center; display:block; margin: 0 auto; width:100%; height:100%; font-size: 1.2em;
+}*/
 

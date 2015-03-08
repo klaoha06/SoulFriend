@@ -14,10 +14,28 @@ var Article = require('./article.model');
 
 // Get list of articles
 exports.index = function(req, res) {
-  Article.find({},{},{limit: 30},function (err, articles) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, articles);
-  });
+  console.log(req.query.category)
+  // console.log(req.query.catagory)
+  switch(req.query.category){
+    case 'popular':
+      Article.find({},{},{limit:15, sort:{views: 1}},function (err, articles) {
+        if(err) { return handleError(res, err); }
+        return res.status(200).json(articles);
+      });
+      break;
+    case 'newest':
+      Article.find({},{},{limit:30, sort:{created: -1, views: 1}},function (err, articles) {
+        if(err) { return handleError(res, err); }
+        return res.status(200).json(articles);
+      });
+      break;
+    default:
+      Article.find({},{},{limit: 30, sort:{views: 1}},function (err, articles) {
+        if(err) { return handleError(res, err); }
+        return res.status(200).json(articles);
+      });
+  }
+
 };
 
 // Get a single article
@@ -25,7 +43,7 @@ exports.show = function(req, res) {
   Article.findById(req.params.id, function (err, article) {
     if(err) { return handleError(res, err); }
     if(!article) { return res.send(404); }
-    return res.json(article);
+    return res.status(200).json(article);
   });
 };
 

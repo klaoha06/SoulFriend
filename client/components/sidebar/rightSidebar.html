@@ -1,0 +1,27 @@
+<div ng-controller="RightCtrl">
+	<div id="quoteOfTheDay">
+		<blockquote class="blockquote-reverse">
+		  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+		</blockquote>
+		<footer style="text-align: right;">
+			By Supakorn L.
+		</footer>
+	</div>
+	
+	<div id="popArticles">
+		<h3 style="text-align: center;">บทความที่น่าสนใจ</h3>
+		<div id="articleList" class="row">
+		  <div class="no-gutter col-sm-12" ng-repeat="article in articles">
+		    <div class="mythumbnail" article="{{article.coverImg}}" id="{{article._id}}" ng-click="goToArticle(article.id)">
+		      <div class="caption">
+		        <h3>{{article.name}}</h3>
+		        <p>{{article.summary}}</p>
+		        <p><a href="#" class="btn btn-primary" role="button" ng-click="openModal()">Comment</a> <a href="#" class="btn btn-default" role="button">Read More</a></p>
+		      </div>
+		    </div>
+		  </div>
+		</div> 
+	</div>
+
+
+</div>

@@ -11,6 +11,7 @@ var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
 var Question = require('../api/question/question.model');
 var Article = require('../api/article/article.model');
+var Tag = require('../api/tag/tag.model');
 
 
 // Seeds
@@ -35,6 +36,38 @@ Thing.find({}).remove(function() {
     info : 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators'
   });
 });
+
+Tag.find().remove(function(){
+  Tag.create({
+    name: 'hurtroom',
+    info: 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators',
+    questions_id: [],
+    questions_count: 112,
+    articles_id: [],
+    articles_count: 123,
+    votes_count: 23,
+    views_count: 102
+  }, {
+    name: 'เบื่อความรัก',
+    info: 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators',
+    questions_id: [],
+    questions_count: 2131,
+    articles_id: [],
+    articles_count: 1,
+    votes_count: 3,
+    views_count: 3213
+  }, {
+    name: 'เบื่อชีวิต',
+    info: 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators',
+    questions_id: [],
+    questions_count: 3,
+    articles_id: [],
+    articles_count: 5,
+    votes_count: 8,
+    views_count: 9
+  }
+  )
+})
 
 User.find({}).remove(function() {
   for (var c = 0; c < 10; c++) {
@@ -88,6 +121,7 @@ User.find({}).remove(function() {
               summary: Faker.lorem.sentences(),
               body: Faker.lorem.paragraphs() + Faker.lorem.paragraphs(),
               coverImg: Faker.image.nature(),
+              tags: ['ความรัก', 'ครอบครัว'],
               owner: {
                 _ownerId: users[i]._id,
                 username: users[i].username,
@@ -98,19 +132,45 @@ User.find({}).remove(function() {
           })
           Question.find({}).remove(function(){        
             Question.create({
-              name: 'สวัสดี|ครับ| |ผม|ชื่อ|กร|ครับ| |ยิน|ดี|ที่|ได้|รู้|จัก',
+              searchname: 'สวัสดี|ครับ| |ผม|ชื่อ|กร|ครับ| |ยิน|ดี|ที่|ได้|รู้|จัก',
+              name: 'สวัสดีครับ ผมชื่อกรครับยินดีที่ได้รู้จัก',
               body: Faker.lorem.paragraph(),
-              coverImg: Faker.image.nature(),
-              jais: Faker.random.number(100),
-              votes: Faker.random.number(100),
+              votes: ['yoyoyo','yoyo'],
+              votes_count: Faker.random.number(100),
+              jais_count: Faker.random.number(100),
+              answers_count: Faker.random.number(10),
               views: Faker.random.number(100),
+              tags: ['เพื่อน', 'การงาน'],
+              topic: 'ครอบครัว',
               owner: {
                 _ownerId: users[i]._id,
                 username: users[i].username,
-                summary: users[i].summary,
-                role: users[i].role
-              }
+                role: users[i].role,
+                coverimg: Faker.image.avatar()
+              },
+              created: Faker.date.recent()
             })
+
+            Question.create({
+              searchname: 'ผ|มอ|ยา|กทํา|เว็บ|ให้|เสร็จ| |ผม|ชื่อ|กร|ครับ',
+              name: 'ผมอยากทําเว็บให้เสร็จ ผมชื่อกรครับ',
+              body: Faker.lorem.paragraph(),
+              votes: ['yoyoyo','yoyo'],
+              votes_count: Faker.random.number(100),
+              jais_count: Faker.random.number(100),
+              answers_count: Faker.random.number(10),
+              views: Faker.random.number(100),
+              tags: ['ธุรกิจ', 'ครอบครัว'],
+              topic: 'การงาน',
+              owner: {
+                _ownerId: users[i]._id,
+                username: users[i].username,
+                role: users[i].role,
+                coverimg: Faker.image.avatar()
+              },
+              created: Faker.date.past()
+            })
+
           })  
         }
       }
