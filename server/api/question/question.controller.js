@@ -85,15 +85,28 @@ exports.show = function(req, res) {
 
 // Creates a new thing in the DB.
 exports.create = function(req, res) {
-  var incomingTags = req.body.tags;
-  var join = Promise.join;
-  
+  var incomingQuestion = req.body.newQuestion;
+  var incomingTags = req.body.newTags;
+  // console.log(incomingQuestion)
+  // console.log(incomingTags)
+  var promise = Tag.create(incomingTags);
+  promise.then(function(){
+    var newTags = arguments;
+    
+    // Question.create(req.body, function(err, thing) {
+    //   if(err) { return handleError(res, err); }
+    //   return res.json(201, thing);
+    // });
 
-  _(incomingTags).forEach(function(tag){
-    if (!_.has(tag, '_id')) {
 
-    }
   })
+  // var join = Promise.join;
+  // var notCreatedTags;
+  // _(incomingTags).forEach(function(tag){
+  //   if (!_.has(tag, '_id')) {
+  //     notCreatedTags.push(tag)
+  //   }
+  // })
 
   // var tags = req.body.tags
   // var promisifiedMap = Promise.promisify(_.map)

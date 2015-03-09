@@ -6,6 +6,8 @@ var elmongo = require('elmongo');
 var Schema = mongoose.Schema;
 var timeStamps = require('mongoose-times');
 
+var tagShortHand = new Schema({ name: 'string', _id: { type: Schema.Types.ObjectId }})
+
 var QuestionSchema = new Schema({
   owner: {
   	_ownerId: { type: Schema.Types.ObjectId },
@@ -27,7 +29,7 @@ var QuestionSchema = new Schema({
   likedAns: { type: Number, default: 0},
   answers: Array,
   answers_count: { type: Number, default: 0},
-  tags: Array,
+  tags: [tagShortHand],
   topic: String
 });
 

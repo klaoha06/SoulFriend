@@ -110,6 +110,12 @@ angular.module('puanJaiApp')
     // On Submit
     $scope.onQuestionFormSubmit = function(){
       if (Auth.isLoggedIn()) {
+            // var partitionedTags = _.partition.($scope.tags, function(t){
+            //   if (!_.has(t, '_id')) {
+            //     return t;
+            //   }
+            // });
+            // debugger;
             var newQuestion = { 
               owner: {
                 _ownerId: user._id,
@@ -134,9 +140,17 @@ angular.module('puanJaiApp')
               tags: $scope.tags,
               topic: $scope.selectedTopic
             };
-            console.log(newQuestion);
+            // console.log(newQuestion);
+            var newTags = [];
+
+
+            //   _(newQuestion.tags).forEach(function(tag){
+            //     if (!_.has(tag, '_id')) {
+            //       newTags.push(tag);
+            //     }
+            //   });
             // debugger;
-            $http.post('/api/questions', newQuestion).success(function(res){
+            $http.post('/api/questions', {newQuestion: newQuestion, newTags: newTags}).success(function(res){
               console.log(res);
             });
             // $scope.textEditorInput = '';

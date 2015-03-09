@@ -88,6 +88,7 @@ angular.module('puanJaiApp')
     $scope.selectedTopic = t || $scope.selectedTopic;
     $http.get('/api/questions',{ params: {category: category, topic: $scope.selectedTopic}}).success(function(questions){
       $scope.questions = questions;
+      console.log(questions);
           socket.syncUpdates('question', $scope.questions, function(e, item, array){
             $scope.questions = orderBy(array, o, r);
           });
