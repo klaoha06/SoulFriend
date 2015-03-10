@@ -23,20 +23,24 @@
 
    <script type="text/ng-template" id="customTemplate.html">
      <a>
-        <b class="yellow">ชื่อ:</b>
+      <b class="yellow">ชื่อ:</b>
+      <span ng-bind-html="match.model._score | number:2"></span>
+      -
+      <b class="yellow">ชื่อ:</b>
        <span ng-bind-html="match.model._source.name | typeaheadHighlight:query"></span>
        -
-       <b class="yellow">หัวข้อ:</b>
-       <span ng-bind-html="match.model._source.topic | typeaheadHighlight:query"></span> -
-       <b class="yellow">โหวต:</b>
-       <span ng-bind-html="match.model._source.votes_count | typeaheadHighlight:query"></span> -
        <b class="yellow">การช่วยเหลือ:</b>
-       <span ng-bind-html="match.model._source.answers_count | typeaheadHighlight:query"></span> -
-       <b class="yellow">ได้คําตอบแล้ว:</b>
-       <span ng-bind-html="match.model._source.answered | typeaheadHighlight:query"></span>
+       <span ng-bind-html="match.model._source.answers_count | typeaheadHighlight:query"></span>
      </a>
    </script>
-
+<!--         -
+       <b class="yellow">ได้คําตอบแล้ว:</b>
+       <span ng-bind-html="match.model._source.answered | typeaheadHighlight:query"></span> -->
+       <!-- <b class="yellow">โหวต:</b>
+       <span ng-bind-html="match.model._source.votes_count | typeaheadHighlight:query"></span> - -->
+<!--        <b class="yellow">หัวข้อ:</b>
+       <span ng-bind-html="match.model._source.topic | typeaheadHighlight:query"></span> - -->
+   
    <div class="row">
      <div class="col-md-2">
         <table class="table table-hover">
@@ -87,7 +91,7 @@
             <div style="width: 170px;">
               <i class="fa fa-tag"></i>
               <a class="topic" ng-href="/topics/{{question.topic}}">{{question.topic}} -</a>
-              <a style="display:inline;" ng-repeat="tag in question.tags" ng-href="/topics/{{tag}}"><small>{{tag+" "}}</small></a> 
+              <a style="display:inline;" ng-repeat="tag in question.tags" ng-href="/topics/{{tag.name}}"><small>{{tag.name+" "}}</small></a> 
             </div>
             <h2 style='font-size: 2.2em;'>{{question.name}}</h2>
           <a style="float:right;"href="" ng-click="isCollapsed = !isCollapsed">...อ่านต่อ</a>

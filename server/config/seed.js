@@ -121,7 +121,7 @@ User.find({}).remove(function() {
               summary: Faker.lorem.sentences(),
               body: Faker.lorem.paragraphs() + Faker.lorem.paragraphs(),
               coverImg: Faker.image.nature(),
-              tags: ['ความรัก', 'ครอบครัว'],
+              tags: [{name:'ความรัก'},{name: 'ครอบครัว'}],
               owner: {
                 _ownerId: users[i]._id,
                 username: users[i].username,
@@ -140,7 +140,7 @@ User.find({}).remove(function() {
               jais_count: Faker.random.number(100),
               answers_count: Faker.random.number(10),
               views: Faker.random.number(100),
-              tags: ['เพื่อน', 'การงาน'],
+              tags: [{name:'เพื่อน'},{name: 'การงาน'}],
               topic: 'ครอบครัว',
               owner: {
                 _ownerId: users[i]._id,
@@ -160,7 +160,7 @@ User.find({}).remove(function() {
               jais_count: Faker.random.number(100),
               answers_count: Faker.random.number(10),
               views: Faker.random.number(100),
-              tags: ['ธุรกิจ', 'ครอบครัว'],
+              tags: [{name:'ธุรกิจ'},{name:'ครอบครัว'}],
               topic: 'การงาน',
               owner: {
                 _ownerId: users[i]._id,

@@ -2,12 +2,12 @@
 
 var promise = require('bluebird');
 var timeStamps = require('mongoose-times');
-var elmongo = require('elmongo');
+var findOrCreate = require('mongoose-findorcreate')
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var TagSchema = new Schema({
-  name: { type: String, autocomplete: true },
+  name: { type: String, autocomplete: true},
   info: String,
   questions_id: Array,
   questions_count: { type: Number, default: 0},
@@ -18,14 +18,10 @@ var TagSchema = new Schema({
 });
 
 TagSchema.plugin(timeStamps);
-TagSchema.plugin(elmongo);
+TagSchema.plugin(findOrCreate);
 
 
 var Tag = mongoose.model('Tag', TagSchema);
-
-Tag.sync(function (err, numSynced) {
-  console.log('number of tags synced:', numSynced)
-})
 
 promise.promisifyAll(Tag);
 promise.promisifyAll(Tag.prototype);

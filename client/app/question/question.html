@@ -72,13 +72,14 @@
 						<div style="margin: 0 10px;">
 							<i class="fa fa-tag"></i>
 							<a class="topic" ng-href="/topics/{{question.topic}}">{{question.topic}} -</a>
-							<a style="display:inline;" ng-repeat="tag in question.tags" ng-href="/topics/{{tag}}">{{tag+" "}}</a>
+							<a style="display:inline;" ng-repeat="tag in question.tags" ng-href="/topics/{{tag.name}}">{{tag.name+" "}}</a>
 						</div>
 					</div>
 
 					<div class="questionContent">
 						<img ng-cloak ng-show="question.coverImg" class="questionImg img-responsive" ng-src="{{question.coverImg}}" />
-						<p>{{question.body}}</p>
+						<!-- <p>{{question.body}}</p> -->
+						<div ng-bind-html="question.body" style="word-wrap: break-word; padding:25px;"></div>
 						<div style="text-align: right;">							
 							<a ng-click="" style="margin: 15px;"><i class="fa fa-ban"></i> แจ้งความไม่เหมาะสม</a>
 							<a ng-click="" style="margin: 15px;"><i class="fa fa-comment"></i> ให้ความคิดเห็น</a>

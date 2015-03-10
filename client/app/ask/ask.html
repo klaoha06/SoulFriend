@@ -10,20 +10,20 @@
 			</textarea>
 			<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[searchInput.length > 150]">{{150 - searchInput.length}}</span> อักขระ</span>
 			</div>
-			<div ng-if="searchResults.hits.length > 0">
+			<div ng-if="searchResults.length > 0">
 				<h2 class="text-center">คําถามที่คลายกันที่อาจมีคําตอบแล้ว</h2>
 				<hr style="width:70%;"/>
 			    <table class="table table-hover animated fadeIn">
 			    	<div class="row" style="text-align: center; margin-right: 0; margin-left: 0;">
 			    		<div class="col-md-3 text-left bigger blue">ความใกล้เคียง</div>
 			    		<div class="col-md-6 text-center bigger blue">คําถาม</div>
-			    		<div class="col-md-3 text-right bigger blue">คูาตอบ</div>
+			    		<div class="col-md-3 text-right bigger blue">คําตอบ</div>
 			    	</div>
 			         <tbody>
-			           <tr ng-repeat="result in searchResults.hits | limitTo:5" ng-class="{true: 'background-yellow', false: ''}[$even]" style="text-align: center;">
+			           <tr ng-repeat="result in searchResults | limitTo:5" ng-class="{true: 'background-yellow', false: ''}[$even]" style="text-align: center;">
 				             <td>{{result._score | number:2}}</td>
 				             <td>{{result._source.name | limitTo:100}}</td>
-				             <td>{{result._source.votes_count}}</td>
+				             <td>{{result._source.answers_count}}</td>
 			           </tr>
 			         </tbody>
 			       </table>
