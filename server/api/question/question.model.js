@@ -2,9 +2,9 @@
 
 var promise = require('bluebird');
 var mongoose = require('mongoose');
-var elmongo = require('elmongo');
 var Schema = mongoose.Schema;
 var timeStamps = require('mongoose-times');
+var mongoosastic = require('mongoosastic');
 
 var QuestionSchema = new Schema({
   owner: {
@@ -13,8 +13,8 @@ var QuestionSchema = new Schema({
   	role: String,
     coverimg: String
   },
-  searchname: { type: Array, autocomplete: true },
-  name: String,
+  searchname: { type: Array, es_indexed:true },
+  name: { type: String, es_indexed:true },
   body: String,
   jais: Array,
   jais_count: { type: Number, default: 0},
@@ -26,21 +26,17 @@ var QuestionSchema = new Schema({
   answered: { type: Boolean, default: false},
   likedAns: { type: Number, default: 0},
   answers: Array,
-  answers_count: { type: Number, default: 0},
+  answers_count: { type: Number, default: 0, es_indexed: true},
   tags: Array,
   topic: String
 });
 
-
 QuestionSchema.plugin(timeStamps);
-QuestionSchema.plugin(elmongo);
-  
+QuestionSchema.plugin(mongoosastic)
+
 var Question = mongoose.model('Question', QuestionSchema)
 
-
-Question.sync(function (err, numSynced) {
-  console.log('number of cats synced:', numSynced)
-})
+Question.synchronize();
 
 promise.promisifyAll(Question);
 promise.promisifyAll(Question.prototype);

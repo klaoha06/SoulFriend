@@ -68,7 +68,8 @@ angular.module('puanJaiApp')
       if (input){
         $cookieStore.put('questionTitle', input);
         $http.get('/api/questions/search', { params: {userInput: input}}).success(function(result) {
-          $scope.searchResults = orderBy(result, '_score', true);
+          // console.log(result.hits.hits);
+          $scope.searchResults = orderBy(result.hits.hits, '_score', true);
         });
       }
     });

@@ -103,7 +103,7 @@ angular.module('puanJaiApp')
     $scope.searchQuestions = function(input) {
       $scope.userInput = input;
       return $http.get('/api/questions/search', { params: {userInput: input}}).then(function(response){
-        return response.data.hits.map(function(item){
+        return response.data.hits.hits.map(function(item){
           return item;
         });
       });
@@ -111,7 +111,6 @@ angular.module('puanJaiApp')
 
     $scope.onSubmitSearch = function(){
       // not done
-      console.log($scope.userInput);
       $location.path('/search/' + $scope.userInput);
     };
 

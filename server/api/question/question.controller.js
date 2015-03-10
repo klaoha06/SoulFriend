@@ -66,7 +66,7 @@ exports.index = function(req, res) {
 
 // Text Search
 exports.search = function(req, res) {
-  Question.search({ query: wordcut.cut(req.query.userInput), fuzziness: 0.5, fields: ['searchname'], pageSize: 10 }, function (err, results) {
+  Question.search({ query_string:{query: wordcut.cut(req.query.userInput) }}, function (err, results) {
     if(err) { return handleError(res, err); }
       return res.status(200).json(results)
   })
@@ -83,9 +83,6 @@ exports.show = function(req, res) {
 
 // Creates a new Question in the DB.
 exports.create = function(req, res) {
-  Question.sync(function (err, numSynced) {
-    // console.log('number of cats synced:', numSynced)
-  })
   var newTags = req.body.newTags;
   var newQuestion = req.body.newQuestion;
   if (newTags.length >= 1) {
@@ -96,12 +93,14 @@ exports.create = function(req, res) {
       }
     });
     promise.then(function(){
+      newQuestion.searchname = wordcut.cut(newQuestion.name);
       Question.create(newQuestion, function(err, question) {
         if(err) { return handleError(res, err); }
         return res.status(200).json(question)
       });
     })
   } else {
+    newQuestion.searchname = wordcut.cut(newQuestion.name);
     Question.create(newQuestion, function(err, question) {
       if(err) { return handleError(res, err); }
       return res.status(200).json(question)

@@ -2,7 +2,6 @@
 
 var promise = require('bluebird');
 var timeStamps = require('mongoose-times');
-var elmongo = require('elmongo');
 var findOrCreate = require('mongoose-findorcreate')
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
@@ -20,14 +19,9 @@ var TagSchema = new Schema({
 
 TagSchema.plugin(timeStamps);
 TagSchema.plugin(findOrCreate);
-TagSchema.plugin(elmongo);
 
 
 var Tag = mongoose.model('Tag', TagSchema);
-
-Tag.sync(function (err, numSynced) {
-  console.log('number of tags synced:', numSynced)
-})
 
 promise.promisifyAll(Tag);
 promise.promisifyAll(Tag.prototype);
