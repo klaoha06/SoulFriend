@@ -85,6 +85,24 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   var newTags = req.body.newTags;
   var newQuestion = req.body.newQuestion;
+  function createNewQuestion(nq) {
+    Question.create(nq, function(err, question) {
+      if(err) { return handleError(res, err); }
+        for (var i = 0; i < question.tags.length; i++) {
+          Tag.findById(question.tags[i]._id, function (err, t){
+              t.questions_count++;
+              t.popular_count++;
+              t.questions_id.push(question._id);
+              t.save(function(err, result){
+                if (err) { return handleError(res, err); }
+                // console.log(result);
+              })
+          })
+        }
+      return res.status(200).json(question)
+    });
+  }
+  newQuestion.searchname = wordcut.cut(newQuestion.name);
   if (newTags.length >= 1) {
     var promise = Tag.create(newTags, function(){
       var tagsToJoin = arguments;
@@ -93,18 +111,10 @@ exports.create = function(req, res) {
       }
     });
     promise.then(function(){
-      newQuestion.searchname = wordcut.cut(newQuestion.name);
-      Question.create(newQuestion, function(err, question) {
-        if(err) { return handleError(res, err); }
-        return res.status(200).json(question)
-      });
+      createNewQuestion(newQuestion)
     })
   } else {
-    newQuestion.searchname = wordcut.cut(newQuestion.name);
-    Question.create(newQuestion, function(err, question) {
-      if(err) { return handleError(res, err); }
-      return res.status(200).json(question)
-    });
+    createNewQuestion(newQuestion)
   }
 
 
