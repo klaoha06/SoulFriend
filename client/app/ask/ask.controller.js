@@ -99,17 +99,32 @@ angular.module('puanJaiApp')
 
     // Autocomplete Tags
     $scope.searchTags = function(input) {
-      return $http.get('/api/tags/search', { params: {userInput: input}});
+      return $http.get('/api/tags/search', { params: {userInput: input}}).success(function(res){
+        $scope.searchedTags = res;
+      });
     };
 
     // Store Tag in Cookie
     $scope.storeTagInCookie = function(){
+      var lastInputTag = _.last($scope.tags);
+      var bestResult = _.first($scope.searchedTags);
+      if (typeof bestResult !== 'undefined'){      
+        if (lastInputTag.name === bestResult.name) {
+          _.merge(lastInputTag, bestResult);
+        }
+      }
       $cookieStore.put('tags', $scope.tags);
     };
 
     // On Submit
     $scope.onQuestionFormSubmit = function(){
       if (Auth.isLoggedIn()) {
+        var partitionedTags = [];
+        partitionedTags = _.partition($scope.tags, function(tag){
+          if (!_.has(tag, '_id')) {
+            return tag;
+          }
+        });
             var newQuestion = { 
               owner: {
                 _ownerId: user._id,
@@ -117,33 +132,20 @@ angular.module('puanJaiApp')
                 role: user.role,
                 coverimg: user.coverimg
               },
-              searchname: [],
               name: $scope.searchInput,
               body: $scope.textEditorInput,
-              jais: [],
-              jais_count:0,
-              upvotes: [],
-              votes_count:0,
-              downvotes: [],
-              views:0,
-              shares:0,
-              answered: false,
-              likedAns:0,
-              answers: [],
-              answers_count:0,
-              tags: $scope.tags,
+              tags: partitionedTags[1],
               topic: $scope.selectedTopic
             };
-            console.log(newQuestion);
-            // debugger;
-            $http.post('/api/questions', newQuestion).success(function(res){
-              console.log(res);
+            $scope.textEditorInput = '';
+            $cookieStore.remove('tags'); 
+            $cookieStore.remove('topic'); 
+            $cookieStore.remove('content'); 
+            $cookieStore.remove('questionTitle'); 
+            $http.post('/api/questions', {newQuestion: newQuestion, newTags: partitionedTags[0]}).success(function(res){
+              console.log(res)
+              $location.path(/questions/ + res._id);
             });
-            // $scope.textEditorInput = '';
-            // $cookieStore.remove('tags'); 
-            // $cookieStore.remove('topic'); 
-            // $cookieStore.remove('content'); 
-            // $cookieStore.remove('questionTitle'); 
       } else {
             $location.path('/login');
             alert('กรุณาเข้าสู้ระบบก่อนเข้าร่วมการสนทนา')

@@ -34,15 +34,12 @@ var QuestionSchema = new Schema({
 
 QuestionSchema.plugin(timeStamps);
 QuestionSchema.plugin(elmongo);
-
-
-// QuestionSchema.index({name: 'text'})
   
 var Question = mongoose.model('Question', QuestionSchema)
 
 
 Question.sync(function (err, numSynced) {
-  // console.log('number of cats synced:', numSynced)
+  console.log('number of cats synced:', numSynced)
 })
 
 promise.promisifyAll(Question);

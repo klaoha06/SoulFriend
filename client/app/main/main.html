@@ -87,7 +87,7 @@
             <div style="width: 170px;">
               <i class="fa fa-tag"></i>
               <a class="topic" ng-href="/topics/{{question.topic}}">{{question.topic}} -</a>
-              <a style="display:inline;" ng-repeat="tag in question.tags" ng-href="/topics/{{tag}}"><small>{{tag+" "}}</small></a> 
+              <a style="display:inline;" ng-repeat="tag in question.tags" ng-href="/topics/{{tag.name}}"><small>{{tag.name+" "}}</small></a> 
             </div>
             <h2 style='font-size: 2.2em;'>{{question.name}}</h2>
           <a style="float:right;"href="" ng-click="isCollapsed = !isCollapsed">...อ่านต่อ</a>

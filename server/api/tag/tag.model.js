@@ -3,11 +3,12 @@
 var promise = require('bluebird');
 var timeStamps = require('mongoose-times');
 var elmongo = require('elmongo');
+var findOrCreate = require('mongoose-findorcreate')
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var TagSchema = new Schema({
-  name: { type: String, autocomplete: true },
+  name: { type: String, autocomplete: true},
   info: String,
   questions_id: Array,
   questions_count: { type: Number, default: 0},
@@ -18,6 +19,7 @@ var TagSchema = new Schema({
 });
 
 TagSchema.plugin(timeStamps);
+TagSchema.plugin(findOrCreate);
 TagSchema.plugin(elmongo);
 
 

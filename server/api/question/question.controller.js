@@ -9,9 +9,7 @@
 
 'use strict';
 
-var Promise = require('bluebird');
 var _ = require('lodash');
-Promise.promisifyAll(_);
 var Question = require('./question.model');
 var Tag = require('../tag/tag.model');
 var wordcut = require("wordcut");
@@ -70,7 +68,7 @@ exports.index = function(req, res) {
 exports.search = function(req, res) {
   Question.search({ query: wordcut.cut(req.query.userInput), fuzziness: 0.5, fields: ['searchname'], pageSize: 10 }, function (err, results) {
     if(err) { return handleError(res, err); }
-      return res.json(200, results)
+      return res.status(200).json(results)
   })
 };
 
@@ -83,81 +81,35 @@ exports.show = function(req, res) {
   });
 };
 
-// Creates a new thing in the DB.
+// Creates a new Question in the DB.
 exports.create = function(req, res) {
-  var incomingTags = req.body.tags;
-  var join = Promise.join;
-  
-
-  _(incomingTags).forEach(function(tag){
-    if (!_.has(tag, '_id')) {
-
-    }
+  Question.sync(function (err, numSynced) {
+    // console.log('number of cats synced:', numSynced)
   })
+  var newTags = req.body.newTags;
+  var newQuestion = req.body.newQuestion;
+  if (newTags.length >= 1) {
+    var promise = Tag.create(newTags, function(){
+      var tagsToJoin = arguments;
+      for (var i = 1; i < tagsToJoin.length; i++) {
+        newQuestion.tags.push({name: tagsToJoin[i].name, _id: tagsToJoin[i]._id})
+      }
+    });
+    promise.then(function(){
+      Question.create(newQuestion, function(err, question) {
+        if(err) { return handleError(res, err); }
+        return res.status(200).json(question)
+      });
+    })
+  } else {
+    Question.create(newQuestion, function(err, question) {
+      if(err) { return handleError(res, err); }
+      return res.status(200).json(question)
+    });
+  }
 
-  // var tags = req.body.tags
-  // var promisifiedMap = Promise.promisify(_.map)
-  // promisifiedMap(req.body.tags, function(tag){
-  //             if (!_.has(tag, '_id')) {
-  //                Tag.create({name: tag.name}, function(err, newTag){
-  //                   // console.log(newTag);
-  //                   tag = newTag;
-  //                   return {name: newTag.name, _id: newTag._id}
-  //                });
-  //             }
-  //             return tag;
-  // }).then(function(result){
-  //   console.log(result)
-  //   console.log('hi')
-  // })
+
 };
-//   var question = new Question(req.body);
-//   question.searchname = wordcut.cut(question.name);
-//   // question.tags = _.map(question.tags, function(tag){
-//   //     if (!_.has(tag, '_id')) {
-//   //       var tagId;
-//   //        Tag.create({name: tag.name}, function(err, newTag){
-//   //           tagId = newTag._id
-//   //           console.log(newTag);
-//   //           return {'name': newTag.name, '_id': tagId}
-//   //        });
-//   //     }
-//   //     return tag;
-//   //   })
-//   var promisifiedMap = Promise.promisify(_.map)
-  // function generateTags(){
-  //   return new Promise(function(resolve){
-  //     tags = _.map(question.tags, function(tag){
-  //                 if (!_.has(tag, '_id')) {
-  //                    Tag.create({name: tag.name}, function(err, newTag){
-  //                       console.log(newTag);
-  //                       tag = newTag;
-  //                       return {name: newTag.name, _id: newTag._id}
-  //                    });
-  //                 }
-  //                 return tag;
-  //               })
-  //       resolve()
-  //   })
-  // }
-//   // question.tags = _.map(question.tags, function(tag){
-//   //             if (!_.has(tag, '_id')) {
-//   //                Tag.create({name: tag.name}, function(err, newTag){
-//   //                   console.log(newTag);
-//   //                   return {'name': newTag.name, '_id': newTag._id}
-//   //                });
-//   //             }
-//   //             return tag;
-//   //           })
-//   generateTags().then(function(){
-//     // console.log(question)
-//     question.save(function(err, question) {
-//     // console.log(question)
-//     if(err) { return handleError(res, err); }
-//     return res.status(201).json(question)
-//   });
-//   })
-// };
 
 // Increment Vote for Question in the DB.
 exports.upVote = function(req, res) {
