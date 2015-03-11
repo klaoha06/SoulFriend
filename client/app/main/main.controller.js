@@ -9,6 +9,7 @@ angular.module('puanJaiApp')
   var order = order || ['created'];
   var reverse = reverse || false;
   $scope.selectedTopic;
+  $scope.popTags = [] || $scope.popTags;
 
   $scope.topics = [
   {
@@ -196,11 +197,17 @@ angular.module('puanJaiApp')
       }
     };
 
+    $http.get('/api/tags', {orderBy: 'popular_count'}).success(function(tags) {
+      angular.forEach(tags, function(tag){
+        $scope.popTags.push({text: tag.name, weight: tag.popular_count, link: 'tags/' + tag._id})
+      });
+      // console.log($scope.popTags);
+    });
+
      // On leave page
      $scope.$on('$destroy', function () {
       socket.unsyncUpdates('question');
     });
-
 
    });
 

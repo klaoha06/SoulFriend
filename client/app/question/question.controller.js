@@ -111,10 +111,11 @@ angular.module('puanJaiApp')
           return String(text).replace(/<[^>]+>/gm, '');
         }
         var text = htmlToPlaintext($scope.textEditorInput);
-        if (text.length < 40) {
-          alert('คําตอบต้องมีมากกว่า 40 อักขระครับ')
+        if (text.length < 40 || text.length > 6000) {
+          alert('คําตอบต้องมียาวระหว่าง 40 ถึง 6000 อักขระ');
           return;
         }
+
         var newAnswer = {
           content: $scope.textEditorInput,
           username: currentUser.username,

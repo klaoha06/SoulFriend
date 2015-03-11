@@ -10,6 +10,7 @@ angular.module('puanJaiApp')
     $scope.searchInput = $cookieStore.get('questionTitle');
     $scope.selectedTopic = $cookieStore.get('topic');
     $scope.tags = $cookieStore.get('tags');
+    $scope.alerts = [];
 
     $scope.topics = [
     {
@@ -120,12 +121,48 @@ angular.module('puanJaiApp')
     // On Submit
     $scope.onQuestionFormSubmit = function(){
       if (Auth.isLoggedIn()) {
+        // reset alerts
+        $scope.alerts = [];
+
+        function htmlToPlaintext(text) {
+          return String(text).replace(/<[^>]+>/gm, '');
+        }
+        var text = htmlToPlaintext($scope.textEditorInput)
+
+        // validate input
+        if (typeof $scope.searchInput === 'undefined') {
+          $scope.alerts.push({ type: 'danger', msg: 'กรุณาเลือกชื่อของคําถามด้วยครับ' })
+        }
+        if ($scope.searchInput.length > 150) {
+          $scope.alerts.push({ type: 'danger', msg: 'กรุณาใช่ไม่เกิน 150 อักขระในการถามคําถาม' })
+        }
+        if (typeof $scope.selectedTopic === 'undefined') {
+          $scope.alerts.push({ type: 'danger', msg: 'กรุณาเลือกหัวข้อของคําถามด้วยครับ' })
+        }
+        if (typeof $scope.textEditorInput === 'undefined') {
+          $scope.alerts.push({ type: 'danger', msg: 'กรุณาใส่เนื้อความของคําถามด้วยครับ' })
+        }
+        if (text.length > 9000) {
+          $scope.alerts.push({ type: 'danger', msg: 'กรุณาใช่ไม่เกิน 9000 อักขระในการถามคําถาม' })
+        }
+        if ($scope.tags.length <= 0) {
+          $scope.alerts.push({ type: 'danger', msg: 'กรุณาใส่อย่างน้อยหนึ่งแท็กครับ' })
+        }
+        $scope.closeAlert = function(index) {
+          $scope.alerts.splice(index, 1);
+        };
+
+        if ($scope.alerts.length !== 0) {
+          return;
+        }
+
         var partitionedTags = [];
         partitionedTags = _.partition($scope.tags, function(tag){
           if (!_.has(tag, '_id')) {
             return tag;
           }
         });
+
             var newQuestion = { 
               owner: {
                 _ownerId: user._id,
@@ -138,13 +175,13 @@ angular.module('puanJaiApp')
               tags: partitionedTags[1],
               topic: $scope.selectedTopic
             };
-            $scope.textEditorInput = '';
-            $cookieStore.remove('tags'); 
-            $cookieStore.remove('topic'); 
-            $cookieStore.remove('content'); 
-            $cookieStore.remove('questionTitle'); 
             $http.post('/api/questions', {newQuestion: newQuestion, newTags: partitionedTags[0]}).success(function(res){
               console.log(res)
+              $scope.textEditorInput = '';
+              $cookieStore.remove('tags'); 
+              $cookieStore.remove('topic'); 
+              $cookieStore.remove('content'); 
+              $cookieStore.remove('questionTitle'); 
               $location.path(/questions/ + res._id);
             });
       } else {
@@ -154,3 +191,10 @@ angular.module('puanJaiApp')
     };
 
   });
+
+// angular.module('puanJaiApp')
+// .config(['$tooltipProvider', function($tooltipProvider){
+//     $tooltipProvider.setTriggers({
+//         'show': 'hide'
+//     });
+// }]);

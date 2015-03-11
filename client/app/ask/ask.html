@@ -6,7 +6,7 @@
 		<h3 style="text-decoration: underline; text-align: center; font-size: 2em;">ถามปัญหาใจ</h3>
 			<h2 class="blue">ขั้นตอนที่ 1: ถาม</h2>
 			<div id="findAnswer">
-			<textarea class="form-control" rows="3" ng-model="searchInput" placeholder="ถามปัญหาใจ..." style="font-size: 1.2em;">
+			<textarea id="askStepOne" class="form-control" rows="3" ng-model="searchInput" placeholder="ถามปัญหาใจ..." style="font-size: 1.2em;" popover-placement="bottom" popover="On the Right!" popover-trigger="show">
 			</textarea>
 			<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[searchInput.length > 150]">{{150 - searchInput.length}}</span> อักขระ</span>
 			</div>
@@ -80,6 +80,9 @@
 
 					</div>
 					<a type="submit" style="background: linear-gradient(white, #fff9aa); font-size: 1.3em; width:100%; color:#428bca;" ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default" role="button" ng-click="onQuestionFormSubmit()"><i ng-class="shake" class="fa fa-child"></i> โพสต์คําถาม</a>
+					<hr>
+					<alert ng-repeat="alert in alerts" type="{{alert.type}}" class="animated fadeIn" close="closeAlert($index)">{{alert.msg}}</alert>
+
 
 			
 		</div>

@@ -14,10 +14,11 @@ var Tag = require('./tag.model');
 
 // Get list of tags
 exports.index = function(req, res) {
-  Tag.find({limit:15, sort:{}},function (err, tags) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, tags);
-  });
+  var order = req.body.orderBy;
+  Tag.find().sort(order).limit(20).exec(function(err, results){
+      if(err) { return handleError(res, err); }
+        return res.status(200).json(results)
+  })
 };
 
 // Text Search
