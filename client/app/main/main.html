@@ -1,35 +1,19 @@
 <div ng-controller="MainCtrl" class="container">
 
-  <!--          <div style="height: 400px;">
-            <carousel id="sampleusers" interval="3000">
-             <slide  class="samplequotes" ng-repeat="user in sampleusers" active="slide.active">
-              <blockquote>
-               <div class="row">
-                 <div class="col-sm-10 col-sm-offset-1">
-                   <p>{{user.reason}}</p>
-                   <small>{{user.username}}</small>
-                 </div>
-               </div>
-             </blockquote>
-           </slide>
-         </carousel>
-         {{setCurrentSlide()}}
-       </div> -->
-
   <div id="questionSearch"class="input-group input-group-lg">
-   <input type="text" ng-model="customSelected" placeholder="ถามปัญหาใจ" typeahead="question as question.name for question in searchQuestions($viewValue) | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" typeahead-on-select="goToQuestion($item, $model)" class="form-control" aria-describedby="basic-addon2">
-   <a class="input-group-addon button" id="basic-addon2" href="" ng-click="onSubmitSearch()">หาคําตอบ</a>
+   <span class="input-group-addon button" id="basic-addon1" href="" ng-click="onSubmitSearch()">ถามปัญหาใจ</span>
+   <input type="text" ng-model="customSelected" placeholder="" typeahead="question as question.name for question in searchQuestions($viewValue) | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" typeahead-on-select="goToQuestion($item, $model)" class="form-control" aria-describedby="basic-addon1">
   </div>
 
    <script type="text/ng-template" id="customTemplate.html">
      <a>
-      <b class="yellow">ชื่อ:</b>
+      <b class="yellow">คะแนะความใกล้เคียง:</b>
       <span ng-bind-html="match.model._score | number:2"></span>
       -
       <b class="yellow">ชื่อ:</b>
        <span ng-bind-html="match.model._source.name | typeaheadHighlight:query"></span>
        -
-       <b class="yellow">การช่วยเหลือ:</b>
+       <b class="yellow">ความช่วยเหลือ:</b>
        <span ng-bind-html="match.model._source.answers_count | typeaheadHighlight:query"></span>
      </a>
    </script>
@@ -46,9 +30,9 @@
         <table class="table table-hover">
            <h2 style="text-align: center; font-size: 2.4em; ">หัวข้อ</h2>
            <tbody>
-                 <tr ng-repeat="topic in topics" class="nav nav-stacked" ng-class="{true: 'active', false: ''}[topic.active]">
-                     <td>
-           <a class="mainTopic" ng-click="selectTopic(topic.title); getQuestions(null,null,null,topic.title);" href=''>
+                 <tr ng-repeat="topic in topics" class="nav nav-stacked">
+                     <td ng-class="{true: 'background-yellow', false: ''}[topic.active]">
+           <a class="mainTopic" ng-click="selectTopic(topic.title);" href=''>
                      <i class="fa {{topic.icon}}" style="font-size: 0.7em;"></i><br/>
                          {{topic.title}}
                  </a>
@@ -64,7 +48,7 @@
      </div>
    <tabset class="col-md-8">
       <!-- <h2>มีคนต้องการความช่วยเหลือ มาช่วยกับตอบปัญหาใจกัน!</h2> -->
-         <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled" ng-click="getQuestions(tab.category, tab.orderBy, tab.reverse);">
+         <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled" ng-click="resetSkip(); getQuestions(tab.category, tab.orderBy, tab.reverse);">
          </tab>
 
        <div class="clearfix">
@@ -86,7 +70,7 @@
             <div style="width: 170px;">
               <i class="fa fa-tag"></i>
               <a class="topic" ng-href="/topics/{{question.topic}}">{{question.topic}} -</a>
-              <a style="display:inline;" ng-repeat="tag in question.tags" ng-href="/topics/{{tag.name}}"><small>{{tag.name+" "}}</small></a> 
+              <a style="display:inline;" ng-repeat="tag in question.tags" ng-href="/tags/{{tag._id}}"><small>{{tag.name+" "}}</small></a> 
             </div>
             <h2 style='font-size: 2.2em;'>{{question.name}}</h2>
           <a style="float:right;"href="" ng-click="isCollapsed = !isCollapsed">...อ่านต่อ</a>
@@ -165,7 +149,26 @@
       </div>
     </div>
     </div>
-    <a class="btn btn-default" style="display:block">ดูเพิ่ม</a>
+    <a ng-if="questions.length >= 1" class="btn btn-default" style="display:block" ng-click="getMoreQuestions()">ดูเพิ่ม</a>
+    <div ng-show="questions.length <= 1">
+      <h2 style="text-align: center;">เป็นคนแรกที่ถามคําถามหัวข้อนี้!<br>มีเพื่อนใจมากมายที่รอให้การช่วยเหลือ!</h2><br>
+      <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" style="font-size: 2em; width:30%; margin:0 auto;" class="btn btn-primary btn-lg btn-block" ng-href="/ask"><i ng-class="shake" class="fa fa-child"></i> ถาม</a><br>
+             <div style="height: 400px;">
+              <carousel id="sampleusers" interval="3000">
+               <slide  class="samplequotes" ng-repeat="user in sampleusers" active="slide.active">
+                <blockquote>
+                 <div class="row">
+                   <div class="col-sm-10 col-sm-offset-1">
+                     <p>{{user.reason}}</p>
+                     <small>{{user.username}}</small>
+                   </div>
+                 </div>
+               </blockquote>
+             </slide>
+           </carousel>
+           {{setCurrentSlide()}}
+         </div>
+    </div>
     </tabset>
 
     <div class="col-md-2">

@@ -10,6 +10,7 @@ angular.module('puanJaiApp')
   var reverse = reverse || false;
   $scope.selectedTopic;
   $scope.popTags = [] || $scope.popTags;
+  $scope.skip = 0;
 
   $scope.topics = [
   {
@@ -63,9 +64,10 @@ angular.module('puanJaiApp')
     } else { 
       $scope.selectedTopic = topic;
     }
+    $scope.getQuestions(null,null,null,$scope.selectedTopic);
     angular.forEach($scope.topics, function(t){
       if (t.title === topic) {
-        t.active = true;
+        t.active = !t.active;
       } else {
         t.active = false;
       }
@@ -80,6 +82,10 @@ angular.module('puanJaiApp')
       { title:'ได้กําลังใจมากสุด', category: 'jais', orderBy: 'jais_count', reverse: true}
     ];
 
+  $scope.resetSkip = function(){
+    $scope.skip = 0;
+  };
+
   // Get Questions
   $scope.getQuestions = function (c, o, r, t) {
     socket.unsyncUpdates('question');
@@ -87,8 +93,12 @@ angular.module('puanJaiApp')
     order = o || order;
     reverse = r || reverse;
     $scope.selectedTopic = t || $scope.selectedTopic;
-    $http.get('/api/questions',{ params: {category: category, topic: $scope.selectedTopic}}).success(function(questions){
-      $scope.questions = questions;
+    $http.get('/api/questions',{ params: {category: category, topic: $scope.selectedTopic, skip: $scope.skip}}).success(function(questions){
+      if ($scope.skip > 0){
+        $scope.questions = $scope.questions.concat(questions);
+      } else {
+        $scope.questions = questions;
+      }
           socket.syncUpdates('question', $scope.questions, function(e, item, array){
             $scope.questions = orderBy(array, o, r);
           });
@@ -110,22 +120,23 @@ angular.module('puanJaiApp')
       });
     };
 
-    $scope.onSubmitSearch = function(){
-      // not done
-      $location.path('/search/' + $scope.userInput);
-    };
+    // $scope.onSubmitSearch = function(){
+    //   // not done
+    //   $location.path('/search/' + $scope.userInput);
+    // };
 
 
-    // if (!$scope.sampleUsers) {
-    //   $http.get('/api/users/sampleusers').success(function(sampleusers) {
-    //     $scope.sampleusers = sampleusers;
-    //   });
-    // }
+    if (!$scope.sampleUsers) {
+      $http.get('/api/users/sampleusers').success(function(sampleusers) {
+        $scope.sampleusers = sampleusers;
+      });
+    }
     
     $scope.setCurrentSlide = function(){
       var indicators = document.getElementsByClassName('carousel-indicators')[0].children;
       if (indicators.length === 5) {
         for (var i = 0; i < $scope.sampleusers.length; i++) {
+          console.log($scope.sampleusers);
           var cssString = "background-size: cover; background-image: url('" + $scope.sampleusers[i].coverimg + "');";
           indicators[i].style.cssText = cssString;
           // if (indicators[i].className === 'ng-scope active') {
@@ -203,6 +214,11 @@ angular.module('puanJaiApp')
       });
       // console.log($scope.popTags);
     });
+
+    $scope.getMoreQuestions = function(){
+      $scope.skip++;
+      $scope.getQuestions();
+    };
 
      // On leave page
      $scope.$on('$destroy', function () {

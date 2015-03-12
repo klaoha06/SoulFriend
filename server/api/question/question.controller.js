@@ -19,45 +19,51 @@ wordcut.init('./node_modules/wordcut/data/tdict-std.txt');
 // Get list of questions
 exports.index = function(req, res) {
   var topic = null;
+  var skip = null;
   if (req.query.topic) {
     topic = {topic: req.query.topic}
   } else {
     topic = {};
   }
+  if (req.query.skip > 0) {
+    skip = 10 + req.query.skip * 10;
+  } else {
+    skip = 0;
+  }
   switch(req.query.category){
     case 'views':
-      Question.find(topic).sort({views: -1}).limit(20).exec(function (err, questions){
+      Question.find(topic).sort({views: -1}).skip(skip).limit(20).exec(function (err, questions){
        if(err) { return handleError(res, err); }
        return res.status(200).json(questions);
       })
       break;
     case 'votes_count':
-      Question.find(topic).sort('-votes_count').limit(20).exec(function (err, questions){
+      Question.find(topic).sort('-votes_count').skip(skip).limit(20).exec(function (err, questions){
           if(err) { return handleError(res, err); }
              return res.status(200).json(questions);
       })
       break;
     case 'created':
-    Question.find(topic).sort('-created').limit(20).exec(function (err, questions){
+    Question.find(topic).sort('-created').skip(skip).limit(20).exec(function (err, questions){
         if(err) { return handleError(res, err); }
          return res.status(200).json(questions);
     })
       break;
     case 'noAnswer':
       topic.answers_count = 0;
-      Question.find(topic).sort('created').limit(20).exec(function (err, questions){
+      Question.find(topic).sort('created').skip(skip).limit(20).exec(function (err, questions){
           if(err) { return handleError(res, err); }
             return res.status(200).json(questions);
       })
       break;
     case 'jais':
-      Question.find(topic).sort('-jais_count').limit(20).exec(function (err, questions){
+      Question.find(topic).sort('-jais_count').skip(skip).limit(20).exec(function (err, questions){
           if(err) { return handleError(res, err); }
              return res.status(200).json(questions);
       })
       break;
     default:
-      Question.find(topic).sort({views: -1}).limit(20).exec(function (err, questions){
+      Question.find(topic).sort({views: -1}).skip(skip).limit(20).exec(function (err, questions){
        if(err) { return handleError(res, err); }
        return res.status(200).json(questions);
       })

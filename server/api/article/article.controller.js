@@ -14,7 +14,6 @@ var Article = require('./article.model');
 
 // Get list of articles
 exports.index = function(req, res) {
-  console.log(req.query.category)
   // console.log(req.query.catagory)
   switch(req.query.category){
     case 'popular':

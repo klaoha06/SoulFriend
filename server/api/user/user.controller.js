@@ -24,7 +24,7 @@ exports.index = function(req, res) {
  * Get sample of users
  */
 exports.sampleusers = function(req, res) {
-  User.findRandom({},'-salt -hashedPassword -provider', {limit: 5}, function (err, users) {
+  User.findRandom({},'-salt -hashedPassword -provider', {limit: 4}, function (err, users) {
     if(err) return res.send(500, err);
     return res.status(200).json(users);
   });
