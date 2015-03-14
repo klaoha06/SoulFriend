@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('puanJaiApp')
-.controller('MainCtrl', function ($scope, $http, socket, Auth, $location, $filter) {
+.controller('MainCtrl', function ($scope, $http, socket, Auth, $location, $filter, $interval) {
+  var currentUser = Auth.getCurrentUser();
+  var userId = currentUser._id;
   var orderBy = $filter('orderBy');
   $scope.isCollapsed = true;
   $scope.userInput;
@@ -12,7 +14,45 @@ angular.module('puanJaiApp')
   $scope.popTags = [] || $scope.popTags;
   $scope.skip = 0;
 
+  $scope.slides = [
+  {
+    image: 'http://lorempixel.com/1900/300/animals',
+    text:'hi'
+  },
+  {
+    image: 'http://lorempixel.com/1600/300/animals',
+    text:'yo'
+  },
+  {
+    image: 'http://lorempixel.com/1400/300/animals',
+    text:'bye'
+  },
+  {
+    image: 'http://lorempixel.com/1000/300/animals',
+    text:'love u'
+  }
+  ];
+
+
   $scope.topics = [
+  {
+    'title': 'การปัฎิบัติธรรม',
+    'link': '/topics/การปัฎิบัติธรรม',
+    'icon': 'fa-circle-thin',
+    'active': false
+  },
+  {
+    'title': 'สุขภาพ',
+    'link': '/topics/สุขภาพ',
+    'icon': 'fa-pagelines',
+    'active': false
+  },
+  {
+    'title': 'ชีวิต',
+    'link': '/topics/ชีวิต',
+    'icon': 'fa-street-view',
+    'active': false
+  },
   {
     'title': 'ความรัก',
     'link': '/topics/ความรัก',
@@ -44,19 +84,22 @@ angular.module('puanJaiApp')
     'icon': 'fa-building-o',
     'active': false
   },
-  {
-    'title': 'ชีวิต',
-    'link': '/topics/ชีวิต',
-    'icon': 'fa-street-view',
-    'active': false
-  },
-  {
-    'title': 'การปัฎิบัติธรรม',
-    'link': '/topics/การปัฎิบัติธรรม',
-    'icon': 'fa-circle-thin',
-    'active': false
-  }
   ];
+  $scope.updateTopic = function(topic){
+    if (topic === null) {
+      $scope.selectedTopic = null;
+    } else { 
+      $scope.selectedTopic = topic.title;
+    }
+    $scope.getQuestions(null,null,null,$scope.selectedTopic);
+    angular.forEach($scope.topics, function(t){
+      if (t.title === topic.title) {
+        t.active = !t.active;
+      } else {
+        t.active = false;
+      }
+    })
+  };
 
   $scope.selectTopic = function(topic){
     if (topic === $scope.selectedTopic) {
@@ -75,7 +118,7 @@ angular.module('puanJaiApp')
   };
 
   $scope.tabs = [
-      { title:'ตัองการความช่วยเหลือ', category: 'noAnswer', orderBy: ['-answers_count, created'], reverse: false },
+      { title:'ยังไม่ได้ความช่วยเหลือ', category: 'noAnswer', orderBy: ['-answers_count, created'], reverse: false },
       { title:'ได้ความสําคํญมากสุด', category: 'votes_count', orderBy: 'votes_count', reverse: true },
       { title:'ล่าสุด', category: 'created', orderBy: 'created', reverse: true},
       { title:'ยอดนิยม', category: 'views', orderBy: 'views', reverse: true},
@@ -152,15 +195,13 @@ angular.module('puanJaiApp')
       if (Auth.isLoggedIn()){
         var index = _.findIndex($scope.questions,{'_id': questionId});
         var currentQuestion = $scope.questions[index];
-        var currentUser = Auth.getCurrentUser();
-        var _id = currentUser._id;
-          if (_.include(currentQuestion.upvotes, _id)) {
+          if (_.include(currentQuestion.upvotes, userId)) {
             alert('คุณได้ให้โหวตแล้ว');
             return;
           } else {
            $scope.questions[index].votes_count++;
-           $scope.questions[index].upvotes.push(_id);
-           $http.post('/api/questions/' + questionId + '/upvote', { _questionId: questionId, userId: _id });
+           $scope.questions[index].upvotes.push(userId);
+           $http.post('/api/questions/' + questionId + '/upvote', { _questionId: questionId, userId: userId });
           }
       } else {
         $location.path('/login');
@@ -172,15 +213,13 @@ angular.module('puanJaiApp')
       if (Auth.isLoggedIn()){
         var index = _.findIndex($scope.questions,{'_id': questionId});
         var currentQuestion = $scope.questions[index];
-        var currentUser = Auth.getCurrentUser();
-        var _id = currentUser._id;
-          if (_.include(currentQuestion.downvotes, _id)) {
+          if (_.include(currentQuestion.downvotes, userId)) {
             alert('คุณได้ให้โหวตแล้ว');
             return;
           } else {
            $scope.questions[index].votes_count--;
-           $scope.questions[index].downvotes.push(_id);
-           $http.post('/api/questions/' + questionId + '/downvote', { _questionId: questionId, userId: _id });
+           $scope.questions[index].downvotes.push(userId);
+           $http.post('/api/questions/' + questionId + '/downvote', { _questionId: questionId, userId: userId });
           }
       } else {
         $location.path('/login');
@@ -192,15 +231,13 @@ angular.module('puanJaiApp')
       if (Auth.isLoggedIn()){
         var index = _.findIndex($scope.questions,{'_id': questionId});
         var currentQuestion = $scope.questions[index];
-        var currentUser = Auth.getCurrentUser();
-        var _id = currentUser._id;
-          if (_.include(currentQuestion.jais, _id)) {
+          if (_.include(currentQuestion.jais, userId)) {
             alert('คุณได้ให้กําลังใจแล้ว');
             return;
           } else {
-           $scope.questions[index].jais.push(_id);
+           $scope.questions[index].jais.push(userId);
            $scope.questions[index].jais_count++;
-           $http.post('/api/questions/' + questionId + '/addjai', { _questionId: questionId, userId: _id });
+           $http.post('/api/questions/' + questionId + '/addjai', { _questionId: questionId, userId: userId });
           }
       } else {
         $location.path('/login');

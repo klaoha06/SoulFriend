@@ -10,7 +10,8 @@ angular.module('puanJaiApp', [
   'timeAgo',
   'textAngular',
   'ngTagsInput',
-  'angular-jqcloud'])
+  'angular-jqcloud',
+  'angular-carousel'])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
       .otherwise('/');

@@ -10,9 +10,15 @@ angular.module('puanJaiApp')
 
       if(form.$valid) {
         Auth.createUser({
-          name: $scope.user.name,
+          name: {
+            first:$scope.user.firstname,
+            last:$scope.user.lastname,
+          },
           email: $scope.user.email,
-          password: $scope.user.password
+          password: $scope.user.password,
+          reason: $scope.user.reason,
+          summary: $scope.user.summary,
+          username: $scope.user.username
         })
         .then( function() {
           // Account created, redirect to home

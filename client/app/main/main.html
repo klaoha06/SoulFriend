@@ -46,9 +46,23 @@
       </div>
       <hr>
      </div>
-   <tabset class="col-md-8">
-      <!-- <h2>มีคนต้องการความช่วยเหลือ มาช่วยกับตอบปัญหาใจกัน!</h2> -->
-         <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled" ng-click="resetSkip(); getQuestions(tab.category, tab.orderBy, tab.reverse);">
+   <tabset justified="true" class="col-md-8">
+<!--      <select class="form-control" style="width:100px; float:right;"ng-model="topicFilter" ng-change="updateTopic(topicFilter)" ng-options="topic.title for topic in topics">
+     <option value="" selected>เลือกหัวข้อ</option>
+     </select> -->
+     <carousel interval="4000" style="margin-bottom: 15px;">
+       <slide ng-repeat="slide in slides" active="slide.active" style="border-radius: 4px;">
+         <img ng-src="{{slide.image}}" class="img-responsive img-rounded" style="margin:auto; height:240px; width:100%; border:1px solid #dddddd;">
+         <div class="carousel-caption">
+           <h3>{{slide.text}}</h3>
+         </div>
+       </slide>
+     </carousel>
+
+   <div class="clearfix">
+   </div>
+
+         <tab ng-repeat="tab in tabs" heading="{{tab.title}}" ng-click="resetSkip(); getQuestions(tab.category, tab.orderBy, tab.reverse);">
          </tab>
 
        <div class="clearfix">

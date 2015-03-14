@@ -12,7 +12,7 @@ var UserSchema = new Schema({
     last: String
   },
   coverimg: String,
-  email: { type: String, lowercase: true },
+  email: String,
   username: String,
   role: {
     type: String,

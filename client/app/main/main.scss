@@ -68,11 +68,11 @@ i {
   color:#FFF577; text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
 }
 
-img {
+/*img {
     -webkit-box-shadow: 1px 2px 3px 1px rgba(0,0,0,0.75);
     -moz-box-shadow: 1px 2px 3px 1px rgba(0,0,0,0.75);
     box-shadow: 1px 2px 3px 1px rgba(0,0,0,0.75);
-}
+}*/
 
 mark {
   border: 1px dotted #dddddd;
@@ -83,6 +83,22 @@ mark {
 
 a:hover {
   text-decoration: none;
+}
+
+.navbar-default {
+  background-color: #FFF9AA;
+}
+
+.nav-tabs-justified > li > a, .nav-tabs.nav-justified > li > a {
+  border-bottom: 1px;
+}
+
+.nav-tabs-justified > li > a, .nav-tabs.nav-justified > li > a {
+  border-bottom: 1px;
+}
+
+.nav-tabs > li > a:hover {
+  background: aliceblue;
 }
 
 .background-blue {
@@ -199,7 +215,7 @@ a:hover {
 }
 
 .carousel-indicators {
-  bottom:0;
+  /*bottom:0;*/
 }
 
 #sampleusers ol li {
@@ -361,8 +377,8 @@ opacity: 1;
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-  border: 0;
-  font-size: 1.2em;
+  border: 1px solid #dddddd;
+  background: #FFF9AA;
 }
 
 .questionImg {
@@ -372,7 +388,7 @@ opacity: 1;
 }
 
 .questions {
-  padding-top: 20px;
+  /*padding-top: 20px;*/
 }
 
 .blue {
@@ -456,7 +472,7 @@ opacity: 1;
 }
 
 #questionSearch{
-  margin: 40px;
+  margin: 15px;
 }
 
 .selectedTopic {

@@ -1,5 +1,5 @@
 .navbar-default {
-	background-color: #F5DC25;
+	background-color: #FFF9AA;
 }
 
 .navbar {
@@ -14,4 +14,8 @@
 	padding: 15px 15px;
 	text-decoration: none;
 	background: transparent;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+  color: #555555;
+  background-color: 0;
 }
