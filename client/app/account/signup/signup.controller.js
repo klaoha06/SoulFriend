@@ -17,12 +17,14 @@ angular.module('puanJaiApp')
           email: $scope.user.email,
           password: $scope.user.password,
           reason: $scope.user.reason,
-          summary: $scope.user.summary,
+          // summary: $scope.user.summary,
           username: $scope.user.username
         })
-        .then( function() {
+        .then( function(res) {
+          console.log(res)
           // Account created, redirect to home
           $location.path('/');
+          $window.location.reload();
         })
         .catch( function(err) {
           err = err.data;

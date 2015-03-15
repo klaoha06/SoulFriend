@@ -24,7 +24,7 @@ exports.index = function(req, res) {
  * Get sample of users
  */
 exports.sampleusers = function(req, res) {
-  User.findRandom({},'-salt -hashedPassword -provider', {limit: 4}, function (err, users) {
+  User.findRandom({},'-salt -hashedPassword -provider -jais_count -questions_count -articles_count -questions_id -articles_id -answers_count', {limit: 4}, function (err, users) {
     if(err) return res.send(500, err);
     return res.status(200).json(users);
   });
@@ -40,7 +40,7 @@ exports.create = function (req, res, next) {
   newUser.save(function(err, user) {
     if (err) return validationError(res, err);
     var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
-    res.json({ token: token });
+    res.json({ token: token, user: user.profile });
   });
 };
 
@@ -93,6 +93,7 @@ exports.changePassword = function(req, res, next) {
  * Get my info
  */
 exports.me = function(req, res, next) {
+  console.log(req)
   var userId = req.user._id;
   User.findOne({
     _id: userId

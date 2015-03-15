@@ -1,7 +1,10 @@
 'use strict';
 
 angular.module('puanJaiApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth, $state) {
+  .controller('NavbarCtrl', function ($scope, $location, Auth, $state, $window) {
+    $scope.user = Auth.getCurrentUser();
+    $scope.userId = $scope.user._id;
+    $scope.username = $scope.user.username;
     $scope.menu = [
     {
       'title': 'ข่าวสารนําใจ',
@@ -17,7 +20,7 @@ angular.module('puanJaiApp')
     $scope.logout = function() {
       Auth.logout();
       $location.path('/');
-      window.location.reload();
+      $window.location.reload();
     };
 
     $scope.isActive = function(route) {
@@ -25,17 +28,17 @@ angular.module('puanJaiApp')
     };
 
 
-    $scope.displayName = function(){
-      // debugger;
-      if (Auth.isLoggedIn()) {
-        if (Auth.getCurrentUser().username) {
-          return Auth.getCurrentUser().username;
-        } else {
-          var full = Auth.getCurrentUser().name.first + " " + Auth.getCurrentUser().name.last;
-          return full;
-        }
-      }
-    };
+    // $scope.displayName = function(){
+    //   if (Auth.isLoggedIn()) {
+    //     console.log($scope.user)
+    //     if ($scope.user.username) {
+    //       return $scope.user.username;
+    //     } else {
+    //       var full = $scope.user.name.first + " " + $scope.user.name.last;
+    //       return full;
+    //     }
+    //   }
+    // };
 
   })
 .controller('DropdownCtrl', function ($scope) {
@@ -83,15 +86,13 @@ angular.module('puanJaiApp')
     $scope.status.isopen = !$scope.status.isopen;
   };
 
-  $scope.closeCollapse = function(e){
-    // $e.preventDefault();
-    debugger;
-    var w = window.innerWidth
-    || document.documentElement.clientWidth
-    || document.body.clientWidth;
-    if (w <= 767) {
-      $scope.isCollapsed = !$scope.isCollapsed;
-    }
-  };
+  // $scope.closeCollapse = function(e){
+  //   var w = window.innerWidth
+  //   || document.documentElement.clientWidth
+  //   || document.body.clientWidth;
+  //   if (w <= 767) {
+  //     $scope.isCollapsed = !$scope.isCollapsed;
+  //   }
+  // };
 });
 

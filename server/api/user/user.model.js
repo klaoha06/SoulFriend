@@ -11,7 +11,7 @@ var UserSchema = new Schema({
     first: String,
     last: String
   },
-  coverimg: String,
+  coverimg: {type: String, default: 'https://kalie101.files.wordpress.com/2013/01/wpid-bn_avatar_builtin14.png'},
   email: String,
   username: String,
   role: {
@@ -27,7 +27,12 @@ var UserSchema = new Schema({
   twitter: {},
   google: {},
   github: {},
-  questions_id: [{type: Schema.Types.ObjectId, ref: 'Question'}]
+  questions_id: [{type: Schema.Types.ObjectId, ref: 'Question'}],
+  questions_count: {type: Number, default: 0},
+  articles_id: [{type: Schema.Types.ObjectId, ref: 'Article'}],
+  articles_count: {type: Number, default: 0},
+  jais_count: {type: Number, default: 0},
+  answers_count: {type: Number, default: 0}
 });
 
 UserSchema.plugin(random);
@@ -52,10 +57,17 @@ UserSchema
   .get(function() {
     return {
       'name': this.name,
+      'username': this.username,
       'role': this.role,
       'coverimg': this.coverimg,
       'summary': this.summary,
-      'reason': this.reason
+      'reason': this.reason,
+      'questions_id': this.questions_id,
+      'questions_count': this.questions_count,
+      'articles_id': this.articles_id,
+      'articles_count': this.articles_count,
+      'jais_count': this.jais_count,
+      'answers_count': this.answers_count
     };
   });
 

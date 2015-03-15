@@ -136,7 +136,7 @@ angular.module('puanJaiApp')
     order = o || order;
     reverse = r || reverse;
     $scope.selectedTopic = t || $scope.selectedTopic;
-    $http.get('/api/questions',{ params: {category: category, topic: $scope.selectedTopic, skip: $scope.skip}}).success(function(questions){
+    $http.get('/api/questions',{ params: {category: category, filterBy: {topic: $scope.selectedTopic}, skip: $scope.skip}}).success(function(questions){
       if ($scope.skip > 0){
         $scope.questions = $scope.questions.concat(questions);
       } else {

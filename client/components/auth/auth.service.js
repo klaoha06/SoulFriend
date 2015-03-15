@@ -62,7 +62,7 @@ angular.module('puanJaiApp')
         return User.save(user,
           function(data) {
             $cookieStore.put('token', data.token);
-            currentUser = User.get();
+            currentUser = data.user;
             return cb(user);
           },
           function(err) {

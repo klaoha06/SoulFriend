@@ -1,0 +1,27 @@
+<div class="container" style="margin-top: 20px; margin-bottom: 20px;">
+	<div class="row panel background-blue">
+		<div class="col-md-3 bg_blur">
+    	    <!-- <a href="#" class="follow_btn hidden-xs">Follow</a> -->
+		</div>
+        <div class="col-md-9  col-xs-12" style="background:white; min-height: 200px;">
+           <img src="{{currentUser.coverimg}}" class="img-thumbnail picture hidden-sm hidden-xs" />
+           <img src="{{currentUser.coverimg}}" class="img-thumbnail visible-sm visible-xs picture_mob" />
+           <div class="header">
+                <h1>{{currentUser.username}}</h1>
+                <!-- <h4>Web Developer</h4> -->
+                <p><small>{{currentUser.reason}}</small><p>
+                <!-- <span>{{currentUser.summary}}</span> -->
+           </div>
+        </div>
+    </div>   
+    
+	<div class="row nav">    
+        <div class="col-md-4"></div>
+        <div class="col-md-8 col-xs-12" style="margin: 0px;padding: 0px; margin-top:-25px;">
+            <div class="col-md-3 col-xs-3 well"><i class="fa fa-gift"></i> ให้กําลังใจ<br>{{currentUser.jais_count}}</div>
+            <div class="col-md-3 col-xs-3 well"><i class="fa fa-heart"></i> ตอบปัญหา<br>{{currentUser.answers_count}}</div>
+            <div class="col-md-3 col-xs-3 well"><i class="fa fa-question"></i> ถาม<br>{{currentUser.questions_count}}</div>
+            <div class="col-md-3 col-xs-3 well"><i class="fa fa-pencil"></i> ให้ความรู้<br>{{currentUser.articles_count}}</div>
+        </div>
+    </div>
+</div>
