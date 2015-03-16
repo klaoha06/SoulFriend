@@ -1,14 +1,19 @@
 'use strict';
 
 angular.module('puanJaiApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth, $state, $window) {
+  .controller('NavbarCtrl', function ($rootScope, $scope, $location, Auth, $state, $window) {
+    $rootScope.$on('userUpdated', function(event, data){
+      $scope.user = data;
+    });
     $scope.user = Auth.getCurrentUser();
-    $scope.userId = $scope.user._id;
-    $scope.username = $scope.user.username;
     $scope.menu = [
     {
-      'title': 'ข่าวสารนําใจ',
+      'title': 'ความรู้เพื่อนใจ',
       'link': '/news'
+    },
+    {
+      'title': 'ข่าวสาร',
+      'link': 'https://www.facebook.com/pages/%E0%B9%80%E0%B8%9E%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%99%E0%B9%83%E0%B8%88-SoulFriend/1592541667644089?ref=hl'
     }
     ];
 
@@ -16,6 +21,70 @@ angular.module('puanJaiApp')
     $scope.isLoggedIn = Auth.isLoggedIn;
     $scope.isAdmin = Auth.isAdmin;
     $scope.getCurrentUser = Auth.getCurrentUser;
+
+     $scope.helps = [
+    // {
+    //   'title': 'ตอบปัญหาเพื่อนใจ',
+    //   'link': '/'
+    // },
+    // {
+    //   'title': 'ให้ความรู้',
+    //   'link': '/share'
+    // },
+    {
+      'title': 'สมัครเป็นนักเขียน',
+      'link': '/writer'
+    },
+    {
+      'title': 'สมัครเป็นผู้แนะนําทางใจ',
+      'link': '/assist'
+    },
+     {
+      'title': 'ร่วมงานกับเรา',
+      'link': '/help'
+    },
+     {
+      'title': 'เราทํางานไม่ได้เงิน',
+      'link': '/help'
+    }
+     ];
+
+      $scope.abouts = [
+     {
+       'title': 'รู้จักกับผู้สร้าง',
+       'link': '/about'
+     },
+     {
+       'title': 'เพื่อนใจทําไมกัน',
+       'link': '/why'
+     },
+     {
+       'title': 'มาเป็นส่วนหนึ่งกับเรา',
+       'link': '/join'
+     }
+      ];
+
+      $scope.userOptions = [
+     {
+       'title': 'หน้าของฉัน',
+       'link': '/users/' + $scope.user._id
+     },
+     {
+       'title': 'ตั่งค่า',
+       'link': '/settings'
+     }
+      ];
+
+     $scope.status = {
+       isopen: false
+     };
+
+     $scope.toggleDropdown = function($event) {
+       $event.preventDefault();
+       $event.stopPropagation();
+       $scope.status.isopen = !$scope.status.isopen;
+     };
+
 
     $scope.logout = function() {
       Auth.logout();
@@ -27,72 +96,5 @@ angular.module('puanJaiApp')
       return route === $location.path();
     };
 
-
-    // $scope.displayName = function(){
-    //   if (Auth.isLoggedIn()) {
-    //     console.log($scope.user)
-    //     if ($scope.user.username) {
-    //       return $scope.user.username;
-    //     } else {
-    //       var full = $scope.user.name.first + " " + $scope.user.name.last;
-    //       return full;
-    //     }
-    //   }
-    // };
-
-  })
-.controller('DropdownCtrl', function ($scope) {
-  $scope.helps = [
- {
-   'title': 'ตอบปัญหาเพื่อนใจ',
-   'link': '/'
- },
- {
-   'title': 'สมัครเป็นนักเขียน',
-   'link': '/writer'
- },
- {
-   'title': 'สมัครเป็นผู้แนะนําทางใจ',
-   'link': '/assist'
- },
-  {
-   'title': 'รับผู้ร่วมงานเพิ่ม',
-   'link': '/help'
- }
-  ];
-
-   $scope.abouts = [
-  {
-    'title': 'รู้จักกับผู้สร้าง',
-    'link': '/about'
-  },
-  {
-    'title': 'เพื่อนใจทําไมกัน',
-    'link': '/why'
-  },
-  {
-    'title': 'มาเป็นส่วนหนึ่งกับเรา',
-    'link': '/join'
-  }
-   ];
-
-  $scope.status = {
-    isopen: false
-  };
-
-  $scope.toggleDropdown = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    $scope.status.isopen = !$scope.status.isopen;
-  };
-
-  // $scope.closeCollapse = function(e){
-  //   var w = window.innerWidth
-  //   || document.documentElement.clientWidth
-  //   || document.body.clientWidth;
-  //   if (w <= 767) {
-  //     $scope.isCollapsed = !$scope.isCollapsed;
-  //   }
-  // };
-});
+  });
 

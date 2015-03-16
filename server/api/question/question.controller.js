@@ -48,8 +48,8 @@ exports.index = function(req, res) {
     })
       break;
     case 'noAnswer':
-      filterBy.answers_count = 0;
-      Question.find(filterBy).sort('created').skip(skip).limit(20).exec(function (err, questions){
+      filterBy.answers_count = {'$lt': 5};
+      Question.find(filterBy).sort({answers_count:1, created: 1}).skip(skip).limit(20).exec(function (err, questions){
           if(err) { return handleError(res, err); }
             return res.status(200).json(questions);
       })

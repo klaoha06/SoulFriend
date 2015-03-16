@@ -67,19 +67,24 @@ angular.module('puanJaiApp')
 
 
     // Slider
-    $scope.myInterval = 3000;
-     var slides = $scope.slides = [];
-     $scope.addSlide = function() {
-       var newWidth = 850 + slides.length + 1;
-       slides.push({
-         image: 'http://placekitten.com/' + newWidth + '/300',
-         text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
-           ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]
-       });
-     };
-     for (var i=0; i<4; i++) {
-       $scope.addSlide();
-     }
+  $scope.slides = [
+  {
+    image: 'http://lorempixel.com/1900/300/animals',
+    text:'hi'
+  },
+  {
+    image: 'http://lorempixel.com/1600/300/animals',
+    text:'yo'
+  },
+  {
+    image: 'http://lorempixel.com/1400/300/animals',
+    text:'bye'
+  },
+  {
+    image: 'http://lorempixel.com/1000/300/animals',
+    text:'love u'
+  }
+  ];
 
      // On leave page
     $scope.$on('$destroy', function () {

@@ -1,21 +1,10 @@
-.navbar-default {
-	background-color: #FFF9AA;
-}
-
-.navbar {
-	border: 0;
-}
-
-.navbar-nav li span a {
-	color: #777777;
-	line-height: 20px;
-	position: relative;
-	display: block;
-	padding: 15px 15px;
-	text-decoration: none;
-	background: transparent;
-}
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-  color: #555555;
-  background-color: 0;
+.navActionButton > li > a:hover, .navActionButton > li > a:focus {
+	background: rgb(91,192,222);
+	background: -moz-linear-gradient(top,  rgba(91,192,222,1) 0%, rgba(75,154,204,1) 99%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(91,192,222,1)), color-stop(99%,rgba(75,154,204,1)));
+	background: -webkit-linear-gradient(top,  rgba(91,192,222,1) 0%,rgba(75,154,204,1) 99%);
+	background: -o-linear-gradient(top,  rgba(91,192,222,1) 0%,rgba(75,154,204,1) 99%);
+	background: -ms-linear-gradient(top,  rgba(91,192,222,1) 0%,rgba(75,154,204,1) 99%);
+	background: linear-gradient(to bottom,  rgba(91,192,222,1) 0%,rgba(75,154,204,1) 99%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5bc0de', endColorstr='#4b9acc',GradientType=0 );
 }

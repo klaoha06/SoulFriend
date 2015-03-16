@@ -93,7 +93,6 @@ exports.changePassword = function(req, res, next) {
  * Get my info
  */
 exports.me = function(req, res, next) {
-  console.log(req)
   var userId = req.user._id;
   User.findOne({
     _id: userId

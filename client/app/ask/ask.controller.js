@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('puanJaiApp')
   .controller('askCtrl', function ($scope, $http, socket, $stateParams, Auth, $location, $cookieStore, $filter) {
     var orderBy = $filter('orderBy');
@@ -118,6 +116,10 @@ angular.module('puanJaiApp')
       $cookieStore.put('tags', $scope.tags);
     };
 
+    $scope.closeAlert = function(index) {
+      $scope.alerts.splice(index, 1);
+    };
+
     // On Submit
     $scope.onQuestionFormSubmit = function(){
       if (Auth.isLoggedIn()) {
@@ -148,9 +150,6 @@ angular.module('puanJaiApp')
         if ($scope.tags.length <= 0) {
           $scope.alerts.push({ type: 'danger', msg: 'กรุณาใส่อย่างน้อยหนึ่งแท็กครับ' })
         }
-        $scope.closeAlert = function(index) {
-          $scope.alerts.splice(index, 1);
-        };
 
         if ($scope.alerts.length !== 0) {
           return;
@@ -176,7 +175,6 @@ angular.module('puanJaiApp')
               topic: $scope.selectedTopic
             };
             $http.post('/api/questions', {newQuestion: newQuestion, newTags: partitionedTags[0]}).success(function(res){
-              console.log(res)
               $scope.textEditorInput = '';
               $cookieStore.remove('tags'); 
               $cookieStore.remove('topic'); 
@@ -191,10 +189,3 @@ angular.module('puanJaiApp')
     };
 
   });
-
-// angular.module('puanJaiApp')
-// .config(['$tooltipProvider', function($tooltipProvider){
-//     $tooltipProvider.setTriggers({
-//         'show': 'hide'
-//     });
-// }]);

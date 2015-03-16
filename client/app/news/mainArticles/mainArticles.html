@@ -1,3 +1,5 @@
+<div class="container">
+  
 <!-- 
 <header class="hero-unit" id="banner">
   <div class="container">
@@ -6,16 +8,18 @@
     <img class="main-logo" src="assets/images/logo-fixed.png" alt="เพื่อนใจ">
   </div>
 </header> -->
-
-        <carousel interval="myInterval">
-          <slide ng-repeat="slide in slides" active="slide.active">
-            <img ng-src="{{slide.image}}" style="margin:auto;">
-            <div class="carousel-caption">
-              <h4>Slide {{$index}}</h4>
-              <p>{{slide.text}}</p>
-            </div>
-          </slide>
-        </carousel>
+<carousel interval="4000">
+  <slide ng-repeat="slide in slides" active="slide.active" style="border-radius: 4px;">
+    <img ng-src="{{slide.image}}" class="img-responsive img-rounded" style="margin:auto; height:240px; width:100%; border:1px solid #dddddd;">
+    <div class="carousel-caption">
+      <h1>{{slide.text}}</h1>
+    </div>
+  </slide>
+</carousel>
+<div id="questionSearch"class="input-group input-group-lg">
+ <span class="input-group-addon button" id="basic-addon1" href="" ng-click="onSubmitSearch()">ถามปัญหาใจ</span>
+ <input type="text" ng-model="customSelected" placeholder="" typeahead="question as question.name for question in searchQuestions($viewValue) | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" typeahead-on-select="goToQuestion($item, $model)" class="form-control" aria-describedby="basic-addon1">
+</div>
 
       <!--       <div>
               <h1 class="page-header">Questions:</h1>
@@ -45,5 +49,8 @@
               </div>
             </div>
           </div> 
+
+</div>
+
 
     

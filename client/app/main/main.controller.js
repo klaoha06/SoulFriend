@@ -139,7 +139,8 @@ angular.module('puanJaiApp')
     $http.get('/api/questions',{ params: {category: category, filterBy: {topic: $scope.selectedTopic}, skip: $scope.skip}}).success(function(questions){
       if ($scope.skip > 0){
         $scope.questions = $scope.questions.concat(questions);
-      } else {
+      } 
+      else {
         $scope.questions = questions;
       }
           socket.syncUpdates('question', $scope.questions, function(e, item, array){

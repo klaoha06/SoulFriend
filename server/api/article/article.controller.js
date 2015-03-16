@@ -11,6 +11,10 @@
 
 var _ = require('lodash');
 var Article = require('./article.model');
+var Tag = require('../tag/tag.model');
+var wordcut = require("wordcut");
+
+wordcut.init('./node_modules/wordcut/data/tdict-std.txt');
 
 // Get list of articles
 exports.index = function(req, res) {
@@ -35,6 +39,14 @@ exports.index = function(req, res) {
       });
   }
 
+};
+
+// Text Search
+exports.search = function(req, res) {
+  Article.search({ query_string:{query: wordcut.cut(req.query.userInput) }}, function (err, results) {
+    if(err) { return handleError(res, err); }
+      return res.status(200).json(results)
+  })
 };
 
 // Get a single article

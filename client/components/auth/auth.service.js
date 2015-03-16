@@ -2,9 +2,9 @@
 
 angular.module('puanJaiApp')
   .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q, $window) {
-    var currentUser = {};
+    $rootScope.user = {};
     if($cookieStore.get('token')) {
-      currentUser = User.get();
+      $rootScope.user = User.get();
     }
 
     return {
@@ -26,7 +26,8 @@ angular.module('puanJaiApp')
         }).
         success(function(data) {
           $cookieStore.put('token', data.token);
-          currentUser = User.get();
+          $rootScope.user = data.user;
+          $rootScope.$emit('userUpdated', data.user);
           deferred.resolve(data);
           return cb();
         }).
@@ -46,7 +47,7 @@ angular.module('puanJaiApp')
        */
       logout: function() {
         $cookieStore.remove('token');
-        currentUser = {};
+        $rootScope.user = {};
       },
 
       /**
@@ -62,7 +63,8 @@ angular.module('puanJaiApp')
         return User.save(user,
           function(data) {
             $cookieStore.put('token', data.token);
-            currentUser = data.user;
+            $rootScope.user = data.user;
+            $rootScope.$emit('userUpdated', data.user);
             return cb(user);
           },
           function(err) {
@@ -82,7 +84,7 @@ angular.module('puanJaiApp')
       changePassword: function(oldPassword, newPassword, callback) {
         var cb = callback || angular.noop;
 
-        return User.changePassword({ id: currentUser._id }, {
+        return User.changePassword({ id: $rootScope.user._id }, {
           oldPassword: oldPassword,
           newPassword: newPassword
         }, function(user) {
@@ -98,7 +100,7 @@ angular.module('puanJaiApp')
        * @return {Object} user
        */
       getCurrentUser: function() {
-        return currentUser;
+        return $rootScope.user;
       },
 
       /**
@@ -107,20 +109,20 @@ angular.module('puanJaiApp')
        * @return {Boolean}
        */
       isLoggedIn: function() {
-        return currentUser.hasOwnProperty('role');
+        return $rootScope.user.hasOwnProperty('role');
       },
 
       /**
        * Waits for currentUser to resolve before checking if user is logged in
        */
       isLoggedInAsync: function(cb) {
-        if(currentUser.hasOwnProperty('$promise')) {
-          currentUser.$promise.then(function() {
+        if($rootScope.user.hasOwnProperty('$promise')) {
+          $rootScope.user.$promise.then(function() {
             cb(true);
           }).catch(function() {
             cb(false);
           });
-        } else if(currentUser.hasOwnProperty('role')) {
+        } else if($rootScope.user.hasOwnProperty('role')) {
           cb(true);
         } else {
           cb(false);
@@ -133,7 +135,7 @@ angular.module('puanJaiApp')
        * @return {Boolean}
        */
       isAdmin: function() {
-        return currentUser.role === 'admin';
+        return $rootScope.user.role === 'admin';
       },
 
       /**

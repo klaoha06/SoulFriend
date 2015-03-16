@@ -9,18 +9,18 @@
       </button>
       <a ng-href="/" class="navbar-brand">เพื่อนใจ</a>
     </div>
-    <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
-      <ul class="nav navbar-nav">
+    <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main" style="text-align:center;">
+      <ul class="nav navbar-nav" style="margin-top:0;">
         <li>
           <a href="/main" ng-hide="isLoggedIn()">หน้าหลัก</a>
         </li>
         <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
             <a ng-href="{{item.link}}">{{item.title}}</a>
         </li>
-        <li ng-controller="DropdownCtrl">
+<!--         <li>
             <span class="dropdown" dropdown on-toggle="toggled(open)">
               <a href class="dropdown-toggle" dropdown-toggle>
-                ทําความรู้จักกับเรา
+                รู้จักกับเรา
               </a>
               <ul class="dropdown-menu">
                 <li ng-repeat="choice in abouts">
@@ -28,17 +28,55 @@
                 </li>
               </ul>
             </span>
+        </li> -->
+        <li>
+          <a ng-mouseover="help='animated rubberBand'" ng-mouseleave="help=''" ng-href="/help" style="color:#428bca;"><i ng-class="help" class="fa fa-heart red"></i> เราต้องการความช่วยเหลือ!</a>
         </li>
-        <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
+<!--         <li>
+            <span class="dropdown" dropdown on-toggle="toggled(open)">
+              <a href class="dropdown-toggle" dropdown-toggle>
+                ช่วยเหลือเพื่อนใจ
+              </a>
+              <ul class="dropdown-menu" style="right: inherit;">
+                <li ng-repeat="choice in helps">
+                  <a ng-href="{{choice.link}}">{{choice.title}}</a>
+                </li>
+              </ul>
+            </span>
+        </li> -->
       </ul>
 
-      <ul class="nav navbar-nav navbar-right">
-        <li><a class="button" href="/ask">ถามปัญหาใจ</a></li>
-        <!-- <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}"><a href="/signup">สมัครเป็นเพื่อนใจ</a></li> -->
-        <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}" ng-click="closeCollapse()"><a href="/login">เข้าสู้ระบบ</a></li>
-        <li ng-show="isLoggedIn()"><a ng-href="/users/{{userId}}" style="padding-bottom:0;"><p>{{user.username}}</p></a></li>
-        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}"><a href="/settings"><span class="glyphicon glyphicon-cog"></span></a></li>
-        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout(); closeCollapse();">ออกจากระบบ</a></li>
+      <ul class="nav navbar-nav navbar-right navActionButton" style="margin-top:0;">
+
+        <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
+        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}" style="margin: 6px 0;">
+            <span class="dropdown" dropdown on-toggle="toggled(open)">
+              <a href="" class="dropdown-toggle" dropdown-toggle style="padding:7px;">
+                <img src="{{user.coverimg}}" style="width: 36px; height:36px; border-radius: 4px; box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.75);">
+              </a>
+              <ul class="dropdown-menu" style="right: inherit;">
+                <li ng-repeat="choice in userOptions">
+                  <a ng-href="{{choice.link}}">{{choice.title}}</a>
+                </li>
+                <hr style="margin-bottom: 0; margin-top: 0;">
+                <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout(); closeCollapse();">ออกจากระบบ</a></li>
+
+              </ul>
+            </span>
+        </li>
+        <li ng-show="isLoggedIn()"><a class="btn btn-info" ng-href="/share" style="color: white; padding: 8px; font-size: 1.1em; margin:5px;
+"><i class="fa fa-pencil"></i> ให้ความรู้</a></li>
+        <li ng-show="isLoggedIn()"><a class="btn btn-info" ng-href="/ask" style="  color: white;
+  padding: 8px;
+  font-size: 1.1em;
+  margin:5px;
+  "><i class="fa fa-question"></i> ถามปัญหาใจ</a></li>
+        <!-- <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}"><a ng-href="/signup">สมัครเป็นเพื่อนใจ</a></li> -->
+        <li ng-hide="isLoggedIn()" ng-click="closeCollapse()"><a class="btn btn-info" ng-href="/login" style="color: white; padding: 8px; font-size: 1.1em; margin:5px;
+"><i class="fa fa-sign-in"></i> เข้าสู้ระบบ</a></li>
+        <!-- <li ng-show="isLoggedIn()"><a ng-href="/users/{{userId}}" style="padding-bottom:0;"><img src="{{user.coverimg}}" style="width: 40px; height:40px;"></a></li> -->
+        <!-- <li ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}"><a href="/settings"><span class="glyphicon glyphicon-cog"></span></a></li> -->
+        <!-- <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout(); closeCollapse();">ออกจากระบบ</a></li> -->
       </ul>
     </div>
   </div>

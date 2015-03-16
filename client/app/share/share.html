@@ -1,5 +1,107 @@
-<div class="container" style="padding: 0 25px;">
+<div class="container-fluid" style="padding: 0 25px;">
 
+<div class="row" ng-init="checked=true">
+	<div ng-hide="checked" class="col-md-6 col-md-offset-3 animated fadeInDownBig" style="text-align: center;">
+		<h1 style="font-size:3em;">เกณฑ์ในการแบ่งบันความรู้</h1>
+		<ul style="list-style: none;">
+			<li ng-repeat="rule in writingRules"><h2 style="font-size:2em;">{{$index + 1}}. {{rule.title}}</h2></li>
+		</ul>
+		<hr>
+		ยืนยันตามข้อตกลงนี้ <input type="checkbox" ng-model="checked"/>
+		<hr>
+	</div>
+
+	<div class="background-blue" style="position: absolute; height:auto; width: 100%; opacity: 0.5;">
+		{{nameInput}}
+	</div>
+
+	<form ng-show="checked" ng-submit="onSubmit(form)" class="col-md-6 col-md-offset-3 animated fadeIn">
+		
+		<h2 class="blue">ขั้นตอนที่ 1: ชื่อบทความ</h2>
+		<textarea class="form-control" rows="3" ng-model="nameInput" placeholder="ชื่อบทความ.." style="font-size: 1.2em;" popover-placement="bottom" popover="On the Right!" popover-trigger="show">
+		</textarea>
+		<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[nameInput.length > 150]">{{150 - nameInput.length}}</span> อักขระ</span>
+		<div ng-if="searchResults.length > 0">
+			<h2 class="text-center">บทความที่คลายกันที่อาจมีคนอื่นเขียนแล้ว</h2>
+			<hr style="width:70%;"/>
+		    <table class="table table-hover animated fadeIn">
+		    	<div class="row" style="text-align: center; margin-right: 0; margin-left: 0;">
+		    		<div class="col-md-3 text-left bigger blue">ความใกล้เคียง</div>
+		    		<div class="col-md-6 text-center bigger blue">ชื่อบทความ</div>
+		    		<div class="col-md-3 text-right bigger blue">ความนิยม</div>
+		    	</div>
+		         <tbody>
+		           <tr ng-repeat="result in searchResults | limitTo:5" ng-class="{true: 'background-yellow', false: ''}[$even]" style="text-align: center;">
+			             <td>{{result._score | number:2}}</td>
+			             <td>{{result._source.name | limitTo:100}}</td>
+			             <td>{{result._source.votes_count}}</td>
+		           </tr>
+		         </tbody>
+		       </table>
+		</div>
+		<hr>
+
+		<h2 class="blue">ขั้นตอนที่ 2: ความสําคัญของบทความนี้</h2>
+		<textarea class="form-control" rows="3" ng-model="importanceInput" placeholder="ความสําคัญของบทความ.." style="font-size: 1.2em;" popover-placement="bottom" popover="On the Right!" popover-trigger="show">
+		</textarea>
+		<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[importanceInput.length > 150]">{{150 - importanceInput.length}}</span> อักขระ</span>
+
+		<hr/>
+		<h2 class="blue">ขั้นตอนที่ 3: เลือกหัวข้อ <h2>
+		<div class="row">
+		  <div ng-repeat="topic in topics" class="col-sm-6 col-md-4" ng-class="{true: 'blue', false: ''}[topic.active]" ng-click="selectTopic(topic.title);" >
+		    <div class="thumbnail" ng-mouseover="animate='animated pulse background-yellow'" ng-mouseleave="animate='background-white'" ng-class="animate">
+		        <h3 style="margin: 0 auto; display:block; padding:30px; text-align: center;">{{topic.title}}</h3>
+		    </div>
+		  </div>
+		  <div ng-show="selectedTopic"class="col-sm-12 col-md-4 animated fadeIn text-center">
+		  	<div class="thumbnail background-yellow">
+			  	<h4 class="blue">หัวข้อที่เลือก</h4>
+			  	<h3>{{selectedTopic}}</h3>
+		  	</div>
+		  </div>
+		</div>
+		<hr/>
+
+		<h2 class="blue">ขั้นตอนที่ 4: เนื้อความ</h2>
+		<text-angular ta-toolbar="[['p','h1','h2','h3','quote', 'ul', 'ol','undo','redo','clear','justifyLeft', 'justifyCenter','justifyRight', 'insertImage', 'insertLink', 'insertVideo']]" ng-model="textEditorInput"></text-angular>
+		<hr/>
+
+		<h2 class="blue">ขั้นตอนที่ 5: สรุปโดยย่อ</h2>
+		<textarea class="form-control" rows="3" ng-model="conclusionInput" placeholder="สรุป.." style="font-size: 1.2em;" popover-placement="bottom" popover="On the Right!" popover-trigger="show">
+		</textarea>
+		<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[conclusionInput.length > 150]">{{150 - conclusionInput.length}}</span> อักขระ</span>
+		<hr>
+		<h2 class="blue">ขั้นตอนสุดท้าย: ใส่แท็ก</h2>
+		<div class="input-group input-group-lg">
+		    <span class="input-group-addon"><i class="fa fa-tags"></i> แท็ก</span>
+		    <tags-input ng-model="tags" class="ti-input-lg" display-property="name" placeholder="คําถามนี้เกี่ยวข้องกับอะไรบ้าง..." max-length="40" add-on-comma="false" maxTags="4" on-tag-added="storeTagInCookie()">
+		    <auto-complete source="searchTags($query)" highlightMatchedText="true" select-first-match="false"></auto-complete>
+		    </tags-input>
+		</div>
+
+		<script type="text/ng-template" id="tagSearch.html">
+		  <a>
+		  	<b class="yellow">ชื่อ:</b>
+		      <span bind-html-unsafe="match.model.name"></span>
+		    <b class="yellow">คนใช่แท็กนี้: </b>
+		      <span bind-html-unsafe="match.model.popular_count"></span>
+		  </a>
+		</script>
+		<br>
+		<!-- <h2 class="blue">ขั้นตอนที่ 1: ภาพปกของบทความ</h2> -->
+		<input class="btn btn-primary btn-lg" style="width:100%;"type="submit" value="แชร์บทความ" />
+		<br/>
+		<alert ng-repeat="alert in alerts" type="{{alert.type}}" class="animated fadeIn" close="closeAlert($index)">{{alert.msg}}</alert>
+
+
+	</form>
+
+</div>
+
+
+
+<!-- 
 
 	<div class="row">
 		<div class="col-md-7">
@@ -69,7 +171,7 @@
 
 		</div>
 		<div class="col-md-4 fixed" style="padding-left: 0; padding-right: 0;">
-			<!-- <div class="fixed"> -->
+			<div class="fixed">
 				
 					<div id="howToAsk">
 					<h2 class="blue">วิธีการถาม</h2>
@@ -86,7 +188,7 @@
 
 			
 		</div>
-	</div>
+	</div> -->
 
 
 </div>

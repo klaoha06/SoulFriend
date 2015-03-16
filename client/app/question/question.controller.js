@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('puanJaiApp')
   .controller('questionCtrl', function ($scope, $http, socket, $stateParams, Auth, $location) {
     $scope.textEditorInput;
