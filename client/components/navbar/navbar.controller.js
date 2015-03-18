@@ -4,6 +4,7 @@ angular.module('puanJaiApp')
   .controller('NavbarCtrl', function ($rootScope, $scope, $location, Auth, $state, $window) {
     $rootScope.$on('userUpdated', function(event, data){
       $scope.user = data;
+      $scope.userId = $scope.user._id;
     });
     $scope.user = Auth.getCurrentUser();
     $scope.menu = [
@@ -67,7 +68,7 @@ angular.module('puanJaiApp')
       $scope.userOptions = [
      {
        'title': 'หน้าของฉัน',
-       'link': '/users/' + $scope.user._id
+       'link': '/users/' + $scope.userId
      },
      {
        'title': 'ตั่งค่า',

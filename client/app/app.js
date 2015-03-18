@@ -10,7 +10,8 @@ angular.module('puanJaiApp', [
   'timeAgo',
   'textAngular',
   'ngTagsInput',
-  'angular-jqcloud'])
+  'angular-jqcloud',
+  'headroom'])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
       .otherwise('/');

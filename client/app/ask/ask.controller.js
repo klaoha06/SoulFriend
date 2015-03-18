@@ -2,8 +2,8 @@ angular.module('puanJaiApp')
   .controller('askCtrl', function ($scope, $http, socket, $stateParams, Auth, $location, $cookieStore, $filter) {
     var orderBy = $filter('orderBy');
     var user = Auth.getCurrentUser();
-    $scope.textEditorInput = $cookieStore.get('content');
-    $scope.oldContent = $cookieStore.get('content');
+    $scope.textEditorInput = localStorage.getItem('questionContent');
+    $scope.oldContent = localStorage.getItem('questionContent');
     $scope.searchResults;
     $scope.searchInput = $cookieStore.get('questionTitle');
     $scope.selectedTopic = $cookieStore.get('topic');
@@ -93,7 +93,7 @@ angular.module('puanJaiApp')
     // Store Content in Cookie
     $scope.$watch('textEditorInput', function(input){
       if (input) {
-        $cookieStore.put('content', input);
+        localStorage.setItem('questionContent', input);
       }
     });
 
@@ -180,6 +180,7 @@ angular.module('puanJaiApp')
               $cookieStore.remove('topic'); 
               $cookieStore.remove('content'); 
               $cookieStore.remove('questionTitle'); 
+              localStorage.removeItem('questionContent'); 
               $location.path(/questions/ + res._id);
             });
       } else {

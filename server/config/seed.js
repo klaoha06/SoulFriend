@@ -126,7 +126,8 @@ User.find({}).remove(function() {
                 _ownerId: users[i]._id,
                 username: users[i].username,
                 summary: users[i].summary,
-                role: users[i].role
+                role: users[i].role,
+                coverimg: Faker.image.avatar()
               }
             })
           })

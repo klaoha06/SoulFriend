@@ -59,14 +59,12 @@
        </slide>
      </carousel>
 
-   <div class="clearfix">
-   </div>
+   <div class="clearfix"></div>
 
          <tab ng-repeat="tab in tabs" heading="{{tab.title}}" ng-click="resetSkip(); getQuestions(tab.category, tab.orderBy, tab.reverse);">
          </tab>
 
-       <div class="clearfix">
-       </div>
+       <div class="clearfix"></div>
 
      <div class="questions row" ng-model="questions">
       <div class="col-md-12" ng-repeat="question in questions" ng-class="questionAni">

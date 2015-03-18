@@ -60,7 +60,7 @@
     font-size:18px;
 }
 
-p {
+p,h1,h2,h3,h4,h5,h6,blockquote {
   word-wrap: break-word;
 }
 
@@ -102,11 +102,11 @@ a:hover {
 }
 
 .background-blue {
-  background: aliceblue;
+  background-color: aliceblue;
 }
 
 .background-yellow {
-  background: #FFF9AA;
+  background-color: #FFF9AA;
 }
 
 .background-white {

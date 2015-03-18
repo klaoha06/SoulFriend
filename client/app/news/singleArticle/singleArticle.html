@@ -1,4 +1,129 @@
+<div style="position: relative">
+	<div class="jumbotron background-blue">
+		<div>
+		  <i class="fa fa-tags"></i>
+		  <a class="topic" ng-href="/topics/{{question.topic}}">{{article.topic}} -</a>
+		  <a style="display:inline;" ng-repeat="tag in article.tags" ng-href="/tags/{{tag._id}}"><small>{{tag.name+" "}}</small></a> 
+		</div>
+		<h1 style="text-align: center; margin-top:10px;">{{article.name}}</h1>
+	</div>
 <div class="container">
+	<div class="row">
+		<div class="col-md-2">
+<!-- 			<div class="panel panel-default panel-card">
+				<div class="panel-heading">
+					<img ng-cloak class="ng-cloak" ng-src="https://unsplash.imgix.net/12/barley.jpg?q=75&fm=jpg&s=f39de5ca1970a13dbe6af6c86b3c47ec" />
+					<button class="btn btn-primary btn-sm" role="button">Follow</button>
+				</div>
+				<div class="panel-figure">
+					<img class="img-responsive img-circle" ng-src="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/73.jpg" />
+				</div>
+				<div class="panel-body text-center">
+					<h4 class="panel-header"><a href="https://twitter.com/maridlcrmn">@Maridlcrmn</a></h4>
+					<small>A short description goes here.</small>
+				</div>
+				<div class="panel-thumbnails">
+					<div class="row">
+						<div class="col-xs-4">
+							<div class="thumbnail">
+								<img ng-src="http://placemi.com/mzwlj/60x60" />
+							</div>
+						</div>
+						<div class="col-xs-4">
+							<div class="thumbnail">
+								<img ng-src="http://placemi.com/yboaj/60x60" />
+							</div>
+						</div>
+						<div class="col-xs-4">
+							<div class="thumbnail">
+								<img ng-src="http://placemi.com/gv3bp/60x60" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> --> 
+		</div>
+		<div class="col-md-8">
+			<div style="margin: 0px;padding: 0px; margin-top:-50px;">
+			    <div class="col-md-3 col-xs-3 well"><i class="fa fa-thumbs-up"></i> โหวต<br>{{article.votes_count}}</div>
+			    <div class="col-md-3 col-xs-3 well"><i class="fa fa-share-alt"></i> แชร์<br>{{article.shares}}</div>
+			    <div class="col-md-3 col-xs-3 well"><i class="fa fa-eye"></i> ผู้ชม<br>{{article.views}}</div>
+			    <div class="col-md-3 col-xs-3 well"><i class="fa fa-comments"></i> ความเห็น<br>{{article.comments_count}}</div>
+			</div>
+			<div id="articleTopPanel">			
+				<h1>ความสําคัญของบทความนี้</h1>
+				<p>{{article.importance}}</p>
+				<hr style="width:75%;">
+				<h1>สรุปโดยสั่น</h1>
+				<p>{{article.summary}}</p>
+				<hr style="width:75%;">
+			</div>
+			<div class="articleBody"ng-bind-html="article.body" style="word-wrap: break-word; padding:25px; line-height:40px; font-size:25px; letter-spacing: 1px;">
+			</div>
+
+		</div>
+	</div>
+</div>
+	
+<headroom ng-show="article" tolerance="5" offset="windowHeight" classes='{"initial":"animated","pinned":"fadeOut","unpinned":"fadeIn","top":"headroom--top","notTop":"headroom--not-top"}' style="background-color: white; max-height: 50px; border: 1px solid #dddddd; margin-top:23px; padding:7px; position:absolute; width:100%;">
+  <img src="{{article.owner.coverimg}}" style="width: 32px; height:32px; border-radius: 4px; box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.75);">
+<a ng-href="/users/{{article.owner._ownerId}}"><small>{{article.owner.username}}</small></a>
+<small>- เขียนเมื่อ {{article.created | timeAgo}}</small>
+<small>- {{article.created | date:'MMM d, y'}}</small>
+<div style="float:right;">
+	<a class="btn btn-info" ng-href="/share" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-ban"></i> รายงานความไม่เหมาะสม</a>
+	<a class="btn btn-info" ng-href="/share" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-heart-o"></i> เก็บใจ</a>
+	<a class="btn btn-info" ng-href="/share" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-slideshare"></i> แชร์</a>
+	<a class="btn btn-info" ng-href="/share" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-thumbs-up"></i> โหวตขึ้น</a>
+	<a class="btn btn-info" ng-href="/share" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-thumbs-down"></i> โหวตลง</a>
+</div>
+</headroom>
+<div class="container">
+	<div class="col-md-8 col-md-offset-2" style="margin-top: 100px;">
+		<div ng-repeat="comment in article.comments">
+			<comment class="row">
+			  <div class="col-md-2 col-sm-2 hidden-xs">
+			    <figure class="thumbnail">
+			      <img class="img-responsive" ng-src="{{comment.user.coverimg}}" />
+			      <figcaption class="text-center">{{comment.user.username}}</figcaption>
+			    </figure>
+			  </div>
+			  <div class="col-md-10 col-sm-10">
+			    <div class="">
+			      <div class="panel-body">
+			        <header class="text-left">
+			          <div class="comment-user"><i class="fa fa-user"></i>{{comment.user.username}}</div>
+			          <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i>{{comment.createAt}}</time>
+			        </header>
+			        <div class="comment-post">
+			          <p>
+			            {{comment.content}}
+			          </p>
+			        </div>
+			        <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
+			      </div>
+			    </div>
+			  </div>
+			</comment>
+			<hr/>
+		</div>
+		<form class="comment-form">
+		  <label>ร่วมสนทนา</label>
+		  <p class="input-group">
+		    <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="newComment">
+		    <span class="input-group-btn">
+		      <button type="submit" class="btn btn-primary" ng-click="addComment()">Add Comment</button>
+		    </span>
+		  </p>
+		</form>
+	</div>
+</div>
+
+
+</div>	
+
+
+<!-- <div class="container">
 <div class="row" style="padding: 0 25px;">
 	<div class="col-md-9 no-gutter">
 		<header class="hero-unit" id="banner" style="background-image: url({{article.coverImg}}); background-size: cover;">
@@ -80,7 +205,7 @@
 	</div>	
 
 
-<!-- 	      <div>
+ <div>
 	        <h1 class="page-header">Questions:</h1>
 	        <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in awesomeThings">
 	          <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="deleteThing(thing)">&times;</button></a></li>
@@ -96,5 +221,5 @@
 	        </span>
 	      </p>
 	    </form>
- -->
-</div>
+
+</div> -->

@@ -27,7 +27,7 @@ var ArticleSchema = new Schema({
   shares: { type: Number, default: 0},
   comments: Array,
   comments_count: { type: Number, default: 0},
-  tag_ids: Array,
+  tags: Array,
   topic: String
 });
 

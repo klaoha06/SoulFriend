@@ -8,3 +8,29 @@
 	background: linear-gradient(to bottom,  rgba(91,192,222,1) 0%,rgba(75,154,204,1) 99%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5bc0de', endColorstr='#4b9acc',GradientType=0 );
 }
+/*.swingInX {
+	-moz-transform-origin: top;
+	-ie-transform-origin: top;
+	-o-transform-origin: top;
+	transform-origin: top;
+	-webkit-backface-visibility: visible!important;
+	-webkit-animation-name: swingInX;
+	-moz-backface-visibility: visible!important;
+	-moz-animation-name: swingInX;
+	-o-backface-visibility: visible!important;
+	-o-animation-name: swingInX;
+	backface-visibility: visible!important;
+	animation-name: swingInX;
+}
+
+.swingInY {
+	-webkit-transform-origin: top;
+	-webkit-animation-name: swingOutX;
+	-webkit-backface-visibility: visible!important;
+	-moz-animation-name: swingOutX;
+	-moz-backface-visibility: visible!important;
+	-o-animation-name: swingOutX;
+	-o-backface-visibility: visible!important;
+	animation-name: swingOutX;
+	backface-visibility: visible!important;
+}*/

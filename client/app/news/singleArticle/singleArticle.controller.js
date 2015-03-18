@@ -1,16 +1,8 @@
 'use strict';
 
 angular.module('puanJaiApp')
-  .controller('articleCtrl', function ($scope, $http, socket, $stateParams, Auth, $location) {
-    // $scope.awesomeThings = [];
-    // var location = $location;
-    // debugger;
-    // Getting Things
-    // $http.get('/api/things').success(function(awesomeThings) {
-    //   $scope.awesomeThings = awesomeThings;
-    //   socket.syncUpdates('thing', $scope.awesomeThings);
-    // });
-
+  .controller('articleCtrl', function ($scope, $http, socket, $stateParams, Auth, $location, $window) {
+    $scope.windowHeight = $window.innerHeight -100;
     // Getting the Article
 
     $http.get('/api/articles/' + $stateParams.id).success(function(article) {
@@ -23,11 +15,11 @@ angular.module('puanJaiApp')
 
     $http.get('/api/articles').success(function(articles) {
       $scope.articles = articles;
-      // socket.syncUpdates('article', $scope.articles);
     });
 
     $scope.addComment = function() {
-      if($scope.newComment === '') {
+      // debugger;
+      if(typeof $scope.newComment === 'undefined' || $scope.newComment.length <= 5) {
         return;
       }
       if (Auth.isLoggedIn()) {

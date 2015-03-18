@@ -1,16 +1,20 @@
 angular.module('puanJaiApp')
   .controller('shareCtrl', function ($scope, $http, socket, $stateParams, Auth, $location, $cookieStore, $filter) {
     var orderBy = $filter('orderBy');
-    var user = Auth.getCurrentUser();
-    $scope.textEditorInput = $cookieStore.get('content');
-    $scope.oldContent = $cookieStore.get('articleContent');
+    $scope.user = Auth.getCurrentUser();
+    $scope.textEditorInput = localStorage.getItem('articleContent');
+    $scope.oldContent = localStorage.getItem('articleContent');
     $scope.searchResults;
-    $scope.nameInput = $cookieStore.get('articleTitle');
-    $scope.importanceInput = $cookieStore.get('articleImportance');
-    $scope.conclusionInput = $cookieStore.get('articleConclusion');
+    $scope.nameInput = '' || $cookieStore.get('articleTitle');
+    $scope.importanceInput = '' || $cookieStore.get('articleImportance');
+    $scope.conclusionInput = '' || $cookieStore.get('articleConclusion');
     $scope.selectedTopic = $cookieStore.get('articleTopic');
     $scope.tags = $cookieStore.get('articleTags');
     $scope.alerts = [];
+    $scope.articlePreview = '';
+    $scope.articleForm = 'show';
+    $scope.now = Date.now();
+    $scope.preview = false;
 
     $scope.writingRules = [
     {
@@ -127,7 +131,7 @@ angular.module('puanJaiApp')
     // Store Content in Cookie
     $scope.$watch('textEditorInput', function(input){
       if (input) {
-        $cookieStore.put('articleContent', input);
+        localStorage.setItem('articleContent', input);
       }
     });
 
@@ -153,6 +157,21 @@ angular.module('puanJaiApp')
     // For closing alerts
     $scope.closeAlert = function(index) {
       $scope.alerts.splice(index, 1);
+    };
+
+
+    // Toogling Preview
+
+    $scope.tooglePreview = function(){
+      if ($scope.articlePreview === '' && $scope.articleForm === 'show') {
+        $scope.articlePreview = 'animated fadeIn';
+        $scope.articleForm = 'hide';
+        $scope.preview = true;
+      } else if ($scope.articlePreview !== 'hide' && $scope.articleForm === 'hide') {
+        $scope.articlePreview = '';
+        $scope.articleForm = 'show';
+        $scope.preview = false;
+      }
     };
 
 
@@ -211,11 +230,11 @@ angular.module('puanJaiApp')
 
             var newArticle = { 
               owner: {
-                _ownerId: user._id,
-                username: user.username,
-                summary: user.summary,
-                role: user.role,
-                coverimg: user.coverimg
+                _ownerId: $scope.user._id,
+                username: $scope.user.username,
+                summary: $scope.user.summary,
+                role: $scope.user.role,
+                coverimg: $scope.user.coverimg
               },
               name: $scope.nameInput,
               body: $scope.textEditorInput,
@@ -226,14 +245,14 @@ angular.module('puanJaiApp')
             };
             $http.post('/api/articles', {newArticle: newArticle, newTags: partitionedTags[0]}).success(function(res){
               // console.log(res)
-              // $scope.textEditorInput = '';
-              // $cookieStore.remove('articleTags'); 
-              // $cookieStore.remove('articleTopic'); 
-              // $cookieStore.remove('articleContent'); 
-              // $cookieStore.remove('articleTitle');
-              // $cookieStore.remove('articleImportance');
-              // $cookieStore.remove('articleConclusion');
-              // $location.path(/questions/ + res._id);
+              $scope.textEditorInput = '';
+              $cookieStore.remove('articleTags'); 
+              $cookieStore.remove('articleTopic'); 
+              $cookieStore.remove('articleTitle');
+              $cookieStore.remove('articleImportance');
+              $cookieStore.remove('articleConclusion');
+              localStorage.removeItem('articleContent');
+              $location.path(/articles/ + res._id);
             });
       } else {
             $location.path('/login');

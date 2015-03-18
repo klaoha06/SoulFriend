@@ -60,10 +60,39 @@ exports.show = function(req, res) {
 
 // Creates a new thing in the DB.
 exports.create = function(req, res) {
-  Article.create(req.body, function(err, article) {
-    if(err) { return handleError(res, err); }
-    return res.json(201, article);
-  });
+  var newTags = req.body.newTags;
+  var newArticle = req.body.newArticle;
+  function createNewArticle(nq) {
+    Article.create(nq, function(err, article) {
+      if(err) { return handleError(res, err); }
+        for (var i = 0; i < article.tags.length; i++) {
+          Tag.findById(article.tags[i]._id, function (err, t){
+              t.articles_count++;
+              t.popular_count++;
+              t.articles_id.push(article._id);
+              t.save(function(err, result){
+                if (err) { return handleError(res, err); }
+              })
+          })
+        }
+      return res.status(200).json(article)
+    });
+  }
+  newArticle.searchname = wordcut.cut(newArticle.name);
+  if (newTags.length >= 1) {
+    var promise = Tag.create(newTags, function(){
+      var tagsToJoin = arguments;
+      for (var i = 1; i < tagsToJoin.length; i++) {
+        newArticle.tags.push({name: tagsToJoin[i].name, _id: tagsToJoin[i]._id})
+      }
+    });
+    promise.then(function(){
+      createNewArticle(newArticle)
+    })
+  } else {
+    createNewArticle(newArticle)
+  }
+
 };
 
 // Updates an existing thing in the DB.
