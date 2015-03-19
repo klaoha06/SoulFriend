@@ -1,7 +1,7 @@
-<div class="container-fluid" style="padding: 0 25px;">
+<div class="container-fluid">
 
-<div class="row" ng-init="checked=true">
-	<div ng-hide="checked" class="col-md-6 col-md-offset-3 animated fadeInDownBig" style="text-align: center;">
+<div class="row" ng-init="checked=false">
+	<div ng-hide="checked || nameInput.length > 0" class="col-md-6 col-md-offset-3 animated fadeInDownBig" style="text-align: center;">
 		<h1 style="font-size:3em;">เกณฑ์ในการแบ่งบันความรู้</h1>
 		<ul style="list-style: none;">
 			<li ng-repeat="rule in writingRules"><h2 style="font-size:2em;">{{$index + 1}}. {{rule.title}}</h2></li>
@@ -11,129 +11,111 @@
 		<hr>
 	</div>
 
-	<div ng-class="articlePreview" style="position: absolute; height:auto; width: 100%; opacity: 0.2; right:0;">
-		<div ng-show="nameInput.length >= 1" class="jumbotron background-blue animated fadeInLeft">
-			<div>
-			  <i class="fa fa-tags"></i>
-			  <a class="topic" href="">{{selectedTopic}} -</a>
-			  <a style="display:inline;" ng-repeat="tag in tags" ng-href=""><small>{{tag.name+" "}}</small></a> 
-			</div>
-			<h1 style="text-align: center; margin-top:10px;">{{nameInput}}</h1>
-		</div>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-2">
-	<!-- 			<div class="panel panel-default panel-card">
-					<div class="panel-heading">
-						<img ng-cloak class="ng-cloak" ng-src="https://unsplash.imgix.net/12/barley.jpg?q=75&fm=jpg&s=f39de5ca1970a13dbe6af6c86b3c47ec" />
-						<button class="btn btn-primary btn-sm" role="button">Follow</button>
-					</div>
-					<div class="panel-figure">
-						<img class="img-responsive img-circle" ng-src="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/73.jpg" />
-					</div>
-					<div class="panel-body text-center">
-						<h4 class="panel-header"><a href="https://twitter.com/maridlcrmn">@Maridlcrmn</a></h4>
-						<small>A short description goes here.</small>
-					</div>
-					<div class="panel-thumbnails">
-						<div class="row">
-							<div class="col-xs-4">
-								<div class="thumbnail">
-									<img ng-src="http://placemi.com/mzwlj/60x60" />
-								</div>
-							</div>
-							<div class="col-xs-4">
-								<div class="thumbnail">
-									<img ng-src="http://placemi.com/yboaj/60x60" />
-								</div>
-							</div>
-							<div class="col-xs-4">
-								<div class="thumbnail">
-									<img ng-src="http://placemi.com/gv3bp/60x60" />
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> --> 
-			</div>
-			<div class="col-md-8">
-				<div style="margin: 0px;padding: 0px; margin-top:-50px;">
-				    <div class="col-md-3 col-xs-3 well"><i class="fa fa-thumbs-up"></i> โหวต<br>123</div>
-				    <div class="col-md-3 col-xs-3 well"><i class="fa fa-share-alt"></i> แชร์<br>123</div>
-				    <div class="col-md-3 col-xs-3 well"><i class="fa fa-eye"></i> ผู้ชม<br>123</div>
-				    <div class="col-md-3 col-xs-3 well"><i class="fa fa-comments"></i> ความเห็น<br>123</div>
-				</div>
-				<div id="articleTopPanel">
-					<div ng-show="importanceInput.length >= 1" class="animated fadeInLeft">					
-						<h1>ความสําคัญของบทความนี้</h1>
-						<p>{{importanceInput}}</p>
-						<hr style="width:75%;">
-					</div>	
-					<div ng-show="conclusionInput.length >= 1" class="animated fadeInLeft">					
-						<h1>สรุปโดยสั่น</h1>
-						<p>{{conclusionInput}}</p>
-						<hr style="width:75%;">
-					</div>
-				</div>
-				<div class="articleBody" ng-bind-html="textEditorInput" style="word-wrap: break-word; padding:25px; line-height:40px; font-size:25px; letter-spacing: 1px;">
-				</div>
+   	<div ng-show="nameInput.length >= 1" class="jumbotron background-blue animated fadeInLeft">
+   		<div>
+   		  <i class="fa fa-tags"></i>
+   		  <a class="topic" href="">{{selectedTopic}} -</a>
+   		  <a style="display:inline;" ng-repeat="tag in tags" ng-href=""><small>{{tag.name+" "}}</small></a> 
+   		</div>
+   		<h1 style="text-align: center; margin-top:10px;">{{nameInput}}</h1>
+   	</div>
+   <div class="container">
+   	<div class="row">
 
-			</div>
-		</div>
-	</div>
+   		<div class="col-md-2">
+   		</div>
 
-	<headroom ng-show="preview" tolerance="5" offset="windowHeight" classes='{"initial":"animated","pinned":"fadeOut","unpinned":"fadeIn","top":"headroom--top","notTop":"headroom--not-top"}' style="background-color: white; max-height: 50px; border: 1px solid #dddddd; margin-top:23px; padding:7px; position:absolute; width:100%;">
-	  <img src="{{user.coverimg}}" style="width: 32px; height:32px; border-radius: 4px; box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.75);">
-	<a ng-href="/users/{{user._ownerId}}"><small>{{user.username}}</small></a>
-	<small>- เขียนเมื่อ {{now | timeAgo}}</small>
-	<small>- {{now | date:'MMM d, y'}}</small>
-	<div style="float:right;">
-		<!-- <a class="btn btn-info" ng-href="/share" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-ban"></i> รายงานความไม่เหมาะสม</a> -->
-		<a class="btn btn-info" ng-href="/share" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-heart-o"></i> เก็บใจ</a>
-		<a class="btn btn-info" ng-href="/share" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-slideshare"></i> แชร์</a>
-		<a class="btn btn-info" ng-href="/share" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-thumbs-up"></i> โหวตขึ้น</a>
-		<a class="btn btn-info" ng-href="/share" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-thumbs-down"></i> โหวตลง</a>
-	</div>
-	</headroom>
+   		<div ng-show="nameInput.length >= 1" class="col-md-8 animated fadeInLeft">
+   			<div style="margin: 0px;padding: 0px; margin-top:-50px;">
+   			    <div class="col-md-3 col-xs-3 well"><i class="fa fa-thumbs-up"></i> โหวต<br>123</div>
+   			    <div class="col-md-3 col-xs-3 well"><i class="fa fa-share-alt"></i> แชร์<br>123</div>
+   			    <div class="col-md-3 col-xs-3 well"><i class="fa fa-eye"></i> ผู้ชม<br>123</div>
+   			    <div class="col-md-3 col-xs-3 well"><i class="fa fa-comments"></i> ความเห็น<br>123</div>
+   			</div>
+   			<div id="articleTopPanel">
+   				<div ng-show="importanceInput.length >= 1" class="animated fadeInLeft">					
+   					<h1>ความสําคัญของบทความนี้</h1>
+   					<p>{{importanceInput}}</p>
+   					<hr style="width:75%;">
+   				</div>	
+   				<div ng-show="conclusionInput.length >= 1" class="animated fadeInLeft">					
+   					<h1>สรุปโดยสั่น</h1>
+   					<p>{{conclusionInput}}</p>
+   					<hr style="width:75%;">
+   				</div>
+   			</div>
+   			<div class="articleBody" ng-bind-html="textEditorInput" style="word-wrap: break-word; padding:25px; line-height:40px; font-size:25px; letter-spacing: 1px;">
+   			</div>
+   		</div>
 
-	</div>
-   <div class="clearfix"></div>
+   		</div>
+   		</div>
+   		<div ng-show="hide[5]===false"class="contaner-fluid">
+   		<div class="row" style="margin-left:0; margin-right: 0; background-color:white;">
+   		<headroom tolerance="5" offset="windowHeight" class="col-md-12" classes='{"initial":"animated","pinned":"fadeOut","unpinned":"fadeIn","top":"headroom--top","notTop":"headroom--not-top"}' style="padding:7px;border-top: 1px solid #dddddd; max-height: 50px;">
+   		<div class="col-md-6">   			
+	 		  <img src="{{user.coverimg}}" style="width: 32px; height:32px; border-radius: 4px; box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.75);">
+	   		<a ng-href="/users/{{user._ownerId}}"><small>{{user.username}}</small></a>
+	   		<small>- เขียนเมื่อ {{now | timeAgo}}</small>
+	   		<small>- {{now | date:'MMM d, y'}}</small>
+   		</div>
+   		<div class="col-md-6 hidden-sm hidden-xs" style="text-align: right;">
+   			<a ng-href="/share" class="btn btn-info"style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-heart-o"></i> เก็บใจ</a>
+   			<a ng-href="/share" class="btn btn-info"style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-slideshare"></i> แชร์</a>
+   			<a ng-href="/share" class="btn btn-info"style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-thumbs-up"></i> โหวตขึ้น</a>
+   			<a ng-href="/share" class="btn btn-info"style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-thumbs-down"></i> โหวตลง</a>
+   		</div>
+   		</headroom>
+   		</div>
+   		</div>
 
-	<form ng-class="articleForm" ng-show="checked" ng-submit="onSubmit(form)" class="col-md-6 col-md-offset-3 animated fadeIn">
-		
+	<hr style="margin-top:0;">
+	<form ng-class="articleForm" ng-show="checked" class="col-md-6 col-md-offset-3 animated fadeIn">
+	
+	<div id="articleForm">
+	<div class="shareSteps animated fadeIn" ng-hide="hide[0]">		
 		<h2 class="blue">ขั้นตอนที่ 1: ชื่อบทความ</h2>
-		<textarea class="form-control" rows="3" ng-model="nameInput" placeholder="ชื่อบทความ.." style="font-size: 1.2em;" popover-placement="bottom" popover="On the Right!" popover-trigger="show">
-		</textarea>
-		<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[nameInput.length > 150]">{{150 - nameInput.length}}</span> อักขระ</span>
-		<div ng-if="searchResults.length > 0">
-			<h2 class="text-center">บทความที่คลายกันที่อาจมีคนอื่นเขียนแล้ว</h2>
-			<hr style="width:70%;"/>
-		    <table class="table table-hover animated fadeIn">
-		    	<div class="row" style="text-align: center; margin-right: 0; margin-left: 0;">
-		    		<div class="col-md-3 text-left bigger blue">ความใกล้เคียง</div>
-		    		<div class="col-md-6 text-center bigger blue">ชื่อบทความ</div>
-		    		<div class="col-md-3 text-right bigger blue">ความนิยม</div>
-		    	</div>
-		         <tbody>
-		           <tr ng-repeat="result in searchResults | limitTo:5" ng-class="{true: 'background-yellow', false: ''}[$even]" style="text-align: center;">
-			             <td>{{result._score | number:2}}</td>
-			             <td>{{result._source.name | limitTo:100}}</td>
-			             <td>{{result._source.votes_count}}</td>
-		           </tr>
-		         </tbody>
-		       </table>
+		<div>		
+			<textarea class="form-control" rows="3" ng-model="nameInput" placeholder="ชื่อบทความ.." style="font-size: 1.2em;" popover-placement="bottom" popover="On the Right!" popover-trigger="show">
+			</textarea>
+			<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[nameInput.length > 150 || nameInput.length < 3 ]">{{150 - nameInput.length}}</span> อักขระ</span>
+			<div ng-if="searchResults.length > 0">
+				<h2 class="text-center">บทความที่คลายกันที่อาจมีคนอื่นเขียนแล้ว</h2>
+				<hr style="width:70%;"/>
+			    <table class="table table-hover animated fadeIn">
+			    	<div class="row" style="text-align: center; margin-right: 0; margin-left: 0;">
+			    		<div class="col-md-3 text-left bigger blue">ความใกล้เคียง</div>
+			    		<div class="col-md-6 text-center bigger blue">ชื่อบทความ</div>
+			    		<div class="col-md-3 text-right bigger blue">ความนิยม</div>
+			    	</div>
+			         <tbody>
+			           <tr ng-repeat="result in searchResults | limitTo:5" ng-class="{true: 'background-yellow', false: ''}[$even]" style="text-align: center;" ng-click="goToArticle(result._id)">
+				             <td>{{result._score | number:2}}</td>
+				             <td>{{result._source.name | limitTo:100}}</td>
+				             <td>{{result._source.votes_count}}</td>
+				             {{result}}
+			           </tr>
+			         </tbody>
+			       </table>
+			</div>
 		</div>
 		<hr>
-
+	</div>
+		
+<div class="shareSteps animated fadeIn" ng-hide="hide[1]">	
 		<h2 class="blue">ขั้นตอนที่ 2: ความสําคัญของบทความนี้</h2>
-		<textarea class="form-control" rows="3" ng-model="importanceInput" placeholder="ความสําคัญของบทความ.." style="font-size: 1.2em;" popover-placement="bottom" popover="On the Right!" popover-trigger="show">
-		</textarea>
-		<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[importanceInput.length > 150]">{{150 - importanceInput.length}}</span> อักขระ</span>
-
+		<div>		
+			<textarea class="form-control" rows="3" ng-model="importanceInput" placeholder="ความสําคัญของบทความ.." style="font-size: 1.2em;" popover-placement="bottom" popover="On the Right!" popover-trigger="show">
+			</textarea>
+			<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[importanceInput.length > 150 || importanceInput.length < 10]">{{150 - importanceInput.length}}</span> อักขระ</span>
+		</div>
 		<hr/>
-		<h2 class="blue">ขั้นตอนที่ 3: เลือกหัวข้อ <h2>
+</div>
+
+<div class="shareSteps animated fadeIn" ng-hide="hide[2]">	
+		<h2 class="blue">ขั้นตอนที่ 3: เลือกหัวข้อ </h2>
 		<div class="row">
-		  <div ng-repeat="topic in topics" class="col-sm-6 col-md-4" ng-class="{true: 'blue', false: ''}[topic.active]" ng-click="selectTopic(topic.title);" >
+		  <div ng-repeat="topic in topics" class="col-sm-6 col-md-4" ng-class="{true: 'blue', false: ''}[topic.active]" ng-click="selectTopic(topic.title);">
 		    <div class="thumbnail" ng-mouseover="animate='animated pulse background-yellow'" ng-mouseleave="animate='background-white'" ng-class="animate">
 		        <h3 style="margin: 0 auto; display:block; padding:30px; text-align: center;">{{topic.title}}</h3>
 		    </div>
@@ -146,23 +128,35 @@
 		  </div>
 		</div>
 		<hr/>
+</div>
 
+<div class="shareSteps animated fadeIn" ng-hide="hide[3]">	
 		<h2 class="blue">ขั้นตอนที่ 4: เนื้อความ</h2>
-		<text-angular ta-toolbar="[['p','h1','h2','h3','quote', 'ul', 'ol','undo','redo','justifyLeft', 'justifyCenter','justifyRight', 'insertImage', 'insertLink', 'insertVideo']]" ng-model="textEditorInput"></text-angular>
+			<div>				
+			<text-angular ta-toolbar="[['p','h1','h2','h3','quote', 'ul', 'ol','undo','redo','justifyLeft', 'justifyCenter','justifyRight', 'insertImage', 'insertLink', 'insertVideo']]" ng-model="textEditorInput"></text-angular>
+			</div>
 		<hr/>
+</div>
 
+<div class="shareSteps animated fadeIn" ng-hide="hide[4]">
 		<h2 class="blue">ขั้นตอนที่ 5: สรุปโดยย่อ</h2>
-		<textarea class="form-control" rows="3" ng-model="conclusionInput" placeholder="สรุป.." style="font-size: 1.2em;" popover-placement="bottom" popover="On the Right!" popover-trigger="show">
-		</textarea>
-		<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[conclusionInput.length > 150]">{{150 - conclusionInput.length}}</span> อักขระ</span>
-		<hr>
-		<h2 class="blue">ขั้นตอนสุดท้าย: ใส่แท็ก</h2>
-		<div class="input-group input-group-lg">
-		    <span class="input-group-addon"><i class="fa fa-tags"></i> แท็ก</span>
-		    <tags-input ng-model="tags" class="ti-input-lg" display-property="name" placeholder="คําถามนี้เกี่ยวข้องกับอะไรบ้าง..." max-length="40" add-on-comma="false" maxTags="4" on-tag-added="storeTagInCookie()">
-		    <auto-complete source="searchTags($query)" highlightMatchedText="true" select-first-match="false"></auto-complete>
-		    </tags-input>
+		<div>		
+			<textarea class="form-control" rows="3" ng-model="conclusionInput" placeholder="สรุป.." style="font-size: 1.2em;" popover-placement="bottom" popover="On the Right!" popover-trigger="show">
+			</textarea>
+			<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[conclusionInput.length > 150 || conclusionInput.length < 10]">{{150 - conclusionInput.length}}</span> อักขระ</span>
 		</div>
+		<hr>
+</div>
+
+<div class="shareSteps animated fadeIn" ng-hide="hide[5]" >	
+		<h2 class="blue">ขั้นตอนสุดท้าย: ใส่แท็ก</h2>
+			<div class="input-group input-group-lg" style="margin: 20px 0;">
+			    <span class="input-group-addon"><i class="fa fa-tags"></i> แท็ก</span>
+			    <tags-input ng-model="tags" class="ti-input-lg" display-property="name" placeholder="คําถามนี้เกี่ยวข้องกับอะไรบ้าง..." max-length="40" add-on-comma="false" maxTags="4" on-tag-added="storeTagInCookie()">
+			    <auto-complete source="searchTags($query)" highlightMatchedText="true" select-first-match="false"></auto-complete>
+			    </tags-input>
+			</div>
+		<hr>
 
 		<script type="text/ng-template" id="tagSearch.html">
 		  <a>
@@ -172,17 +166,30 @@
 		      <span bind-html-unsafe="match.model.popular_count"></span>
 		  </a>
 		</script>
+</div>
+</div>
+		<div class="row">
+				<button ng-show="hide[5] === false" class="btn btn-info" ng-click="showPrevious()" style="width:90%; display:block; margin:20px auto 0 auto;">กลับ</button>
+				<button ng-show="hide[0] === false" class="btn btn-info" ng-click="showNext()" style="width:90%; display:block; margin:20px auto 0 auto;">ต่อไป</button>
+			
+			<div class="col-md-6" ng-hide="hide[0] === false || hide[5] === false">
+				<button class="btn btn-info" ng-click="showPrevious()" style="width:90%; display:block; margin:20px auto 0 auto;">กลับ</button>
+			</div>
+			<div class="col-md-6" ng-hide="hide[0] === false || hide[5] === false">
+				<button class="btn btn-info" ng-click="showNext()" style="width:90%; display:block; margin:20px auto 0 auto;">ต่อไป</button>
+			</div>
+		</div>
 		<br>
+
 		<!-- <h2 class="blue">ขั้นตอนที่ 1: ภาพปกของบทความ</h2> -->
-		<input class="btn btn-primary btn-lg" style="width:100%;"type="submit" value="แชร์บทความ" />
-		<br/>
+		<!-- <input ng-show="hide[5]===false" class="btn btn-primary btn-lg" style="width:80%; display:block; margin:0 auto;"type="submit" value="แชร์บทความ" ng-click="onSubmit()" /> -->
+		<div ng-show="hide[5]===false">
+			<hr>
+			<a type="submit" style="background: linear-gradient(white, #fff9aa); font-size: 2em; width:100%; display:block; margin:0 auto; color:#428bca;" ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default" role="button" ng-click="onSubmit()"><i ng-class="shake" class="fa fa-child"></i> โพสต์บทความ</a>
+		</div>
+		<br>
 		<alert ng-repeat="alert in alerts" type="{{alert.type}}" class="animated fadeIn" close="closeAlert($index)">{{alert.msg}}</alert>
-
-
 	</form>
-	<div class="col-md-2 fixed" style="padding-left: 0; padding-right: 0;">
-		<button class="btn btn-default" ng-click="tooglePreview()">ดูผลงานที่เขียน ณ ตอนนี้</button>
-	</div>
 
 </div>
 

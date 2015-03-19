@@ -121,7 +121,6 @@ exports.create = function(req, res) {
     createNewQuestion(newQuestion)
   }
 
-
 };
 
 // Increment Vote for Question in the DB.

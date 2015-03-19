@@ -1,5 +1,5 @@
 angular.module('puanJaiApp')
-  .controller('shareCtrl', function ($scope, $http, socket, $stateParams, Auth, $location, $cookieStore, $filter) {
+  .controller('shareCtrl', function ($scope, $http, Auth, $location, $cookieStore, $filter) {
     var orderBy = $filter('orderBy');
     $scope.user = Auth.getCurrentUser();
     $scope.textEditorInput = localStorage.getItem('articleContent');
@@ -11,10 +11,7 @@ angular.module('puanJaiApp')
     $scope.selectedTopic = $cookieStore.get('articleTopic');
     $scope.tags = $cookieStore.get('articleTags');
     $scope.alerts = [];
-    $scope.articlePreview = '';
-    $scope.articleForm = 'show';
     $scope.now = Date.now();
-    $scope.preview = false;
 
     $scope.writingRules = [
     {
@@ -31,10 +28,7 @@ angular.module('puanJaiApp')
     },
     {
       title: 'มีประโยช์นทั่งต่อตนเองและผู้อื่น'
-    },
-    // {
-    //   title: 'ไม่กระทบกระทั่งทั่งตนเองและผู้อื่น'
-    // }
+    }
     ];
 
     $scope.topics = [
@@ -89,6 +83,12 @@ angular.module('puanJaiApp')
     }
     ];
 
+    $scope.hide = [false,true,true,true,true,true];
+
+    function htmlToPlaintext(text) {
+      return String(text).replace(/<[^>]+>/gm, '');
+    }
+
     // Search Articles
     $scope.$watch('nameInput', function(input){
       if (input){
@@ -98,6 +98,32 @@ angular.module('puanJaiApp')
         });
       }
     });
+
+    // Go to Article
+    $scope.goToArticle = function(articleId){
+      $location.path('/articles/' + articleId);
+    };
+
+    //Show Next or Previous
+    $scope.showNext = function(){
+      for (var i = 0; i < $scope.hide.length; i++) {
+        if ($scope.hide[i] === false) {
+          $scope.hide[i] = true;
+          $scope.hide[i+1] = false;
+          return;
+        }
+      }
+    };
+
+    $scope.showPrevious = function(){
+      for (var i = 0; i < $scope.hide.length; i++) {
+        if ($scope.hide[i] === false) {
+          $scope.hide[i] = true;
+          $scope.hide[i-1] = false;
+          return;
+        }
+      }
+    };
 
     $scope.$watch('importanceInput', function(input){
       if (input){
@@ -180,42 +206,40 @@ angular.module('puanJaiApp')
       if (Auth.isLoggedIn()) {
         // reset alerts
         $scope.alerts = [];
-
-        function htmlToPlaintext(text) {
-          return String(text).replace(/<[^>]+>/gm, '');
-        }
-        var text = htmlToPlaintext($scope.textEditorInput)
+        var text = htmlToPlaintext($scope.textEditorInput);
 
         // validate input
-        if ($scope.nameInput.length <= 10) {
-          $scope.alerts.push({ type: 'danger', msg: 'ชื่อของบทความควรมีความยาวอย่างน่อย 10 อักขระ' })
+        if ($scope.nameInput) {
+          if ($scope.nameInput.length < 3 || $scope.nameInput.length > 150) {
+            $scope.alerts.push({ type: 'danger', msg: 'ชื่อของบทความควรมีความยาวระหว่าง 10 ถึง 150 อักขระ' });
+          }
+        } else {
+          $scope.alerts.push({ type: 'danger', msg: 'กรุณาใส่ชื่อของบทความด้วยครับ' });
         }
-        if ($scope.nameInput.length > 150) {
-          $scope.alerts.push({ type: 'danger', msg: 'กรุณาใช่ไม่เกิน 150 อักขระในชื่อของบทความ' })
+
+        if ($scope.importanceInput) {
+          if ($scope.importanceInput.length <= 10 || $scope.importanceInput.length > 150) {
+            $scope.alerts.push({ type: 'danger', msg: 'ความสําคัญของบทความควรมีความยาวระหว่าง 10 ถึง 150 อักขระ' });
+          }
+        } else {
+          $scope.alerts.push({ type: 'danger', msg: 'กรุณาใส่ความสําคัญของบทความด้วยครับ' });
         }
-        if ($scope.importanceInput.length <= 10) {
-          $scope.alerts.push({ type: 'danger', msg: 'ความสําคัญของบทความควรมีความยาวอย่างน่อย 10 อักขระ' })
-        }
-        if ($scope.importanceInput.length > 150) {
-          $scope.alerts.push({ type: 'danger', msg: 'กรุณาใช่ไม่เกิน 150 อักขระในการเขียนความสําคัญของบทความ' })
-        }
+
         if ($scope.selectedTopic === null) {
-          $scope.alerts.push({ type: 'danger', msg: 'กรุณาเลือกหัวข้อของคําถามด้วยครับ' })
+          $scope.alerts.push({ type: 'danger', msg: 'กรุณาเลือกหัวข้อของคําถามด้วยครับ' });
         }
-        if (text.length <= 25) {
-          $scope.alerts.push({ type: 'danger', msg: 'เนื้อความควรมีความยาวอย่างน่อย 25 อักขระ' })
+        if (text.length <= 600 || text.length > 9000) {
+          $scope.alerts.push({ type: 'danger', msg: 'เนื้อความควรมีความยาวระหว่าง 600 ถึง 9000 อักขระ' });
         }
-        if (text.length > 9000) {
-          $scope.alerts.push({ type: 'danger', msg: 'กรุณาใช่ไม่เกิน 9000 อักขระในการถามคําถาม' })
-        }
-        if ($scope.conclusionInput.length <= 10) {
-          $scope.alerts.push({ type: 'danger', msg: 'บทสรุปของความควรมีความยาวอย่างน่อย 10 อักขระ' })
-        }
-        if ($scope.conclusionInput.length > 150) {
-          $scope.alerts.push({ type: 'danger', msg: 'กรุณาใช่ไม่เกิน 150 อักขระในเขียนบทสรุป' })
+        if ($scope.conclusionInput) {
+          if ($scope.conclusionInput.length > 150 || $scope.conclusionInput.length < 10) {
+            $scope.alerts.push({ type: 'danger', msg: 'กรุณาใช่ไม่เกิน 150 อักขระในเขียนบทสรุป' });
+          }
+        } else {
+          $scope.alerts.push({ type: 'danger', msg: 'กรุณาให้บทสรุปของบทความด้วยครับ' });
         }
         if ($scope.tags.length <= 0) {
-          $scope.alerts.push({ type: 'danger', msg: 'กรุณาใส่อย่างน้อยหนึ่งแท็กครับ' })
+          $scope.alerts.push({ type: 'danger', msg: 'กรุณาใส่อย่างน้อยหนึ่งแท็กครับ' });
         }
         if ($scope.alerts.length !== 0) {
           return;
@@ -227,7 +251,6 @@ angular.module('puanJaiApp')
             return tag;
           }
         });
-
             var newArticle = { 
               owner: {
                 _ownerId: $scope.user._id,
@@ -243,8 +266,10 @@ angular.module('puanJaiApp')
               importance: $scope.importanceInput,
               summary: $scope.conclusionInput
             };
+
             $http.post('/api/articles', {newArticle: newArticle, newTags: partitionedTags[0]}).success(function(res){
               // console.log(res)
+              debugger;
               $scope.textEditorInput = '';
               $cookieStore.remove('articleTags'); 
               $cookieStore.remove('articleTopic'); 

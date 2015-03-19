@@ -20,7 +20,7 @@
 			    		<div class="col-md-3 text-right bigger blue">คําตอบ</div>
 			    	</div>
 			         <tbody>
-			           <tr ng-repeat="result in searchResults | limitTo:5" ng-class="{true: 'background-yellow', false: ''}[$even]" style="text-align: center;">
+			           <tr ng-repeat="result in searchResults | limitTo:5" ng-class="{true: 'background-yellow', false: ''}[$even]" style="text-align: center;" ng-click="goToQuestion(result._id)">
 				             <td>{{result._score | number:2}}</td>
 				             <td>{{result._source.name | limitTo:100}}</td>
 				             <td>{{result._source.answers_count}}</td>

@@ -73,6 +73,11 @@ angular.module('puanJaiApp')
       }
     });
 
+    // Go to Question
+    $scope.goToQuestion = function(questionId){
+      $location.path('/questions/' + questionId);
+    };
+
     // Select Topic
     $scope.selectTopic = function(topic){
       if (topic === $scope.selectedTopic) {
