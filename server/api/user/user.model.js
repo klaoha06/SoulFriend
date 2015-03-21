@@ -26,13 +26,13 @@ var UserSchema = new Schema({
   facebook: {},
   twitter: {},
   google: {},
-  github: {},
   questions_id: [{type: Schema.Types.ObjectId, ref: 'Question'}],
   questions_count: {type: Number, default: 0},
+  ansInQuestions_id: [{type: Schema.Types.ObjectId, ref: 'Question'}],
+  answers_count: {type: Number, default: 0},
   articles_id: [{type: Schema.Types.ObjectId, ref: 'Article'}],
   articles_count: {type: Number, default: 0},
   jais_count: {type: Number, default: 0},
-  answers_count: {type: Number, default: 0}
 });
 
 UserSchema.plugin(random);

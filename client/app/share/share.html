@@ -55,7 +55,7 @@
    		<headroom tolerance="5" offset="windowHeight" class="col-md-12" classes='{"initial":"animated","pinned":"fadeOut","unpinned":"fadeIn","top":"headroom--top","notTop":"headroom--not-top"}' style="padding:7px;border-top: 1px solid #dddddd; max-height: 50px;">
    		<div class="col-md-6">   			
 	 		  <img src="{{user.coverimg}}" style="width: 32px; height:32px; border-radius: 4px; box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.75);">
-	   		<a ng-href="/users/{{user._ownerId}}"><small>{{user.username}}</small></a>
+	   		<a ng-href=""><small>{{user.username}}</small></a>
 	   		<small>- เขียนเมื่อ {{now | timeAgo}}</small>
 	   		<small>- {{now | date:'MMM d, y'}}</small>
    		</div>
@@ -70,7 +70,7 @@
    		</div>
 
 	<hr style="margin-top:0;">
-	<form ng-class="articleForm" ng-show="checked" class="col-md-6 col-md-offset-3 animated fadeIn">
+	<form ng-class="articleForm" ng-show="checked || nameInput.length > 1" class="col-md-6 col-md-offset-3 animated fadeIn">
 	
 	<div id="articleForm">
 	<div class="shareSteps animated fadeIn" ng-hide="hide[0]">		

@@ -7,8 +7,8 @@ var timeStamps = require('mongoose-times');
 var mongoosastic = require('mongoosastic');
 
 var QuestionSchema = new Schema({
+	ownerId: { type: Schema.Types.ObjectId, ref: 'User' },
   owner: {
-  	_ownerId: { type: Schema.Types.ObjectId },
   	username: String,
   	role: String,
     coverimg: String

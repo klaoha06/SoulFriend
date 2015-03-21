@@ -1,15 +1,28 @@
 'use strict';
 
 angular.module('puanJaiApp')
-  .controller('userCtrl', function ($scope, $http, socket, $stateParams, Auth, $location) {
+  .controller('profileCtrl', function ($scope, $http, socket, $stateParams, Auth, $location, $rootScope, $cookieStore) {
     $scope.currentUser = Auth.getCurrentUser();
-    $scope.userId = $scope.currentUser._id;
+    $scope.userId = localStorage.getItem('userId');
+
+    $http.get('/api/questions', { params: { filterBy: { ownerId: $scope.userId}}}).success(function(questions){
+        $scope.myQuestions = questions;
+    });
+
+    $http.get('/api/articles', { params: { filterBy: { ownerId: $scope.userId}}}).success(function(articles){
+        $scope.myArticles = articles;
+    });
+
+    $http.get('/api/questions/myanswers', { params: {userId: $scope.userId}}).success(function(questions){
+        $scope.answersInQuestions = questions;
+    });
 
 
 
     // $scope.textEditorInput;
 
     // $http.get('/api/questions/').success(function(question) {
+    //   $scope.question = question;
     //   $scope.question = question;
     //   if (currentUser){
     //     $scope.userAnsIndex = _.findIndex($scope.question.answers,{'user_id': userId});

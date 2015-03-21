@@ -91,7 +91,7 @@
 										<img class="userIcon" ng-src="{{question.owner.coverimg}}" />
 									</div>
 									<div class="col-md-8 no-gutter" style="margin: 10px 0; text-align: center; font-size:0.9em;">
-										<a ng-href="/users/{{question.owner._ownerId}}" style="font-size: 1em">{{question.owner.username}}</a><br/>
+										<a ng-href="/users/{{question.ownerId}}" style="font-size: 1em">{{question.owner.username}}</a><br/>
 										<small>{{question.created | timeAgo}}</small><br/>
 										<small>{{question.created | date:'MMM d, y h:mm a'}}</small>
 									</div>
@@ -131,7 +131,7 @@
 							<img class="userIcon" ng-src="{{answer.coverimg}}" />
 						</div>
 						<div class="col-md-10 no-gutter" style="margin: 10px 0; font-size:0.9em;">
-							<p style="margin: 15px 0;"><a ng-href="/users/{{question.owner._ownerId}}">{{answer.username}}</a><small>
+							<p style="margin: 15px 0;"><a ng-href="/users/{{question.ownerId}}">{{answer.username}}</a><small>
 								- {{answer.created | timeAgo}} - {{answer.created | date:'MMM d, y h:mm a'}}</small></p>
 								<!-- <small>{{answer.created | date:'MMM d, y h:mm a'}}</small> -->
 							</div>
@@ -173,7 +173,7 @@
 							<img class="userIcon" ng-src="{{userAns.coverimg}}" />
 						</div>
 						<div class="col-md-10 no-gutter" style="margin: 10px 0; font-size:0.9em;">
-							<p style="margin: 15px 0;"><a ng-href="/users/{{question.owner._ownerId}}">{{userAns.username}}</a><small>
+							<p style="margin: 15px 0;"><a ng-href="/users/{{question.ownerId}}">{{userAns.username}}</a><small>
 								- {{userAns.created | timeAgo}} - {{userAns.created | date:'MMM d, y h:mm a'}}</small></p>
 								<!-- <small>{{userAns.created | date:'MMM d, y h:mm a'}}</small> -->
 							</div>

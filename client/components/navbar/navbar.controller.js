@@ -68,7 +68,7 @@ angular.module('puanJaiApp')
       $scope.userOptions = [
      {
        'title': 'หน้าของฉัน',
-       'link': '/users/' + $scope.userId
+       'link': '/profile'
      },
      {
        'title': 'ตั่งค่า',

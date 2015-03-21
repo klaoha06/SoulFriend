@@ -252,24 +252,22 @@ angular.module('puanJaiApp')
           }
         });
             var newArticle = { 
+              body: $scope.textEditorInput,
+              importance: $scope.importanceInput,
+              name: $scope.nameInput,
               owner: {
-                _ownerId: $scope.user._id,
                 username: $scope.user.username,
                 summary: $scope.user.summary,
                 role: $scope.user.role,
                 coverimg: $scope.user.coverimg
               },
-              name: $scope.nameInput,
-              body: $scope.textEditorInput,
+              ownerId: $scope.user._id,
+              summary: $scope.conclusionInput,
               tags: partitionedTags[1],
-              topic: $scope.selectedTopic,
-              importance: $scope.importanceInput,
-              summary: $scope.conclusionInput
+              topic: $scope.selectedTopic
             };
 
             $http.post('/api/articles', {newArticle: newArticle, newTags: partitionedTags[0]}).success(function(res){
-              // console.log(res)
-              debugger;
               $scope.textEditorInput = '';
               $cookieStore.remove('articleTags'); 
               $cookieStore.remove('articleTopic'); 

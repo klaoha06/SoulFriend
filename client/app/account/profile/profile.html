@@ -1,5 +1,7 @@
-<div class="container" style="margin-top: 20px; margin-bottom: 20px;">
-	<div class="row panel background-blue">
+<div class="container" style="margin-top: 20px; margin-bottom: 20px; border: 1px solid #dddddd;">
+	<div class="row panel background-blue" style="-webkit-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75);">
 		<div class="col-md-3 bg_blur">
     	    <!-- <a href="#" class="follow_btn hidden-xs">Follow</a> -->
 		</div>
@@ -8,7 +10,7 @@
            <img src="{{currentUser.coverimg}}" class="img-thumbnail visible-sm visible-xs picture_mob" />
            <div class="header">
                 <h1>{{currentUser.username}}</h1>
-                <!-- <h4>Web Developer</h4> -->
+                <h4>{{currentUser.role}}</h4>
                 <p><small>{{currentUser.reason}}</small><p>
                 <p><span>{{currentUser.summary}}</span><p>
            </div>
@@ -22,6 +24,19 @@
             <div class="col-md-3 col-xs-3 well"><i class="fa fa-heart"></i> ตอบปัญหา<br>{{currentUser.answers_count}}</div>
             <div class="col-md-3 col-xs-3 well"><i class="fa fa-question"></i> ถาม<br>{{currentUser.questions_count}}</div>
             <div class="col-md-3 col-xs-3 well"><i class="fa fa-pencil"></i> ให้ความรู้<br>{{currentUser.articles_count}}</div>
+        </div>
+    </div>
+
+    <div class="row" style="text-align:center;">
+        <div class="col-md-4">คําถามใจ
+            {{myQuestions}}
+        </div>
+        <div class="col-md-4">ความรู้ที่ได้แบ่งบัน{{myArticles}}</div>
+        <div class="col-md-4">คําตอบที่ได้ให้{{answersInQuestions}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            ใจที่เก็บไว้
         </div>
     </div>
 

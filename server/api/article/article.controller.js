@@ -11,6 +11,7 @@
 
 var _ = require('lodash');
 var Article = require('./article.model');
+var User = require('../user/user.model');
 var Tag = require('../tag/tag.model');
 var wordcut = require("wordcut");
 
@@ -18,7 +19,17 @@ wordcut.init('./node_modules/wordcut/data/tdict-std.txt');
 
 // Get list of articles
 exports.index = function(req, res) {
-  // console.log(req.query.catagory)
+  var filterBy;
+  var skip;
+  console.log(req.query.filterBy)
+  if (req.query.filterBy) {
+    filterBy = JSON.parse(req.query.filterBy);
+  }
+  if (req.query.skip > 0) {
+    skip = 10 + req.query.skip * 10;
+  } else {
+    skip = 0;
+  }
   switch(req.query.category){
     case 'popular':
       Article.find({},{},{limit:15, sort:{views: 1}},function (err, articles) {
@@ -33,10 +44,10 @@ exports.index = function(req, res) {
       });
       break;
     default:
-      Article.find({},{},{limit: 30, sort:{views: 1}},function (err, articles) {
-        if(err) { return handleError(res, err); }
-        return res.status(200).json(articles);
-      });
+      Article.find(filterBy).sort().skip(skip).limit(20).exec(function (err, articles){
+       if(err) { return handleError(res, err); }
+       return res.status(200).json(articles);
+      })
   }
 
 };
@@ -62,8 +73,8 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   var newTags = req.body.newTags;
   var newArticle = req.body.newArticle;
-  function createNewArticle(nq) {
-    Article.create(nq, function(err, article) {
+  function createNewArticle(na) {
+    Article.create(na, function(err, article) {
       if(err) { return handleError(res, err); }
         for (var i = 0; i < article.tags.length; i++) {
           Tag.findById(article.tags[i]._id, function (err, t){
@@ -75,6 +86,14 @@ exports.create = function(req, res) {
               })
           })
         }
+        console.log(article)
+      User.findById(article.ownerId, function(err, user){
+        console.log(user)
+        user.articles_id.push(article._id)
+        user.save(function(err,u){
+          console.log(u)
+        })
+      })
       return res.status(200).json(article)
     });
   }

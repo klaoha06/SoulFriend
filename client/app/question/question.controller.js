@@ -2,7 +2,7 @@ angular.module('puanJaiApp')
   .controller('questionCtrl', function ($scope, $http, socket, $stateParams, Auth, $location) {
     $scope.textEditorInput;
     var currentUser = Auth.getCurrentUser();
-    var userId = currentUser._id;
+    var userId = localStorage.getItem('userId');
 
     $http.get('/api/questions/' + $stateParams.id).success(function(question) {
       $scope.question = question;
@@ -129,7 +129,9 @@ angular.module('puanJaiApp')
         };
         $scope.question.answers.push(newAnswer);
         $http.put('/api/questions/' +  $stateParams.id + '/newanswer', newAnswer).success(function(res){
-          console.log(res);
+          // console.log(res);
+          $scope.userAnsIndex = _.findIndex($scope.question.answers,{'user_id': userId});
+          $scope.userAns = $scope.question.answers[$scope.userAnsIndex];
         });
         $scope.textEditorInput = '';  
       } else {

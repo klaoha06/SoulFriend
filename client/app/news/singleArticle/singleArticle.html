@@ -67,7 +67,7 @@
 	
 <headroom ng-show="article" tolerance="5" offset="windowHeight" classes='{"initial":"animated","pinned":"fadeOut","unpinned":"fadeIn","top":"headroom--top","notTop":"headroom--not-top"}' style="background-color: white; max-height: 50px; border: 1px solid #dddddd; margin-top:23px; padding:7px; position:absolute; width:100%;">
   <img src="{{article.owner.coverimg}}" style="width: 32px; height:32px; border-radius: 4px; box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.75);">
-<a ng-href="/users/{{article.owner._ownerId}}"><small>{{article.owner.username}}</small></a>
+<a ng-href="/users/{{article.ownerId}}"><small>{{article.owner.username}}</small></a>
 <small>- เขียนเมื่อ {{article.created | timeAgo}}</small>
 <small>- {{article.created | date:'MMM d, y'}}</small>
 <div style="float:right;">

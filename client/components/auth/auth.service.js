@@ -1,10 +1,12 @@
 'use strict';
 
 angular.module('puanJaiApp')
-  .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q, $window) {
+  .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q) {
     $rootScope.user = {};
     if($cookieStore.get('token')) {
-      $rootScope.user = User.get();
+      $rootScope.user = User.get(function(result){
+        localStorage.setItem('userId', result._id);
+      });
     }
 
     return {
@@ -26,6 +28,7 @@ angular.module('puanJaiApp')
         }).
         success(function(data) {
           $cookieStore.put('token', data.token);
+          $cookieStore.put('userId', data.user._id);
           $rootScope.user = data.user;
           $rootScope.$emit('userUpdated', data.user);
           deferred.resolve(data);
@@ -47,6 +50,7 @@ angular.module('puanJaiApp')
        */
       logout: function() {
         $cookieStore.remove('token');
+        localStorage.removeItem('userId');
         $rootScope.user = {};
       },
 
@@ -63,6 +67,7 @@ angular.module('puanJaiApp')
         return User.save(user,
           function(data) {
             $cookieStore.put('token', data.token);
+            $cookieStore.put('userId', data.token);
             $rootScope.user = data.user;
             $rootScope.$emit('userUpdated', data.user);
             return cb(user);

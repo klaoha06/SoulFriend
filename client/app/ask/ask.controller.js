@@ -168,8 +168,8 @@ angular.module('puanJaiApp')
         });
 
             var newQuestion = { 
+              ownerId: user._id,
               owner: {
-                _ownerId: user._id,
                 username: user.username,
                 role: user.role,
                 coverimg: user.coverimg
@@ -180,6 +180,7 @@ angular.module('puanJaiApp')
               topic: $scope.selectedTopic
             };
             $http.post('/api/questions', {newQuestion: newQuestion, newTags: partitionedTags[0]}).success(function(res){
+              // console.log(res)
               $scope.textEditorInput = '';
               $cookieStore.remove('tags'); 
               $cookieStore.remove('topic'); 

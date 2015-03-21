@@ -19,9 +19,9 @@ angular.module('puanJaiApp')
       controller: 'SettingsCtrl',
       authenticate: true
     })
-    .state('users', {
-      url: '/users/:id',
-      templateUrl: 'app/account/users/user.html',
-      controller: 'userCtrl'
+    .state('profile', {
+      url: '/profile',
+      templateUrl: 'app/account/profile/profile.html',
+      controller: 'profileCtrl'
     });
   });

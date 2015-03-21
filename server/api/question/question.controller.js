@@ -11,8 +11,10 @@
 
 var _ = require('lodash');
 var Question = require('./question.model');
+var User = require('../user/user.model');
 var Tag = require('../tag/tag.model');
 var wordcut = require("wordcut");
+var ObjectId = require('mongoose').Types.ObjectId;
 
 wordcut.init('./node_modules/wordcut/data/tdict-std.txt');
 
@@ -28,6 +30,7 @@ exports.index = function(req, res) {
   } else {
     skip = 0;
   }
+ 
   switch(req.query.category){
     case 'views':
       Question.find(filterBy).sort({views: -1}).skip(skip).limit(20).exec(function (err, questions){
@@ -89,6 +92,7 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   var newTags = req.body.newTags;
   var newQuestion = req.body.newQuestion;
+
   function createNewQuestion(nq) {
     Question.create(nq, function(err, question) {
       if(err) { return handleError(res, err); }
@@ -103,10 +107,18 @@ exports.create = function(req, res) {
               })
           })
         }
+      User.findById(question.ownerId, function(err, user){
+        user.questions_id.push(question._id)
+        user.save(function(err,u){
+          // console.log(u)
+        })
+      })
       return res.status(200).json(question)
     });
   }
+
   newQuestion.searchname = wordcut.cut(newQuestion.name);
+
   if (newTags.length >= 1) {
     var promise = Tag.create(newTags, function(){
       var tagsToJoin = arguments;
@@ -189,13 +201,29 @@ exports.addAnswer = function(req, res) {
   Question.findById(req.params.id, function (err, question) {
     if (err) { return handleError(res, err); }
     if(!question) { return res.send(404); }
-    console.log(req.body)
     question.answers.push(req.body)
     question.save(function (err) {
       if (err) { return handleError(res, err); }
-      return res.json(200, question);
+      User.findById(req.body.user_id, function(err, user){
+        user.ansInQuestions_id.push(question._id)
+        user.save(function(err,u){
+          // console.log(u)
+        })
+      })
+      return res.status(200).send(question)
     });
   });
+};
+
+exports.myAns = function(req, res){
+  User.findById(req.query.userId, function(err, user){
+    console.log(user)
+    Question.find({ '_id':{ $in: user.ansInQuestions_id }}, function(err, questions){
+      if (err) { return handleError(res, err); }
+      console.log(questions)
+      return res.status(200).json(questions)
+    })
+  })
 };
 
 // Decrement Vote for Question in the DB.
@@ -203,8 +231,7 @@ exports.updateAns = function(req, res) {
   Question.findById(req.params.id, function (err, question) {
     if (err) { return handleError(res, err); }
     if(!question) { return res.send(404); }
-
-      question.markModified('answers');
+    question.markModified('answers');
     question.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, question);

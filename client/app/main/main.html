@@ -113,7 +113,7 @@
                   <img class="userIcon" ng-src="{{question.owner.coverimg}}" />
                 </div>
                 <div class="col-md-8 no-gutter" style="margin: 15px 0; text-align: center; font-size:0.9em;">
-                  <a ng-href="/users/{{question.owner._ownerId}}"><small>{{question.owner.username}}</small></a><br/>
+                  <a ng-href="/users/{{question.ownerId}}"><small>{{question.owner.username}}</small></a><br/>
                   <small>{{question.created | timeAgo}}</small><br/>
                   <!-- <small>{{question.created | date:'MMM d, y h:mm a'}}</small> -->
                 </div>
