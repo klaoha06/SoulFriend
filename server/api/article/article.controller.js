@@ -21,7 +21,7 @@ wordcut.init('./node_modules/wordcut/data/tdict-std.txt');
 exports.index = function(req, res) {
   var filterBy;
   var skip;
-  console.log(req.query.filterBy)
+  // console.log(req.query.filterBy)
   if (req.query.filterBy) {
     filterBy = JSON.parse(req.query.filterBy);
   }
@@ -86,12 +86,11 @@ exports.create = function(req, res) {
               })
           })
         }
-        console.log(article)
       User.findById(article.ownerId, function(err, user){
-        console.log(user)
-        user.articles_id.push(article._id)
+        user.articles_id.push(article._id);
+        user.articles_count++;
         user.save(function(err,u){
-          console.log(u)
+          // console.log(u)
         })
       })
       return res.status(200).json(article)

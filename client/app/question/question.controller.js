@@ -128,6 +128,7 @@ angular.module('puanJaiApp')
           created: Date.now()
         };
         $scope.question.answers.push(newAnswer);
+        $scope.question.answers_count++;
         $http.put('/api/questions/' +  $stateParams.id + '/newanswer', newAnswer).success(function(res){
           // console.log(res);
           $scope.userAnsIndex = _.findIndex($scope.question.answers,{'user_id': userId});

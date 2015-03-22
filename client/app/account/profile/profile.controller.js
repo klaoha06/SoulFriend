@@ -1,21 +1,39 @@
 'use strict';
 
 angular.module('puanJaiApp')
-  .controller('profileCtrl', function ($scope, $http, socket, $stateParams, Auth, $location, $rootScope, $cookieStore) {
-    $scope.currentUser = Auth.getCurrentUser();
+  .controller('profileCtrl', function ($scope, $http, socket, $stateParams, Auth, $cookieStore, User) {
+    if($cookieStore.get('token')) {
+        $scope.currentUser = User.get();
+    }
     $scope.userId = localStorage.getItem('userId');
 
     $http.get('/api/questions', { params: { filterBy: { ownerId: $scope.userId}}}).success(function(questions){
         $scope.myQuestions = questions;
     });
 
-    $http.get('/api/articles', { params: { filterBy: { ownerId: $scope.userId}}}).success(function(articles){
-        $scope.myArticles = articles;
-    });
-
-    $http.get('/api/questions/myanswers', { params: {userId: $scope.userId}}).success(function(questions){
-        $scope.answersInQuestions = questions;
-    });
+    $scope.onSelectCategory = function(category){
+        switch(category){
+            case 'myQuestions':
+                $http.get('/api/questions', { params: { filterBy: { ownerId: $scope.userId}}}).success(function(questions){
+                    $scope.myQuestions = questions;
+                });
+                break;
+            case 'myArticles':
+                $http.get('/api/articles', { params: { filterBy: { ownerId: $scope.userId}}}).success(function(articles){
+                    $scope.myArticles = articles;
+                });
+                break;
+            case 'myAnswersInQuestions':
+                $http.get('/api/questions/myanswers', { params: {userId: $scope.userId}}).success(function(questions){
+                    $scope.myAnswersInQuestions = questions;
+                });
+                break;
+            default:
+                $http.get('/api/questions', { params: { filterBy: { ownerId: $scope.userId}}}).success(function(questions){
+                    $scope.myQuestions = questions;
+                });
+        }
+    };
 
 
 

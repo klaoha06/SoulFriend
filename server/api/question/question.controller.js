@@ -108,7 +108,8 @@ exports.create = function(req, res) {
           })
         }
       User.findById(question.ownerId, function(err, user){
-        user.questions_id.push(question._id)
+        user.questions_id.push(question._id);
+        user.questions_count++;
         user.save(function(err,u){
           // console.log(u)
         })
@@ -202,10 +203,12 @@ exports.addAnswer = function(req, res) {
     if (err) { return handleError(res, err); }
     if(!question) { return res.send(404); }
     question.answers.push(req.body)
+    question.answers_count++;
     question.save(function (err) {
       if (err) { return handleError(res, err); }
       User.findById(req.body.user_id, function(err, user){
         user.ansInQuestions_id.push(question._id)
+        user.answers_count++;
         user.save(function(err,u){
           // console.log(u)
         })
@@ -217,10 +220,8 @@ exports.addAnswer = function(req, res) {
 
 exports.myAns = function(req, res){
   User.findById(req.query.userId, function(err, user){
-    console.log(user)
     Question.find({ '_id':{ $in: user.ansInQuestions_id }}, function(err, questions){
       if (err) { return handleError(res, err); }
-      console.log(questions)
       return res.status(200).json(questions)
     })
   })

@@ -28,7 +28,7 @@ angular.module('puanJaiApp')
         }).
         success(function(data) {
           $cookieStore.put('token', data.token);
-          $cookieStore.put('userId', data.user._id);
+          localStorage.setItem('userId', data.user._id);
           $rootScope.user = data.user;
           $rootScope.$emit('userUpdated', data.user);
           deferred.resolve(data);
