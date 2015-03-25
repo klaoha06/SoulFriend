@@ -5,52 +5,70 @@ angular.module('puanJaiApp')
     $scope.showQuestions = true;
     $scope.showArticles = false;
     $scope.skip = 0;
+    $scope.tagQuestions = [];
+    $scope.tagArticles = [];
+
+    function getQuestionsFromTag() {
+      var questionsToChunk = _.chunk($scope.tag.questions_id,10);
+      var questionsToQuery = questionsToChunk[$scope.skip];
+      // debugger;
+      if (questionsToChunk.length <= $scope.skip) {
+        alert('ไม่มีคําถามในแท็กนี้แล้วครับ');
+        return;
+      }
+      $http.get('/api/tags/' + $stateParams.id + '/questions', {params: {questions: questionsToQuery}}).success(function(questions){
+          $scope.tagQuestions = $scope.tagQuestions.concat(questions);
+      // socket.syncUpdates('article', $scope.article, function(event, oldArticle, newArticle){
+      //   $scope.article = newArticle;
+      // });
+      });
+    }
+
+    function getArticlesFromTag() {
+      var articlesToChunk = _.chunk($scope.tag.articles_id,10);
+      var articlesToQuery = articlesToChunk[$scope.skip];
+      if (articlesToChunk.length <= $scope.skip) {
+        alert('ไม่มีบทความในแท็กนี้แล้วครับ');
+        return;
+      }
+      $http.get('/api/tags/' + $stateParams.id + '/articles', {params: {articles: articlesToQuery}}).success(function(articles){
+          $scope.tagArticles = $scope.tagArticles.concat(articles);
+      // socket.syncUpdates('article', $scope.article, function(event, oldArticle, newArticle){
+      //   $scope.article = newArticle;
+      // });
+      });
+    }
 
     $http.get('/api/tags/' + $stateParams.id).success(function(tag) {
       $scope.tag = tag;
-      $http.get('/api/tags/' + $stateParams.id + '/questions').success(function(questions){
-          $scope.tagQuestions = questions;
-      // socket.syncUpdates('article', $scope.article, function(event, oldArticle, newArticle){
-      //   $scope.article = newArticle;
-      // });
-      });
+      getQuestionsFromTag();
     });
 
-    $scope.resetSkip = function(){
-      $scope.skip = 0;
-    };
-
     $scope.getMore = function(){
-      $scope.skip++;
-      $http.get('/api/tags/' + $stateParams.id + '/questions', {params: {skip: $scope.skip}}).success(function(questions){
-          $scope.tagQuestions = questions;
-      // socket.syncUpdates('article', $scope.article, function(event, oldArticle, newArticle){
-      //   $scope.article = newArticle;
-      // });
-      });
+      $scope.skip = $scope.skip + 1;
+      if ($scope.showArticles) {
+        getArticlesFromTag();
+      }
+      if ($scope.showQuestions) {
+        getQuestionsFromTag();
+      }
     };
 
     $scope.onSelectCategory = function(category){
-      $scope.resetSkip();
+      $scope.skip = 0;
         switch(category){
             case 'tagQuestions':
               $scope.showQuestions = true;
               $scope.showArticles = false;
-              $http.get('/api/tags/' + $stateParams.id + '/questions').success(function(questions){
-                  $scope.tagQuestions = questions;
-              });
+              getQuestionsFromTag();
                 break;
             case 'tagArticles':
               $scope.showQuestions = false;
               $scope.showArticles = true;
-              $http.get('/api/tags/' + $stateParams.id + '/articles').success(function(articles){
-                  $scope.tagArticles = articles;
-              });
+              getArticlesFromTag();
                 break;
             default:
-              $http.get('/api/tags/' + $stateParams.id + '/questions').success(function(questions){
-                  $scope.tagQuestions = questions;
-              });
+              getQuestionsFromTag();
         }
     };
 

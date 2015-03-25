@@ -41,28 +41,28 @@ exports.show = function(req, res) {
   });
 };
 
-// Get tag's questions by Id
+// Get Questions by Tag's Id
 exports.tagQuestions = function(req, res) {
-  Tag.findById(req.params.id, function (err, tag) {
-    if(err) { return handleError(res, err); }
-    if(!tag) { return res.send(404); }
-    Question.find({ '_id':{ $in: tag.questions_id }}, function(err, questions){
-      if (err) { return handleError(res, err); }
-      return res.status(200).json(questions)
-    })
-  });
+  var query = req.query.questions;
+  if (typeof req.query.questions === 'string') {
+    query = [req.query.questions];
+  }
+  Question.find({ '_id':{ $in: query }}, function(err, questions){
+    if (err) { return handleError(res, err); }
+    return res.status(200).json(questions)
+  })
 };
 
 // Get tag's articles by Id
 exports.tagArticles = function(req, res) {
-  Tag.findById(req.params.id, function (err, tag) {
-    if(err) { return handleError(res, err); }
-    if(!tag) { return res.send(404); }
-    Article.find({ '_id':{ $in: tag.articles_id }}, function(err, articles){
-      if (err) { return handleError(res, err); }
-      return res.status(200).json(articles)
-    })
-  });
+  var query = req.query.articles;
+  if (typeof req.query.articles === 'string') {
+    query = [req.query.articles];
+  }
+  Article.find({ '_id':{ $in: query }}, function(err, articles){
+    if (err) { return handleError(res, err); }
+    return res.status(200).json(articles)
+  })
 };
 
 
