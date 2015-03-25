@@ -1,0 +1,113 @@
+<div ng-show="tag" class="container" style="margin-top: 20px; margin-bottom: 20px; border: 1px solid #dddddd; -webkit-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;  padding-left:0; padding-right:0;">
+		<h1 class="text-center" style="font-size:2.5em;">
+		<i class="fa fa-tag"></i>
+แท็ก: "{{tag.name}}"</h1>
+	<div class="row background-blue" style="margin-left:0; margin-right: 0;">
+		<div class="row text-center" style="border:1px solid #dddddd; margin-left:0; margin-right: 0;">
+			<div class="col-md-4">
+				<h3>คนใช้แท็กนี้</h3>
+				<h3>{{tag.popular_count | thousandSuffix}}</h3>
+			</div>
+			<div class="col-md-4" style="border-left:1px solid #dddddd;border-right:1px solid #dddddd; ">
+				<h3>คําถามในแท็กนี้</h3>
+				<h3>{{tag.articles_count | thousandSuffix}}</h3>
+			</div>
+			<div class="col-md-4">
+				<h3>บทความในแท็กนี้</h3>
+				<h3>{{tag.questions_count | thousandSuffix}}</h3>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-6" style="margin:20px 0;">
+			<button ng-click="onSelectCategory('tagQuestions')"class="btn btn-info btn-lg" style="display: block; margin:0 auto; font-size:1.1em;"><i class="fa fa-question"></i> ดูคําถามในแท็กนี้</button>
+		</div>
+		<div class="col-xs-6" style="margin:20px 0;">
+			<button ng-click="onSelectCategory('tagArticles')"class="btn btn-info btn-lg" style="display: block; margin:0 auto; font-size:1.1em;"><i class="fa fa-pencil"></i> ดูบทความในแท็กนี้</button>
+		</div>
+	</div>
+	<div class="row" style="margin-right:0; margin-left:0;">
+		
+		<div ng-show="showQuestions" class="animated fadeIn">
+		<div class="col-md-6" ng-repeat="question in tagQuestions">
+			<div class="panel card" style="border:0;">
+				<div style="padding:1px 10px; min-height: 166px;">
+					<a ng-href="/questions/{{question._id}}"><h2>{{question.name}}</h2></a>
+					<p><a ng-href="/topics/{{question.topic}}">{{question.topic}} - </a>
+					<a style="display:inline;" ng-repeat="tag in question.tags" ng-href="/tags/{{tag._id}}"><small> {{tag.name}}</small></a>
+					</p>
+				</div>
+				<div class="row background-yellow" style="margin-right:0; margin-left:0; border: 1px solid #dddddd;">
+					<div class="col-md-4 text-center">โหวต<br>{{question.votes_count}}</div>
+					<div class="col-md-4 text-center" style="border-left: 1px solid #dddddd; border-right: 1px solid #dddddd;">คําตอบ<br>{{question.answers_count}}</div>
+					<div class="col-md-4 text-center">ผู้เข้าชม<br>{{question.views}}</div>
+				</div>
+
+				<div class="row" style="background:aliceblue;margin-right:0; margin-left:0;border-radius:4px;">
+					<div class="col-md-2 no-gutter" style="padding: 20px;">
+						<img class="userIcon" ng-src="{{question.owner.coverimg}}" />
+					</div>
+					<div class="col-md-10 text-center" style="margin: 10px 0; font-size:0.9em;">
+						<p style="margin: 10px 0;"><a ng-href="/users/{{question.ownerId}}">{{question.owner.username}}</a><br>
+						<small>{{question.created | timeAgo}} - {{question.created | date:'MMM d, y h:mm a'}}</small></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-md-12">
+			<a class="btn btn-default" style="display:block; margin: 15px 0;" ng-click="getMore()">ดูเพิ่ม</a>
+		</div>
+		<div class="col-md-12 animated pulse" ng-show="tagQuestions.length <= 0;">
+			<hr style="width: 80%;"/>
+			<div class="text-center">
+			<h2>ไม่มีคําถามในแท็กนี้</h2>
+			<p>เป็นคนแรกที่ถามปัญหาเกี่ยวกับหัวข้อนี้!</p>
+			<a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/share')" role="button"><i ng-class="shake" class="fa fa-question"></i> ถาม</a>
+			</div>
+			<hr style="width: 80%;"/>
+		</div>
+		</div>
+
+		<div ng-show="showArticles" class="animated fadeIn">
+		<div class="col-md-6" ng-repeat="article in tagArticles">
+			<div class="panel card" style="border:0;">
+				<div style="padding:1px 10px; min-height: 166px;">
+					<a ng-href="/articles/{{article._id}}"><h2>{{article.name}}</h2></a>
+					<p><a ng-href="/topics/{{article.topic}}">{{article.topic}} - </a>
+					<a style="display:inline;" ng-repeat="tag in article.tags" ng-href="/tags/{{tag._id}}"><small> {{tag.name}}</small></a>
+					</p>
+				</div>
+				<div class="row background-yellow" style="margin-right:0; margin-left:0; border: 1px solid #dddddd;">
+					<div class="col-md-4 text-center">โหวต<br>{{article.votes_count}}</div>
+					<div class="col-md-4 text-center" style="border-left: 1px solid #dddddd; border-right: 1px solid #dddddd;">ความเห็น<br>{{article.comments_count}}</div>
+					<div class="col-md-4 text-center">ผู้เข้าชม<br>{{article.views}}</div>
+				</div>
+
+				<div class="row" style="background:aliceblue;margin-right:0; margin-left:0;border-radius:4px;">
+					<div class="col-md-2 no-gutter" style="margin: 20px 0;">
+						<img class="userIcon" ng-src="{{article.owner.coverimg}}" />
+					</div>
+					<div class="col-md-10 text-center" style="margin: 10px 0; font-size:0.9em;">
+						<p style="margin: 10px 0;"><a ng-href="/users/{{article.ownerId}}">{{article.owner.username}}</a><br>
+						<small>{{article.created | timeAgo}} - {{article.created | date:'MMM d, y h:mm a'}}</small></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 animated pulse" ng-show="tagArticles.length <= 0;">
+			<hr style="width: 80%;"/>
+			<div class="text-center">
+			<h2>ไม่มีบทความในแท็กนี้</h2>
+			<p>เป็นคนแรกที่ให้ความรู้เกี่ยวกับหัวข้อนี้!</p>
+			<a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/ask')" role="button"><i ng-class="shake" class="fa fa-pencil"></i> แชร์ความรู้</a>
+			</div>
+			<hr style="width: 80%;"/>
+
+		</div>
+		</div>
+	</div>
+
+</div>

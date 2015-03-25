@@ -56,9 +56,7 @@ angular.module('puanJaiApp', [
       });
     });
     $rootScope.$on("$routeChangeSuccess", function (event, currentRoute, previousRoute) {
-
         $window.scrollTo(0, 0);
-
     });
 
   });

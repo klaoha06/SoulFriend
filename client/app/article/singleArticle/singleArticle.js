@@ -5,7 +5,7 @@ angular.module('puanJaiApp')
     $stateProvider
       .state('singleArticle', {
         url: '/articles/:id',
-        templateUrl: 'app/news/singleArticle/singleArticle.html',
+        templateUrl: 'app/article/singleArticle/singleArticle.html',
         controller: 'articleCtrl'
       });
   });

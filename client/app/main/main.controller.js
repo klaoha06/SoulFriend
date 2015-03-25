@@ -170,11 +170,11 @@ angular.module('puanJaiApp')
     // };
 
 
-    if (!$scope.sampleUsers) {
-      $http.get('/api/users/sampleusers').success(function(sampleusers) {
-        $scope.sampleusers = sampleusers;
-      });
-    }
+    // if (!$scope.sampleUsers) {
+    //   $http.get('/api/users/sampleusers').success(function(sampleusers) {
+    //     $scope.sampleusers = sampleusers;
+    //   });
+    // }
     
     $scope.setCurrentSlide = function(){
       var indicators = document.getElementsByClassName('carousel-indicators')[0].children;
@@ -224,7 +224,7 @@ angular.module('puanJaiApp')
           }
       } else {
         $location.path('/login');
-        alert('กรุณาเข้าระบบหรือสมัครเป็นสมาชิกก่อนนะครับ : )')
+        alert('กรุณาเข้าระบบหรือสมัครเป็นสมาชิกก่อนนะครับ : )');
       }
     };
 

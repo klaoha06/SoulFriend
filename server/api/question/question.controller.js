@@ -30,8 +30,7 @@ exports.index = function(req, res) {
   } else {
     skip = 0;
   }
- 
-  switch(req.query.category){
+    switch(req.query.category){
     case 'views':
       Question.find(filterBy).sort({views: -1}).skip(skip).limit(20).exec(function (err, questions){
        if(err) { return handleError(res, err); }

@@ -4,8 +4,8 @@ angular.module('puanJaiApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('mainArticles', {
-        url: '/news',
-        templateUrl: 'app/news/mainArticles/mainArticles.html',
+        url: '/articles',
+        templateUrl: 'app/article/mainArticles/mainArticles.html',
         controller: 'MainArtCtrl'
       });
   });

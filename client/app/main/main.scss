@@ -85,6 +85,17 @@ a:hover {
   text-decoration: none;
 }
 
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus{
+ background-color: transparent;
+}
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+  background-color: transparent;
+}
+
+.btn-default:hover {
+  color: #428bca;
+}
+
 .navbar-default {
   background-color: #FFF9AA;
 }

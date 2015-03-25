@@ -12,13 +12,11 @@ angular.module('puanJaiApp')
       });
     });    
 
-
     $http.get('/api/articles').success(function(articles) {
       $scope.articles = articles;
     });
 
     $scope.addComment = function() {
-      // debugger;
       if(typeof $scope.newComment === 'undefined' || $scope.newComment.length <= 5) {
         return;
       }
@@ -42,19 +40,6 @@ angular.module('puanJaiApp')
         alert('กรุณาเข้าสู้ระบบก่อนเข้าร่วมการสนทนา')
       }
     };
-
-
-    // $scope.addThing = function() {
-    //   if($scope.newThing === '') {
-    //     return;
-    //   }
-    //   $http.post('/api/things', { name: $scope.newThing });
-    //   $scope.newThing = '';
-    // };
-
-    // $scope.deleteThing = function(thing) {
-    //   $http.delete('/api/things/' + thing._id);
-    // };
 
      // On leave page
     $scope.$on('$destroy', function () {

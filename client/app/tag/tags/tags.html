@@ -1,0 +1,56 @@
+<div class="container">
+  
+<!-- 
+<header class="hero-unit" id="banner">
+  <div class="container">
+    <h1>เพื่อนใจ</h1>
+    <p class="lead">ชุมชนเพื่อช่วยเหลือและเกื้อกูลจิตใจของกันและกัน</p>
+    <img class="main-logo" src="assets/images/logo-fixed.png" alt="เพื่อนใจ">
+  </div>
+</header> -->
+<carousel interval="4000">
+  <slide ng-repeat="slide in slides" active="slide.active" style="border-radius: 4px;">
+    <img ng-src="{{slide.image}}" class="img-responsive img-rounded" style="margin:auto; height:240px; width:100%; border:1px solid #dddddd;">
+    <div class="carousel-caption">
+      <h1>{{slide.text}}</h1>
+    </div>
+  </slide>
+</carousel>
+<div id="questionSearch"class="input-group input-group-lg">
+ <span class="input-group-addon button" id="basic-addon1" href="" ng-click="onSubmitSearch()">ถามปัญหาใจ</span>
+ <input type="text" ng-model="customSelected" placeholder="" typeahead="question as question.name for question in searchQuestions($viewValue) | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" typeahead-on-select="goToQuestion($item, $model)" class="form-control" aria-describedby="basic-addon1">
+</div>
+
+      <!--       <div>
+              <h1 class="page-header">Questions:</h1>
+              <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in awesomeThings">
+                <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="deleteThing(thing)">&times;</button></a></li>
+              </ul>
+            </div>
+
+          <form class="thing-form">
+            <label>Syncs in realtime across clients</label>
+            <p class="input-group">
+              <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="newThing">
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary" ng-click="addThing()">Add New</button>
+              </span>
+            </p>
+          </form> -->
+
+          <div id="articleList" class="row">
+            <div class="no-gutter col-sm-6 col-md-4" ng-repeat="article in articles">
+              <div class="mythumbnail" article="{{article.coverImg}}" id="{{article._id}}" ng-click="goToArticle(article)">
+                <div class="caption">
+                  <h3>{{article.name}}</h3>
+                  <p>{{article.summary}}</p>
+                  <p><a href="#" class="btn btn-primary" role="button" ng-click="openModal()">Comment</a> <a href="#" class="btn btn-default" role="button">Read More</a></p>
+                </div>
+              </div>
+            </div>
+          </div> 
+
+</div>
+
+
+    

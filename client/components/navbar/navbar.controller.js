@@ -10,7 +10,7 @@ angular.module('puanJaiApp')
     $scope.menu = [
     {
       'title': 'ความรู้เพื่อนใจ',
-      'link': '/news'
+      'link': '/articles'
     },
     {
       'title': 'ข่าวสาร',

@@ -11,6 +11,8 @@
 
 var _ = require('lodash');
 var Tag = require('./tag.model');
+var Question = require('../question/question.model');
+var Article = require('../article/article.model');
 
 // Get list of tags
 exports.index = function(req, res) {
@@ -38,6 +40,32 @@ exports.show = function(req, res) {
     return res.json(tag);
   });
 };
+
+// Get tag's questions by Id
+exports.tagQuestions = function(req, res) {
+  Tag.findById(req.params.id, function (err, tag) {
+    if(err) { return handleError(res, err); }
+    if(!tag) { return res.send(404); }
+    Question.find({ '_id':{ $in: tag.questions_id }}, function(err, questions){
+      if (err) { return handleError(res, err); }
+      return res.status(200).json(questions)
+    })
+  });
+};
+
+// Get tag's articles by Id
+exports.tagArticles = function(req, res) {
+  Tag.findById(req.params.id, function (err, tag) {
+    if(err) { return handleError(res, err); }
+    if(!tag) { return res.send(404); }
+    Article.find({ '_id':{ $in: tag.articles_id }}, function(err, articles){
+      if (err) { return handleError(res, err); }
+      return res.status(200).json(articles)
+    })
+  });
+};
+
+
 
 // Creates a new tag in the DB.
 exports.create = function(req, res) {

@@ -44,6 +44,7 @@
          <h2 style="text-align: center; font-size: 2em; padding-bottom:15px; border-bottom: 1px solid #dddddd; ">แท็กยอดนิยม</h2>
          <jqcloud id="jqcloudtag" style="width:100%; display: block; margin:0 auto;" autoResize="true" words="popTags" height="370" width="155"shape="rectangular" removeOverflowing="false" steps="7" center="{x:0.5, y:0.45}"></jqcloud> 
       </div>
+      <a ng-href="/tags"><h3 class="text-center">ดูแท็กทั่งหมด..</h3></a>
       <hr>
      </div>
    <tabset justified="true" class="col-md-8">
@@ -161,10 +162,14 @@
       </div>
     </div>
     </div>
+
     <a ng-if="questions.length >= 1" class="btn btn-default" style="display:block" ng-click="getMoreQuestions()">ดูเพิ่ม</a>
-    <div ng-show="questions.length <= 1">
+
+    <div class="row animated pulse" ng-show="questions.length <= 1">
+      <hr>
       <h2 style="text-align: center;">เป็นคนแรกที่ถามคําถามหัวข้อ <span class="bigger yellow">{{selectedTopic}}</span><br>มีเพื่อนใจมากมายที่รอให้การช่วยเหลือ!</h2><br>
       <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" style="font-size: 2em; width:30%; margin:0 auto;" class="btn btn-primary btn-lg btn-block" ng-href="/ask"><i ng-class="shake" class="fa fa-child"></i> ถาม</a><br>
+      <hr>
 <!--              <div style="height: 400px;">
               <carousel id="sampleusers" interval="3000">
                <slide  class="samplequotes" ng-repeat="user in sampleusers" active="slide.active">
