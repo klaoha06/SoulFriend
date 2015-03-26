@@ -17,7 +17,6 @@
     "express-jwt": "^0.1.4",
     "express-session": "^1.10.3",
     "faker": "^2.1.2",
-    "icu-wordsplit": "^0.2.3",
     "jsonwebtoken": "^0.3.0",
     "lodash": "3.5.0",
     "markdown": "^0.5.0",
