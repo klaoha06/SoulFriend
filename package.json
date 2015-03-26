@@ -18,6 +18,7 @@
     "express-session": "^1.10.3",
     "faker": "^2.1.2",
     "grunt-usemin": "^3.0.0",
+    "grunt-wiredep": "^2.0.0",
     "jsonwebtoken": "^0.3.0",
     "lodash": "3.5.0",
     "markdown": "^0.5.0",
