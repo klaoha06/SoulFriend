@@ -7,7 +7,7 @@ angular.module('puanJaiApp', [
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',
-  'timeAgo',
+  'yaru22.angular-timeago',
   'textAngular',
   'ngTagsInput',
   'angular-jqcloud',
