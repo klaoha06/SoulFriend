@@ -28,7 +28,8 @@ var QuestionSchema = new Schema({
   answers: Array,
   answers_count: { type: Number, default: 0, es_indexed: true},
   tags: Array,
-  topic: String
+  topic: String,
+  reports: Array
 });
 
 QuestionSchema.plugin(timeStamps);

@@ -1,23 +1,23 @@
 <div class="container" style="margin-top: 20px; margin-bottom: 20px; border: 1px solid #dddddd; -webkit-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75);
 box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
-	<div class="row background-blue" style="border-bottom: 1px solid #dddddd;">
-		<div class="col-md-3 bg_blur">
-    	    <!-- <a href="#" class="follow_btn hidden-xs">Follow</a> -->
-		</div>
-        <div class="col-md-9  col-xs-12" style="background:white; min-height: 200px;">
+  <div class="row background-blue" style="border-bottom: 1px solid #dddddd;">
+    <div class="col-md-3 bg_blur">
+          <!-- <a href="#" class="follow_btn hidden-xs">Follow</a> -->
+    </div>
+        <div class="col-md-9  col-xs-12" style="background:white; min-height: 200px; padding-bottom:40px;">
            <img src="{{currentUser.coverimg}}" class="img-thumbnail picture hidden-sm hidden-xs" />
            <img src="{{currentUser.coverimg}}" class="img-thumbnail visible-sm visible-xs picture_mob" />
            <div class="header">
                 <h1>{{currentUser.username}}</h1>
                 <h4>{{currentUser.role}}</h4>
                 <p><small>{{currentUser.reason}}</small><p>
-                <p><span>{{currentUser.summary}}</span><p>
+                <p>{{currentUser.summary}}<p>
            </div>
         </div>
     </div>
     
-	<div class="row nav">    
+  <div class="row nav">    
         <div class="col-md-4"></div>
         <div class="col-md-8 col-xs-12" style="margin: 0px;padding: 0px; margin-top:-25px;">
             <div class="col-md-3 col-xs-3 well"><i class="fa fa-gift"></i> ให้กําลังใจ<br>{{currentUser.jais_count}}</div>
@@ -28,11 +28,12 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
     </div>
 
     <tabset justified="true">
+
       <tab select="onSelectCategory('myQuestions')">
         <tab-heading>คําถามใจ <span class="badge" style="font-size: inherit;">{{currentUser.questions_count | thousandSuffix}}</span></tab-heading>
         <div class="row">
           <div class="col-md-12">
-            <div class="list-group">
+            <div class="list-group" style="margin-bottom: 0;">
                 <a ng-repeat="question in myQuestions" class="list-group-item" href="/questions/{{question._id}}">
                   <div class="row">
                     <div class="col-md-8">
@@ -62,6 +63,10 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
                 </a>    
             </div>
           </div>
+        </div>
+
+        <div ng-show="myQuestions.length <= 0"class="row text-center" style="border:1px solid #dddddd; padding:15px; border-radius: 4px;">
+          <h2>ยังไม่มีถามคําถามใจ</h2>
         </div>
       </tab>
 
@@ -99,6 +104,9 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
                 </a>    
             </div>
           </div>
+        </div>
+        <div ng-show="myArticles.length <= 0"class="row text-center" style="border:1px solid #dddddd; padding:15px; border-radius: 4px;">
+          <h2>ยังไม่ได้แชร์บทความให้เพื่อนๆ</h2>
         </div>
       </tab>
 
@@ -147,29 +155,10 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
             </div>
           </div>
         </div>
+        <div ng-show="myAnswersInQuestions.length <= 0"class="row text-center" style="border:1px solid #dddddd; padding:15px; border-radius: 4px;">
+          <h2>คุณยังไม่ได้ให้ความช่วยเหลือเพื่อนๆ</h2>
+        </div>
         </tab>
     </tabset>
-
-<!--     <div class="row" style="text-align:center;">
-        <div class="col-md-4">
-            <h4>คําถามใจ</h4>
-            <div class="list-group">
-                <a ng-repeat="question in myQuestions" class="list-group-item" href="/questions/{{question._id}}">
-                    <h4>{{question.name}}</h4>
-                    <p>{{question}}</p>
-                </a>
-                
-            </div>
-        </div>
-        <div class="col-md-4">ความรู้ที่ได้แบ่งบัน{{myArticles}}</div>
-        <div class="col-md-4">คําตอบที่ได้ให้{{myAnswersInQuestions}}</div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            ใจที่เก็บไว้
-            {{myFav}}
-        </div>
-    </div> -->
-
 
 </div>

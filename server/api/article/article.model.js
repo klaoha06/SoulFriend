@@ -21,14 +21,16 @@ var ArticleSchema = new Schema({
   body: String,
   inHouse: { type: Boolean, default: false},
   coverImg: String,
-  votes: Array,
+  upvotes: Array,
+  downvotes: Array,
   votes_count: { type: Number, default: 0, es_indexed:true},
   views: { type: Number, default: 0},
   shares: { type: Number, default: 0},
   comments: Array,
   comments_count: { type: Number, default: 0},
   tags: Array,
-  topic: String
+  topic: String,
+  reports: Array
 });
 
 ArticleSchema.plugin(timeStamps);

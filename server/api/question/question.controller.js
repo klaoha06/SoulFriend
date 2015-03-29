@@ -80,10 +80,12 @@ exports.search = function(req, res) {
 
 // Get a single question
 exports.show = function(req, res) {
+  // console.log(req.connection.remoteAddress);
   Question.findById(req.params.id, function (err, question) {
     if(err) { return handleError(res, err); }
     if(!question) { return res.send(404); }
-    return res.json(question);
+    res.status(200).json(question);
+    question.update({$inc: {views: 1}})
   });
 };
 
@@ -175,24 +177,40 @@ exports.addJai = function(req, res) {
     question.jais_count++;
     question.save(function (err) {
       if (err) { return handleError(res, err); }
-      return res.json(200, question);
+       res.status(200).json(question);
+       User.findById(req.body.userId, function(err, user){
+        user.jais_count++;
+        user.jais_id.push(question._id);
+        user.save();
+       })
     });
   });
 };
 
 // Updates an existing thing in the DB.
 exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
-  Question.findById(req.params.id, function (err, question) {
-    if (err) { return handleError(res, err); }
-    if(!question) { return res.send(404); }
-    var updated = _.merge(question, req.body);
-    updated.markModified('answers');
-    updated.save(function (err) {
-      if (err) { return handleError(res, err); }
-      return res.json(200, question);
+  var newTags = req.body.newTags;
+  console.log(newTags)
+  var questionToUpdate = req.body.questionToUpdate;
+  if (newTags) {
+    var promise = Tag.create(newTags, function(){
+      var tagsToJoin = arguments;
+      for (var i = 1; i < tagsToJoin.length; i++) {
+        questionToUpdate.tags.push({name: tagsToJoin[i].name, _id: tagsToJoin[i]._id})
+      }
     });
-  });
+    promise.then(function(){
+      Question.findByIdAndUpdate(questionToUpdate._id, questionToUpdate, function(err, question){
+        if (err) { return handleError(res, err); }
+        return res.status(200).send(question)
+      })
+    })
+  } else {
+    Question.findByIdAndUpdate(questionToUpdate._id, questionToUpdate, function(err ,question){
+      if (err) { return handleError(res, err); }
+      return res.status(200).send(question)
+    })
+  }
 };
 
 // Updates an existing thing in the DB.
@@ -226,7 +244,7 @@ exports.myAns = function(req, res){
   })
 };
 
-// Decrement Vote for Question in the DB.
+// Update Answers for Question in the DB.
 exports.updateAns = function(req, res) {
   Question.findById(req.params.id, function (err, question) {
     if (err) { return handleError(res, err); }
@@ -239,8 +257,23 @@ exports.updateAns = function(req, res) {
   });
 };
 
+// Add Report for "bad" Question in the DB.
+exports.report = function(req, res) {
+  if(req.body._id) { delete req.body._id; }
+  Question.findById(req.params.id, function (err, question) {
+    if (err) { return handleError(res, err); }
+    if(!question) { return res.send(404); }
+    question.reports.push(req.body.userId);
+    question.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, question);
+    });
+  });
+};
+
 // Deletes a thing from the DB.
 exports.destroy = function(req, res) {
+  console.log(req.params.id)
   Question.findById(req.params.id, function (err, question) {
     if(err) { return handleError(res, err); }
     if(!question) { return res.send(404); }

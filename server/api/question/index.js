@@ -19,7 +19,7 @@ router.delete('/:id', controller.destroy);
 
 router.post('/:id/downvote', auth.isAuthenticated(), controller.downVote);
 router.post('/:id/upvote', auth.isAuthenticated(), controller.upVote);
-
 router.post('/:id/addjai', auth.isAuthenticated(), controller.addJai);
+router.post('/:id/report', auth.isAuthenticated(), controller.report);
 
 module.exports = router;

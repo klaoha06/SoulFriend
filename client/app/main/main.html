@@ -138,7 +138,7 @@
           <div>
             <ul class="nav nav-pills">
               <li>
-                <a ng-click=""><i class="fa fa-share"></i> แชร์</a>
+                <a ng-click="shareFB('/questions/{{question._id}}')"><i class="fa fa-share"></i> แชร์</a>
               </li>
               <li>
                 <a ng-click=""><i class="fa fa-gratipay"></i> เก็บใจ</a>
@@ -163,9 +163,9 @@
     </div>
     </div>
 
-    <a ng-if="questions.length >= 1" class="btn btn-default" style="display:block" ng-click="getMoreQuestions()">ดูเพิ่ม</a>
+    <a ng-hide="questions.length >= 20" class="btn btn-default" style="display:block" ng-click="getMoreQuestions()">ดูเพิ่ม</a>
 
-    <div class="row animated pulse" ng-show="questions.length <= 1">
+    <div class="row animated pulse" ng-show="questions.length < 1 && selectedTopic.$ne !== null">
       <hr>
       <h2 style="text-align: center;">เป็นคนแรกที่ถามคําถามหัวข้อ <span class="bigger yellow">{{selectedTopic}}</span><br>มีเพื่อนใจมากมายที่รอให้การช่วยเหลือ!</h2><br>
       <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" style="font-size: 2em; width:30%; margin:0 auto;" class="btn btn-primary btn-lg btn-block" ng-href="/ask"><i ng-class="shake" class="fa fa-child"></i> ถาม</a><br>

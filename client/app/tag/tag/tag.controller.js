@@ -13,7 +13,7 @@ angular.module('puanJaiApp')
       var questionsToQuery = questionsToChunk[$scope.skip];
       // debugger;
       if (questionsToChunk.length <= $scope.skip) {
-        alert('ไม่มีคําถามในแท็กนี้แล้วครับ');
+        // alert('ไม่มีคําถามในแท็กนี้แล้วครับ');
         return;
       }
       $http.get('/api/tags/' + $stateParams.id + '/questions', {params: {questions: questionsToQuery}}).success(function(questions){
@@ -28,7 +28,7 @@ angular.module('puanJaiApp')
       var articlesToChunk = _.chunk($scope.tag.articles_id,10);
       var articlesToQuery = articlesToChunk[$scope.skip];
       if (articlesToChunk.length <= $scope.skip) {
-        alert('ไม่มีบทความในแท็กนี้แล้วครับ');
+        // alert('ไม่มีบทความในแท็กนี้แล้วครับ');
         return;
       }
       $http.get('/api/tags/' + $stateParams.id + '/articles', {params: {articles: articlesToQuery}}).success(function(articles){
