@@ -11,12 +11,16 @@ angular.module('puanJaiApp', [
   'textAngular',
   'ngTagsInput',
   'angular-jqcloud',
-  'headroom'])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+  'headroom',
+  'angulartics',
+  'angulartics.google.analytics',
+  'facebook'])
+  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, FacebookProvider) {
     $urlRouterProvider
       .otherwise('/');
-    $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
+    $locationProvider.html5Mode(true).hashPrefix('!');
+    FacebookProvider.init('816905961709405');
   })
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {

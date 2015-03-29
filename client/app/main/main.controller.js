@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('puanJaiApp')
-.controller('MainCtrl', function ($scope, $http, socket, Auth, $location, $filter, $interval) {
+.controller('MainCtrl', function ($scope, $http, socket, Auth, $location, $filter, Facebook) {
   var currentUser = Auth.getCurrentUser();
-  var userId = currentUser._id;
+  var userId = localStorage.getItem('userId');
   var orderBy = $filter('orderBy');
   $scope.isCollapsed = true;
   $scope.userInput;
@@ -13,6 +13,15 @@ angular.module('puanJaiApp')
   $scope.selectedTopic;
   $scope.popTags = [] || $scope.popTags;
   $scope.skip = 0;
+
+  $scope.shareFB = function(url){
+    Facebook.ui({
+      method: 'share',
+      href: url, function(res){
+        console.log(res);
+      }
+    });
+  };
 
   $scope.slides = [
   {
@@ -84,26 +93,33 @@ angular.module('puanJaiApp')
     'icon': 'fa-building-o',
     'active': false
   },
+  {
+    'title': 'อื่นๆ',
+    'link': '/topics/อื่นๆ',
+    'icon': 'fa-plus',
+    'active': false
+  }
   ];
-  $scope.updateTopic = function(topic){
-    if (topic === null) {
-      $scope.selectedTopic = null;
-    } else { 
-      $scope.selectedTopic = topic.title;
-    }
-    $scope.getQuestions(null,null,null,$scope.selectedTopic);
-    angular.forEach($scope.topics, function(t){
-      if (t.title === topic.title) {
-        t.active = !t.active;
-      } else {
-        t.active = false;
-      }
-    })
-  };
+  // $scope.updateTopic = function(topic){
+  //   if (topic === null) {
+  //     $scope.selectedTopic = null;
+  //   } else { 
+  //     $scope.selectedTopic = topic.title;
+  //   }
+  //   $scope.getQuestions(null,null,null,$scope.selectedTopic);
+  //   angular.forEach($scope.topics, function(t){
+  //     if (t.title === topic.title) {
+  //       t.active = !t.active;
+  //     } else {
+  //       t.active = false;
+  //     }
+  //   });
+  // };
 
   $scope.selectTopic = function(topic){
+    $scope.resetSkip();
     if (topic === $scope.selectedTopic) {
-      $scope.selectedTopic = null;
+      $scope.selectedTopic = {'$ne': null};
     } else { 
       $scope.selectedTopic = topic;
     }

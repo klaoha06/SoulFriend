@@ -2,6 +2,7 @@ angular.module('puanJaiApp')
   .controller('askCtrl', function ($scope, $http, socket, $stateParams, Auth, $location, $cookieStore, $filter) {
     var orderBy = $filter('orderBy');
     var user = Auth.getCurrentUser();
+    $scope.editQuestion = localStorage.getItem('editQuestion');
     $scope.textEditorInput = localStorage.getItem('questionContent');
     $scope.oldContent = localStorage.getItem('questionContent');
     $scope.searchResults;
@@ -61,6 +62,16 @@ angular.module('puanJaiApp')
       'active': false
     }
     ];
+
+    function resetFormVariables() {
+      $scope.textEditorInput = '';
+      localStorage.removeItem('editQuestion');
+      localStorage.removeItem('questionContent');
+      $cookieStore.remove('topic');
+      $cookieStore.remove('tags');
+      $cookieStore.remove('questionTitle');
+      $cookieStore.remove('questionContent');
+    }
 
     // Search Questions
     $scope.$watch('searchInput', function(input){
@@ -134,7 +145,7 @@ angular.module('puanJaiApp')
         function htmlToPlaintext(text) {
           return String(text).replace(/<[^>]+>/gm, '');
         }
-        var text = htmlToPlaintext($scope.textEditorInput)
+        var text = htmlToPlaintext($scope.textEditorInput);
 
         // validate input
         if (typeof $scope.searchInput === 'undefined') {
@@ -161,38 +172,54 @@ angular.module('puanJaiApp')
         }
 
         var partitionedTags = [];
+
         partitionedTags = _.partition($scope.tags, function(tag){
           if (!_.has(tag, '_id')) {
             return tag;
           }
         });
 
-            var newQuestion = { 
-              ownerId: user._id,
-              owner: {
-                username: user.username,
-                role: user.role,
-                coverimg: user.coverimg
-              },
-              name: $scope.searchInput,
-              body: $scope.textEditorInput,
-              tags: partitionedTags[1],
-              topic: $scope.selectedTopic
-            };
-            $http.post('/api/questions', {newQuestion: newQuestion, newTags: partitionedTags[0]}).success(function(res){
-              // console.log(res)
-              $scope.textEditorInput = '';
-              $cookieStore.remove('tags'); 
-              $cookieStore.remove('topic'); 
-              $cookieStore.remove('content'); 
-              $cookieStore.remove('questionTitle'); 
-              localStorage.removeItem('questionContent'); 
-              $location.path(/questions/ + res._id);
-            });
+        if (localStorage.getItem('editQuestion')) {
+          var questionToUpdate = { 
+            _id: $scope.editQuestion,
+            name: $scope.searchInput,
+            body: $scope.textEditorInput,
+            tags: partitionedTags[1],
+            topic: $scope.selectedTopic
+          };
+          $http.patch('/api/questions/' + $stateParams.id, {questionToUpdate: questionToUpdate, newTags: partitionedTags[0]}).success(function(res){
+            resetFormVariables();
+            $location.path(/questions/ + res._id);
+          });
+        } else {            
+          var newQuestion = { 
+            ownerId: user._id,
+            owner: {
+              username: user.username,
+              role: user.role,
+              coverimg: user.coverimg
+            },
+            name: $scope.searchInput,
+            body: $scope.textEditorInput,
+            tags: partitionedTags[1],
+            topic: $scope.selectedTopic
+          };
+          $http.post('/api/questions', {newQuestion: newQuestion, newTags: partitionedTags[0]}).success(function(res){
+            resetFormVariables();
+            $location.path(/questions/ + res._id);
+          });
+        }
       } else {
             $location.path('/login');
             alert('กรุณาเข้าสู้ระบบก่อนเข้าร่วมการสนทนา')
       }
     };
+
+     // On leave page
+     $scope.$on('$destroy', function () {
+      if (localStorage.getItem('editQuestion')) {
+        resetFormVariables();
+      }
+    });
 
   });

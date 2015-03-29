@@ -1,7 +1,7 @@
 <div class="container">
 
 	<div class="col-md-2">
-		<div class="panel panel-default panel-card">
+<!-- 		<div class="panel panel-default panel-card">
 			<div class="panel-heading">
 				<img ng-cloak class="ng-cloak" ng-src="https://unsplash.imgix.net/12/barley.jpg?q=75&fm=jpg&s=f39de5ca1970a13dbe6af6c86b3c47ec" />
 				<button class="btn btn-primary btn-sm" role="button">Follow</button>
@@ -32,16 +32,15 @@
 					</div>
 				</div>
 			</div>
-		</div> 
+		</div>  -->
 	</div>
 
-	<div class="col-md-8" style="margin: 15px 0;">
+	<div ng-show="question" class="col-md-8" style="margin: 15px 0;">
 		<div ng-mouseover="onQuestion='animated swing'" ng-mouseleave="onQuestion=''" class="panel panel-default animated fadeIn">
 			<div class="row">
 				<div class="col-md-2">
 					<ul class="nav nav-pills questionSidePanel">
 						<li>
-
 							<a ng-click="upVote(question._id, $element)">โหวตขึ้น<br><i class="fa fa-thumbs-up"></i></a>
 							<h3 style="text-align: center;">{{question.votes_count}}</h3>
 							<a ng-click="downVote(question._id, $element)"><i class="fa fa-thumbs-down"></i><br>โหวตลง</a><hr style="width:80%;">
@@ -52,8 +51,7 @@
 						</li>
 						<hr style="width:80%;">
 						<li>
-
-							<a ng-click=""><i class="fa fa-share"></i><br>แชร์</a>
+							<a ng-click="shareFB('/questions/{{question._id}}')"><i class="fa fa-share"></i><br>แชร์</a>
 						</li>
 						<li>
 							<a ng-click=""><i class="fa fa-gratipay"></i><br>เก็บใจ</a>
@@ -68,7 +66,7 @@
 							<p class="bigger" ng-hide="{{question.answered}}">ยังไม่ได้คําตอบที่โดนใจ <i class="fa fa-frown-o blue" ng-class="onQuestion"></i></p>
 						</div> -->
 
-						<h2 style='font-size: 2.2em;'>{{question.name}}</h2>
+						<h2 style='font-size: 2.2em; margin-left:15px;'>{{question.name}}</h2>
 						<div style="margin: 0 10px;">
 							<i class="fa fa-tag"></i>
 							<a class="topic" ng-href="/topics/{{question.topic}}">{{question.topic}} -</a>
@@ -80,23 +78,43 @@
 						<!-- <img ng-cloak ng-show="question.coverImg" class="questionImg img-responsive" ng-src="{{question.coverImg}}" /> -->
 						<!-- <p>{{question.body}}</p> -->
 						<div ng-bind-html="question.body" style="word-wrap: break-word; padding:25px;"></div>
-						<div style="text-align: right;">							
-							<a ng-click="" style="margin: 15px;"><i class="fa fa-ban"></i> แจ้งความไม่เหมาะสม</a>
-							<a ng-click="" style="margin: 15px;"><i class="fa fa-comment"></i> ให้ความคิดเห็น</a>
-						</div>
-						<div class="row" style="  padding: 15px;   margin-right: 0;   margin-left:0;">
-							<div class="col-md-4 col-md-offset-8">
+			<!-- 			<div style="text-align: right;">							
+
+						</div> -->
+						<hr style="width:80%;">
+						<div class="row" style="padding: 15px;margin-right: 0;margin-left:0;">
+							<div class="col-md-4">
 								<div class="row userPanelQuestion">
-									<div class="col-md-4 no-gutter" style="margin: 15px 0;">
+									<div class="col-lg-4 col-md-12 no-gutter" style="margin: 15px 0;">
 										<img class="userIcon" ng-src="{{question.owner.coverimg}}" />
 									</div>
-									<div class="col-md-8 no-gutter" style="margin: 10px 0; text-align: center; font-size:0.9em;">
+									<div class="col-lg-8 col-md-12 no-gutter" style="margin: 10px 0; text-align: center; font-size:0.9em;">
 										<a ng-href="/users/{{question.ownerId}}" style="font-size: 1em">{{question.owner.username}}</a><br/>
 										<small>{{question.created | timeAgo}}</small><br/>
 										<small>{{question.created | date:'MMM d, y h:mm a'}}</small>
 									</div>
 								</div>
 							</div>
+							<div class="col-md-8 text-center">
+								<div class="row">
+									<div class="col-md-6" style="margin-top:15px;">
+										<a ng-click="report()"><i class="fa fa-ban"></i> แจ้งความไม่เหมาะสม</a>
+									</div>
+									<div class="col-md-6" style="margin-top:15px;">
+										<a ng-click=""><i class="fa fa-comment"></i> ให้ความคิดเห็น</a>
+									</div>
+								</div>
+								<div ng-show="questionOwner()" class="row">
+									<div class="col-md-6" style="margin-top:15px;">
+										<a ng-click="editQuestion()"><i class="fa fa-pencil"></i> แก้ไขคําถามนี้</a>
+									</div>
+									<div class="col-md-6" style="margin-top:15px;">
+										<a ng-click="deleteQuestion()"><i class="fa fa-trash-o"></i> ลบคําถามนี้</a>
+									</div>
+								</div>
+
+							</div>
+
 						</div>
 					</div>				
 				</div>
@@ -107,9 +125,9 @@
 			<div ng-show="question.answers.length==0" style="text-align: center;" class="animated pulse">
 				<!-- <i class="fa fa-frown-o blue"></i> -->
 				<h2 style="text-align: center;">ยังไม่ได้ความช่วยเหลือ</h2>
-				<p>รู้จักคนที่สามารถช่วยเพื่อนใจได้ <a href="">ฝากแชร์การด้วยจ้า</a></p>
-				<a class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
-					<i class="fa fa-facebook"></i> Connect with Facebook
+				<p>รู้จักคนที่สามารถช่วยเพื่อนใจได้ <span class="blue">ฝากแชร์การด้วยจ้า</span></p>
+				<a class="btn btn-facebook white" ng-click="shareFB('/questions/{{question._id}}')">
+					<i class="fa fa-facebook white"></i> แชร์บน Facebook!
 				</a>
 				<hr style="width: 80%;"/>
 
@@ -156,52 +174,47 @@
 					</div>
 				</div>
 
-
-
-
-
 				<!-- <hr style="width: 80%;"/> -->
 			</div>
 			<h3 style="text-decoration: underline; text-align: center; font-size: 1.5em;">การช่วยเหลือของคุณ</h3>
-			<div ng-class="{true: 'hide', false: '' }[userAnsIndex < 0]">
+			<!-- <div ng-class="{true: 'hide', false: '' }[userAnsIndex < 0]"> -->
+			<div class="animated fadeIn" ng-show="textEditorInput || userAns">
 				<div class="row answersInQuestion animated fadeIn">
-
 					<div class="col-md-12">
 						<div class="row" style="background: aliceblue; border-bottom: 1px solid #dddddd;
 						border-top: 1px solid #dddddd;">
 						<div class="col-md-2 no-gutter" style="margin: 15px 0;">
-							<img class="userIcon" ng-src="{{userAns.coverimg}}" />
+							<img class="userIcon" ng-src="{{userAns.coverimg || currentUser.coverimg}}" />
 						</div>
 						<div class="col-md-10 no-gutter" style="margin: 10px 0; font-size:0.9em;">
-							<p style="margin: 15px 0;"><a ng-href="/users/{{question.ownerId}}">{{userAns.username}}</a><small>
-								- {{userAns.created | timeAgo}} - {{userAns.created | date:'MMM d, y h:mm a'}}</small></p>
+							<p style="margin: 15px 0;">
+							<a ng-href="/users/{{question.ownerId}}">{{userAns.username || currentUser.username}}</a>
+							<small ng-hide="userAns.created">
+								- {{timeNow() | timeAgo}} - {{timeNow() | date:'MMM d, y h:mm a'}}</small>
+							<small ng-show="userAns.created">
+								- {{userAns.created | timeAgo}} - {{userAns.created | date:'MMM d, y h:mm a'}}</small>
+								</p>
 								<!-- <small>{{userAns.created | date:'MMM d, y h:mm a'}}</small> -->
 							</div>
 
 						</div>
 
-						<div ng-bind-html="userAns.content" style="word-wrap: break-word; padding:25px;"></div>
+						<div ng-bind-html="userAns.content || textEditorInput" style="word-wrap: break-word; padding:25px;"></div>
 						<div style="text-align: right; margin-bottom: 10px;">							
 							<!-- <a ng-click="" style="margin: 15px;"><i class="fa fa-ban"></i> แจ้งความไม่เหมาะสม</a> -->
-							<a ng-click="" style="margin: 15px;"><i class="fa fa-comment"></i> ความคิดเห็น</a>
+							<a ng-show="userAns" ng-click="" style="margin: 15px;"><i class="fa fa-comment"></i> ความคิดเห็น</a>
+							<a ng-show="userAns" ng-click="deleteMyAns()" style="margin: 15px;"><i class="fa fa-trash-o"></i> ลบคําตอบนี้</a>
+							<a ng-show="userAns" ng-click="editMyAns()" style="margin: 15px;"><i class="fa fa-pencil"></i> แก้ไขคําตอบนี้</a>
 						</div>
 					</div>
-
-<!-- 					<div class="col-md-2" style="background:#FFF9AA; border-left: 1px solid #dddddd; border-top: 1px solid #dddddd; border-bottom: 1px solid #dddddd;">
-						<ul class="nav nav-pills answerSidePanel">
-							<li>
-								<h3 style="text-align: center;">{{userAns.votes_count}}</h3>
-							</li>
-						</ul>
-					</div> -->
 				</div>
-
 			</div>
 
-			<div ng-class="{true: '', false: 'hide' }[userAnsIndex < 0]">
+			<div ng-hide="userAnsIndex >= 0">
 				<form>
 					<text-angular ta-toolbar="[['p','h1','h2','h3','quote', 'ul', 'ol','undo','redo','justifyLeft', 'justifyCenter','justifyRight', 'insertImage', 'insertLink', 'insertVideo', 'charcount']]" ng-model="textEditorInput"></text-angular>
-					<input ng-mouseover="shake='animated rubberBand'" ng-mouseleave="shake=''" class="btn btn-default" type="submit" ng-click="onSubmit()" value="ช่วยเพื่อนใจ" style="background: linear-gradient(white, #fff9aa); font-size: 1.5em; width:100%;"></input>
+					<input ng-hide="editingAns" ng-mouseover="shake='animated rubberBand'" ng-mouseleave="shake=''" class="btn btn-default" type="submit" ng-click="onSubmit()" value="ช่วยเพื่อนใจ" style="background: linear-gradient(white, #fff9aa); font-size: 1.5em; width:100%;"></input>
+					<input ng-show="editingAns" ng-mouseover="shake='animated rubberBand'" ng-mouseleave="shake=''" class="btn btn-default" type="submit" ng-click="onEditAns()" value="แก้ไขคําตอบ" style="background: linear-gradient(white, #fff9aa); font-size: 1.5em; width:100%;"></input>
 					<!-- 			<a  class="btn btn-default questionHelpBtn" href="/questions/{{question._id}}" role="button"><i ng-class="shake" class="fa fa-heart red"></i> ให้ความช่วยเหลือ</a> -->
 				</form>
 			</div>

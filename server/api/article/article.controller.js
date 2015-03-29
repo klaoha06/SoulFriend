@@ -65,7 +65,9 @@ exports.show = function(req, res) {
   Article.findById(req.params.id, function (err, article) {
     if(err) { return handleError(res, err); }
     if(!article) { return res.send(404); }
-    return res.status(200).json(article);
+    res.json(article);
+    article.views++;
+    article.save();
   });
 };
 
@@ -127,6 +129,37 @@ exports.update = function(req, res) {
   });
 };
 
+// Increment Vote for Article in the DB.
+exports.upVote = function(req, res) {
+  if(req.body._id) { delete req.body._id; }
+  Article.findById(req.params.id, function (err, article) {
+    if (err) { return handleError(res, err); }
+    if(!article) { return res.send(404); }
+    article.upvotes.push(req.body.userId);
+    article.votes_count++;
+    article.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, article);
+    });
+  });
+};
+
+// Decrement Vote for Article in the DB.
+exports.downVote = function(req, res) {
+  if(req.body._id) { delete req.body._id; }
+  Article.findById(req.params.id, function (err, article) {
+    if (err) { return handleError(res, err); }
+    if(!article) { return res.send(404); }
+    article.downvotes.push(req.body.userId);
+    article.votes_count--;
+    article.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, article);
+    });
+  });
+};
+
+
 // Add Comment.
 exports.addComment = function(req, res) {
   if(req.body._id) { delete req.body._id; }
@@ -134,6 +167,33 @@ exports.addComment = function(req, res) {
     if (err) { return handleError(res, err); }
     if(!article) { return res.send(404); }
     article.comments.push(req.body);
+    article.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, article);
+    });
+  });
+};
+
+// Update Comments for Article in the DB.
+exports.updateComment = function(req, res) {
+  Article.findById(req.params.id, function (err, question) {
+    if (err) { return handleError(res, err); }
+    if(!article) { return res.send(404); }
+    article.markModified('comments');
+    article.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, article);
+    });
+  });
+};
+
+// Add Report for "bad" Article in the DB.
+exports.report = function(req, res) {
+  if(req.body._id) { delete req.body._id; }
+  Article.findById(req.params.id, function (err, article) {
+    if (err) { return handleError(res, err); }
+    if(!article) { return res.send(404); }
+    article.reports.push(req.body.userId);
     article.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, article);

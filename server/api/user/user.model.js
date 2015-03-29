@@ -33,6 +33,7 @@ var UserSchema = new Schema({
   articles_id: [{type: Schema.Types.ObjectId, ref: 'Article'}],
   articles_count: {type: Number, default: 0},
   jais_count: {type: Number, default: 0},
+  jais_id: [{type: Schema.Types.ObjectId, ref: 'Question'}],
 });
 
 UserSchema.plugin(random);

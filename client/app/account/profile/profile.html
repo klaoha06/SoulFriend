@@ -5,7 +5,7 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
 		<div class="col-md-3 bg_blur">
     	    <!-- <a href="#" class="follow_btn hidden-xs">Follow</a> -->
 		</div>
-        <div class="col-md-9  col-xs-12" style="background:white; min-height: 200px;">
+        <div class="col-md-9  col-xs-12" style="background:white; min-height: 200px; padding-bottom:40px;">
            <img src="{{currentUser.coverimg}}" class="img-thumbnail picture hidden-sm hidden-xs" />
            <img src="{{currentUser.coverimg}}" class="img-thumbnail visible-sm visible-xs picture_mob" />
            <div class="header">
@@ -28,11 +28,12 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
     </div>
 
     <tabset justified="true">
+
       <tab select="onSelectCategory('myQuestions')">
         <tab-heading>คําถามใจ <span class="badge" style="font-size: inherit;">{{currentUser.questions_count | thousandSuffix}}</span></tab-heading>
         <div class="row">
           <div class="col-md-12">
-            <div class="list-group">
+            <div class="list-group" style="margin-bottom: 0;">
                 <a ng-repeat="question in myQuestions" class="list-group-item" href="/questions/{{question._id}}">
                   <div class="row">
                     <div class="col-md-8">
@@ -63,6 +64,11 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
             </div>
           </div>
         </div>
+
+        <div ng-show="myQuestions.length <= 0"class="row text-center" style="border:1px solid #dddddd; padding:15px; border-radius: 4px;">
+          <h2>คุณยังไม่ได้ถามคําถามใจ</h2>
+        </div>
+          <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/ask')" role="button" style="width:100%;"><i ng-class="shake" class="fa fa-question"></i> ถามปัญหา!</a>
       </tab>
 
       <tab select="onSelectCategory('myArticles')">
@@ -100,6 +106,10 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
             </div>
           </div>
         </div>
+        <div ng-show="myArticles.length <= 0"class="row text-center" style="border:1px solid #dddddd; padding:15px; border-radius: 4px;">
+          <h2>คุณยังไม่ได้แชร์บทความให้เพื่อนๆ</h2>
+        </div>
+          <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/share')" role="button" style="width:100%;"><i ng-class="shake" class="fa fa-pencil"></i> เขียนบทความ!</a>
       </tab>
 
       <tab select="onSelectCategory('myAnswersInQuestions')">
@@ -147,6 +157,10 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
             </div>
           </div>
         </div>
+        <div ng-show="myAnswersInQuestions.length <= 0"class="row text-center" style="border:1px solid #dddddd; padding:15px; border-radius: 4px;">
+          <h2>คุณยังไม่ได้ให้ความช่วยเหลือเพื่อนๆ</h2>
+        </div>
+          <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/')" role="button" style="width:100%;"><i ng-class="shake" class="fa fa-heart"></i> ตอบปัญหาให้เพื่อนๆ!</a>
         </tab>
     </tabset>
 

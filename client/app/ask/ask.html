@@ -78,7 +78,8 @@
 						<p>วีธีการถาม วีธีการถาม วีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธ ีการถามวีธีการถามวีธีการถามวีธีการถามวีธี</p>
 
 					</div>
-					<a type="submit" style="background: linear-gradient(white, #fff9aa); font-size: 1.3em; width:100%; color:#428bca;" ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default" role="button" ng-click="onQuestionFormSubmit()"><i ng-class="shake" class="fa fa-child"></i> โพสต์คําถาม</a>
+					<a ng-hide="editQuestion" type="submit" style="background: linear-gradient(white, #fff9aa); font-size: 1.3em; width:100%; color:#428bca;" ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default" role="button" ng-click="onQuestionFormSubmit()"><i ng-class="shake" class="fa fa-child"></i> โพสต์คําถาม</a>
+					<a ng-show="editQuestion" type="submit" style="background: linear-gradient(white, #fff9aa); font-size: 1.3em; width:100%; color:#428bca;" ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default" role="button" ng-click="onQuestionFormSubmit()"><i ng-class="shake" class="fa fa-pencil"></i> แก้ไขคําถามนี้</a>
 					<hr>
 					<alert ng-repeat="alert in alerts" type="{{alert.type}}" class="animated fadeIn" close="closeAlert($index)">{{alert.msg}}</alert>
 
