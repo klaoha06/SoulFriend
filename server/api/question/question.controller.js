@@ -85,7 +85,8 @@ exports.show = function(req, res) {
     if(err) { return handleError(res, err); }
     if(!question) { return res.send(404); }
     res.status(200).json(question);
-    question.update({$inc: {views: 1}})
+    question.views++;
+    question.save();
   });
 };
 

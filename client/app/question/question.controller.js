@@ -151,6 +151,26 @@ angular.module('puanJaiApp')
       }
     };
 
+    $scope.makeGoodAns = function(ansUserId){
+      var currentAnsindex = _.findIndex($scope.question.answers,{'user_id': ansUserId});
+      if (Auth.isLoggedIn()){
+            $scope.question.answers[currentAnsindex].goodAns = !$scope.question.answers[currentAnsindex].goodAns;
+            angular.forEach($scope.question.answers, function(q){
+              if (q.goodAns === true) {
+                $scope.question.answered = true;
+              } else {
+                $scope.question.answered = false;
+              }
+            });
+           $http.patch('/api/questions/' + $stateParams.id, {questionToUpdate: $scope.question}).success(function(res) {
+            // console.log(res);
+           });
+      } else {
+        $location.path('/login');
+        alert('กรุณาเข้าระบบหรือสมัครเป็นสมาชิกก่อนนะครับ : )')
+      }
+    };
+
     $scope.report = function(){
       if (Auth.isLoggedIn()){
           if (_.include($scope.question.reports, userId)) {
@@ -173,6 +193,7 @@ angular.module('puanJaiApp')
       if (r === true) {
         getUserAns();
         $scope.question.answers.splice($scope.userAnsIndex, 1);
+        $scope.question.answers_count--;
         $http.patch('/api/questions/' + $stateParams.id, {questionToUpdate: $scope.question}).success(function(res) {
           getUserAns();
         });
@@ -226,6 +247,15 @@ angular.module('puanJaiApp')
       } else {
             $location.path('/login');
             alert('กรุณาเข้าสู้ระบบก่อนเข้าร่วมการสนทนา')
+      }
+    };
+
+    $scope.isLoggedIn = function(){
+      if(!Auth.isLoggedIn()){
+          alert('กรณาเข้าสู่ระบบก่อนร่วมตอบปัญหานะครับ');
+          $location.path('/login');
+      } else {
+        return;
       }
     };
 

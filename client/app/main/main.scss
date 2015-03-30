@@ -113,6 +113,10 @@ a:hover {
   background: aliceblue;
 }
 
+.haveBorder {
+  border: 1px solid #dddddd;
+}
+
 .background-blue {
   background-color: aliceblue;
 }
@@ -207,9 +211,9 @@ a:hover {
       bottom: 0px;
       left: 50%;
       overflow: hidden;
-      padding: 25px;
       position: absolute;
       right: 0px;
+      padding:5px;
       top: 50%;
       z-index: 4;
 }
@@ -405,6 +409,10 @@ opacity: 1;
 
 .white {
   color:white;
+}
+
+.grey {
+  color:#dddddd;
 }
 
 .yellow {

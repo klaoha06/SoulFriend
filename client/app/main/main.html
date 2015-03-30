@@ -47,146 +47,182 @@
       <a ng-href="/tags"><h3 class="text-center">ดูแท็กทั่งหมด..</h3></a>
       <hr>
      </div>
-   <tabset justified="true" class="col-md-8">
-<!--      <select class="form-control" style="width:100px; float:right;"ng-model="topicFilter" ng-change="updateTopic(topicFilter)" ng-options="topic.title for topic in topics">
-     <option value="" selected>เลือกหัวข้อ</option>
-     </select> -->
-     <carousel interval="4000" style="margin-bottom: 15px;">
-       <slide ng-repeat="slide in slides" active="slide.active" style="border-radius: 4px;">
-         <img ng-src="{{slide.image}}" class="img-responsive img-rounded" style="margin:auto; height:240px; width:100%; border:1px solid #dddddd;">
-         <div class="carousel-caption">
-           <h1>{{slide.text}}</h1>
-         </div>
-       </slide>
-     </carousel>
 
-   <div class="clearfix"></div>
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-12">
+          <carousel interval="4000" style="margin-bottom: 15px;">
+            <slide ng-repeat="slide in slides" active="slide.active" style="border-radius: 4px;">
+              <img ng-src="{{slide.image}}" class="img-responsive img-rounded" style="margin:auto; height:240px; width:100%; border:1px solid #dddddd; border-radius:4px;">
+              <div class="carousel-caption">
+                <h1>{{slide.text}}</h1>
+              </div>
+            </slide>
+          </carousel>
 
-         <tab ng-repeat="tab in tabs" heading="{{tab.title}}" ng-click="resetSkip(); getQuestions(tab.category, tab.orderBy, tab.reverse);">
-         </tab>
+          <div class="row">
+             <div class="col-md-6">
+               <button class="btn btn-default postfixQuestionButton" ng-class="{true: '', false: ''}[showQuestions]" ng-click="switchMainTab('questions')" style="width:100%; display:block; margin:0px auto 15px auto; font-size: 1.2em;">ดูคําถามเพื่อนใจ</button>
+             </div>
+             <div class="col-md-6">
+               <button class="btn btn-default postfixQuestionButton" ng-class="{true: '', false: ''}[!showQuestions]" ng-click="switchMainTab('articles')" style="width:100%; display:block; margin:0px auto 15px auto; font-size: 1.2em;">ดูบทความเพื่อนใจ</button>
+             </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+             <tabset class="col-md-12" justified="true" ng-show="showQuestions">
+          <!--      <select class="form-control" style="width:100px; float:right;"ng-model="topicFilter" ng-change="updateTopic(topicFilter)" ng-options="topic.title for topic in topics">
+               <option value="" selected>เลือกหัวข้อ</option>
+               </select> -->
 
-       <div class="clearfix"></div>
+             <div class="clearfix"></div>
 
-     <div class="questions row" ng-model="questions">
-      <div class="col-md-12" ng-repeat="question in questions" ng-class="questionAni">
-        <div ng-mouseover="onQuestion='animated swing'" ng-mouseleave="onQuestion=''" class="panel panel-default animated fadeIn">
-          <!-- <div class="panel-default"> -->
+                   <tab ng-repeat="tab in questionTabs" heading="{{tab.title}}" ng-click="resetSkip(); getQuestions(tab.category, tab.orderBy, tab.reverse);">
+                   </tab>
 
-            <div class="topPanel">
+                 <div class="clearfix"></div>
 
-              <div class="panel qStatusPanel">
-                  <!-- <p>ได้คําตอบแล้ว {{question.answered}}</p> -->
-                  <p ng-show="{{question.answered}}">ได้ความช่วยเหลือจากเพื่อนใจเแล้ว <i class="fa fa-smile-o blue" ng-class="onQuestion"></i></p>
-                  <p class="bigger" ng-hide="{{question.answered}}">ยังไม่ได้คําตอบที่โดนใจ <i class="fa fa-frown-o blue" ng-class="onQuestion"></i></p>
+               <div class="questions row" ng-model="questions">
+                <div class="col-md-12" ng-repeat="question in questions" ng-class="questionAni">
+                  <div ng-mouseover="onQuestion='animated swing'" ng-mouseleave="onQuestion=''" class="panel panel-default animated fadeIn">
+                    <!-- <div class="panel-default"> -->
+
+                      <div class="topPanel">
+
+                        <div class="panel qStatusPanel">
+                            <!-- <p>ได้คําตอบแล้ว {{question.answered}}</p> -->
+                            <p ng-show="{{question.answered}}">ได้ความช่วยเหลือจากเพื่อนใจเแล้ว <i class="fa fa-smile-o fa-lg blue" ng-class="onQuestion"></i></p>
+                            <p ng-hide="{{question.answered}}">ยังไม่ได้คําตอบที่โดนใจ <i class="fa fa-frown-o blue fa-lg" ng-class="onQuestion"></i></p>
+                        </div>
+
+                      <div style="width: 170px;">
+                        <i class="fa fa-tag"></i>
+                        <a class="topic" ng-href="/topics/{{question.topic}}">{{question.topic}} -</a>
+                        <a style="display:inline;" ng-repeat="tag in question.tags" ng-href="/tags/{{tag._id}}"><small>{{tag.name+" "}}</small></a> 
+                      </div>
+                      <h2 style='font-size: 2.2em;'>{{question.name}}</h2>
+                    <a style="float:right;"href="" ng-click="isCollapsed = !isCollapsed">...อ่านต่อ</a>
+                      </div>
+
+                      <div class="clearfix">
+                      </div>
+
+
+                    <div class="questionContent" collapse="isCollapsed" >
+                      <!-- <img class="questionImg img-responsive" ng-src="{{question.coverImg}}" /> -->
+                      <p>{{question.body}}</p>
+                      <a ng-mouseover="shake='animated rubberBand'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" href="/questions/{{question._id}}" role="button"><i ng-class="shake" class="fa fa-heart red"></i> ให้ความช่วยเหลือ</a>
+                      <br/>
+                      <li style="text-align: center;">
+                        <a ng-href="/questions/{{question._id}}">ดูทั่งหมด</a>
+                      </li>
+                    </div>
+
+                    <div class="clearfix">
+                    </div>
+
+                    <div class="questionPanel inline row">
+
+                      <div class="userPanel col-md-4">
+                        <div class="row" style="border-right: 1px solid #dddddd;">
+                          <div class="col-md-4 no-gutter" style="margin: 15px 0;">
+                            <img class="userIcon" ng-src="{{question.owner.coverimg}}" />
+                          </div>
+                          <div class="col-md-8 no-gutter" style="margin: 15px 0; text-align: center; font-size:0.9em;">
+                            <a ng-href="/users/{{question.ownerId}}"><small>{{question.owner.username}}</small></a><br/>
+                            <small>{{question.created | timeAgo}}</small><br/>
+                            <!-- <small>{{question.created | date:'MMM d, y h:mm a'}}</small> -->
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-8">
+                      <div class="row" style="text-align:center;">
+                        <p class="col-lg-3 col-sm-6 col-xs-12">ความช่วยเหลือ<br/>
+                        <strong class="blue bigger"> {{question.answers_count | thousandSuffix}}</strong></p>
+                        <p class="col-lg-3 col-sm-6 col-xs-12">ได้ความสําคัญ<br/>
+                        <strong class="blue bigger"> {{question.votes_count | thousandSuffix}}</strong></p>
+                        <p class="col-lg-3 col-sm-6 col-xs-12">ผู้เข้าชม<br/>
+                        <strong class="blue bigger"> {{question.views | thousandSuffix}}</strong></p>
+                        <p class="col-lg-3 col-sm-6 col-xs-12">ได้กําลังใจ <br/>
+                        <strong class="blue bigger">{{question.jais_count | thousandSuffix}}</strong></p>
+                      </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <ul class="nav nav-pills">
+                        <li>
+                          <a ng-click="shareFB('/questions/{{question._id}}')"><i class="fa fa-share"></i> แชร์</a>
+                        </li>
+                        <li>
+                          <a ng-click=""><i class="fa fa-gratipay"></i> เก็บใจ</a>
+                        </li>
+                        <li>
+                          <a ng-href="/questions/{{question._id}}"><i class="fa fa-child"></i> ช่วยเพื่อน</a>
+                        </li>
+                        <li>
+                          <a ng-click="addJai(question._id, $element)"><i class="fa fa-gift"></i> ให้กําลังใจ</a>
+                        </li>
+                        <li>
+                          <a ng-click="downVote(question._id, $element)"><i class="fa fa-thumbs-down"></i> โหวตลง</a>
+                        </li>
+                        <li>
+                          <a ng-click="upVote(question._id, $element)"><i class="fa fa-thumbs-up"></i> โหวตขึ้น</a>
+                        </li>
+                      </ul>
+                    </div>
+                  <!-- </div> -->
+
+                </div>
+              </div>
               </div>
 
-            <div style="width: 170px;">
-              <i class="fa fa-tag"></i>
-              <a class="topic" ng-href="/topics/{{question.topic}}">{{question.topic}} -</a>
-              <a style="display:inline;" ng-repeat="tag in question.tags" ng-href="/tags/{{tag._id}}"><small>{{tag.name+" "}}</small></a> 
-            </div>
-            <h2 style='font-size: 2.2em;'>{{question.name}}</h2>
-          <a style="float:right;"href="" ng-click="isCollapsed = !isCollapsed">...อ่านต่อ</a>
-            </div>
+              <a ng-show="questions.length >= 20" class="btn btn-default" style="display:block" ng-click="getMoreQuestions()">ดูเพิ่ม</a>
 
-            <div class="clearfix">
-            </div>
+              <div class="row animated pulse" ng-show="questions.length < 1 && selectedTopic.$ne !== null">
+                <hr>
+                <h2 style="text-align: center;">เป็นคนแรกที่ถามคําถามหัวข้อ <span class="bigger yellow">{{selectedTopic}}</span><br>มีเพื่อนใจมากมายที่รอให้การช่วยเหลือ!</h2><br>
+                <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" style="font-size: 2em; width:30%; margin:0 auto;" class="btn btn-primary btn-lg btn-block" ng-href="/ask"><i ng-class="shake" class="fa fa-child"></i> ถาม</a><br>
+                <hr>
+              </div>
+              </tabset>
 
+           <tabset class="col-md-12" justified="true" ng-hide="showQuestions">
 
-          <div class="questionContent" collapse="isCollapsed" >
-            <!-- <img class="questionImg img-responsive" ng-src="{{question.coverImg}}" /> -->
-            <p>{{question.body}}</p>
-            <a ng-mouseover="shake='animated rubberBand'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" href="/questions/{{question._id}}" role="button"><i ng-class="shake" class="fa fa-heart red"></i> ให้ความช่วยเหลือ</a>
-            <br/>
-            <li style="text-align: center;">
-              <a ng-href="/questions/{{question._id}}">ดูทั่งหมด</a>
-            </li>
-          </div>
+            <div class="clearfix"></div>
 
-          <div class="clearfix">
-          </div>
+            <tab ng-repeat="tab in articleTabs" heading="{{tab.title}}" ng-click="resetSkip(); getArticles(tab.filterBy, tab.orderBy, tab.reverse);" >
+            </tab>
 
-          <div class="questionPanel inline row">
+            <div class="clearfix"></div>
 
-            <div class="userPanel col-md-4">
-              <div class="row" style="border-right: 1px solid #dddddd;">
-                <div class="col-md-4 no-gutter" style="margin: 15px 0;">
-                  <img class="userIcon" ng-src="{{question.owner.coverimg}}" />
-                </div>
-                <div class="col-md-8 no-gutter" style="margin: 15px 0; text-align: center; font-size:0.9em;">
-                  <a ng-href="/users/{{question.ownerId}}"><small>{{question.owner.username}}</small></a><br/>
-                  <small>{{question.created | timeAgo}}</small><br/>
-                  <!-- <small>{{question.created | date:'MMM d, y h:mm a'}}</small> -->
+            <div id="articleList" class="row haveBorder">
+              <div class="no-gutter col-sm-6 col-md-6" ng-repeat="article in articles">
+                <div class="mythumbnail animated fadeIn" article="{{article.coverImg}}" id="{{article._id}}" ng-click="goToArticle(article)">
+                  <div class="caption">
+                    <p class="bigger">{{article.name}}</p>
+                  </div>
                 </div>
               </div>
-            </div>
+              <div ng-show="articles.length <= 0">
+                <h2>ไม่มีบทความในหัวข้อ{{selectedTopic}}</h2>
+              </div>
+            </div> 
+              <a ng-show="articles.length >= 20" class="btn btn-default" style="display:block; margin:20px 0;" ng-click="getMoreArticles()">ดูเพิ่ม</a>
 
-            <div class="col-md-8">
-            <div class="row" style="text-align:center;">
-              <p class="col-lg-3 col-sm-6 col-xs-12">ความช่วยเหลือ<br/>
-              <strong class="blue bigger"> {{question.answers_count | thousandSuffix}}</strong></p>
-              <p class="col-lg-3 col-sm-6 col-xs-12">ได้ความสําคัญ<br/>
-              <strong class="blue bigger"> {{question.votes_count | thousandSuffix}}</strong></p>
-              <p class="col-lg-3 col-sm-6 col-xs-12">ผู้เข้าชม<br/>
-              <strong class="blue bigger"> {{question.views | thousandSuffix}}</strong></p>
-              <p class="col-lg-3 col-sm-6 col-xs-12">ได้กําลังใจ <br/>
-              <strong class="blue bigger">{{question.jais_count | thousandSuffix}}</strong></p>
-            </div>
-            </div>
-          </div>
 
-          <div>
-            <ul class="nav nav-pills">
-              <li>
-                <a ng-click="shareFB('/questions/{{question._id}}')"><i class="fa fa-share"></i> แชร์</a>
-              </li>
-              <li>
-                <a ng-click=""><i class="fa fa-gratipay"></i> เก็บใจ</a>
-              </li>
-              <li>
-                <a ng-href="/questions/{{question._id}}"><i class="fa fa-child"></i> ช่วยเพื่อน</a>
-              </li>
-              <li>
-                <a ng-click="addJai(question._id, $element)"><i class="fa fa-gift"></i> ให้กําลังใจ</a>
-              </li>
-              <li>
-                <a ng-click="downVote(question._id, $element)"><i class="fa fa-thumbs-down"></i> โหวตลง</a>
-              </li>
-              <li>
-                <a ng-click="upVote(question._id, $element)"><i class="fa fa-thumbs-up"></i> โหวตขึ้น</a>
-              </li>
-            </ul>
-          </div>
-        <!-- </div> -->
+           </tabset>
+
 
       </div>
     </div>
-    </div>
 
-    <a ng-hide="questions.length >= 20" class="btn btn-default" style="display:block" ng-click="getMoreQuestions()">ดูเพิ่ม</a>
 
-    <div class="row animated pulse" ng-show="questions.length < 1 && selectedTopic.$ne !== null">
-      <hr>
-      <h2 style="text-align: center;">เป็นคนแรกที่ถามคําถามหัวข้อ <span class="bigger yellow">{{selectedTopic}}</span><br>มีเพื่อนใจมากมายที่รอให้การช่วยเหลือ!</h2><br>
-      <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" style="font-size: 2em; width:30%; margin:0 auto;" class="btn btn-primary btn-lg btn-block" ng-href="/ask"><i ng-class="shake" class="fa fa-child"></i> ถาม</a><br>
-      <hr>
-<!--              <div style="height: 400px;">
-              <carousel id="sampleusers" interval="3000">
-               <slide  class="samplequotes" ng-repeat="user in sampleusers" active="slide.active">
-                <blockquote>
-                 <div class="row">
-                   <div class="col-sm-10 col-sm-offset-1">
-                     <p>{{user.reason}}</p>
-                     <small>{{user.username}}</small>
-                   </div>
-                 </div>
-               </blockquote>
-             </slide>
-           </carousel>
-           {{setCurrentSlide()}}
-         </div> -->
-    </div>
-    </tabset>
+
+
+
 
     <div class="col-md-2">
       <div ng-include="'components/sidebar/rightSidebar.html'"></div>

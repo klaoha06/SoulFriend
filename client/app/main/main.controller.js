@@ -5,23 +5,18 @@ angular.module('puanJaiApp')
   var currentUser = Auth.getCurrentUser();
   var userId = localStorage.getItem('userId');
   var orderBy = $filter('orderBy');
+  $scope.showQuestions = true;
   $scope.isCollapsed = true;
   $scope.userInput;
   var category = category || 'noAnswer';
   var order = order || ['created'];
   var reverse = reverse || false;
+  var articlesFilter = articlesFilter || {recommended: true};
+  var articlesOrder = order || ['created'];
+  var articlesReverse = reverse || false;
   $scope.selectedTopic;
   $scope.popTags = [] || $scope.popTags;
   $scope.skip = 0;
-
-  $scope.shareFB = function(url){
-    Facebook.ui({
-      method: 'share',
-      href: url, function(res){
-        console.log(res);
-      }
-    });
-  };
 
   $scope.slides = [
   {
@@ -100,40 +95,8 @@ angular.module('puanJaiApp')
     'active': false
   }
   ];
-  // $scope.updateTopic = function(topic){
-  //   if (topic === null) {
-  //     $scope.selectedTopic = null;
-  //   } else { 
-  //     $scope.selectedTopic = topic.title;
-  //   }
-  //   $scope.getQuestions(null,null,null,$scope.selectedTopic);
-  //   angular.forEach($scope.topics, function(t){
-  //     if (t.title === topic.title) {
-  //       t.active = !t.active;
-  //     } else {
-  //       t.active = false;
-  //     }
-  //   });
-  // };
 
-  $scope.selectTopic = function(topic){
-    $scope.resetSkip();
-    if (topic === $scope.selectedTopic) {
-      $scope.selectedTopic = {'$ne': null};
-    } else { 
-      $scope.selectedTopic = topic;
-    }
-    $scope.getQuestions(null,null,null,$scope.selectedTopic);
-    angular.forEach($scope.topics, function(t){
-      if (t.title === topic) {
-        t.active = !t.active;
-      } else {
-        t.active = false;
-      }
-    });
-  };
-
-  $scope.tabs = [
+  $scope.questionTabs = [
       { title:'ยังไม่ได้ความช่วยเหลือ', category: 'noAnswer', orderBy: ['-answers_count, created'], reverse: false },
       { title:'ได้ความสําคํญมากสุด', category: 'votes_count', orderBy: 'votes_count', reverse: true },
       { title:'ล่าสุด', category: 'created', orderBy: 'created', reverse: true},
@@ -141,9 +104,13 @@ angular.module('puanJaiApp')
       { title:'ได้กําลังใจมากสุด', category: 'jais', orderBy: 'jais_count', reverse: true}
     ];
 
-  $scope.resetSkip = function(){
-    $scope.skip = 0;
-  };
+  $scope.articleTabs = [
+      { title:'แนะนํา', filterBy: {recommended: true}, orderBy: 'created', reverse: true },
+      { title:'ล่าสุด', filterBy: {}, orderBy: 'created', reverse: true},
+      { title:'ได้โหวตมากสุด', filterBy: {}, orderBy: 'votes_count', reverse: true },
+      { title:'ยอดนิยม', filterBy: {}, orderBy: 'views', reverse: true},
+      { title:'โดยนักเขียน', filterBy: {byWriter: true}, orderBy: 'created', reverse: true},
+    ];
 
   // Get Questions
   $scope.getQuestions = function (c, o, r, t) {
@@ -167,6 +134,76 @@ angular.module('puanJaiApp')
 
   $scope.getQuestions(category, order, reverse, $scope.selectedTopic);
 
+  // Get Articles
+  $scope.getArticles = function (f, o, r, t) {
+    socket.unsyncUpdates('article');
+    articlesFilter = f || articlesFilter;
+    articlesFilter.topic = $scope.selectedTopic;
+    articlesOrder = o || articlesOrder;
+    articlesReverse = r || articlesReverse;
+    $scope.selectedTopic = t || $scope.selectedTopic;
+    var sort;
+    if (articlesReverse === true) {
+      sort = '-' + articlesOrder;
+    } else {
+      sort = articlesOrder;
+    }
+    $http.get('/api/articles',{ params: {filterBy: articlesFilter, skip: $scope.skip, sort: sort}}).success(function(articles){
+      if ($scope.skip > 0){
+        $scope.articles = $scope.articles.concat(articles);
+        console.log(articles)
+      } 
+      else {
+        $scope.articles = articles;
+        console.log(articles)
+      }
+          socket.syncUpdates('article', $scope.articles, function(e, item, array){
+            $scope.articles = orderBy(array, o, r);
+          });
+    });
+  };
+
+  $scope.switchMainTab = function(input){
+    switch(input) {
+      case 'questions':
+        $scope.showQuestions = true;
+        $scope.resetSkip();
+        break;
+      case 'articles':
+        $scope.showQuestions = false;
+        $scope.getArticles();
+        $scope.resetSkip();
+        break;
+    }
+  };
+
+  // $scope.currentTab = function(tagTitle){
+  //   $scope.currentTab = tagTitle;
+  //   console.log(tagTitle)
+  // };
+
+  $scope.selectTopic = function(topic){
+    $scope.resetSkip();
+    if (topic === $scope.selectedTopic) {
+      $scope.selectedTopic = {'$ne': null};
+    } else { 
+      $scope.selectedTopic = topic;
+    }
+    $scope.getQuestions(null,null,null,$scope.selectedTopic);
+    angular.forEach($scope.topics, function(t){
+      if (t.title === topic) {
+        t.active = !t.active;
+      } else {
+        t.active = false;
+      }
+    });
+  };
+
+  $scope.resetSkip = function(){
+    $scope.skip = 0;
+  };
+
+
     $scope.goToQuestion = function(item, model){
       $location.path('/questions/'+model._id);
     };
@@ -179,18 +216,6 @@ angular.module('puanJaiApp')
         });
       });
     };
-
-    // $scope.onSubmitSearch = function(){
-    //   // not done
-    //   $location.path('/search/' + $scope.userInput);
-    // };
-
-
-    // if (!$scope.sampleUsers) {
-    //   $http.get('/api/users/sampleusers').success(function(sampleusers) {
-    //     $scope.sampleusers = sampleusers;
-    //   });
-    // }
     
     $scope.setCurrentSlide = function(){
       var indicators = document.getElementsByClassName('carousel-indicators')[0].children;
@@ -269,14 +294,29 @@ angular.module('puanJaiApp')
       // console.log($scope.popTags);
     });
 
+    $scope.shareFB = function(url){
+      Facebook.ui({
+        method: 'share',
+        href: url, function(res){
+          console.log(res);
+        }
+      });
+    };
+
     $scope.getMoreQuestions = function(){
       $scope.skip++;
       $scope.getQuestions();
     };
 
+    $scope.getMoreArticles = function(){
+      $scope.skip++;
+      $scope.getArticles();
+    };
+
      // On leave page
      $scope.$on('$destroy', function () {
       socket.unsyncUpdates('question');
+      socket.unsyncUpdates('article');
     });
 
    });

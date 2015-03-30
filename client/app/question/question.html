@@ -151,7 +151,6 @@
 						<div class="col-md-10 no-gutter" style="margin: 10px 0; font-size:0.9em;">
 							<p style="margin: 15px 0;"><a ng-href="/users/{{question.ownerId}}">{{answer.username}}</a><small>
 								- {{answer.created | timeAgo}} - {{answer.created | date:'MMM d, y h:mm a'}}</small></p>
-								<!-- <small>{{answer.created | date:'MMM d, y h:mm a'}}</small> -->
 						</div>
 
 						</div>
@@ -169,7 +168,12 @@
 								<a ng-click="upVoteAns(answer.user_id)">โหวตขึ้น<br><i class="fa fa-thumbs-up"></i></a>
 								<h3 style="text-align: center;">{{answer.votes_count}}</h3>
 								<a ng-click="downVoteAns(answer.user_id)"><i class="fa fa-thumbs-down"></i><br>โหวตลง</a>
+								<hr style="margin-top:0; margin-bottom: 0;">
+								<a ng-show="questionOwner()" ng-click="makeGoodAns(answer.user_id)"><i class="fa fa-heart fa-2x" style="margin:10px;" ng-class="{true: 'fa-heart red', false: 'fa-heart-o grey'}[answer.goodAns]"></i><br>โดนใจ</a>
 							</li>
+								<div ng-show="answer.goodAns && !questionOwner()" class="text-center">
+									<i class="fa fa-heart fa-2x" style="margin:10px;" ng-class="{true: 'fa-heart red', false: 'fa-heart-o grey'}[answer.goodAns]"></i><br><p class="blue">โดนใจ</p>
+								</div>
 						</ul>
 					</div>
 				</div>
@@ -212,7 +216,7 @@
 
 			<div ng-hide="userAnsIndex >= 0">
 				<form>
-					<text-angular ta-toolbar="[['p','h1','h2','h3','quote', 'ul', 'ol','undo','redo','justifyLeft', 'justifyCenter','justifyRight', 'insertImage', 'insertLink', 'insertVideo', 'charcount']]" ng-model="textEditorInput"></text-angular>
+					<text-angular ta-toolbar="[['p','h1','h2','h3','quote', 'ul', 'ol','undo','redo','justifyLeft', 'justifyCenter','justifyRight', 'insertImage', 'insertLink', 'insertVideo', 'charcount']]" ng-model="textEditorInput" ng-focus="isLoggedIn()"></text-angular>
 					<input ng-hide="editingAns" ng-mouseover="shake='animated rubberBand'" ng-mouseleave="shake=''" class="btn btn-default" type="submit" ng-click="onSubmit()" value="ช่วยเพื่อนใจ" style="background: linear-gradient(white, #fff9aa); font-size: 1.5em; width:100%;"></input>
 					<input ng-show="editingAns" ng-mouseover="shake='animated rubberBand'" ng-mouseleave="shake=''" class="btn btn-default" type="submit" ng-click="onEditAns()" value="แก้ไขคําตอบ" style="background: linear-gradient(white, #fff9aa); font-size: 1.5em; width:100%;"></input>
 					<!-- 			<a  class="btn btn-default questionHelpBtn" href="/questions/{{question._id}}" role="button"><i ng-class="shake" class="fa fa-heart red"></i> ให้ความช่วยเหลือ</a> -->

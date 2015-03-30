@@ -21,7 +21,8 @@ wordcut.init('./node_modules/wordcut/data/tdict-std.txt');
 exports.index = function(req, res) {
   var filterBy;
   var skip;
-  // console.log(req.query.filterBy)
+  var sort = req.query.sort;
+  console.log(req.query)
   if (req.query.filterBy) {
     filterBy = JSON.parse(req.query.filterBy);
   }
@@ -37,14 +38,9 @@ exports.index = function(req, res) {
         return res.status(200).json(articles);
       });
       break;
-    case 'newest':
-      Article.find({},{},{limit:30, sort:{created: -1, views: 1}},function (err, articles) {
-        if(err) { return handleError(res, err); }
-        return res.status(200).json(articles);
-      });
-      break;
     default:
-      Article.find(filterBy).sort().skip(skip).limit(20).exec(function (err, articles){
+      console.log(skip)
+      Article.find(filterBy).sort(sort).skip(skip).limit(20).exec(function (err, articles){
        if(err) { return handleError(res, err); }
        return res.status(200).json(articles);
       })

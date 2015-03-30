@@ -121,7 +121,10 @@ User.find({}).remove(function() {
               summary: Faker.lorem.sentences(),
               body: Faker.lorem.paragraphs() + Faker.lorem.paragraphs(),
               coverImg: Faker.image.nature(),
+              recommended: true,
+              views: Faker.random.number(100),
               tags: [{name:'ความรัก'},{name: 'ครอบครัว'}],
+              votes_count: Faker.random.number(100),
               owner: {
                 _ownerId: users[i]._id,
                 username: users[i].username,
