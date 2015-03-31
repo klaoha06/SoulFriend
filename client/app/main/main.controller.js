@@ -151,11 +151,9 @@ angular.module('puanJaiApp')
     $http.get('/api/articles',{ params: {filterBy: articlesFilter, skip: $scope.skip, sort: sort}}).success(function(articles){
       if ($scope.skip > 0){
         $scope.articles = $scope.articles.concat(articles);
-        console.log(articles)
       } 
       else {
         $scope.articles = articles;
-        console.log(articles)
       }
           socket.syncUpdates('article', $scope.articles, function(e, item, array){
             $scope.articles = orderBy(array, o, r);
@@ -189,7 +187,11 @@ angular.module('puanJaiApp')
     } else { 
       $scope.selectedTopic = topic;
     }
-    $scope.getQuestions(null,null,null,$scope.selectedTopic);
+    if ($scope.showQuestions) {
+      $scope.getQuestions(null,null,null,$scope.selectedTopic);
+    } else {
+      $scope.getArticles(null,null,null,$scope.selectedTopic);
+    }
     angular.forEach($scope.topics, function(t){
       if (t.title === topic) {
         t.active = !t.active;

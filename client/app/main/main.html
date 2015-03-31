@@ -201,13 +201,20 @@
             <div id="articleList" class="row haveBorder">
               <div class="no-gutter col-sm-6 col-md-6" ng-repeat="article in articles">
                 <div class="mythumbnail animated fadeIn" article="{{article.coverImg}}" id="{{article._id}}" ng-click="goToArticle(article)">
+                  <div ng-show="article.owner.role === 'writer'" class="triangle">
+                    โดยนักเขียน
+                  </div>
+                  <div ng-show="article.owner.role === 'admin'" class="triangle" style="color:black;">
+                    โดยผูสร้างเพื่อนใจ
+                  </div>
                   <div class="caption">
                     <p class="bigger">{{article.name}}</p>
                   </div>
                 </div>
               </div>
-              <div ng-show="articles.length <= 0">
-                <h2>ไม่มีบทความในหัวข้อ{{selectedTopic}}</h2>
+              <div ng-show="articles.length <= 0" class="text-center animated pulse">
+                  <h2 style="text-align: center;">เป็นคนแรกที่เขียนบทความในหัวข้อ <span class="bigger yellow">{{selectedTopic}}</span></h2><br>
+                  <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" style="font-size: 2em; width:30%; margin:0 auto;" class="btn btn-primary btn-lg btn-block" ng-href="/share"><i ng-class="shake" class="fa fa-pencil"></i> แชร์ความรู้!</a><br>
               </div>
             </div> 
               <a ng-show="articles.length >= 20" class="btn btn-default" style="display:block; margin:20px 0;" ng-click="getMoreArticles()">ดูเพิ่ม</a>

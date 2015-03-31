@@ -151,8 +151,8 @@ angular.module('puanJaiApp')
         if (typeof $scope.searchInput === 'undefined') {
           $scope.alerts.push({ type: 'danger', msg: 'กรุณาเลือกชื่อของคําถามด้วยครับ' })
         }
-        if ($scope.searchInput.length > 150) {
-          $scope.alerts.push({ type: 'danger', msg: 'กรุณาใช่ไม่เกิน 150 อักขระในการถามคําถาม' })
+        if ($scope.searchInput.length > 84 || $scope.searchInput.length < 8) {
+          $scope.alerts.push({ type: 'danger', msg: 'กรุณาใช่ระหว่าง 8 ถึง 150 อักขระในการถามคําถาม' })
         }
         if (typeof $scope.selectedTopic === 'undefined') {
           $scope.alerts.push({ type: 'danger', msg: 'กรุณาเลือกหัวข้อของคําถามด้วยครับ' })
@@ -160,8 +160,8 @@ angular.module('puanJaiApp')
         if (typeof $scope.textEditorInput === 'undefined') {
           $scope.alerts.push({ type: 'danger', msg: 'กรุณาใส่เนื้อความของคําถามด้วยครับ' })
         }
-        if (text.length > 9000) {
-          $scope.alerts.push({ type: 'danger', msg: 'กรุณาใช่ไม่เกิน 9000 อักขระในการถามคําถาม' })
+        if (text.length > 7000 || text.length < 15) {
+          $scope.alerts.push({ type: 'danger', msg: 'กรุณาใช่ไระหว่าง 15 ถึง 7000 อักขระในการถามคําถาม' })
         }
         if ($scope.tags.length <= 0) {
           $scope.alerts.push({ type: 'danger', msg: 'กรุณาใส่อย่างน้อยหนึ่งแท็กครับ' })

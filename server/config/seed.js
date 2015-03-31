@@ -124,6 +124,7 @@ User.find({}).remove(function() {
               recommended: true,
               views: Faker.random.number(100),
               tags: [{name:'ความรัก'},{name: 'ครอบครัว'}],
+              topic: 'ความรัก',
               votes_count: Faker.random.number(100),
               owner: {
                 _ownerId: users[i]._id,

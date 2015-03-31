@@ -83,7 +83,7 @@ angular.module('puanJaiApp')
     }
     ];
 
-    $scope.hide = [false,true,true,true,true,true];
+    $scope.hide = [false,true,true,true,true,true,true];
 
     function htmlToPlaintext(text) {
       return String(text).replace(/<[^>]+>/gm, '');
@@ -210,8 +210,8 @@ angular.module('puanJaiApp')
 
         // validate input
         if ($scope.nameInput) {
-          if ($scope.nameInput.length < 3 || $scope.nameInput.length > 150) {
-            $scope.alerts.push({ type: 'danger', msg: 'ชื่อของบทความควรมีความยาวระหว่าง 10 ถึง 150 อักขระ' });
+          if ($scope.nameInput.length < 3 || $scope.nameInput.length > 84) {
+            $scope.alerts.push({ type: 'danger', msg: 'ชื่อของบทความควรมีความยาวระหว่าง 10 ถึง 84 อักขระ' });
           }
         } else {
           $scope.alerts.push({ type: 'danger', msg: 'กรุณาใส่ชื่อของบทความด้วยครับ' });
