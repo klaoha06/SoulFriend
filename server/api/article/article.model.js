@@ -20,7 +20,7 @@ var ArticleSchema = new Schema({
   summary: String,
   body: String,
   recommended: { type: Boolean, default: false},
-  coverImg: {type: String, default: 'https://kalie101.files.wordpress.com/2013/01/wpid-bn_avatar_builtin14.png'},
+  coverImg: {type: String, default:'http://pipsum.com/850x210.jpg'},
   upvotes: Array,
   downvotes: Array,
   votes_count: { type: Number, default: 0, es_indexed:true},

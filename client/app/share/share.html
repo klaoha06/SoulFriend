@@ -1,6 +1,6 @@
 <div class="container-fluid">
 
-<div class="row" ng-init="checked=false">
+<div class="row" ng-init="checked=false" style="overflow:hidden;">
 	<div ng-hide="checked || nameInput.length > 0" class="col-md-6 col-md-offset-3 animated fadeInDownBig" style="text-align: center;">
 		<h1 style="font-size:3em;">เกณฑ์ในการแบ่งบันความรู้</h1>
 		<ul style="list-style: none;">
@@ -11,28 +11,28 @@
 		<hr>
 	</div>
 
-   	<div ng-show="nameInput.length >= 1" class="animated fadeInLeft background-blue" style="margin-bottom:30px; min-height:200px;">
-   		<div style="position: absolute; left: 50%; top:50%;">
+   	<div ng-show="nameInput.length >= 1" class="animated fadeInLeft background-blue" style="min-height:200px; position: relative;">
+   		<div style="position: absolute; left: 50%; top:35%; z-index:20;">
    		    <div style="position: relative; left: -50%;">
-   		      <h1>{{nameInput}}</h1>
+   		      <h1 ng-class="{true: 'white', false: ''}[warnUrl === false]"style="font-size:2.7em;text-shadow: 1px 1px 1px #969696;">{{nameInput}}</h1>
    		    </div>
    		</div>
-   		<img ng-show="coverImageUrl.length > 0" ng-src="{{coverImageUrl}}" style="width:100%;"/>
-   		<div style="position:absolute;">
+   		<div class="triangle" style="position:absolute; z-index:232;">
    		  <i class="fa fa-tags"></i>
-   		  <a class="topic" href="">{{selectedTopic}} -</a>
-   		  <a style="display:inline;" ng-repeat="tag in tags" ng-href=""><small>{{tag.name+" "}}</small></a> 
+   		  <a class="topic" ng-class="{true: 'white', false: 'blue'}[warnUrl === false]"ng-href=""> {{selectedTopic}} - </a>
+   		  <a style="display:inline;" ng-repeat="tag in tags" ng-class="{true: 'white', false: 'blue'}[warnUrl === false]" ng-href=""><small>{{tag.name+" "}}</small></a> 
    		</div>
-
+   		<img ng-hide="warnUrl" ng-src="{{coverImageUrl}}" style="width:100%; opacity:0.7; z-index:-20;"/>
    	</div>
-   <div class="container">
+
+   <div class="container" ng-show="nameInput.length >= 1">
    	<div class="row">
 
    		<div class="col-md-2">
    		</div>
 
    		<div ng-show="nameInput.length >= 1" class="col-md-8 animated fadeInLeft">
-   			<div class="row" style="margin: 0px;padding: 0px; margin-top:-50px;">
+   			<div class="row" style="margin: 0px;padding: 0px; margin-top:-20px;">
    			    <div class="col-md-3 col-xs-3 well"><i class="fa fa-thumbs-up"></i> โหวต<br>123</div>
    			    <div class="col-md-3 col-xs-3 well"><i class="fa fa-share-alt"></i> แชร์<br>123</div>
    			    <div class="col-md-3 col-xs-3 well"><i class="fa fa-eye"></i> ผู้ชม<br>123</div>
@@ -75,7 +75,7 @@
    		</div>
    		</div>
 
-	<hr style="margin-top:0;">
+	<!-- <hr style="margin-top:0;"> -->
 	<form ng-class="articleForm" ng-show="checked || nameInput.length > 1" class="col-md-6 col-md-offset-3 animated fadeIn">
 	
 	<div id="articleForm">
@@ -109,10 +109,11 @@
 	</div>
 
 	<div class="shareSteps animated fadeIn" ng-hide="hide[1]">
-		<h2 class="blue">ขั้นตอนที่ 2: ภาพปกของบทความ</h2>
-		<textarea class="form-control" type="url" ng-model="coverImageUrl" placeholder="Url..." style="font-size: 1.2em;">
+		<h2 class="blue">ขั้นตอนที่ 2: ปกภาพของบทความ (ใส่ก็ได้ไม่ใส่ก็ได้)</h2>
+		<textarea class="form-control" ng-model="coverImageUrl" placeholder="ใส่ลิงค์ หรือ url ของรูป.." style="font-size: 1.2em;">
 		</textarea>
-		<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[coverImageUrl.length > 300 || coverImageUrl.length < 3 ]">{{300 - coverImageUrl.length}}</span> อักขระ</span>
+		<span ng-show="coverImageUrl.length > 0" id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[coverImageUrl.length > 300 || coverImageUrl.length < 11 ]">{{300 - coverImageUrl.length}}</span> อักขระ</span>
+		<span ng-show="warnUrl && coverImageUrl.length > 0" class="help-block text-right red">ลิงค์หรือ url นี้ไม่ถูกต้อง</span>
 	</div>
 		
 <div class="shareSteps animated fadeIn" ng-hide="hide[2]">	
@@ -195,7 +196,7 @@
 		</div>
 		<br>
 
-		<div ng-show="hide[5]===false">
+		<div ng-show="hide[6]===false">
 			<hr>
 			<a type="submit" style="background: linear-gradient(white, #fff9aa); font-size: 2em; width:100%; display:block; margin:0 auto; color:#428bca;" ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default" role="button" ng-click="onSubmit()"><i ng-class="shake" class="fa fa-child"></i> โพสต์บทความ</a>
 		</div>

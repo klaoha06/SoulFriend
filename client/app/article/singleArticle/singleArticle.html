@@ -1,50 +1,24 @@
-<div ng-show="article"style="position: relative">
-	<div class="jumbotron background-blue">
-		<div>
-		  <i class="fa fa-tags"></i>
-		  <a class="topic" ng-href="/topics/{{question.topic}}">{{article.topic}} -</a>
-		  <a style="display:inline;" ng-repeat="tag in article.tags" ng-href="/tags/{{tag._id}}"><small>{{tag.name+" "}}</small></a> 
+<div ng-show="article"style="position: relative; overflow:hidden;">
+	<div class="background-blue" style="min-height:200px; position: relative;">
+		<div style="position: absolute; left: 50%; top:35%; z-index:20;">
+		    <div style="position: relative; left: -50%;">
+		      <h1 ng-class="{true: 'white', false: ''}[article.coverImg.length > 4]"style="font-size:2.7em;text-shadow: 1px 1px 1px #969696;
+">{{article.name}}</h1>
+		    </div>
 		</div>
-		<h1 style="text-align: center; margin-top:10px;">{{article.name}}</h1>
+		<div class="triangle" style="position:absolute; z-index:232;">
+		  <i class="fa fa-tags"></i>
+		  <a class="topic" ng-class="{true: 'white', false: 'blue'}[article.coverImg.length > 4]"ng-href=""> {{article.topic}} - </a>
+		  <a style="display:inline;" ng-repeat="tag in article.tags" ng-class="{true: 'white', false: 'blue'}[article.coverImg.length > 4]" ng-href=""><small>{{tag.name+" "}}</small></a> 
+		</div>
+		<img ng-show="article.coverImg.length > 0" ng-src="{{article.coverImg}}" style="width:100%; opacity:0.7; z-index:-20; max-height: 500px;"/>
 	</div>
 <div class="container">
 	<div class="row">
 		<div class="col-md-2">
-<!-- 			<div class="panel panel-default panel-card">
-				<div class="panel-heading">
-					<img ng-cloak class="ng-cloak" ng-src="https://unsplash.imgix.net/12/barley.jpg?q=75&fm=jpg&s=f39de5ca1970a13dbe6af6c86b3c47ec" />
-					<button class="btn btn-primary btn-sm" role="button">Follow</button>
-				</div>
-				<div class="panel-figure">
-					<img class="img-responsive img-circle" ng-src="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/73.jpg" />
-				</div>
-				<div class="panel-body text-center">
-					<h4 class="panel-header"><a href="https://twitter.com/maridlcrmn">@Maridlcrmn</a></h4>
-					<small>A short description goes here.</small>
-				</div>
-				<div class="panel-thumbnails">
-					<div class="row">
-						<div class="col-xs-4">
-							<div class="thumbnail">
-								<img ng-src="http://placemi.com/mzwlj/60x60" />
-							</div>
-						</div>
-						<div class="col-xs-4">
-							<div class="thumbnail">
-								<img ng-src="http://placemi.com/yboaj/60x60" />
-							</div>
-						</div>
-						<div class="col-xs-4">
-							<div class="thumbnail">
-								<img ng-src="http://placemi.com/gv3bp/60x60" />
-							</div>
-						</div>
-					</div>
-				</div>
-			</div> --> 
 		</div>
 		<div class="col-md-8">
-			<div style="margin: 0px;padding: 0px; margin-top:-50px;">
+			<div style="margin: 0px;padding: 0px; margin-top:-20px;">
 			    <div class="col-md-3 col-xs-3 well"><i class="fa fa-thumbs-up"></i> โหวต<br>{{article.votes_count}}</div>
 			    <div class="col-md-3 col-xs-3 well"><i class="fa fa-share-alt"></i> แชร์<br>{{article.shares}}</div>
 			    <div class="col-md-3 col-xs-3 well"><i class="fa fa-eye"></i> ผู้ชม<br>{{article.views}}</div>

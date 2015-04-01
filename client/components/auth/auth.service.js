@@ -53,6 +53,7 @@ angular.module('puanJaiApp')
         localStorage.removeItem('userId');
         localStorage.removeItem('editQuestion');
         localStorage.removeItem('questionContent');
+        localStorage.removeItem('shareCoverImg');    
         $cookieStore.remove('topic');
         $cookieStore.remove('tags');
         $cookieStore.remove('questionTitle');

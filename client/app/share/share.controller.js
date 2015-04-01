@@ -6,12 +6,14 @@ angular.module('puanJaiApp')
     $scope.oldContent = localStorage.getItem('articleContent');
     $scope.searchResults;
     $scope.nameInput = '' || $cookieStore.get('articleTitle');
+    $scope.coverImageUrl = '' || localStorage.getItem('shareCoverImg');
     $scope.importanceInput = '' || $cookieStore.get('articleImportance');
     $scope.conclusionInput = '' || $cookieStore.get('articleConclusion');
     $scope.selectedTopic = $cookieStore.get('articleTopic');
     $scope.tags = $cookieStore.get('articleTags');
     $scope.alerts = [];
     $scope.now = Date.now();
+    $scope.warnUrl = true;
 
     $scope.writingRules = [
     {
@@ -83,6 +85,16 @@ angular.module('puanJaiApp')
     }
     ];
 
+    function ValidURL(str) {
+      var pattern = new RegExp(/^(https?:\/\/)?((([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|((\d{1,3}\.){3}\d{1,3}))(\:\d+)?(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(\#[-a-z\d_]*)?$/i
+); // fragment locater
+      if(!pattern.test(str)) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
     $scope.hide = [false,true,true,true,true,true,true];
 
     function htmlToPlaintext(text) {
@@ -124,6 +136,16 @@ angular.module('puanJaiApp')
         }
       }
     };
+
+    $scope.$watch('coverImageUrl', function(input){
+      if (input){
+        if (ValidURL(input)) {
+          $scope.warnUrl = false;
+          localStorage.setItem('shareCoverImg', input);
+        } else 
+        $scope.warnUrl = true;
+      }
+    });
 
     $scope.$watch('importanceInput', function(input){
       if (input){
@@ -217,6 +239,14 @@ angular.module('puanJaiApp')
           $scope.alerts.push({ type: 'danger', msg: 'กรุณาใส่ชื่อของบทความด้วยครับ' });
         }
 
+        if ($scope.coverImageUrl) {
+          if ($scope.coverImageUrl.length < 11 || $scope.coverImageUrl > 300) {
+            $scope.alerts.push({type:'danger', msg: 'url หรือ ลิงค์ ควรมีความยาวระหว่าง 11 ถึง 300 อักขระ'});
+          }
+          if (!ValidURL($scope.coverImageUrl)){
+            $scope.alerts.push({type:'danger', msg: 'url หรือ ลิงค์ ของคุณไม่ถูกต้อง'});
+          }
+        }
         if ($scope.importanceInput) {
           if ($scope.importanceInput.length <= 10 || $scope.importanceInput.length > 150) {
             $scope.alerts.push({ type: 'danger', msg: 'ความสําคัญของบทความควรมีความยาวระหว่าง 10 ถึง 150 อักขระ' });
@@ -267,6 +297,10 @@ angular.module('puanJaiApp')
               topic: $scope.selectedTopic
             };
 
+            if ($scope.coverImageUrl && $scope.warnUrl) {
+              newArticle.coverImg = $scope.coverImageUrl;
+            }
+
             $http.post('/api/articles', {newArticle: newArticle, newTags: partitionedTags[0]}).success(function(res){
               $scope.textEditorInput = '';
               $cookieStore.remove('articleTags'); 
@@ -275,6 +309,7 @@ angular.module('puanJaiApp')
               $cookieStore.remove('articleImportance');
               $cookieStore.remove('articleConclusion');
               localStorage.removeItem('articleContent');
+              localStorage.removeItem('shareCoverImg');
               $location.path(/articles/ + res._id);
             });
       } else {

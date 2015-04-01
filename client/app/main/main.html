@@ -2,7 +2,7 @@
 
   <div id="questionSearch"class="input-group input-group-lg">
    <span class="input-group-addon button" id="basic-addon1" href="" ng-click="onSubmitSearch()">ถามปัญหาใจ</span>
-   <input type="text" ng-model="customSelected" placeholder="" typeahead="question as question.name for question in searchQuestions($viewValue) | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" typeahead-on-select="goToQuestion($item, $model)" class="form-control" aria-describedby="basic-addon1">
+   <input type="text" ng-model="customSelected" placeholder="" typeahead="question as question.name for question in searchQuestions($viewValue) | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" typeahead-on-select="goToQuestion($model)" class="form-control" aria-describedby="basic-addon1">
   </div>
 
    <script type="text/ng-template" id="customTemplate.html">
@@ -200,7 +200,7 @@
 
             <div id="articleList" class="row haveBorder">
               <div class="no-gutter col-sm-6 col-md-6" ng-repeat="article in articles">
-                <div class="mythumbnail animated fadeIn" article="{{article.coverImg}}" id="{{article._id}}" ng-click="goToArticle(article)">
+                <div class="mythumbnail animated fadeIn" article="{{article.coverImg}}" id="{{article._id}}" ng-click="goToArticle(article._id)">
                   <div ng-show="article.owner.role === 'writer'" class="triangle">
                     โดยนักเขียน
                   </div>

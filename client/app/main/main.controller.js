@@ -5,7 +5,7 @@ angular.module('puanJaiApp')
   var currentUser = Auth.getCurrentUser();
   var userId = localStorage.getItem('userId');
   var orderBy = $filter('orderBy');
-  $scope.showQuestions = true;
+  $scope.showQuestions = $scope.showQuestions || true;
   $scope.isCollapsed = true;
   $scope.userInput;
   var category = category || 'noAnswer';
@@ -132,8 +132,6 @@ angular.module('puanJaiApp')
     });
   };
 
-  $scope.getQuestions(category, order, reverse, $scope.selectedTopic);
-
   // Get Articles
   $scope.getArticles = function (f, o, r, t) {
     socket.unsyncUpdates('article');
@@ -160,6 +158,12 @@ angular.module('puanJaiApp')
           });
     });
   };
+
+  if ($scope.showQuestions) {
+    $scope.getQuestions(category, order, reverse, $scope.selectedTopic);
+  } else {
+    $scope.getArticles(articlesFilter, articlesOrder, articlesReverse, $scope.selectedTopic); 
+  }
 
   $scope.switchMainTab = function(input){
     switch(input) {
@@ -206,9 +210,14 @@ angular.module('puanJaiApp')
   };
 
 
-    $scope.goToQuestion = function(item, model){
-      $location.path('/questions/'+model._id);
-    };
+  $scope.goToQuestion = function(model){
+    $location.path('/questions/'+model._id);
+  };
+
+  $scope.goToArticle = function(articleId){
+    console.log(articleId)
+    $location.path('/articles/'+articleId);
+  };
 
     $scope.searchQuestions = function(input) {
       $scope.userInput = input;
