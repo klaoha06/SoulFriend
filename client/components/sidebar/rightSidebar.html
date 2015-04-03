@@ -1,14 +1,51 @@
 <div ng-controller="RightCtrl">
-	<div id="quoteOfTheDay">
+	<div id="help">
+		
+	</div>
+<!-- 	<div id="quoteOfTheDay" style="margin-bottom: 20px;">
 		<blockquote class="blockquote-reverse">
 		  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
 		</blockquote>
 		<footer style="text-align: right;">
 			By Supakorn L.
 		</footer>
+	</div> -->
+<a ng-href="/suggestion">
+	<div id="suggestionBox" ng-init="ideaImg='/assets/images/idea1.png'" ng-mouseover="ideaImg='/assets/images/idea.gif'" ng-mouseout="ideaImg='/assets/images/idea1.png'" style="border:1px solid #dddddd; text-align: center; background: #F1C632;">
+		<div class="smallPadding sidebarInnerBox blueBorder">
+		<h2>เสนอไอเดียให้เพื่อนใจ</h2>
+		<small>- ยินดีฟังทุกเรื่องจ้า -</small>
+		</div>
+		<img ng-src="{{ideaImg}}" style="width:100%;"/>
 	</div>
+</a>
+
+<a ng-href="/report">
+	<div id="reportProblem" class="haveBorder text-center" style="background: #1069C9;">
+		<div class="smallPadding sidebarInnerBox yellowBorder">
+		<h2>แจ้งปัญหาของเว็บไซ</h2>
+		<small>- จะแก้เท่าที่แก้ได้ -</small>
+		</div>
+		<img ng-src="/assets/images/fix.png" style="width:100%;"/>
+	</div>
+</a>
+
+<a ng-href="">
+	<div id="aboutUs" class="haveBorder text-center pinkGradient">
+		<div class="smallPadding sidebarInnerBox blueBorder">
+		<h2>รู้จักกับเรา</h2>
+		<small>- ทําด้วยใจ -</small>
+		</div>
+		<div style="position: absolute; left: 50%; bottom:0;">
+		    <div id="mainTitle" style="position: relative; left: -50%;">
+		      <i class="fa fa-heart fa-2x red"></i>
+		    </div>
+		</div>
+		<img ng-src="/assets/images/cutecat.png" style="width:100%;"/>
+	</div>
+</a>
 	
-	<div id="popArticles">
+<!-- 	<div id="popArticles">
 		<h3 style="text-align: center;">บทความที่น่าสนใจ</h3>
 		<div id="articleList" class="row">
 		  <div class="no-gutter col-sm-12" ng-repeat="article in articles">
@@ -21,7 +58,7 @@
 		    </div>
 		  </div>
 		</div> 
-	</div>
+	</div> -->
 
 
 </div>

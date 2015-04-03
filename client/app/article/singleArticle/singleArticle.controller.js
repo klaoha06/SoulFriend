@@ -1,20 +1,34 @@
-'use strict';
-
 angular.module('puanJaiApp')
   .controller('articleCtrl', function ($scope, $http, socket, $stateParams, Auth, $location, $window, Facebook) {
     $scope.windowHeight = $window.innerHeight -100;
-    var userId = localStorage.getItem('userId');
+    $scope.alreadyCommented = false;
+    $scope.currentUser = Auth.getCurrentUser();
+    var userId = $scope.currentUser._id;
     var articleId;
 
     // Getting the Article
-
     $http.get('/api/articles/' + $stateParams.id).success(function(article) {
       $scope.article = article;
       articleId = article._id;
+      $scope.articleOwner = function(){
+        if ($scope.article.ownerId === userId) {
+          return true;
+        } else {
+          return false;
+        }
+      };
+      if (userId){
+        angular.forEach($scope.article.comments, function(c){
+          if (c.user._id === userId) {
+            $scope.alreadyCommented = true;
+            return;
+          }
+        });
+      }
       socket.syncUpdates('article', $scope.article, function(event, oldArticle, newArticle){
         $scope.article = newArticle;
       });
-    });    
+    });
 
     $http.get('/api/articles').success(function(articles) {
       $scope.articles = articles;
@@ -24,9 +38,24 @@ angular.module('puanJaiApp')
       Facebook.ui({
         method: 'share',
         href: url, function(res){
-          console.log(res);
+          // console.log(res);
         }
       });
+    };
+
+    $scope.deleteArticle = function(){
+      if (!$scope.articleOwner()){
+        return;
+      }
+      var r = confirm("ต้องการลบคําถามนี้?")
+      if (r === true) {
+        $http.delete('api/articles/' + $stateParams.id).then(function(){
+          alert('คําถามของคุณถูกลบเรียบร้อยแล้ว');
+          $location.path('/');
+        });
+      } else {
+        return;
+      }
     };
 
     $scope.upVote = function(){
@@ -121,9 +150,13 @@ angular.module('puanJaiApp')
 
 
     $scope.addComment = function() {
-      if(typeof $scope.newComment === 'undefined' || $scope.newComment.length <= 5) {
+      if(typeof $scope.newComment === 'undefined') {
         return;
       }
+      if ($scope.newComment.length < 3 || $scope.newComment.length > 150) {
+        return;
+      }
+
       if (Auth.isLoggedIn()) {
         var user = Auth.getCurrentUser();
         var newComment = { 
@@ -138,11 +171,20 @@ angular.module('puanJaiApp')
         };
         $scope.article.comments.push(newComment);
         $http.post('/api/articles/' +  $stateParams.id + '/comments', newComment);
+        $scope.alreadyCommented = true;
         $scope.newComment = '';
       } else {
         $location.path('/login');
         alert('กรุณาเข้าสู้ระบบก่อนเข้าร่วมการสนทนา')
       }
+    };
+
+    $scope.deleteMyComment = function(){
+      
+    };
+
+    $scope.editMyComment = function(){
+      
     };
 
      // On leave page

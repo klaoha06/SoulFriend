@@ -232,8 +232,8 @@ angular.module('puanJaiApp')
 
         // validate input
         if ($scope.nameInput) {
-          if ($scope.nameInput.length < 3 || $scope.nameInput.length > 84) {
-            $scope.alerts.push({ type: 'danger', msg: 'ชื่อของบทความควรมีความยาวระหว่าง 10 ถึง 84 อักขระ' });
+          if ($scope.nameInput.length < 3 || $scope.nameInput.length > 83) {
+            $scope.alerts.push({ type: 'danger', msg: 'ชื่อของบทความควรมีความยาวระหว่าง 10 ถึง 83 อักขระ' });
           }
         } else {
           $scope.alerts.push({ type: 'danger', msg: 'กรุณาใส่ชื่อของบทความด้วยครับ' });
@@ -281,37 +281,38 @@ angular.module('puanJaiApp')
             return tag;
           }
         });
-            var newArticle = { 
-              body: $scope.textEditorInput,
-              importance: $scope.importanceInput,
-              name: $scope.nameInput,
-              owner: {
-                username: $scope.user.username,
-                summary: $scope.user.summary,
-                role: $scope.user.role,
-                coverimg: $scope.user.coverimg
-              },
-              ownerId: $scope.user._id,
-              summary: $scope.conclusionInput,
-              tags: partitionedTags[1],
-              topic: $scope.selectedTopic
-            };
+        var newArticle = { 
+          body: $scope.textEditorInput,
+          importance: $scope.importanceInput,
+          name: $scope.nameInput,
+          owner: {
+            username: $scope.user.username,
+            summary: $scope.user.summary,
+            role: $scope.user.role,
+            coverimg: $scope.user.coverimg
+          },
+          ownerId: $scope.user._id,
+          summary: $scope.conclusionInput,
+          tags: partitionedTags[1],
+          topic: $scope.selectedTopic
+        };
 
-            if ($scope.coverImageUrl && $scope.warnUrl) {
-              newArticle.coverImg = $scope.coverImageUrl;
-            }
-
-            $http.post('/api/articles', {newArticle: newArticle, newTags: partitionedTags[0]}).success(function(res){
-              $scope.textEditorInput = '';
-              $cookieStore.remove('articleTags'); 
-              $cookieStore.remove('articleTopic'); 
-              $cookieStore.remove('articleTitle');
-              $cookieStore.remove('articleImportance');
-              $cookieStore.remove('articleConclusion');
-              localStorage.removeItem('articleContent');
-              localStorage.removeItem('shareCoverImg');
-              $location.path(/articles/ + res._id);
-            });
+        if ($scope.coverImageUrl && $scope.warnUrl) {
+          newArticle.coverImg = $scope.coverImageUrl;
+        } else {
+          newArticle.coverImg = 'http://loremflickr.com/750/240/landscape?random=' + Math.floor((Math.random() * 100) + 1);
+        }
+        $http.post('/api/articles', {newArticle: newArticle, newTags: partitionedTags[0]}).success(function(res){
+          $scope.textEditorInput = '';
+          $cookieStore.remove('articleTags'); 
+          $cookieStore.remove('articleTopic'); 
+          $cookieStore.remove('articleTitle');
+          $cookieStore.remove('articleImportance');
+          $cookieStore.remove('articleConclusion');
+          localStorage.removeItem('articleContent');
+          localStorage.removeItem('shareCoverImg');
+          $location.path(/articles/ + res._id);
+        });
       } else {
             $location.path('/login');
             alert('กรุณาเข้าสู้ระบบก่อนเข้าร่วมการสนทนา')

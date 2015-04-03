@@ -52,10 +52,10 @@
       <div class="row">
         <div class="col-md-12">
           <carousel interval="4000" style="margin-bottom: 15px;">
-            <slide ng-repeat="slide in slides" active="slide.active" style="border-radius: 4px;">
+            <slide ng-repeat="slide in slides" active="slide.active" style="border-radius: 4px; cursor:pointer;" ng-click="goTo(slide.link)">
               <img ng-src="{{slide.image}}" class="img-responsive img-rounded" style="margin:auto; height:240px; width:100%; border:1px solid #dddddd; border-radius:4px;">
               <div class="carousel-caption">
-                <h1>{{slide.text}}</h1>
+                <h1 style="font-size:3em; margin-bottom:35px;">{{slide.text}}</h1>
               </div>
             </slide>
           </carousel>
@@ -139,13 +139,13 @@
 
                       <div class="col-md-8">
                       <div class="row" style="text-align:center;">
-                        <p class="col-lg-3 col-sm-6 col-xs-12">ความช่วยเหลือ<br/>
+                        <p class="col-lg-3 col-sm-6 col-xs-6">ความช่วยเหลือ<br/>
                         <strong class="blue bigger"> {{question.answers_count | thousandSuffix}}</strong></p>
-                        <p class="col-lg-3 col-sm-6 col-xs-12">ได้ความสําคัญ<br/>
+                        <p class="col-lg-3 col-sm-6 col-xs-6">ได้ความสําคัญ<br/>
                         <strong class="blue bigger"> {{question.votes_count | thousandSuffix}}</strong></p>
-                        <p class="col-lg-3 col-sm-6 col-xs-12">ผู้เข้าชม<br/>
+                        <p class="col-lg-3 col-sm-6 col-xs-6">ผู้เข้าชม<br/>
                         <strong class="blue bigger"> {{question.views | thousandSuffix}}</strong></p>
-                        <p class="col-lg-3 col-sm-6 col-xs-12">ได้กําลังใจ <br/>
+                        <p class="col-lg-3 col-sm-6 col-xs-6">ได้กําลังใจ <br/>
                         <strong class="blue bigger">{{question.jais_count | thousandSuffix}}</strong></p>
                       </div>
                       </div>
@@ -200,15 +200,31 @@
 
             <div id="articleList" class="row haveBorder">
               <div class="no-gutter col-sm-6 col-md-6" ng-repeat="article in articles">
-                <div class="mythumbnail animated fadeIn" article="{{article.coverImg}}" id="{{article._id}}" ng-click="goToArticle(article._id)">
-                  <div ng-show="article.owner.role === 'writer'" class="triangle">
+                <div class="mythumbnail animated fadeIn" article="{{article.coverImg}}" id="{{article._id}}" ng-click="goToArticle(article._id)" style="background-position: center;">
+                  <div ng-show="article.owner.role === 'writer'" class="triangle-right" style="float:right;">
                     โดยนักเขียน
                   </div>
-                  <div ng-show="article.owner.role === 'admin'" class="triangle" style="color:black;">
+                  <div ng-show="article.owner.role === 'admin'" class="triangle-right" style="color:black; float:right;">
                     โดยผูสร้างเพื่อนใจ
                   </div>
-                  <div class="caption">
-                    <p class="bigger">{{article.name}}</p>
+                  <span class="label label-info" style="font-size:0.7em; position:absolute; left:12px; top:12px;">{{article.topic}}</span>
+                  <div class="caption" ng-class="{true: 'bigPadding', false: 'smallPadding'}[article.name.length <= 65]">
+                    <p>{{article.name}}</p>
+                    <hr style="margin-bottom: 7px; margin-top:7px;">
+                    <div class="row text-center">
+                      <div class="col-xs-4">
+                        <i class="fa fa-thumbs-up"></i><br>
+                        <small>{{article.votes_count}}</small>
+                      </div>
+                      <div class="col-xs-4">
+                        <i class="fa fa-share-alt"></i><br>
+                        <small>{{article.shares}}</small>
+                      </div>
+                      <div class="col-xs-4">
+                        <i class="fa fa-eye"></i><br>
+                        <small>{{article.views}}</small>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -225,11 +241,6 @@
 
       </div>
     </div>
-
-
-
-
-
 
     <div class="col-md-2">
       <div ng-include="'components/sidebar/rightSidebar.html'"></div>

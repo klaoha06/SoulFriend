@@ -85,6 +85,7 @@ exports.create = function(req, res) {
           })
         }
       User.findById(article.ownerId, function(err, user){
+        if(!user){ return res.send(404)}
         user.articles_id.push(article._id);
         user.articles_count++;
         user.save(function(err,u){
@@ -165,7 +166,13 @@ exports.addComment = function(req, res) {
     article.comments.push(req.body);
     article.save(function (err) {
       if (err) { return handleError(res, err); }
-      return res.json(200, article);
+      res.status(200).json(article);
+      User.findById(req.body.user._id, function(err, user){
+        if(!user){ return res.send(404)}
+        user.comments_count++;
+        user.commentInArticles_id.push(article._id);
+        user.save();
+      })
     });
   });
 };

@@ -14,15 +14,15 @@
    	<div ng-show="nameInput.length >= 1" class="animated fadeInLeft background-blue" style="min-height:200px; position: relative;">
    		<div style="position: absolute; left: 50%; top:35%; z-index:20;">
    		    <div style="position: relative; left: -50%;">
-   		      <h1 ng-class="{true: 'white', false: ''}[warnUrl === false]"style="font-size:2.7em;text-shadow: 1px 1px 1px #969696;">{{nameInput}}</h1>
+   		      <h1 style="font-size:2.7em;text-shadow: 1px 1px 1px #969696; color:black;">{{nameInput}}</h1>
    		    </div>
    		</div>
-   		<div class="triangle" style="position:absolute; z-index:232;">
+   		<div class="triangle-left" style="position:absolute; z-index:232;">
    		  <i class="fa fa-tags"></i>
-   		  <a class="topic" ng-class="{true: 'white', false: 'blue'}[warnUrl === false]"ng-href=""> {{selectedTopic}} - </a>
-   		  <a style="display:inline;" ng-repeat="tag in tags" ng-class="{true: 'white', false: 'blue'}[warnUrl === false]" ng-href=""><small>{{tag.name+" "}}</small></a> 
+   		  <a class="topic" style="color:black;"> {{selectedTopic}}</a> - 
+   		  <a style="display:inline;" ng-repeat="tag in tags"><small style="color:black;">{{tag.name+" "}}</small></a> 
    		</div>
-   		<img ng-hide="warnUrl" ng-src="{{coverImageUrl}}" style="width:100%; opacity:0.7; z-index:-20;"/>
+   		<img ng-cloak ng-hide="warnUrl" ng-src="{{coverImageUrl}}" style="width:100%; opacity:0.7; z-index:-20; max-height:450px;"/>
    	</div>
 
    <div class="container" ng-show="nameInput.length >= 1">
@@ -84,7 +84,7 @@
 		<div>		
 			<textarea class="form-control" rows="3" ng-model="nameInput" placeholder="ชื่อบทความ.." style="font-size: 1.2em;">
 			</textarea>
-			<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[nameInput.length > 84 || nameInput.length < 3 ]">{{84 - nameInput.length}}</span> อักขระ</span>
+			<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[nameInput.length > 83 || nameInput.length < 3 ]">{{83 - nameInput.length}}</span> อักขระ</span>
 			<div ng-if="searchResults.length > 0">
 				<h2 class="text-center">บทความที่คลายกันที่อาจมีคนอื่นเขียนแล้ว</h2>
 				<hr style="width:70%;"/>
@@ -109,7 +109,7 @@
 	</div>
 
 	<div class="shareSteps animated fadeIn" ng-hide="hide[1]">
-		<h2 class="blue">ขั้นตอนที่ 2: ปกภาพของบทความ (ใส่ก็ได้ไม่ใส่ก็ได้)</h2>
+		<h2 class="blue">ขั้นตอนที่ 2: ปกภาพของบทความ (ไม่ใส่ก็ได้)</h2>
 		<textarea class="form-control" ng-model="coverImageUrl" placeholder="ใส่ลิงค์ หรือ url ของรูป.." style="font-size: 1.2em;">
 		</textarea>
 		<span ng-show="coverImageUrl.length > 0" id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[coverImageUrl.length > 300 || coverImageUrl.length < 11 ]">{{300 - coverImageUrl.length}}</span> อักขระ</span>

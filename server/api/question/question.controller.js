@@ -30,6 +30,7 @@ exports.index = function(req, res) {
   } else {
     skip = 0;
   }
+  console.log(filterBy)
     switch(req.query.category){
     case 'views':
       Question.find(filterBy).sort({views: -1}).skip(skip).limit(20).exec(function (err, questions){
@@ -94,7 +95,6 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   var newTags = req.body.newTags;
   var newQuestion = req.body.newQuestion;
-
   function createNewQuestion(nq) {
     Question.create(nq, function(err, question) {
       if(err) { return handleError(res, err); }
@@ -110,12 +110,14 @@ exports.create = function(req, res) {
           })
         }
       User.findById(question.ownerId, function(err, user){
+        if(!user){ return res.send(404)}
         user.questions_id.push(question._id);
         user.questions_count++;
         user.save(function(err,u){
           // console.log(u)
         })
       })
+      console.log(question)
       return res.status(200).json(question)
     });
   }
@@ -180,6 +182,7 @@ exports.addJai = function(req, res) {
       if (err) { return handleError(res, err); }
        res.status(200).json(question);
        User.findById(req.body.userId, function(err, user){
+        if(!user){ return res.send(404)}
         user.jais_count++;
         user.jais_id.push(question._id);
         user.save();
@@ -225,6 +228,7 @@ exports.addAnswer = function(req, res) {
     question.save(function (err) {
       if (err) { return handleError(res, err); }
       User.findById(req.body.user_id, function(err, user){
+        if(!user){ return res.send(404)}
         user.ansInQuestions_id.push(question._id)
         user.answers_count++;
         user.save(function(err,u){

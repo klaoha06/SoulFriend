@@ -3,56 +3,8 @@
 }
 
 @font-face {
-    font-family: font1;
-    src:url(/assets/fonts/1.ttf);
-}
-
-@font-face {
-    font-family: font2;
-    src:url(/assets/fonts/Nithan.ttf);
-}
-
-@font-face {
-    font-family: font3;
-    src:url(/assets/fonts/ASGMatrathanLight.ttf);
-}
-
-@font-face {
-    font-family: font4;
-    src:url(/assets/fonts/CSPraJad.otf);
-}
-
-@font-face {
-    font-family: font5;
-    src:url(/assets/fonts/DRdeco.ttf);
-}
-@font-face {
     font-family: font6;
     src:url(/assets/fonts/EDPenSook.ttf);
-}
-@font-face {
-    font-family: font7;
-    src:url(/assets/fonts/kruengprung.ttf);
-}
-@font-face {
-    font-family: font8;
-    src:url(/assets/fonts/PGVIM.ttf);
-}
-@font-face {
-    font-family: font9;
-    src:url(/assets/fonts/Quark-light.otf);
-}
-@font-face {
-    font-family: font10;
-    src:url(/assets/fonts/torsilp-wadkhen.ttf);
-}
-@font-face {
-    font-family: font11;
-    src:url(/assets/fonts/WDB_Bangna.ttf);
-}
-@font-face {
-    font-family: font12;
-    src:url(/assets/fonts/LayijiRuDuuRon.ttf);
 }
 
 * {
@@ -148,8 +100,13 @@ a:hover {
 }
 
 
-.thing-form {
-    margin: 20px 0;
+.bigPadding {
+  padding:20px;
+  font-size:1.4em;
+}
+
+.smallPadding {
+  padding: 7px;
 }
 
 #banner {
@@ -213,18 +170,28 @@ a:hover {
       overflow: hidden;
       position: absolute;
       right: 0px;
-      padding:5px;
       top: 40%;
       z-index: 4;
 }
 
-.triangle {
+.triangle-right {
+  width: 0;
+  height: 0;
+  border: solid 5px;
+  border-color: #FFF9AA #428bca transparent transparent;
+  color: white;
+  display: table;
+  padding: 5px;
+  text-shadow: 2px 2px 2px rgba(150, 150, 150, 1);
+}
+
+.triangle-left {
   width: 0;
   height: 0;
   border: solid 5px;
   border-color: #FFF9AA transparent transparent #428bca;
   color: white;
-  display: inline-table;
+  display: table;
   padding: 5px;
   text-shadow: 2px 2px 2px rgba(150, 150, 150, 1);
 }

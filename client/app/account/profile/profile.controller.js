@@ -7,9 +7,12 @@ angular.module('puanJaiApp')
     }
     $scope.userId = localStorage.getItem('userId');
 
-    $http.get('/api/questions', { params: { filterBy: { ownerId: $scope.userId}}}).success(function(questions){
-        $scope.myQuestions = questions;
-    });
+    if (localStorage.getItem('userId')) {    
+        $http.get('/api/questions', { params: { filterBy: { ownerId: $scope.userId}}}).success(function(questions){
+            $scope.myQuestions = questions;
+        });
+    }
+
 
     // Go to
     $scope.goTo = function(url){

@@ -20,7 +20,7 @@ var ArticleSchema = new Schema({
   summary: String,
   body: String,
   recommended: { type: Boolean, default: false},
-  coverImg: {type: String, default:'http://pipsum.com/850x210.jpg'},
+  coverImg: String,
   upvotes: Array,
   downvotes: Array,
   votes_count: { type: Number, default: 0, es_indexed:true},

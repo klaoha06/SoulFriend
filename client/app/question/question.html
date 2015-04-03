@@ -75,12 +75,7 @@
 					</div>
 
 					<div class="questionContent">
-						<!-- <img ng-cloak ng-show="question.coverImg" class="questionImg img-responsive" ng-src="{{question.coverImg}}" /> -->
-						<!-- <p>{{question.body}}</p> -->
-						<div ng-bind-html="question.body" style="word-wrap: break-word; padding:25px;"></div>
-			<!-- 			<div style="text-align: right;">							
-
-						</div> -->
+						<div ta-bind ng-model="question.body" style="word-wrap: break-word; padding:25px;"></div>
 						<hr style="width:80%;">
 						<div class="row" style="padding: 15px;margin-right: 0;margin-left:0;">
 							<div class="col-md-4">
@@ -228,6 +223,7 @@
 
 	<div class="col-md-2">
 		คําถามที่คลายกัน
+		<div ng-include="'components/sidebar/rightSidebar.html'"></div>
 	</div>
 
 </div>

@@ -151,9 +151,14 @@ angular.module('puanJaiApp')
         if (typeof $scope.searchInput === 'undefined') {
           $scope.alerts.push({ type: 'danger', msg: 'กรุณาเลือกชื่อของคําถามด้วยครับ' })
         }
-        if ($scope.searchInput.length > 84 || $scope.searchInput.length < 8) {
+        if ($scope.searchInput){        
+          if ($scope.searchInput.length > 84 || $scope.searchInput.length < 8) {
+            $scope.alerts.push({ type: 'danger', msg: 'กรุณาใช่ระหว่าง 8 ถึง 150 อักขระในการถามคําถาม' })
+          }
+        } else {
           $scope.alerts.push({ type: 'danger', msg: 'กรุณาใช่ระหว่าง 8 ถึง 150 อักขระในการถามคําถาม' })
         }
+
         if (typeof $scope.selectedTopic === 'undefined') {
           $scope.alerts.push({ type: 'danger', msg: 'กรุณาเลือกหัวข้อของคําถามด้วยครับ' })
         }
@@ -191,7 +196,7 @@ angular.module('puanJaiApp')
             resetFormVariables();
             $location.path(/questions/ + res._id);
           });
-        } else {            
+        } else {
           var newQuestion = { 
             ownerId: user._id,
             owner: {

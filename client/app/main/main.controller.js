@@ -1,39 +1,51 @@
-'use strict';
-
 angular.module('puanJaiApp')
 .controller('MainCtrl', function ($scope, $http, socket, Auth, $location, $filter, Facebook) {
   var currentUser = Auth.getCurrentUser();
   var userId = localStorage.getItem('userId');
   var orderBy = $filter('orderBy');
-  $scope.showQuestions = $scope.showQuestions || true;
+  if (localStorage.getItem('showQuestions') === 'false') {
+    $scope.showQuestions = false;
+  } else {
+    $scope.showQuestions = true;
+  }
   $scope.isCollapsed = true;
   $scope.userInput;
   var category = category || 'noAnswer';
   var order = order || ['created'];
   var reverse = reverse || false;
-  var articlesFilter = articlesFilter || {recommended: true};
-  var articlesOrder = order || ['created'];
-  var articlesReverse = reverse || false;
+  var articlesFilter = articlesFilter || {};
+  var articlesOrder = order || ['-created'];
+  var articlesReverse = reverse || true;
   $scope.selectedTopic;
   $scope.popTags = [] || $scope.popTags;
   $scope.skip = 0;
 
   $scope.slides = [
   {
-    image: 'http://lorempixel.com/1900/300/animals',
-    text:'hi'
+    image: '/assets/images/6.jpg',
+    text:'ยินดีต้อนรับสู่เพื่อนใจ',
+    caption: '',
+    link:'/about'
   },
   {
-    image: 'http://lorempixel.com/1600/300/animals',
-    text:'yo'
+    image: '/assets/images/writer2.jpg',
+    text:'สมัครเป็นนักเขียนเพื่อนใจ',
+    link:'/writer'
   },
   {
-    image: 'http://lorempixel.com/1400/300/animals',
-    text:'bye'
+    image: '/assets/images/10.png',
+    text:'รู้จักผู้สร้างเพื่อนใจ',
+    link:'/aboutcreator'
   },
   {
-    image: 'http://lorempixel.com/1000/300/animals',
-    text:'love u'
+    image: '/assets/images/13.jpg',
+    text:'บริการเพื่อนใจ',
+    link:'/services'
+  },
+    {
+    image: '/assets/images/7.png',
+    text:'กิจกรรมเพื่อนใจ',
+    link:'/activities'
   }
   ];
 
@@ -105,10 +117,10 @@ angular.module('puanJaiApp')
     ];
 
   $scope.articleTabs = [
-      { title:'แนะนํา', filterBy: {recommended: true}, orderBy: 'created', reverse: true },
       { title:'ล่าสุด', filterBy: {}, orderBy: 'created', reverse: true},
       { title:'ได้โหวตมากสุด', filterBy: {}, orderBy: 'votes_count', reverse: true },
       { title:'ยอดนิยม', filterBy: {}, orderBy: 'views', reverse: true},
+      { title:'แนะนํา', filterBy: {recommended: true}, orderBy: 'created', reverse: true },
       { title:'โดยนักเขียน', filterBy: {byWriter: true}, orderBy: 'created', reverse: true},
     ];
 
@@ -136,7 +148,9 @@ angular.module('puanJaiApp')
   $scope.getArticles = function (f, o, r, t) {
     socket.unsyncUpdates('article');
     articlesFilter = f || articlesFilter;
-    articlesFilter.topic = $scope.selectedTopic;
+    if ($scope.selectedTopic){
+      articlesFilter.topic = $scope.selectedTopic;
+    }
     articlesOrder = o || articlesOrder;
     articlesReverse = r || articlesReverse;
     $scope.selectedTopic = t || $scope.selectedTopic;
@@ -159,30 +173,40 @@ angular.module('puanJaiApp')
     });
   };
 
-  if ($scope.showQuestions) {
-    $scope.getQuestions(category, order, reverse, $scope.selectedTopic);
-  } else {
-    $scope.getArticles(articlesFilter, articlesOrder, articlesReverse, $scope.selectedTopic); 
-  }
+  $scope.resetSkip = function(){
+    $scope.skip = 0;
+  };
 
   $scope.switchMainTab = function(input){
     switch(input) {
       case 'questions':
         $scope.showQuestions = true;
+        if (!$scope.questions) {
+          $scope.getQuestions(category, order, reverse, $scope.selectedTopic);
+        }
+        localStorage.setItem('showQuestions', true);
         $scope.resetSkip();
         break;
       case 'articles':
         $scope.showQuestions = false;
+        if (!$scope.articles) {
+          $scope.getArticles(articlesFilter, articlesOrder, articlesReverse, $scope.selectedTopic);
+        }
+        localStorage.setItem('showQuestions', false);
         $scope.getArticles();
         $scope.resetSkip();
         break;
+      default:
+        $scope.getQuestions(category, order, reverse, $scope.selectedTopic);
+        $scope.getArticles(articlesFilter, articlesOrder, articlesReverse, $scope.selectedTopic);
     }
   };
 
-  // $scope.currentTab = function(tagTitle){
-  //   $scope.currentTab = tagTitle;
-  //   console.log(tagTitle)
-  // };
+  if ($scope.showQuestions) {
+    $scope.switchMainTab('questions');
+  } else {
+    $scope.switchMainTab('articles');
+  }
 
   $scope.selectTopic = function(topic){
     $scope.resetSkip();
@@ -205,17 +229,15 @@ angular.module('puanJaiApp')
     });
   };
 
-  $scope.resetSkip = function(){
-    $scope.skip = 0;
+  $scope.goTo = function(url){
+    $location.path(url);
   };
-
 
   $scope.goToQuestion = function(model){
     $location.path('/questions/'+model._id);
   };
 
   $scope.goToArticle = function(articleId){
-    console.log(articleId)
     $location.path('/articles/'+articleId);
   };
 
@@ -302,7 +324,6 @@ angular.module('puanJaiApp')
       angular.forEach(tags, function(tag){
         $scope.popTags.push({text: tag.name, weight: tag.popular_count, link: 'tags/' + tag._id})
       });
-      // console.log($scope.popTags);
     });
 
     $scope.shareFB = function(url){
@@ -332,24 +353,4 @@ angular.module('puanJaiApp')
 
    });
 
-angular.module('puanJaiApp')
-  .filter('thousandSuffix', function () {
-    return function (number){
-      if (number !== undefined) {
-      var abs = Math.abs(number);
-      if (abs >= Math.pow(10, 12)) {
-        number = (number / Math.pow(10, 12)).toFixed(1)+"t";
-      }
-      else if (abs < Math.pow(10, 12) && abs >= Math.pow(10, 9)) {
-        number = (number / Math.pow(10, 9)).toFixed(1)+"b";
-      }
-      else if (abs < Math.pow(10, 9) && abs >= Math.pow(10, 6)) {
-        number = (number / Math.pow(10, 6)).toFixed(1)+"m";
-      }
-      else if (abs < Math.pow(10, 6) && abs >= Math.pow(10, 3)) {
-        number = (number / Math.pow(10, 3)).toFixed(1)+"k";
-      }
-      return number;
-    }
-  };
-  });
+
