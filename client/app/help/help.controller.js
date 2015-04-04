@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('puanJaiApp')
-.controller('RightCtrl', function ($scope, $http) {
+.controller('HelpCtrl', function ($scope, $http) {
 
 	//Get Popular Articles
 	// if (!$scope.articles) {

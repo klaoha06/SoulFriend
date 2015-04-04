@@ -5,11 +5,11 @@ angular.module('puanJaiApp')
     $scope.textEditorInput = localStorage.getItem('articleContent');
     $scope.oldContent = localStorage.getItem('articleContent');
     $scope.searchResults;
-    $scope.nameInput = '' || $cookieStore.get('articleTitle');
+    $scope.nameInput = '' || localStorage.getItem('articleTitle');
     $scope.coverImageUrl = '' || localStorage.getItem('shareCoverImg');
-    $scope.importanceInput = '' || $cookieStore.get('articleImportance');
-    $scope.conclusionInput = '' || $cookieStore.get('articleConclusion');
-    $scope.selectedTopic = $cookieStore.get('articleTopic');
+    $scope.importanceInput = '' || localStorage.getItem('articleImportance');
+    $scope.conclusionInput = '' || localStorage.getItem('articleConclusion');
+    $scope.selectedTopic = localStorage.getItem('articleTopic');
     $scope.tags = $cookieStore.get('articleTags');
     $scope.alerts = [];
     $scope.now = Date.now();
@@ -104,7 +104,7 @@ angular.module('puanJaiApp')
     // Search Articles
     $scope.$watch('nameInput', function(input){
       if (input){
-        $cookieStore.put('articleTitle', input);
+        localStorage.setItem('articleTitle', input);
         $http.get('/api/articles/search', { params: {userInput: input}}).success(function(result) {
           $scope.searchResults = orderBy(result.hits.hits, '_score', true);
         });
@@ -149,13 +149,13 @@ angular.module('puanJaiApp')
 
     $scope.$watch('importanceInput', function(input){
       if (input){
-        $cookieStore.put('articleImportance', input);
+        localStorage.setItem('articleImportance', input);
       }
     });
 
     $scope.$watch('conclusionInput', function(input){
       if (input){
-        $cookieStore.put('articleConclusion', input);
+        localStorage.setItem('articleConclusion', input);
       }
     });
 
@@ -165,7 +165,7 @@ angular.module('puanJaiApp')
         $scope.selectedTopic = null;
       } else { 
         $scope.selectedTopic = topic;
-        $cookieStore.put('articleTopic', $scope.selectedTopic);
+        localStorage.setItem('articleTopic', $scope.selectedTopic);
       }
       angular.forEach($scope.topics, function(t){
         if (t.title === topic) {
@@ -304,11 +304,11 @@ angular.module('puanJaiApp')
         }
         $http.post('/api/articles', {newArticle: newArticle, newTags: partitionedTags[0]}).success(function(res){
           $scope.textEditorInput = '';
-          $cookieStore.remove('articleTags'); 
-          $cookieStore.remove('articleTopic'); 
-          $cookieStore.remove('articleTitle');
-          $cookieStore.remove('articleImportance');
-          $cookieStore.remove('articleConclusion');
+          localStorage.removeItem('articleTags'); 
+          localStorage.removeItem('articleTopic'); 
+          localStorage.removeItem('articleTitle');
+          localStorage.removeItem('articleImportance');
+          localStorage.removeItem('articleConclusion');
           localStorage.removeItem('articleContent');
           localStorage.removeItem('shareCoverImg');
           $location.path(/articles/ + res._id);

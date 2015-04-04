@@ -17,13 +17,6 @@
        <span ng-bind-html="match.model._source.answers_count | typeaheadHighlight:query"></span>
      </a>
    </script>
-<!--         -
-       <b class="yellow">ได้คําตอบแล้ว:</b>
-       <span ng-bind-html="match.model._source.answered | typeaheadHighlight:query"></span> -->
-       <!-- <b class="yellow">โหวต:</b>
-       <span ng-bind-html="match.model._source.votes_count | typeaheadHighlight:query"></span> - -->
-<!--        <b class="yellow">หัวข้อ:</b>
-       <span ng-bind-html="match.model._source.topic | typeaheadHighlight:query"></span> - -->
    
    <div class="row">
      <div class="col-md-2">
@@ -242,7 +235,7 @@
       </div>
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-2" style="overflow: hidden;">
       <div ng-include="'components/sidebar/rightSidebar.html'"></div>
     </div>
 

@@ -1,7 +1,16 @@
 <div ng-controller="RightCtrl">
-	<div id="help">
-		
+	<div id="help" class="text-center">
+		<h2 class="text-center" style="font-size: 2.4em; margin-top:0;">งานอาสา</h2>
+		<!-- <small>เว็บนี้เป็นของทุกคนมาช่วยกันพัฒนา</small> -->
+		<div class="list-group text-center">
+		  <a class="list-group-item smallPadding background-yellow" ng-repeat="task in tasks | limitTo: 5">
+		  	<h4>{{task.name}}</h4>
+			  <span class="label label-info">{{task.label}}</span>
+		  </a>
+		</div>
+		<a ng-href="/help"><h4>ดูงานอาสาทั่งหมด..</h4></a>
 	</div>
+	<hr>
 <!-- 	<div id="quoteOfTheDay" style="margin-bottom: 20px;">
 		<blockquote class="blockquote-reverse">
 		  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
@@ -30,7 +39,7 @@
 	</div>
 </a>
 
-<a ng-href="">
+<a ng-href="/about">
 	<div id="aboutUs" class="haveBorder text-center pinkGradient">
 		<div class="smallPadding sidebarInnerBox blueBorder">
 		<h2>รู้จักกับเรา</h2>

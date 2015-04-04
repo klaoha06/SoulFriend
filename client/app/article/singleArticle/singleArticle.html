@@ -32,42 +32,60 @@
 				<p>{{article.summary}}</p>
 				<hr style="width:75%;">
 			</div>
-			<div class="articleBody"ng-bind-html="article.body" style="word-wrap: break-word; padding:25px; line-height:40px; font-size:25px; letter-spacing: 1px;">
-			</div>
-
+			<div class="articleBody" ta-bind ng-model="article.body" style="word-wrap: break-word; padding:25px; line-height:40px; font-size:25px; letter-spacing: 1px;"></div>
 		</div>
 	</div>
 </div>
-	
-<headroom ng-show="article" tolerance="5" offset="windowHeight" classes='{"initial":"animated","pinned":"fadeOut","unpinned":"fadeIn","top":"headroom--top","notTop":"headroom--not-top"}' style="background-color: white; max-height: 50px; border: 1px solid #dddddd; margin-top:23px; padding:7px; position:absolute; width:100%;">
-  <img src="{{article.owner.coverimg}}" style="width: 32px; height:32px; border-radius: 4px; box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.75);">
-	<a ng-href="/users/{{article.ownerId}}"><small>{{article.owner.username}}</small></a>
-	<small>- เขียนเมื่อ {{article.created | timeAgo}}</small>
-	<small>- {{article.created | date:'MMM d, y'}}</small>
-	<div style="float:right;">
-		<a class="btn btn-info" ng-click="report()" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-ban"></i> รายงานความไม่เหมาะสม</a>
+
+<headroom ng-show="article" tolerance="20" offset="windowHeight" classes='{"initial":"animated","pinned":"fadeOut","unpinned":"fadeIn","top":"headroom--top","notTop":"headroom--not-top"}' class="row" style="background-color: white; border: 1px solid #dddddd; margin-top:23px; margin-left: 0; margin-right: 0; position:absolute; width:100%;">
+	<div class="col-lg-6 col-md-12 text-center" style="padding:7px;">
+	  <img src="{{article.owner.coverimg}}" style="width: 32px; height:32px; border-radius: 4px; box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.75);">
+		<a ng-href="/users/{{article.ownerId}}"><small>{{article.owner.username}}</small></a>
+		<small>- เขียนเมื่อ {{article.created | timeAgo}}</small>
+		<small>- {{article.created | date:'MMM d, y'}}</small>
+	</div>
+	<div class="col-lg-6 col-md-12 text-center" style="padding:7px;">
+		<a ng-hide="articleOwner" class="btn btn-info" ng-click="report()" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-ban"></i> รายงานความไม่เหมาะสม</a>
 		<a class="btn btn-info" ng-click="saveArticle()" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-heart-o"></i> เก็บใจ</a>
 		<a class="btn btn-info" ng-click="shareFB('/articles/{{article._id}}')" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-slideshare"></i> แชร์</a>
 		<a class="btn btn-info" ng-click="upVote()" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-thumbs-up"></i> โหวตขึ้น</a>
 		<a class="btn btn-info" ng-click="downVote()" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-thumbs-down"></i> โหวตลง</a>
+		<a ng-show="articleOwner" class="btn btn-info" ng-click="deleteArticle()" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-times"></i> ลบ</a>
+		<a ng-show="articleOwner" class="btn btn-info" ng-click="editArticle()" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-pencil"></i> แก้ไข</a>
 	</div>
 </headroom>
 <div class="container">
-	<div class="col-md-8 col-md-offset-2" style="margin-top: 100px; border-top: 1px solid #dddddd;">
-		<h2 class="text-center" style="font-size:2em;">ความคิดเห็นเพื่อนใจ</h2>
+	<div class="col-md-8 col-md-offset-2" style="margin-top: 110px;">
+		<h2 class="text-center" style="font-size:2em;">ร่วมสนทนา</h2>
+		<form ng-hide="alreadyCommented" ng-show="editing" class="comment-form">
+		  <p class="input-group">
+		    <input type="text" class="form-control" placeholder="เขียนที่นี้.." ng-model="newComment" style="font-size:1.2em;">
+		    <span ng-hide="editing" class="input-group-btn">
+		      <button type="submit" class="btn btn-info" ng-click="addComment()" style="border-radius: 0;">Add Comment</button>
+		    </span>
+		    <span ng-show="editing" class="input-group-btn" >
+		      <button type="submit" class="btn btn-info" ng-click="editMyComment()" style="border-radius: 0;">Edit Comment</button>
+		    </span>
+		  </p>
+		  <span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[newComment.length > 150 || newComment.length < 3 ]">{{150 - newComment.length}}</span> อักขระ</span>
+		</form>
 		<div ng-repeat="comment in article.comments">
 			<comment class="row">
 			  <div class="col-md-10">
-			      <img class="img-responsive img-thumbnail" ng-src="{{comment.user.coverimg}}" style="width:40px; height:40px;"/>
+			      <img class="img-responsive img-thumbnail" ng-src="{{comment.user.coverimg}}" style="width:45px; height:45px;"/>
 			      <header class="text-left" style="display:inline;">
 			        <a ng-href="/users/{{comment.user._id}}"><div class="comment-user" style="display:inherit;"> {{comment.user.username}}</div></a>
 			        <time class="comment-date" >เมื่อ {{comment.created | timeAgo}}</time>
 			      </header>
 			  </div>
-			  <div ng-show="articleOwner() || currentUser._id === comment.user._id" class="col-md-2 text-right">
-			  	<a ng-click="editMyComment()"><i class="fa fa-pencil"></i></a>
+			  <div ng-show="articleOwner || currentUser._id === comment.user_id" class="col-md-2 text-right">
+			  	<a ng-click="openEditor(comment.content)"><i class="fa fa-pencil"></i></a>
 			  	<a ng-click="deleteMyComment()"><i class="fa fa-times"></i></a>
 			  </div>
+<!-- 			  <div class="col-md-1">
+			  	<i class="fa fa-angle-up fa-3x"></i>
+			  	<i class="fa fa-angle-down fa-3x"></i>
+			  </div> -->
 			  <div class="col-md-12">
 			      <div class="panel-body">
 			        <div class="comment-post">
@@ -80,16 +98,6 @@
 			</comment>
 			<hr style="margin-top:0; margin-bottom:0;"/>
 		</div>
-		<form ng-hide="alreadyCommented"class="comment-form">
-		  <label>ร่วมสนทนา</label>
-		  <p class="input-group">
-		    <input type="text" class="form-control" placeholder="เขียนที่นี้.." ng-model="newComment">
-		    <span class="input-group-btn">
-		      <button type="submit" class="btn btn-primary" ng-click="addComment()">Add Comment</button>
-		    </span>
-		  </p>
-		  <span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[newComment.length > 150 || newComment.length < 3 ]">{{150 - newComment.length}}</span> อักขระ</span>
-		</form>
 	</div>
 </div>
 

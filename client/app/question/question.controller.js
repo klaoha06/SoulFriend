@@ -19,7 +19,7 @@ angular.module('puanJaiApp')
       $scope.question = question;
       questionId = $scope.question._id;
       $scope.questionOwner = function(){
-        if ($scope.question.ownerId === userId) {
+        if ($scope.question.ownerId && $scope.question.ownerId === userId) {
           return true;
         } else {
           return false;

@@ -51,6 +51,7 @@ angular.module('puanJaiApp')
       logout: function() {
         $cookieStore.remove('token');
         localStorage.removeItem('userId');
+        localStorage.removeItem('currentUser');
         localStorage.removeItem('editQuestion');
         localStorage.removeItem('questionContent');
         localStorage.removeItem('shareCoverImg');    
@@ -58,12 +59,13 @@ angular.module('puanJaiApp')
         $cookieStore.remove('tags');
         $cookieStore.remove('questionTitle');
         $cookieStore.remove('questionContent');
-        $cookieStore.remove('articleTags'); 
-        $cookieStore.remove('articleTopic'); 
-        $cookieStore.remove('articleTitle');
-        $cookieStore.remove('articleImportance');
-        $cookieStore.remove('articleConclusion');
+        localStorage.removeItem('articleTags'); 
+        localStorage.removeItem('articleTopic'); 
+        localStorage.removeItem('articleTitle');
+        localStorage.removeItem('articleImportance');
+        localStorage.removeItem('articleConclusion');
         localStorage.removeItem('articleContent');
+        localStorage.removeItem('shareCoverImg');
       },
 
       /**
