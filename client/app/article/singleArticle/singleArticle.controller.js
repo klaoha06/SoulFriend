@@ -1,5 +1,5 @@
 angular.module('puanJaiApp')
-  .controller('articleCtrl', function ($scope, $http, socket, $stateParams, Auth, $location, $window, Facebook) {
+  .controller('articleCtrl', function ($scope, $http, socket, $stateParams, Auth, $location, $window, Facebook, $cookieStore) {
     $scope.windowHeight = $window.innerHeight -100;
     $scope.alreadyCommented = false;
     $scope.currentUser = Auth.getCurrentUser();
@@ -38,7 +38,9 @@ angular.module('puanJaiApp')
       Facebook.ui({
         method: 'share',
         href: url, function(res){
-          // console.log(res);
+          console.log(res);
+          $scope.article.shares++;
+          $http.patch('/api/articles/' + $stateParams.id, $scope.article);
         }
       });
     };
@@ -223,7 +225,15 @@ angular.module('puanJaiApp')
     };
 
     $scope.editArticle = function(){
-      
+      localStorage.setItem('articleContent', $scope.article.body);
+      localStorage.setItem('articleTopic', $scope.article.topic);
+      localStorage.setItem('articleImportance', $scope.article.importance);
+      localStorage.setItem('articleTitle', $scope.article.name);
+      localStorage.setItem('articleConclusion', $scope.article.summary);
+      localStorage.setItem('shareCoverImg', $scope.article.coverImg);
+      $cookieStore.put('articleTags', $scope.article.tags);
+      localStorage.setItem('editingArticle', $scope.article._id);
+      $location.path('/share');
     };
 
      // On leave page

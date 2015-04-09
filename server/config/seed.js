@@ -12,6 +12,23 @@ var User = require('../api/user/user.model');
 var Question = require('../api/question/question.model');
 var Article = require('../api/article/article.model');
 var Tag = require('../api/tag/tag.model');
+var http = require('http');
+
+var opts = {
+  host:'localhost',
+  port: '9200',
+  method: 'DELETE',
+  path: '_all',
+  header: {}
+}
+
+var req = http.request(opts, function(res){
+  res.on('end',function(r){
+    console.log(r);
+  })
+})
+
+req.end();
 
 // Seeds
 // Thing.find({}).remove(function() {

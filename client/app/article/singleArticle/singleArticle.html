@@ -61,10 +61,10 @@
 		  <p class="input-group">
 		    <input type="text" class="form-control" placeholder="เขียนที่นี้.." ng-model="newComment" style="font-size:1.2em;">
 		    <span ng-hide="editing" class="input-group-btn">
-		      <button type="submit" class="btn btn-info" ng-click="addComment()" style="border-radius: 0;">Add Comment</button>
+		      <button type="submit" class="btn btn-info" ng-click="addComment()" style="border-radius: 0;">ให้ความคิดเห็น</button>
 		    </span>
 		    <span ng-show="editing" class="input-group-btn" >
-		      <button type="submit" class="btn btn-info" ng-click="editMyComment()" style="border-radius: 0;">Edit Comment</button>
+		      <button type="submit" class="btn btn-info" ng-click="editMyComment()" style="border-radius: 0;">แก้ความคิดเห็น</button>
 		    </span>
 		  </p>
 		  <span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[newComment.length > 150 || newComment.length < 3 ]">{{150 - newComment.length}}</span> อักขระ</span>

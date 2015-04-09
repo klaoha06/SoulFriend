@@ -76,7 +76,7 @@
    		</div>
 
 	<!-- <hr style="margin-top:0;"> -->
-	<form ng-class="articleForm" ng-show="checked || nameInput.length > 1" class="col-md-6 col-md-offset-3 animated fadeIn">
+	<form ng-class="articleForm" ng-show="checked || nameInput.length >= 1" class="col-md-6 col-md-offset-3 animated fadeIn">
 	
 	<div id="articleForm">
 	<div class="shareSteps animated fadeIn" ng-hide="hide[0]">		
@@ -198,7 +198,8 @@
 
 		<div ng-show="hide[6]===false">
 			<hr>
-			<a type="submit" style="background: linear-gradient(white, #fff9aa); font-size: 2em; width:100%; display:block; margin:0 auto; color:#428bca;" ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default" role="button" ng-click="onSubmit()"><i ng-class="shake" class="fa fa-child"></i> โพสต์บทความ</a>
+			<a ng-hide="editingArticle" type="submit" style="background: linear-gradient(white, #fff9aa); font-size: 2em; width:100%; display:block; margin:0 auto; color:#428bca;" ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default" role="button" ng-click="onSubmit()"><i ng-class="shake" class="fa fa-child"></i> โพสต์บทความ</a>
+			<a ng-show="editingArticle"type="submit" style="background: linear-gradient(white, #fff9aa); font-size: 2em; width:100%; display:block; margin:0 auto; color:#428bca;" ng-mouseover="shake='animated shake'" ng-mouseleave="shake=''" class="btn btn-default" role="button" ng-click="onSubmit()"><i ng-class="shake" class="fa fa-wrench"></i> แก้ไขบทความ</a>
 		</div>
 		<br>
 		<alert ng-repeat="alert in alerts" type="{{alert.type}}" class="animated fadeIn" close="closeAlert($index)">{{alert.msg}}</alert>

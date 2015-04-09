@@ -73,7 +73,9 @@ exports.create = function(req, res) {
     Article.create(na, function(err, article) {
       if(err) { return handleError(res, err); }
         for (var i = 0; i < article.tags.length; i++) {
+          // console.log(article.tags[i])
           Tag.findById(article.tags[i]._id, function (err, t){
+              // console.log(t)
               t.articles_count++;
               t.popular_count++;
               t.articles_id.push(article._id);

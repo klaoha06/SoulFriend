@@ -15,6 +15,25 @@ angular.module('puanJaiApp')
     $scope.now = Date.now();
     $scope.warnUrl = true;
 
+    function resetVars(){
+      $scope.textEditorInput = '';
+      $cookieStore.remove('articleTags');
+      localStorage.removeItem('articleTopic'); 
+      localStorage.removeItem('articleTitle');
+      localStorage.removeItem('articleImportance');
+      localStorage.removeItem('articleConclusion');
+      localStorage.removeItem('articleContent');
+      localStorage.removeItem('shareCoverImg');
+    }
+
+    if (localStorage.getItem('editingArticle')) {
+      $http.get('api/articles/' + localStorage.getItem('editingArticle')).success(function(article){
+        $scope.editingArticle = article;
+      }).error(function(){
+        resetVars();
+      });
+    }
+
     $scope.writingRules = [
     {
       title: 'แสดงด้วยความรักและเมตตา'
@@ -223,6 +242,8 @@ angular.module('puanJaiApp')
     };
 
 
+
+
     // On Submit
     $scope.onSubmit = function(){
       if (Auth.isLoggedIn()) {
@@ -281,38 +302,57 @@ angular.module('puanJaiApp')
             return tag;
           }
         });
-        var newArticle = { 
-          body: $scope.textEditorInput,
-          importance: $scope.importanceInput,
-          name: $scope.nameInput,
-          owner: {
-            username: $scope.user.username,
-            summary: $scope.user.summary,
-            role: $scope.user.role,
-            coverimg: $scope.user.coverimg
-          },
-          ownerId: $scope.user._id,
-          summary: $scope.conclusionInput,
-          tags: partitionedTags[1],
-          topic: $scope.selectedTopic
-        };
+        if ($scope.editingArticle) {
+          $scope.editingArticle.body = $scope.textEditorInput;
+          $scope.editingArticle.importance = $scope.importanceInput;
+          $scope.editingArticle.name = $scope.nameInput;
+          $scope.editingArticle.summary = $scope.conclusionInput;
+          $scope.editingArticle.tags = partitionedTags[1];
+          $scope.editingArticle.newTags = partitionedTags[0];
+          $scope.editingArticle.topic = $scope.selectedTopic;
 
-        if ($scope.coverImageUrl && $scope.warnUrl) {
-          newArticle.coverImg = $scope.coverImageUrl;
-        } else {
-          newArticle.coverImg = 'http://loremflickr.com/750/240/landscape?random=' + Math.floor((Math.random() * 100) + 1);
+          if ($scope.coverImageUrl && $scope.warnUrl) {
+            $scope.editingArticle.coverImg = $scope.coverImageUrl;
+          } else {
+            $scope.editingArticle.coverImg = 'http://loremflickr.com/750/240/landscape?random=' + Math.floor((Math.random() * 100) + 1);
+          }
+
+          $http.patch('/api/articles/' + $scope.editingArticle._id, $scope.editingArticle).success(function(article){
+            $location.path('/articles/' + $scope.editingArticle._id);
+            resetVars();
+          });
+
+        } else {          
+          var newArticle = { 
+            body: $scope.textEditorInput,
+            importance: $scope.importanceInput,
+            name: $scope.nameInput,
+            owner: {
+              username: $scope.user.username,
+              summary: $scope.user.summary,
+              role: $scope.user.role,
+              coverimg: $scope.user.coverimg
+            },
+            ownerId: $scope.user._id,
+            summary: $scope.conclusionInput,
+            tags: partitionedTags[1],
+            topic: $scope.selectedTopic
+          };
+
+          if ($scope.coverImageUrl && $scope.warnUrl) {
+            newArticle.coverImg = $scope.coverImageUrl;
+          } else {
+            newArticle.coverImg = 'http://loremflickr.com/750/240/landscape?random=' + Math.floor((Math.random() * 100) + 1);
+          }
+
+          $http.post('/api/articles', {newArticle: newArticle, newTags: partitionedTags[0]}).success(function(article){
+            resetVars();
+            $location.path('/articles/' + article._id);
+          });
+          
         }
-        $http.post('/api/articles', {newArticle: newArticle, newTags: partitionedTags[0]}).success(function(res){
-          $scope.textEditorInput = '';
-          localStorage.removeItem('articleTags'); 
-          localStorage.removeItem('articleTopic'); 
-          localStorage.removeItem('articleTitle');
-          localStorage.removeItem('articleImportance');
-          localStorage.removeItem('articleConclusion');
-          localStorage.removeItem('articleContent');
-          localStorage.removeItem('shareCoverImg');
-          $location.path(/articles/ + res._id);
-        });
+
+
       } else {
             $location.path('/login');
             alert('กรุณาเข้าสู้ระบบก่อนเข้าร่วมการสนทนา')
