@@ -50,11 +50,6 @@ angular.module('puanJaiApp', [
     };
   })
 
-  .factory('taRenderer', function(textAngular){
-    debugger;
-    console.log(textAngular)
-  })
-
   .run(function ($rootScope, $location, Auth) {
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$stateChangeStart', function (event, next) {
@@ -92,3 +87,12 @@ angular.module('puanJaiApp', [
       }
     };
     });
+
+    angular.module('puanJaiApp')
+      .filter('htmlToText', function() {
+        return function(html){
+          return String(html).replace(/<[^>]+>/gm, '');
+        };
+      });
+
+

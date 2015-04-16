@@ -109,6 +109,9 @@ angular.module('puanJaiApp')
       }
     };
 
+    $scope.goTo = function(url){
+      $location.path(url);
+    };
 
     // $scope.upVoteComment = function(commentUserId){
     //   var index = _.findIndex($scope.article.comments,{'user_id': commentUserId});

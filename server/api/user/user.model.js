@@ -36,6 +36,8 @@ var UserSchema = new Schema({
   jais_id: [{type: Schema.Types.ObjectId, ref: 'Question'}],
   comments_count: {type: Number, default: 0},
   commentInArticles_id: [{type: Schema.Types.ObjectId, ref: 'Article'}],
+  books_count: {type: Number, default: 0},
+  books_id: [{type: Schema.Types.ObjectId, ref: 'Book'}],
 });
 
 UserSchema.plugin(random);

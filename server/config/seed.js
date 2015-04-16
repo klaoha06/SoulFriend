@@ -12,6 +12,8 @@ var User = require('../api/user/user.model');
 var Question = require('../api/question/question.model');
 var Article = require('../api/article/article.model');
 var Tag = require('../api/tag/tag.model');
+var Suggestion = require('../api/suggestion/suggestion.model');
+var Report = require('../api/report/report.model');
 var http = require('http');
 
 var opts = {
@@ -29,6 +31,11 @@ var req = http.request(opts, function(res){
 })
 
 req.end();
+
+Suggestion.find().remove();
+Report.find().remove();
+Tag.find().remove();
+
 
 // Seeds
 // Thing.find({}).remove(function() {
@@ -53,37 +60,37 @@ req.end();
 //   });
 // });
 
-Tag.find().remove(function(){
-  Tag.create({
-    name: 'hurtroom',
-    info: 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators',
-    questions_id: [],
-    questions_count: 112,
-    articles_id: [],
-    articles_count: 123,
-    votes_count: 23,
-    views_count: 102
-  }, {
-    name: 'เบื่อความรัก',
-    info: 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators',
-    questions_id: [],
-    questions_count: 2131,
-    articles_id: [],
-    articles_count: 1,
-    votes_count: 3,
-    views_count: 3213
-  }, {
-    name: 'เบื่อชีวิต',
-    info: 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators',
-    questions_id: [],
-    questions_count: 3,
-    articles_id: [],
-    articles_count: 5,
-    votes_count: 8,
-    views_count: 9
-  }
-  )
-})
+// Tag.find().remove(function(){
+//   Tag.create({
+//     name: 'hurtroom',
+//     info: 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators',
+//     questions_id: [],
+//     questions_count: 112,
+//     articles_id: [],
+//     articles_count: 123,
+//     votes_count: 23,
+//     views_count: 102
+//   }, {
+//     name: 'เบื่อความรัก',
+//     info: 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators',
+//     questions_id: [],
+//     questions_count: 2131,
+//     articles_id: [],
+//     articles_count: 1,
+//     votes_count: 3,
+//     views_count: 3213
+//   }, {
+//     name: 'เบื่อชีวิต',
+//     info: 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators',
+//     questions_id: [],
+//     questions_count: 3,
+//     articles_id: [],
+//     articles_count: 5,
+//     votes_count: 8,
+//     views_count: 9
+//   }
+//   )
+// })
 
 User.find({}).remove(function() {
   for (var c = 0; c < 10; c++) {

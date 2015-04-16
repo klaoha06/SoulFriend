@@ -9,7 +9,7 @@
 		<div class="triangle-left" style="position:absolute; z-index:232;">
 		  <i class="fa fa-tags"></i>
 		  <a class="topic" style="color:black;" ng-href="/topics/{{article.topic}}"> {{article.topic}}</a> - 
-		  <a style="display:inline;" ng-repeat="tag in article.tags" ng-href="/tags/{{tags.name}}"><small style="color:black;">{{tag.name+" "}}</small></a> 
+		  <a style="display:inline;" ng-repeat="tag in article.tags" ng-href="/tags/{{tag._id}}"><small style="color:black;">{{tag.name+" "}}</small></a>
 		</div>
 		<img ng-show="article.coverImg.length > 0" ng-src="{{article.coverImg}}" style="width:100%; opacity:0.7; z-index:-20; max-height: 450px; margin-top:-8px;"/>
 	</div>
@@ -38,19 +38,20 @@
 </div>
 
 <headroom ng-show="article" tolerance="20" offset="windowHeight" classes='{"initial":"animated","pinned":"fadeOut","unpinned":"fadeIn","top":"headroom--top","notTop":"headroom--not-top"}' class="row" style="background-color: white; border: 1px solid #dddddd; margin-top:23px; margin-left: 0; margin-right: 0; position:absolute; width:100%;">
-	<div class="col-lg-6 col-md-12 text-center" style="padding:7px;">
+	<div class="col-lg-12 col-md-12 text-center" style="padding:7px;">
 	  <img src="{{article.owner.coverimg}}" style="width: 32px; height:32px; border-radius: 4px; box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.75);">
 		<a ng-href="/users/{{article.ownerId}}"><small>{{article.owner.username}}</small></a>
 		<small>- เขียนเมื่อ {{article.created | timeAgo}}</small>
 		<small>- {{article.created | date:'MMM d, y'}}</small>
 	</div>
-	<div class="col-lg-6 col-md-12 text-center" style="padding:7px;">
+	<div class="col-lg-12 col-md-12 text-center" style="padding:7px;">
 		<a ng-hide="articleOwner" class="btn btn-info" ng-click="report()" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-ban"></i> รายงานความไม่เหมาะสม</a>
 		<a class="btn btn-info" ng-click="saveArticle()" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-heart-o"></i> เก็บใจ</a>
 		<a class="btn btn-info" ng-click="shareFB('/articles/{{article._id}}')" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-slideshare"></i> แชร์</a>
 		<a class="btn btn-info" ng-click="upVote()" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-thumbs-up"></i> โหวตขึ้น</a>
 		<a class="btn btn-info" ng-click="downVote()" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-thumbs-down"></i> โหวตลง</a>
 		<a ng-show="articleOwner" class="btn btn-info" ng-click="deleteArticle()" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-times"></i> ลบ</a>
+		<a ng-show="articleOwner" class="btn btn-info" ng-click="goTo('/createbook')" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-book"></i> ร่วมเล่ม</a>
 		<a ng-show="articleOwner" class="btn btn-info" ng-click="editArticle()" style="color: white; font-size: 1em; padding: 4px 12px;"><i class="fa fa-pencil"></i> แก้ไข</a>
 	</div>
 </headroom>

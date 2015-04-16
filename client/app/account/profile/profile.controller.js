@@ -13,7 +13,6 @@ angular.module('puanJaiApp')
         });
     }
 
-
     // Go to
     $scope.goTo = function(url){
       $location.path(url);
@@ -34,6 +33,11 @@ angular.module('puanJaiApp')
             case 'myAnswersInQuestions':
                 $http.get('/api/questions/myanswers', { params: {userId: $scope.userId}}).success(function(questions){
                     $scope.myAnswersInQuestions = questions;
+                });
+                break;
+            case 'myBooks':
+                $http.get('/api/books', { params: {userId: $scope.userId}}).success(function(mybooks){
+                    $scope.myBooks = mybooks;
                 });
                 break;
             default:

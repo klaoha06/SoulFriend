@@ -30,7 +30,10 @@ var ArticleSchema = new Schema({
   comments_count: { type: Number, default: 0},
   tags: Array,
   topic: String,
-  reports: Array
+  reports: Array,
+  bookId: { type: Schema.Types.ObjectId, ref: 'User' },
+  bookName: String,
+  bookPage: Number
 });
 
 ArticleSchema.plugin(timeStamps);
