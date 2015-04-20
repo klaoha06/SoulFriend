@@ -7,9 +7,11 @@ angular.module('puanJaiApp')
     }
     $scope.userId = localStorage.getItem('userId');
 
-    $http.get('/api/questions', { params: { filterBy: { ownerId: $scope.userId}}}).success(function(questions){
-        $scope.myQuestions = questions;
-    });
+    if (localStorage.getItem('userId')) {    
+        $http.get('/api/questions', { params: { filterBy: { ownerId: $scope.userId}}}).success(function(questions){
+            $scope.myQuestions = questions;
+        });
+    }
 
     // Go to
     $scope.goTo = function(url){
@@ -31,6 +33,11 @@ angular.module('puanJaiApp')
             case 'myAnswersInQuestions':
                 $http.get('/api/questions/myanswers', { params: {userId: $scope.userId}}).success(function(questions){
                     $scope.myAnswersInQuestions = questions;
+                });
+                break;
+            case 'myBooks':
+                $http.get('/api/books', { params: {userId: $scope.userId}}).success(function(mybooks){
+                    $scope.myBooks = mybooks;
                 });
                 break;
             default:

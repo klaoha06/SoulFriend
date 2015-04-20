@@ -19,7 +19,7 @@ angular.module('puanJaiApp')
       $scope.question = question;
       questionId = $scope.question._id;
       $scope.questionOwner = function(){
-        if ($scope.question.ownerId === userId) {
+        if ($scope.question.ownerId && $scope.question.ownerId === userId) {
           return true;
         } else {
           return false;
@@ -43,6 +43,9 @@ angular.module('puanJaiApp')
     };
 
     $scope.deleteQuestion = function(){
+      if (!$scope.questionOwner()) {
+        return;
+      }
       var r = confirm("ต้องการลบคําถามนี้?")
       if (r === true) {
         $http.delete('api/questions/' + $stateParams.id).then(function(){
@@ -224,7 +227,6 @@ angular.module('puanJaiApp')
           alert('คําตอบต้องมียาวระหว่าง 40 ถึง 6000 อักขระ');
           return;
         }
-
         var newAnswer = {
           content: $scope.textEditorInput,
           username: $scope.currentUser.username,

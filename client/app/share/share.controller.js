@@ -5,13 +5,34 @@ angular.module('puanJaiApp')
     $scope.textEditorInput = localStorage.getItem('articleContent');
     $scope.oldContent = localStorage.getItem('articleContent');
     $scope.searchResults;
-    $scope.nameInput = '' || $cookieStore.get('articleTitle');
-    $scope.importanceInput = '' || $cookieStore.get('articleImportance');
-    $scope.conclusionInput = '' || $cookieStore.get('articleConclusion');
-    $scope.selectedTopic = $cookieStore.get('articleTopic');
+    $scope.nameInput = '' || localStorage.getItem('articleTitle');
+    $scope.coverImageUrl = '' || localStorage.getItem('shareCoverImg');
+    $scope.importanceInput = '' || localStorage.getItem('articleImportance');
+    $scope.conclusionInput = '' || localStorage.getItem('articleConclusion');
+    $scope.selectedTopic = localStorage.getItem('articleTopic');
     $scope.tags = $cookieStore.get('articleTags');
     $scope.alerts = [];
     $scope.now = Date.now();
+    $scope.warnUrl = true;
+
+    function resetVars(){
+      $scope.textEditorInput = '';
+      $cookieStore.remove('articleTags');
+      localStorage.removeItem('articleTopic'); 
+      localStorage.removeItem('articleTitle');
+      localStorage.removeItem('articleImportance');
+      localStorage.removeItem('articleConclusion');
+      localStorage.removeItem('articleContent');
+      localStorage.removeItem('shareCoverImg');
+    }
+
+    if (localStorage.getItem('editingArticle')) {
+      $http.get('api/articles/' + localStorage.getItem('editingArticle')).success(function(article){
+        $scope.editingArticle = article;
+      }).error(function(){
+        resetVars();
+      });
+    }
 
     $scope.writingRules = [
     {
@@ -83,7 +104,17 @@ angular.module('puanJaiApp')
     }
     ];
 
-    $scope.hide = [false,true,true,true,true,true];
+    function ValidURL(str) {
+      var pattern = new RegExp(/^(https?:\/\/)?((([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|((\d{1,3}\.){3}\d{1,3}))(\:\d+)?(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(\#[-a-z\d_]*)?$/i
+); // fragment locater
+      if(!pattern.test(str)) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    $scope.hide = [false,true,true,true,true,true,true];
 
     function htmlToPlaintext(text) {
       return String(text).replace(/<[^>]+>/gm, '');
@@ -92,7 +123,7 @@ angular.module('puanJaiApp')
     // Search Articles
     $scope.$watch('nameInput', function(input){
       if (input){
-        $cookieStore.put('articleTitle', input);
+        localStorage.setItem('articleTitle', input);
         $http.get('/api/articles/search', { params: {userInput: input}}).success(function(result) {
           $scope.searchResults = orderBy(result.hits.hits, '_score', true);
         });
@@ -125,15 +156,25 @@ angular.module('puanJaiApp')
       }
     };
 
+    $scope.$watch('coverImageUrl', function(input){
+      if (input){
+        if (ValidURL(input)) {
+          $scope.warnUrl = false;
+          localStorage.setItem('shareCoverImg', input);
+        } else 
+        $scope.warnUrl = true;
+      }
+    });
+
     $scope.$watch('importanceInput', function(input){
       if (input){
-        $cookieStore.put('articleImportance', input);
+        localStorage.setItem('articleImportance', input);
       }
     });
 
     $scope.$watch('conclusionInput', function(input){
       if (input){
-        $cookieStore.put('articleConclusion', input);
+        localStorage.setItem('articleConclusion', input);
       }
     });
 
@@ -143,7 +184,7 @@ angular.module('puanJaiApp')
         $scope.selectedTopic = null;
       } else { 
         $scope.selectedTopic = topic;
-        $cookieStore.put('articleTopic', $scope.selectedTopic);
+        localStorage.setItem('articleTopic', $scope.selectedTopic);
       }
       angular.forEach($scope.topics, function(t){
         if (t.title === topic) {
@@ -201,6 +242,8 @@ angular.module('puanJaiApp')
     };
 
 
+
+
     // On Submit
     $scope.onSubmit = function(){
       if (Auth.isLoggedIn()) {
@@ -210,13 +253,21 @@ angular.module('puanJaiApp')
 
         // validate input
         if ($scope.nameInput) {
-          if ($scope.nameInput.length < 3 || $scope.nameInput.length > 150) {
-            $scope.alerts.push({ type: 'danger', msg: 'ชื่อของบทความควรมีความยาวระหว่าง 10 ถึง 150 อักขระ' });
+          if ($scope.nameInput.length < 3 || $scope.nameInput.length > 83) {
+            $scope.alerts.push({ type: 'danger', msg: 'ชื่อของบทความควรมีความยาวระหว่าง 10 ถึง 83 อักขระ' });
           }
         } else {
           $scope.alerts.push({ type: 'danger', msg: 'กรุณาใส่ชื่อของบทความด้วยครับ' });
         }
 
+        if ($scope.coverImageUrl) {
+          if ($scope.coverImageUrl.length < 11 || $scope.coverImageUrl > 300) {
+            $scope.alerts.push({type:'danger', msg: 'url หรือ ลิงค์ ควรมีความยาวระหว่าง 11 ถึง 300 อักขระ'});
+          }
+          if (!ValidURL($scope.coverImageUrl)){
+            $scope.alerts.push({type:'danger', msg: 'url หรือ ลิงค์ ของคุณไม่ถูกต้อง'});
+          }
+        }
         if ($scope.importanceInput) {
           if ($scope.importanceInput.length <= 10 || $scope.importanceInput.length > 150) {
             $scope.alerts.push({ type: 'danger', msg: 'ความสําคัญของบทความควรมีความยาวระหว่าง 10 ถึง 150 อักขระ' });
@@ -251,32 +302,57 @@ angular.module('puanJaiApp')
             return tag;
           }
         });
-            var newArticle = { 
-              body: $scope.textEditorInput,
-              importance: $scope.importanceInput,
-              name: $scope.nameInput,
-              owner: {
-                username: $scope.user.username,
-                summary: $scope.user.summary,
-                role: $scope.user.role,
-                coverimg: $scope.user.coverimg
-              },
-              ownerId: $scope.user._id,
-              summary: $scope.conclusionInput,
-              tags: partitionedTags[1],
-              topic: $scope.selectedTopic
-            };
+        if ($scope.editingArticle) {
+          $scope.editingArticle.body = $scope.textEditorInput;
+          $scope.editingArticle.importance = $scope.importanceInput;
+          $scope.editingArticle.name = $scope.nameInput;
+          $scope.editingArticle.summary = $scope.conclusionInput;
+          $scope.editingArticle.tags = partitionedTags[1];
+          $scope.editingArticle.newTags = partitionedTags[0];
+          $scope.editingArticle.topic = $scope.selectedTopic;
 
-            $http.post('/api/articles', {newArticle: newArticle, newTags: partitionedTags[0]}).success(function(res){
-              $scope.textEditorInput = '';
-              $cookieStore.remove('articleTags'); 
-              $cookieStore.remove('articleTopic'); 
-              $cookieStore.remove('articleTitle');
-              $cookieStore.remove('articleImportance');
-              $cookieStore.remove('articleConclusion');
-              localStorage.removeItem('articleContent');
-              $location.path(/articles/ + res._id);
-            });
+          if ($scope.coverImageUrl && $scope.warnUrl) {
+            $scope.editingArticle.coverImg = $scope.coverImageUrl;
+          } else {
+            $scope.editingArticle.coverImg = 'http://loremflickr.com/750/240/landscape?random=' + Math.floor((Math.random() * 100) + 1);
+          }
+
+          $http.patch('/api/articles/' + $scope.editingArticle._id, $scope.editingArticle).success(function(article){
+            $location.path('/articles/' + $scope.editingArticle._id);
+            resetVars();
+          });
+
+        } else {          
+          var newArticle = { 
+            body: $scope.textEditorInput,
+            importance: $scope.importanceInput,
+            name: $scope.nameInput,
+            owner: {
+              username: $scope.user.username,
+              summary: $scope.user.summary,
+              role: $scope.user.role,
+              coverimg: $scope.user.coverimg
+            },
+            ownerId: $scope.user._id,
+            summary: $scope.conclusionInput,
+            tags: partitionedTags[1],
+            topic: $scope.selectedTopic
+          };
+
+          if ($scope.coverImageUrl && $scope.warnUrl) {
+            newArticle.coverImg = $scope.coverImageUrl;
+          } else {
+            newArticle.coverImg = 'http://loremflickr.com/750/240/landscape?random=' + Math.floor((Math.random() * 100) + 1);
+          }
+
+          $http.post('/api/articles', {newArticle: newArticle, newTags: partitionedTags[0]}).success(function(article){
+            resetVars();
+            $location.path('/articles/' + article._id);
+          });
+          
+        }
+
+
       } else {
             $location.path('/login');
             alert('กรุณาเข้าสู้ระบบก่อนเข้าร่วมการสนทนา')

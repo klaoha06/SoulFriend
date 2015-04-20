@@ -51,7 +51,21 @@ angular.module('puanJaiApp')
       logout: function() {
         $cookieStore.remove('token');
         localStorage.removeItem('userId');
-        $rootScope.user = {};
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('editQuestion');
+        localStorage.removeItem('questionContent');
+        localStorage.removeItem('shareCoverImg');    
+        $cookieStore.remove('topic');
+        $cookieStore.remove('tags');
+        $cookieStore.remove('questionTitle');
+        $cookieStore.remove('questionContent');
+        localStorage.removeItem('articleTags'); 
+        localStorage.removeItem('articleTopic'); 
+        localStorage.removeItem('articleTitle');
+        localStorage.removeItem('articleImportance');
+        localStorage.removeItem('articleConclusion');
+        localStorage.removeItem('articleContent');
+        localStorage.removeItem('shareCoverImg');
       },
 
       /**

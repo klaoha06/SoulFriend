@@ -22,7 +22,6 @@ exports.index = function(req, res) {
   var filterBy;
   var skip;
   var sort = req.query.sort;
-  console.log(req.query)
   if (req.query.filterBy) {
     filterBy = JSON.parse(req.query.filterBy);
   }
@@ -39,7 +38,6 @@ exports.index = function(req, res) {
       });
       break;
     default:
-      console.log(skip)
       Article.find(filterBy).sort(sort).skip(skip).limit(20).exec(function (err, articles){
        if(err) { return handleError(res, err); }
        return res.status(200).json(articles);
@@ -75,7 +73,9 @@ exports.create = function(req, res) {
     Article.create(na, function(err, article) {
       if(err) { return handleError(res, err); }
         for (var i = 0; i < article.tags.length; i++) {
+          // console.log(article.tags[i])
           Tag.findById(article.tags[i]._id, function (err, t){
+              // console.log(t)
               t.articles_count++;
               t.popular_count++;
               t.articles_id.push(article._id);
@@ -85,11 +85,10 @@ exports.create = function(req, res) {
           })
         }
       User.findById(article.ownerId, function(err, user){
+        if(!user){ return res.send(404)}
         user.articles_id.push(article._id);
         user.articles_count++;
-        user.save(function(err,u){
-          // console.log(u)
-        })
+        user.save()
       })
       return res.status(200).json(article)
     });
@@ -111,19 +110,56 @@ exports.create = function(req, res) {
 
 };
 
-// Updates an existing thing in the DB.
+// Updates an existing article in the DB.
 exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
-  Article.findById(req.params.id, function (err, article) {
-    if (err) { return handleError(res, err); }
-    if(!article) { return res.send(404); }
-    var updated = _.merge(article, req.body);
-    updated.save(function (err) {
-      if (err) { return handleError(res, err); }
-      return res.json(200, article);
+  var newTags = req.body.newTags;
+  var articleToUpdate = req.body;
+  if (newTags) {
+    var promise = Tag.create(newTags, function(){
+      var tagsToJoin = arguments;
+      for (var i = 1; i < tagsToJoin.length; i++) {
+        articleToUpdate.tags.push({name: tagsToJoin[i].name, _id: tagsToJoin[i]._id})
+      }
     });
-  });
+    promise.then(function(){
+      Article.findByIdAndUpdate(articleToUpdate._id, articleToUpdate, function(err, article){
+        if (err) { return handleError(res, err); }
+        return res.status(200).send(article)
+      })
+    })
+  } else {
+    Article.findByIdAndUpdate(articleToUpdate._id, articleToUpdate, function(err ,article){
+      if (err) { return handleError(res, err); }
+      return res.status(200).send(article)
+    })
+  }
 };
+// exports.update = function(req, res) {
+//   if(req.body._id) { delete req.body._id; }
+//   Article.findById(req.params.id, function (err, article) {
+//     if (err) { return handleError(res, err); }
+//     if(!article) { return res.send(404); }
+//     article.markModified('comments');
+//     var updated = _.merge(article, req.body);
+//     updated.save(function (err) {
+//       if (err) { return handleError(res, err); }
+//       return res.json(200, article);
+//     });
+//   });
+// };
+
+// // Update Comments for Question in the DB.
+// exports.updateAns = function(req, res) {
+//   Question.findById(req.params.id, function (err, question) {
+//     if (err) { return handleError(res, err); }
+//     if(!question) { return res.send(404); }
+//     question.markModified('comments');
+//     question.save(function (err) {
+//       if (err) { return handleError(res, err); }
+//       return res.json(200, question);
+//     });
+//   });
+// };
 
 // Increment Vote for Article in the DB.
 exports.upVote = function(req, res) {
@@ -163,16 +199,24 @@ exports.addComment = function(req, res) {
     if (err) { return handleError(res, err); }
     if(!article) { return res.send(404); }
     article.comments.push(req.body);
+    article.comments_count++;
     article.save(function (err) {
       if (err) { return handleError(res, err); }
-      return res.json(200, article);
+      res.status(200).json(article);
+      User.findById(req.body.user._id, function(err, user){
+      if (user) {        
+        user.comments_count++;
+        user.commentInArticles_id.push(article._id);
+        user.save();
+      }
+      })
     });
   });
 };
 
 // Update Comments for Article in the DB.
 exports.updateComment = function(req, res) {
-  Article.findById(req.params.id, function (err, question) {
+  Article.findById(req.params.id, function (err, article) {
     if (err) { return handleError(res, err); }
     if(!article) { return res.send(404); }
     article.markModified('comments');
@@ -202,6 +246,13 @@ exports.destroy = function(req, res) {
   Article.findById(req.params.id, function (err, article) {
     if(err) { return handleError(res, err); }
     if(!article) { return res.send(404); }
+    if(article.ownerId) {
+      User.findById(article.ownerId, function(err, user){
+        user.articles_id.pull(article._id);
+        user.articles_count--;
+        user.save();
+      })
+    }
     article.remove(function(err) {
       if(err) { return handleError(res, err); }
       return res.send(204);

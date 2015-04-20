@@ -1,0 +1,62 @@
+<div class="container" ng-controller="reportCtrl">
+
+	<div class="page-header">
+	  <h1>แจ้งปัญหาของเว็บไช <small>ถ้ามีปัญหาอะไรทางเราจะพยายามแก้ให้ได้เร็วที่สุดครับ</small></h1>
+	</div>
+
+	<div class="panel panel-info">
+	  <div class="panel-heading"><i class="fa fa-wrench fa-lg"></i> แจ้งปัญหา</div>
+	  <div class="panel-body">
+	    <p></p>
+	  </div>
+
+	  <form class="row" style="margin-right:0; margin-left:0;">
+	  	<div class="col-md-1 col-sm-2 col-xs-12">
+		  	<img class="img-rounded userIcon" style="display: block; margin:10px auto; width:60px; height:60px" ng-src="{{currentUser.coverimg || 'https://kalie101.files.wordpress.com/2013/01/wpid-bn_avatar_builtin14.png'}}">
+	  	</div>
+	  	<div class="col-md-10 col-sm-10 col-xs-12">
+		  	<div class="input-group input-group-lg">
+		  	      <textarea type="text" rows="2" class="form-control" placeholder="ให้คําแนะนําที่นี้.." style="font-size:1.2em;" ng-model="reportInput" ng-focus="isLoggedIn()"></textarea>
+		  	      <span class="input-group-btn">
+		  	        <button ng-show="editingReport" class="btn btn-info" type="button" ng-click="editReport()" style="height:80px;">แก้ไขคําแนะนํา</button>
+		  	        <button ng-hide="editingReport" class="btn btn-info" type="button" ng-click="createReport()" style="height:80px;">ให้คําแนะนํา</button>
+		  	      </span>
+		  	    </div><!-- /input-group -->
+	  	</div>
+	  	<span class="pull-right" style="margin:10px 15px;"><span ng-class="{true: 'red', false: 'green'}[reportInput.length > 300 || reportInput.length < 10 ]">{{300 - reportInput.length}}</span> อักขระ</span>
+
+	  </form>
+
+	  <div class="smallPadding" ng-repeat="report in reports | orderBy: '-votes_count'"style="border-top:1px solid #dddddd;">
+	    <div class="media-body" style="position: relative;">
+	    	<div class="col-md-1 col-xs-2">
+		      <div class="text-center">
+		      	<a ng-click="upVote(report._id)"><i class="fa fa-angle-up fa-lg"></i></a>
+		      	<h4 style="text-align: center;">{{report.votes_count}}</h4>
+		      	<a ng-click="downVote(report._id)"><i class="fa fa-angle-down fa-lg"></i></a>
+		      </div>
+	    	</div>
+	    	<div class="col-md-11 col-xs-10" style="border-left: 1px solid #dddddd;">
+
+	    		<div ng-show="currentUser._id === report.ownerId || currentUser.role === 'admin'" class="pull-right text-right">
+	    			<a ng-click="openEditor(report)"><i class="fa fa-pencil"></i></a>
+	    			<a ng-click="deleteReport(report._id)"><i class="fa fa-times"></i></a>
+	    		</div>
+		      <h3 class="media-heading" style="margin: 40px 0;">{{report.content}}</h3>
+	    	</div>
+		      <div style="position:absolute; bottom:0; right:0;">
+			      <a ng-href="/users/{{report.ownerId}}"><small>{{report.owner.username}}</small></a>
+			      <time class="comment-date" ><small>- {{report.created | timeAgo}}</small></time>
+		      </div>
+	    </div>
+	  </div>
+
+	  <div ng-show="reports.length <= 0" class="text-center animated pulse">
+	      <h2 style="text-align: center;">เป็นคนแรกที่แจ้งปัญหาแกี่ยวกับเว็บไช</h2>
+	  </div>
+
+
+	</div>
+	<a ng-show="reports.length >= 20" class="btn btn-default" style="display:block; margin:20px 0;" ng-click="getMoreReports()">ดูเพิ่ม</a>
+
+</div>

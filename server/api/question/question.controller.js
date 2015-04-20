@@ -94,7 +94,6 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   var newTags = req.body.newTags;
   var newQuestion = req.body.newQuestion;
-
   function createNewQuestion(nq) {
     Question.create(nq, function(err, question) {
       if(err) { return handleError(res, err); }
@@ -110,6 +109,7 @@ exports.create = function(req, res) {
           })
         }
       User.findById(question.ownerId, function(err, user){
+        if(!user){ return res.send(404)}
         user.questions_id.push(question._id);
         user.questions_count++;
         user.save(function(err,u){
@@ -180,6 +180,7 @@ exports.addJai = function(req, res) {
       if (err) { return handleError(res, err); }
        res.status(200).json(question);
        User.findById(req.body.userId, function(err, user){
+        if(!user){ return res.send(404)}
         user.jais_count++;
         user.jais_id.push(question._id);
         user.save();
@@ -191,7 +192,6 @@ exports.addJai = function(req, res) {
 // Updates an existing thing in the DB.
 exports.update = function(req, res) {
   var newTags = req.body.newTags;
-  console.log(newTags)
   var questionToUpdate = req.body.questionToUpdate;
   if (newTags) {
     var promise = Tag.create(newTags, function(){
@@ -225,6 +225,7 @@ exports.addAnswer = function(req, res) {
     question.save(function (err) {
       if (err) { return handleError(res, err); }
       User.findById(req.body.user_id, function(err, user){
+        if(!user){ return res.send(404)}
         user.ansInQuestions_id.push(question._id)
         user.answers_count++;
         user.save(function(err,u){
@@ -278,6 +279,13 @@ exports.destroy = function(req, res) {
   Question.findById(req.params.id, function (err, question) {
     if(err) { return handleError(res, err); }
     if(!question) { return res.send(404); }
+    if(question.ownerId) {
+      User.findById(question.ownerId, function(err, user){
+        user.questions_id.pull(article._id);
+        user.questions_count--;
+        user.save();
+      })
+    }
     question.remove(function(err) {
       if(err) { return handleError(res, err); }
       return res.send(204);

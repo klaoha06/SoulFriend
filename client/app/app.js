@@ -14,7 +14,10 @@ angular.module('puanJaiApp', [
   'headroom',
   'angulartics',
   'angulartics.google.analytics',
-  'facebook'])
+  'facebook',
+  'textAngular.factories',
+  'angular-parallax',
+  'viewhead'])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, FacebookProvider) {
     $urlRouterProvider
       .otherwise('/');
@@ -49,6 +52,14 @@ angular.module('puanJaiApp', [
     };
   })
 
+  .factory('Page', function() {
+       var title = 'เพื่อนใจ - Soul Friends';
+       return {
+         title: function() { return title; },
+         setTitle: function(newTitle) { title = newTitle }
+       };
+    })
+
   .run(function ($rootScope, $location, Auth) {
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$stateChangeStart', function (event, next) {
@@ -64,3 +75,35 @@ angular.module('puanJaiApp', [
     });
 
   });
+
+  angular.module('puanJaiApp')
+    .filter('thousandSuffix', function () {
+      return function (number){
+        if (number !== undefined) {
+        var abs = Math.abs(number);
+        if (abs >= Math.pow(10, 12)) {
+          number = (number / Math.pow(10, 12)).toFixed(1)+"t";
+        }
+        else if (abs < Math.pow(10, 12) && abs >= Math.pow(10, 9)) {
+          number = (number / Math.pow(10, 9)).toFixed(1)+"b";
+        }
+        else if (abs < Math.pow(10, 9) && abs >= Math.pow(10, 6)) {
+          number = (number / Math.pow(10, 6)).toFixed(1)+"m";
+        }
+        else if (abs < Math.pow(10, 6) && abs >= Math.pow(10, 3)) {
+          number = (number / Math.pow(10, 3)).toFixed(1)+"k";
+        }
+        return number;
+      }
+    };
+    });
+
+    angular.module('puanJaiApp')
+      .filter('htmlToText', function() {
+        return function(html){
+          return String(html).replace(/<[^>]+>/gm, '');
+        };
+      });
+
+
+

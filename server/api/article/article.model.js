@@ -8,11 +8,15 @@ var mongoosastic = require('mongoosastic');
 
 var ArticleSchema = new Schema({
   ownerId: { type: Schema.Types.ObjectId, ref: 'User' },
+  storyId: { type: Schema.Types.ObjectId, ref: 'Story' },
   owner: {
   	username: String,
     summary: String,
   	role: String,
     coverimg: String
+  },
+  story: {
+    name: String
   },
   name: { type: String, es_indexed:true },
   searchname: { type: Array, es_indexed:true },
@@ -20,7 +24,6 @@ var ArticleSchema = new Schema({
   summary: String,
   body: String,
   recommended: { type: Boolean, default: false},
-  byWriter: { type: Boolean, default: false},
   coverImg: String,
   upvotes: Array,
   downvotes: Array,
@@ -31,7 +34,10 @@ var ArticleSchema = new Schema({
   comments_count: { type: Number, default: 0},
   tags: Array,
   topic: String,
-  reports: Array
+  reports: Array,
+  bookId: { type: Schema.Types.ObjectId, ref: 'User' },
+  bookName: String,
+  bookPage: Number
 });
 
 ArticleSchema.plugin(timeStamps);
