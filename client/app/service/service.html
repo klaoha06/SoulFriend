@@ -1,0 +1,127 @@
+<div ng-controller="serviceCtrl" class="container">
+	<div class="page-header">
+	  <h1>บริการเพื่อนใจ <small>ทําฟรี</small></h1>
+	</div>
+	<div class="row">
+	<div class="no-gutter col-sm-6 col-md-6">
+	  <div class="mythumbnail animated fadeIn" article="/assets/images/service1.png" id="{{article._id}}" ng-click="goToArticle(article._id)">
+	    <div ng-show="article.owner.role === 'writer'" class="triangle-right" style="float:right;">
+	      โดยนักเขียน
+	    </div>
+	    <div ng-show="article.owner.role === 'admin'" class="triangle-right" style="color:black; float:right;">
+	      โดยผูสร้างเพื่อนใจ
+	    </div>
+	    <span class="label label-info" style="font-size:0.7em; position:absolute; left:12px; top:12px;">{{article.topic}}</span>
+	    <div class="caption" ng-class="{true: 'bigPadding', false: 'smallPadding'}[article.name.length <= 65]">
+	      <p>{{article.name}}</p>
+	      <hr style="margin-bottom: 7px; margin-top:7px;">
+	      <div class="row text-center">
+	        <div class="col-xs-4">
+	          <i class="fa fa-thumbs-up"></i><br>
+	          <small>{{article.votes_count}}</small>
+	        </div>
+	        <div class="col-xs-4">
+	          <i class="fa fa-share-alt"></i><br>
+	          <small>{{article.shares}}</small>
+	        </div>
+	        <div class="col-xs-4">
+	          <i class="fa fa-eye"></i><br>
+	          <small>{{article.views}}</small>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div class="no-gutter col-sm-6 col-md-6">
+	  <div class="mythumbnail animated fadeIn" article="{{article.coverImg}}" id="{{article._id}}" ng-click="goToArticle(article._id)" style="background-position: center;">
+	    <div ng-show="article.owner.role === 'writer'" class="triangle-right" style="float:right;">
+	      โดยนักเขียน
+	    </div>
+	    <div ng-show="article.owner.role === 'admin'" class="triangle-right" style="color:black; float:right;">
+	      โดยผูสร้างเพื่อนใจ
+	    </div>
+	    <span class="label label-info" style="font-size:0.7em; position:absolute; left:12px; top:12px;">{{article.topic}}</span>
+	    <div class="caption" ng-class="{true: 'bigPadding', false: 'smallPadding'}[article.name.length <= 65]">
+	      <p>{{article.name}}</p>
+	      <hr style="margin-bottom: 7px; margin-top:7px;">
+	      <div class="row text-center">
+	        <div class="col-xs-4">
+	          <i class="fa fa-thumbs-up"></i><br>
+	          <small>{{article.votes_count}}</small>
+	        </div>
+	        <div class="col-xs-4">
+	          <i class="fa fa-share-alt"></i><br>
+	          <small>{{article.shares}}</small>
+	        </div>
+	        <div class="col-xs-4">
+	          <i class="fa fa-eye"></i><br>
+	          <small>{{article.views}}</small>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div class="no-gutter col-sm-6 col-md-6">
+	  <div class="mythumbnail animated fadeIn" article="{{article.coverImg}}" id="{{article._id}}" ng-click="goToArticle(article._id)" style="background-position: center;">
+	    <div ng-show="article.owner.role === 'writer'" class="triangle-right" style="float:right;">
+	      โดยนักเขียน
+	    </div>
+	    <div ng-show="article.owner.role === 'admin'" class="triangle-right" style="color:black; float:right;">
+	      โดยผูสร้างเพื่อนใจ
+	    </div>
+	    <span class="label label-info" style="font-size:0.7em; position:absolute; left:12px; top:12px;">{{article.topic}}</span>
+	    <div class="caption" ng-class="{true: 'bigPadding', false: 'smallPadding'}[article.name.length <= 65]">
+	      <p>{{article.name}}</p>
+	      <hr style="margin-bottom: 7px; margin-top:7px;">
+	      <div class="row text-center">
+	        <div class="col-xs-4">
+	          <i class="fa fa-thumbs-up"></i><br>
+	          <small>{{article.votes_count}}</small>
+	        </div>
+	        <div class="col-xs-4">
+	          <i class="fa fa-share-alt"></i><br>
+	          <small>{{article.shares}}</small>
+	        </div>
+	        <div class="col-xs-4">
+	          <i class="fa fa-eye"></i><br>
+	          <small>{{article.views}}</small>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div class="no-gutter col-sm-6 col-md-6">
+	  <div class="mythumbnail animated fadeIn" article="{{article.coverImg}}" id="{{article._id}}" ng-click="goToArticle(article._id)" style="background-position: center;">
+	    <div ng-show="article.owner.role === 'writer'" class="triangle-right" style="float:right;">
+	      โดยนักเขียน
+	    </div>
+	    <div ng-show="article.owner.role === 'admin'" class="triangle-right" style="color:black; float:right;">
+	      โดยผูสร้างเพื่อนใจ
+	    </div>
+	    <span class="label label-info" style="font-size:0.7em; position:absolute; left:12px; top:12px;">{{article.topic}}</span>
+	    <div class="caption" ng-class="{true: 'bigPadding', false: 'smallPadding'}[article.name.length <= 65]">
+	      <p>{{article.name}}</p>
+	      <hr style="margin-bottom: 7px; margin-top:7px;">
+	      <div class="row text-center">
+	        <div class="col-xs-4">
+	          <i class="fa fa-thumbs-up"></i><br>
+	          <small>{{article.votes_count}}</small>
+	        </div>
+	        <div class="col-xs-4">
+	          <i class="fa fa-share-alt"></i><br>
+	          <small>{{article.shares}}</small>
+	        </div>
+	        <div class="col-xs-4">
+	          <i class="fa fa-eye"></i><br>
+	          <small>{{article.views}}</small>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	</div>
+
+</div>

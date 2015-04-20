@@ -13,7 +13,7 @@ var StorySchema = new Schema({
 	about: String,
 	views: { type: Number, default: 0},
 	shares: { type: Number, default: 0},
-	ownerId: { type: Schema.Types.ObjectId, ref: 'User' },
+	writerId: { type: Schema.Types.ObjectId, ref: 'User' },
   owner: {
   	username: String,
   	role: String,
@@ -25,6 +25,8 @@ var StorySchema = new Schema({
   reports: Array,
   tags: Array,
   topic: String,
+  language: String,
+  
 });
 
 StorySchema.plugin(timeStamps);

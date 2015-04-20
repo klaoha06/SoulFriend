@@ -1,13 +1,13 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="th_TH"> <!--<![endif]-->
+<!--[if lt IE 7]>      <html ng-app="puanJaiApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html ng-app="puanJaiApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html ng-app="puanJaiApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html ng-app="puanJaiApp" class="no-js" lang="th_TH" > <!--<![endif]-->
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <base href="/">
-    <title>เพื่อนใจ - Soul Friends</title>
+    <title ng-bind-template="{{viewTitle}} เพื่อนใจ Soul Friends">เพื่อนใจ Soul Friends</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -26,7 +26,7 @@
       <!-- endinjector -->
     <!-- endbuild -->
   </head>
-  <body ng-app="puanJaiApp">
+  <body>
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -99,6 +99,8 @@
       <script src="bower_components/angulartics/src/angulartics-marketo.js"></script>
       <script src="bower_components/angulartics/src/angulartics-intercom.js"></script>
       <script src="bower_components/angular-facebook/lib/angular-facebook.js"></script>
+      <script src="bower_components/angular-parallax/scripts/angular-parallax.js"></script>
+      <script src="bower_components/angularjs-viewhead/angularjs-viewhead.js"></script>
       <!-- endbower -->
       <script src="socket.io-client/socket.io.js"></script>
     <!-- endbuild -->
@@ -121,6 +123,8 @@
           <script src="app/article/singleArticle/singleArticle.js"></script>
           <script src="app/ask/ask.controller.js"></script>
           <script src="app/ask/ask.js"></script>
+          <script src="app/contact/contact.controller.js"></script>
+          <script src="app/contact/contact.js"></script>
           <script src="app/createstory/createstory.controller.js"></script>
           <script src="app/createstory/createstory.js"></script>
           <script src="app/help/help.controller.js"></script>
@@ -133,6 +137,8 @@
           <script src="app/question/question.js"></script>
           <script src="app/report/report.controller.js"></script>
           <script src="app/report/report.js"></script>
+          <script src="app/service/service.controller.js"></script>
+          <script src="app/service/service.js"></script>
           <script src="app/share/share.controller.js"></script>
           <script src="app/share/share.js"></script>
           <script src="app/suggestion/suggestion.controller.js"></script>

@@ -1,5 +1,5 @@
 angular.module('puanJaiApp')
-  .controller('articleCtrl', function ($scope, $http, socket, $stateParams, Auth, $location, $window, Facebook, $cookieStore) {
+  .controller('articleCtrl', function ($scope, $http, socket, $stateParams, Auth, $location, $window, Facebook, $cookieStore, $rootScope) {
     $scope.windowHeight = $window.innerHeight -100;
     $scope.alreadyCommented = false;
     $scope.currentUser = Auth.getCurrentUser();

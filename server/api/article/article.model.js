@@ -8,11 +8,15 @@ var mongoosastic = require('mongoosastic');
 
 var ArticleSchema = new Schema({
   ownerId: { type: Schema.Types.ObjectId, ref: 'User' },
+  storyId: { type: Schema.Types.ObjectId, ref: 'Story' },
   owner: {
   	username: String,
     summary: String,
   	role: String,
     coverimg: String
+  },
+  story: {
+    name: String
   },
   name: { type: String, es_indexed:true },
   searchname: { type: Array, es_indexed:true },

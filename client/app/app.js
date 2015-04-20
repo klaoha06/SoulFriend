@@ -15,7 +15,9 @@ angular.module('puanJaiApp', [
   'angulartics',
   'angulartics.google.analytics',
   'facebook',
-  'textAngular.factories'])
+  'textAngular.factories',
+  'angular-parallax',
+  'viewhead'])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, FacebookProvider) {
     $urlRouterProvider
       .otherwise('/');
@@ -49,6 +51,14 @@ angular.module('puanJaiApp', [
       }
     };
   })
+
+  .factory('Page', function() {
+       var title = 'เพื่อนใจ - Soul Friends';
+       return {
+         title: function() { return title; },
+         setTitle: function(newTitle) { title = newTitle }
+       };
+    })
 
   .run(function ($rootScope, $location, Auth) {
     // Redirect to login if route requires auth and you're not logged in
@@ -94,5 +104,6 @@ angular.module('puanJaiApp', [
           return String(html).replace(/<[^>]+>/gm, '');
         };
       });
+
 
 
