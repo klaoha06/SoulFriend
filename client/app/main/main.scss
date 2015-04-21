@@ -26,6 +26,10 @@ iframe{
   box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
 }
 
+.textAngular img {
+  max-width: 100%;
+}
+
 /*img {
     -webkit-box-shadow: 1px 2px 3px 1px rgba(0,0,0,0.75);
     -moz-box-shadow: 1px 2px 3px 1px rgba(0,0,0,0.75);
@@ -55,6 +59,11 @@ a:hover {
   color: #428bca;
 }
 
+.nav-tabs > li > a {
+  padding: 5px;
+  font-size:17px;
+}
+
 .navbar-default {
   background-color: #FFF9AA;
 }
@@ -81,6 +90,16 @@ a:hover {
 
 .background-yellow {
   background-color: #FFF9AA;
+}
+
+.background-blue-gradient {
+ background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(233,253,255,1) 57%, rgba(217,252,255,1) 100%);
+ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(57%,rgba(233,253,255,1)), color-stop(100%,rgba(217,252,255,1)));
+ background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(233,253,255,1) 57%,rgba(217,252,255,1) 100%);
+ background: -o-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(233,253,255,1) 57%,rgba(217,252,255,1) 100%);
+ background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(233,253,255,1) 57%,rgba(217,252,255,1) 100%);
+ background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(233,253,255,1) 57%,rgba(217,252,255,1) 100%);
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#d9fcff',GradientType=0 );
 }
 
 .background-white {

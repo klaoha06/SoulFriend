@@ -17,7 +17,8 @@ angular.module('puanJaiApp', [
   'facebook',
   'textAngular.factories',
   'angular-parallax',
-  'viewhead'])
+  'viewhead',
+  'angular-carousel'])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, FacebookProvider) {
     $urlRouterProvider
       .otherwise('/');

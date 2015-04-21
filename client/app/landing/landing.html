@@ -1,27 +1,63 @@
-<div class="container" ng-controller="LandingCtrl">
+<div class="container-fluid no-gutter" ng-controller="LandingCtrl">
   
  <!--  <div id="MainCarousel">
     <h1 id="mainTitle">เพื่อนใจ</h1>
     <h1 id="lead">ชุมชนเพื่อช่วยเหลือจิตใจของกันและกัน</h1>
   </div> -->
 
-<div id="MainCarousel">
-<div style="position: absolute; left: 50%;">
+<!-- <div style="position: absolute; left: 50%; z-index:1;">
     <div id="mainTitle" style="position: relative; left: -50%;">
-      <h1 class="animated fadeIn">เพื่อนใจ</h1>
+      <h1>เพื่อนใจ</h1>
     </div>
 </div>
-  <carousel interval="myInterval">
-    <slide ng-repeat="slide in slides" active="slide.active">
+  <carousel class="carousel-fade" interval="myInterval">
+    <slide ng-repeat="slide in slides" active="slide.active" style="background:url({{slide.image}}); background-size:cover;"> -->
       <!-- <img ng-src="{{slide.image}}" style="margin:auto;"> -->
-        <h1 class="mainLead">{{slide.lead}}</h1>
+<!--         <h1 class="mainLead">{{slide.lead}}</h1>
       <div class="carousel-button-main">
         <a ng-href="{{slide.link}}" class="btn btn-success btn-lg">{{slide.text}}</a>
       </div>
     </slide>
-  </carousel>
-</div>
+  </carousel> -->
 
+<!-- <div id="landingMain">
+ <div style="position: absolute; left: 50%;">
+     <div id="mainTitle" style="position: relative; left: -50%;">
+       <h1 class="animated fadeIn">เพื่อนใจ</h1>
+     </div>
+ </div>
+</div> -->
+
+<!-- <div class="carousel-demo-fullscreen">
+    <ul rn-carousel rn-carousel-controls rn-carousel-transition="none" rn-carousel-index="carouselIndex" rn-carousel-buffered class="carousel1" style="height:500px">
+      <li><h1 style="background:blue;">sdalkfjadls;</h1></li>
+      <li><h1 style="background:blue;">sdalkfjadls;</h1></li>
+      <li><h1 style="background:blue;">sdalkfjadls;</h1></li>
+      <li><h1 style="background:blue;">sdalkfjadls;</h1></li>
+      <li><h1 style="background:blue;">sdalkfjadls;</h1></li>
+    </ul>
+</div> -->
+
+<!-- <ul rn-carousel class="image">
+  <li ng-repeat="image in sportImages">
+    <div class="layer">{{ image }}</div>
+  </li>
+</ul> -->
+
+<div id="landingMain" style="height:500px; background:url({{background}}); position:relative;" ng-mouseover="rightArrow='show animated slideInRight'; leftArrow='show animated slideInLeft'" ng-mouseleave="rightArrow='show animated fadeOutRight'; leftArrow='show animated fadeOutLeft';">
+  <div class="leftArrow" ng-click="previousSlide()"><i class="hide fa fa-angle-left fa-3x slideArrow" ng-class="leftArrow"></i></div>
+  <div class="rightArrow" ng-click="nextSlide()"><i class="hide fa fa-angle-right fa-3x pull-right slideArrow" ng-class="rightArrow" style="right:0"></i></div>
+    <div style="position: absolute; left: 50%;">
+        <div id="mainTitle" style="position: relative; left: -50%;">
+          <h1 class="animated fadeIn">เพื่อนใจ</h1>
+        </div>
+    </div>
+  <div id="slide1">  
+  </div>
+  <div id="slide2">
+    
+  </div>
+</div>
 
 <script id="template/carousel/carousel.html" type="text/ng-template">
 <div ng-mouseenter="play()" ng-mouseleave="play()" class="carousel" ng-swipe-right="prev()" ng-swipe-left="next()">

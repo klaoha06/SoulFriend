@@ -30,20 +30,21 @@ angular.module('puanJaiApp')
     caption: '',
     link:'/about'
   },
+  // {
+  //   image: '/assets/images/writer2.jpg',
+  //   text:'สมัครเป็นนักเขียนเพื่อนใจ',
+  //   link:'/writer'
+  // },
   {
-    image: '/assets/images/writer2.jpg',
-    text:'สมัครเป็นนักเขียนเพื่อนใจ',
-    link:'/writer'
+    image: '/assets/images/13.jpg',
+    text:'บริการเพื่อนใจ',
+    caption: 'Friend Delivery',
+    link:'/services'
   },
   {
     image: '/assets/images/10.png',
     text:'รู้จักผู้สร้างเพื่อนใจ',
     link:'/aboutcreator'
-  },
-  {
-    image: '/assets/images/13.jpg',
-    text:'บริการเพื่อนใจ',
-    link:'/services'
   },
     {
     image: '/assets/images/7.png',
@@ -112,20 +113,22 @@ angular.module('puanJaiApp')
   ];
 
   $scope.questionTabs = [
-      { title:'ยังไม่ได้ความช่วยเหลือ', category: 'noAnswer', orderBy: ['-answers_count, created'], reverse: false },
-      { title:'ได้ความสําคํญมากสุด', category: 'votes_count', orderBy: 'votes_count', reverse: true },
+      { title:'ยังรอการช่วยเหลือ', category: 'noAnswer', orderBy: ['-answers_count, created'], reverse: false },
+      { title:'โหวตมากสุด', category: 'votes_count', orderBy: 'votes_count', reverse: true },
       { title:'ล่าสุด', category: 'created', orderBy: 'created', reverse: true},
+      { title:'กําลังใจมากสุด', category: 'jais', orderBy: 'jais_count', reverse: true},
       { title:'ยอดนิยม', category: 'views', orderBy: 'views', reverse: true},
-      { title:'ได้กําลังใจมากสุด', category: 'jais', orderBy: 'jais_count', reverse: true}
+      { title:'อาทิตย์นี้', category: 'viewsThisWeek', orderBy: 'views', reverse: true},
+      { title:'เดือนนี้', category: 'viewsThisMonth', orderBy: 'views', reverse: true},
     ];
 
-  $scope.articleTabs = [
-      { title:'ล่าสุด', filterBy: {}, orderBy: 'created', reverse: true},
-      { title:'ได้โหวตมากสุด', filterBy: {}, orderBy: 'votes_count', reverse: true },
-      { title:'ยอดนิยม', filterBy: {}, orderBy: 'views', reverse: true},
-      { title:'แนะนํา', filterBy: {recommended: true}, orderBy: 'created', reverse: true },
-      { title:'โดยนักเขียน', filterBy: {byWriter: true}, orderBy: 'created', reverse: true},
-    ];
+  // $scope.articleTabs = [
+  //     { title:'ล่าสุด', filterBy: {}, orderBy: 'created', reverse: true},
+  //     { title:'ได้โหวตมากสุด', filterBy: {}, orderBy: 'votes_count', reverse: true },
+  //     { title:'ยอดนิยม', filterBy: {}, orderBy: 'views', reverse: true},
+  //     { title:'แนะนํา', filterBy: {recommended: true}, orderBy: 'created', reverse: true },
+  //     { title:'โดยนักเขียน', filterBy: {byWriter: true}, orderBy: 'created', reverse: true},
+  //   ];
 
   // $scope.bookTabs = [
   //     { title:'ล่าสุด', filterBy: {}, orderBy: 'created', reverse: true},

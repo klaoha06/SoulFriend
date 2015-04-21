@@ -1,4 +1,9 @@
-<div ng-controller="MainCtrl" class="container-fluid">
+<div ng-controller="MainCtrl" class="container-fluid" style="position:relative; padding-bottom: 15px;">
+<div style="position:absolute; width:100%; bottom:0; margin-left:-15px;">
+  <div class="background-blue-gradient" style="height: 500px;"></div>
+<img src="/assets/images/background.png" style="width:100%;">
+</div>
+
 
   <div id="questionSearch"class="input-group input-group-lg">
    <span class="input-group-addon button" id="basic-addon1" href="" ng-click="onSubmitSearch()">ถามปัญหาใจ</span>
@@ -33,7 +38,7 @@
                  </tr>
          </tbody>
       </table>
-      <div id="popTags" class="well" style="padding:0; background-color: white; border-radius: 4px !important;">
+      <div id="popTags" style="padding:0; background-color: white; border:none; margin: 25px 0;">
          <h2 style="text-align: center; font-size: 2em; padding-bottom:15px; border-bottom: 1px solid #dddddd; ">แท็กยอดนิยม</h2>
          <jqcloud id="jqcloudtag" style="width:100%; display: block; margin:0 auto;" autoResize="true" words="popTags" height="370" width="155"shape="rectangular" removeOverflowing="false" steps="7" center="{x:0.5, y:0.45}"></jqcloud> 
       </div>
@@ -46,14 +51,14 @@
         <div class="col-md-12">
           <carousel interval="4000" style="margin-bottom: 15px;">
             <slide ng-repeat="slide in slides" active="slide.active" style="border-radius: 4px; cursor:pointer;" ng-click="goTo(slide.link)">
-              <img ng-src="{{slide.image}}" class="img-responsive img-rounded" style="margin:auto; height:240px; width:100%; border:1px solid #dddddd; border-radius:4px;">
+              <img ng-src="{{slide.image}}" class="img-responsive img-rounded" style="margin:auto; height:300px; width:100%; border:1px solid #dddddd; border-radius:4px;">
               <div class="carousel-caption">
-                <h1 style="font-size:3em; margin-bottom:35px;">{{slide.text}}</h1>
+                <h1 style="font-size:3em; margin-bottom:65px;">{{slide.text}}</h1>
               </div>
             </slide>
           </carousel>
 
-          <div class="row">
+ <!--          <div class="row">
              <div class="col-md-4">
                <button class="btn btn-default postfixQuestionButton mainSwitchButtom" ng-click="switchMainTab('questions')">ดูคําถามเพื่อนใจ</button>
              </div>
@@ -63,11 +68,11 @@
              <div class="col-md-4">
                <button class="btn btn-default postfixQuestionButton mainSwitchButtom" ng-click="switchMainTab('books')">ดูหลังสือเพื่อนใจ</button>
              </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="row">
-       <tabset class="col-md-12" justified="true" ng-show="defaultTab === 'questions'">
+       <tabset class="col-md-12" justified="true">
 
        <div class="clearfix"></div>
 
@@ -117,12 +122,12 @@
 
               <div class="questionPanel inline row">
 
-                <div class="userPanel col-md-4">
-                  <div class="row" style="border-right: 1px solid #dddddd;">
-                    <div class="col-md-4 no-gutter" style="margin: 15px 0;">
+                <div class="userPanel col-sm-4">
+                  <div class="row">
+                    <div class="col-xs-4 no-gutter" style="margin: 15px 0;">
                       <img class="userIcon" ng-src="{{question.owner.coverimg}}" />
                     </div>
-                    <div class="col-md-8 no-gutter" style="margin: 15px 0; text-align: center; font-size:0.9em;">
+                    <div class="col-xs-8 no-gutter" style="margin: 15px 0; text-align: center; font-size:0.9em;">
                       <a ng-href="/users/{{question.ownerId}}"><small>{{question.owner.username}}</small></a><br/>
                       <small>{{question.created | timeAgo}}</small><br/>
                       <!-- <small>{{question.created | date:'MMM d, y h:mm a'}}</small> -->
@@ -130,8 +135,8 @@
                   </div>
                 </div>
 
-                <div class="col-md-8">
-                <div class="row" style="text-align:center;">
+                <div class="col-sm-8">
+                <div class="row text-center" style="border-left: 1px solid #dddddd;">
                   <p class="col-lg-3 col-sm-6 col-xs-6">ความช่วยเหลือ<br/>
                   <strong class="blue bigger"> {{question.answers_count | thousandSuffix}}</strong></p>
                   <p class="col-lg-3 col-sm-6 col-xs-6">ได้ความสําคัญ<br/>
@@ -172,10 +177,9 @@
         </div>
         </div>
 
-        <a ng-show="questions.length >= 20" class="btn btn-default" style="display:block" ng-click="getMoreQuestions()">ดูเพิ่ม</a>
+        <a ng-show="questions.length >= 20" class="btn btn-default" style="display:block; margin-bottom: 15px;" ng-click="getMoreQuestions()">ดูเพิ่ม</a>
 
         <div class="row animated pulse" ng-show="questions.length < 1 && selectedTopic.$ne !== null">
-          <hr>
           <h2 style="text-align: center;">เป็นคนแรกที่ถามคําถามหัวข้อ <span class="bigger yellow">{{selectedTopic}}</span><br>มีเพื่อนใจมากมายที่รอให้การช่วยเหลือ!</h2><br>
           <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" style="font-size: 2em; width:30%; margin:0 auto;" class="btn btn-primary btn-lg btn-block" ng-href="/ask"><i ng-class="shake" class="fa fa-child"></i> ถาม</a><br>
           <hr>

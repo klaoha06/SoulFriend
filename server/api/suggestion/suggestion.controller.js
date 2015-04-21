@@ -25,7 +25,6 @@ exports.index = function(req, res) {
   } else {
     skip = 0;
   }
-  console.log(skip)
   Suggestion.find(filterBy).sort(sort).skip(skip).limit(20).exec(function (err, suggestions){
    if(err) { return handleError(res, err); }
    return res.status(200).json(suggestions);

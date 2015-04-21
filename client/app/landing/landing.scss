@@ -1,13 +1,124 @@
+#landingMain {
+	height:400px;
+	background-size: cover;
+}
+
 #mainCarousel {
 	margin: 0 auto;
 	display:block;
 }
+
 #mainTitle h1 {
 	font-size: 15em;
 }
 
 #mainTitle {
 	width:590px;
+}
+
+.leftArrow {
+	position: absolute;
+	left:15px;
+	z-index: 2;
+	height: 500px;
+	width:10%;
+	cursor:pointer;
+}
+
+.rightArrow {
+	position: absolute;
+	right:15px;
+	z-index: 2;
+	height: 500px;
+	width:10%;
+	cursor:pointer;
+
+}
+
+.slideArrow {
+	position: absolute;
+	top:230px;
+}
+
+/*.carousel.fading {
+  .carousel-inner {
+    height:500px;
+    .item {
+      display: block;*/
+      /*margin:0 auto;*/
+/*      position: absolute;
+      left: 0 !important;
+      width: 100%;
+      opacity: 0;
+      z-index:-121;
+      @include transition(0.4s ease opacity);
+      &.active, &.next.left {
+        opacity: 1;
+      }
+      &.next, &.active.left {
+        opacity: 0;
+      }
+    }
+  }
+}*/
+/*.carousel .item {
+  opacity: 0;
+  -webkit-transition-property: opacity;
+  -moz-transition-property: opacity;
+  -o-transition-property: opacity;
+  transition-property: opacity;
+}*/
+
+.carousel-fade {
+  .carousel-inner {
+    .item {
+	  	height:500px;
+	  	padding-top: 300px;
+      opacity: 0;
+      z-index: 0;
+      -webkit-transition-property: opacity;
+      transition-property: opacity;
+    }
+
+    .active {
+      opacity: 1;
+    }
+
+    .active.left,
+    .active.right {
+      left: 0;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    .next.left,
+    .prev.right {
+      opacity: 1;
+    }
+  }
+
+  .carousel-control {
+    z-index: 2;
+  }
+}
+
+@media all and (transform-3d), (-webkit-transform-3d) {
+    .carousel-inner > .item.next,
+    .carousel-inner > .item.active.right {
+      -webkit-transform: translate3d( 0, 0, 0);
+      transform: translate3d( 0, 0, 0);
+    }
+    .carousel-inner > .item.prev,
+    .carousel-inner > .item.active.left {
+      -webkit-transform: translate3d( 0, 0, 0);
+      transform: translate3d( 0, 0, 0);
+    }
+    .carousel-inner > .item.next.left,
+    .carousel-inner > .item.prev.right,
+    .carousel-inner > .item.active {
+       -webkit-transform: translate3d(0, 0, 0);
+       transform: translate3d(0, 0, 0);
+    }
 }
 
 @media(max-width: 600px) {
@@ -23,8 +134,9 @@
 
 .mainLead {
 	font-size: 5em;
-	color:black;
-	margin-top: 300px;
+	color:white;
+	/*margin-top: 300px;*/
+	margin-top:0;
 }
 
 

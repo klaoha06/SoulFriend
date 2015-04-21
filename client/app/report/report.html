@@ -1,4 +1,4 @@
-<div class="container" ng-controller="reportCtrl">
+<div class="container">
 
 	<div class="page-header">
 	  <h1>แจ้งปัญหาของเว็บไช <small>ถ้ามีปัญหาอะไรทางเราจะพยายามแก้ให้ได้เร็วที่สุดครับ</small></h1>
@@ -14,12 +14,12 @@
 	  	<div class="col-md-1 col-sm-2 col-xs-12">
 		  	<img class="img-rounded userIcon" style="display: block; margin:10px auto; width:60px; height:60px" ng-src="{{currentUser.coverimg || 'https://kalie101.files.wordpress.com/2013/01/wpid-bn_avatar_builtin14.png'}}">
 	  	</div>
-	  	<div class="col-md-10 col-sm-10 col-xs-12">
+	  	<div class="col-md-11 col-sm-10 col-xs-12">
 		  	<div class="input-group input-group-lg">
 		  	      <textarea type="text" rows="2" class="form-control" placeholder="ให้คําแนะนําที่นี้.." style="font-size:1.2em;" ng-model="reportInput" ng-focus="isLoggedIn()"></textarea>
 		  	      <span class="input-group-btn">
-		  	        <button ng-show="editingReport" class="btn btn-info" type="button" ng-click="editReport()" style="height:80px;">แก้ไขคําแนะนํา</button>
-		  	        <button ng-hide="editingReport" class="btn btn-info" type="button" ng-click="createReport()" style="height:80px;">ให้คําแนะนํา</button>
+		  	        <button ng-show="editingReport" class="btn btn-info" type="button" ng-click="editReport()" style="height:78px;">แก้ไขการแจ้งปัญหา</button>
+		  	        <button ng-hide="editingReport" class="btn btn-info" type="button" ng-click="createReport()" style="height:78px;">แจ้งปัญหา</button>
 		  	      </span>
 		  	    </div><!-- /input-group -->
 	  	</div>
