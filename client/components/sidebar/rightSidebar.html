@@ -1,5 +1,8 @@
 <div ng-controller="RightCtrl">
 
+<div ng-include="'components/sidebar/tagCloud.html'"></div>
+
+
 <!-- 	<div id="help" class="text-center">
 		<h2 class="text-center" style="font-size: 2.4em; margin-top:0;">งานอาสา</h2>
 		<small>เว็บนี้เป็นของทุกคนมาช่วยกันพัฒนา</small>
@@ -21,6 +24,7 @@
 		</footer>
 	</div> -->
 
+<!-- 
 <a ng-href="/suggestion">
 	<div class="sidebarBox col-md-12 col-sm-6 col-xs-12 no-gutter" id="suggestionBox" ng-init="ideaImg='/assets/images/idea1.png'" ng-mouseover="ideaImg='/assets/images/idea.gif'" ng-mouseout="ideaImg='/assets/images/idea1.png'" style="text-align: center; background: #F1C632;">
 		<div class="smallPadding sidebarInnerBox blueBorder">
@@ -29,9 +33,27 @@
 		</div>
 		<img ng-src="{{ideaImg}}"/>
 	</div>
+</a> -->
+<!-- 
+<a ng-href="/suggestion">
+	<div class="sidebarBox col-md-12 col-sm-6 col-xs-12 no-gutter" id="suggestionBox" style="text-align: center;">
+		<div class="smallPadding sidebarInnerBox blueBorder">
+		<h2>เสนอไอเดียให้เพื่อนใจ</h2>
+		<small>- ยินดีฟังทุกเรื่องจ้า -</small>
+		</div>
+		<img ng-src="/assets/images/plane.jpg"/>
+	</div>
+</a> -->
+
+<a ng-href="/suggestion" class="col-md-12 col-sm-4 col-xs-12 no-gutter">
+  <div class="triangle-right text-center" style="width:100%; color:black;">
+	  <h2>เสนอไอเดียให้เพื่อนใจ</h2>
+	  <small>- ยินดีฟังทุกเรื่องจ้า -</small>
+  </div>
+  <img ng-src="/assets/images/climb.png"/ style="width:100%;">
 </a>
 
-<a ng-href="/report">
+<!-- <a ng-href="/report">
 	<div id="reportProblem" class="sidebarBox text-center col-md-12 col-sm-6 col-xs-12 no-gutter" style="background: #1069C9;">
 		<div class="smallPadding sidebarInnerBox yellowBorder">
 		<h2>แจ้งปัญหาของเว็บไซ</h2>
@@ -39,12 +61,26 @@
 		</div>
 		<img ng-src="/assets/images/fix.png"/>
 	</div>
+</a> -->
+<!-- style="background-color:rgba(255, 249, 170, 0.5)" -->
+
+<a ng-href="/report" class="col-md-12 col-sm-4 col-xs-12 no-gutter">
+  <div class="triangle-left text-center" style="width:100%; color:black;">
+  <h2>แจ้งปัญหาของเว็บไซ</h2>
+  <small>- จะแก้เท่าที่แก้ได้ -</small>
+  </div>
+  <img ng-src="/assets/images/repair.png"/ style="width:100%;">
 </a>
 
-<div class="clearfix visible-sm-block"></div>
+<a ng-href="/about" class="col-md-12 col-sm-4 col-xs-12 no-gutter">
+  <div class="triangle-right text-center" style="width:100%; color:black;">
+    <h2>รู้จักกับผู้สร้าง</h2>
+    <small>- ปรทัต -</small>
+  </div>
+  <img ng-src="/assets/images/waves.jpg" style="width:100%;"/>
+</a>
 
-
-<a ng-href="/service" style="position:relative;">
+<!-- <a ng-href="/service" style="position:relative;">
 	<div id="service" class="sidebarBox text-center pinkGradient col-md-12 col-sm-4 col-xs-12 no-gutter">
 		<div class="smallPadding sidebarInnerBox blueBorder">
 		<h2>บริการเพื่อนใจ</h2>
@@ -69,17 +105,8 @@
 		</div>
 		<img ng-src="/assets/images/hello.png"/>
 	</div>
-</a>
+</a> -->
 
-<a ng-href="/contact">
-	<div id="contactus" class="sidebarBox text-center col-md-12 col-sm-4 col-xs-12 no-gutter" style="background: #FAF2DD;">
-		<div class="smallPadding sidebarInnerBox blueBorder">
-				<h2>ติดต่อกับเรา</h2>
-				<small>- ตลอด 24 ชี่วโมง -</small>
-		</div>
-		<img ng-src="/assets/images/contact.jpg"/>
-	</div>
-</a>
 
 
 <!-- 	<div id="popArticles">

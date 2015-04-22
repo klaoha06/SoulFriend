@@ -25,21 +25,21 @@ angular.module('puanJaiApp')
                     $scope.myQuestions = questions;
                 });
                 break;
-            case 'myArticles':
-                $http.get('/api/articles', { params: { filterBy: { ownerId: $scope.userId}}}).success(function(articles){
-                    $scope.myArticles = articles;
-                });
-                break;
+            // case 'myArticles':
+            //     $http.get('/api/articles', { params: { filterBy: { ownerId: $scope.userId}}}).success(function(articles){
+            //         $scope.myArticles = articles;
+            //     });
+            //     break;
             case 'myAnswersInQuestions':
                 $http.get('/api/questions/myanswers', { params: {userId: $scope.userId}}).success(function(questions){
                     $scope.myAnswersInQuestions = questions;
                 });
                 break;
-            case 'myBooks':
-                $http.get('/api/books', { params: {userId: $scope.userId}}).success(function(mybooks){
-                    $scope.myBooks = mybooks;
-                });
-                break;
+            // case 'myBooks':
+            //     $http.get('/api/books', { params: {userId: $scope.userId}}).success(function(mybooks){
+            //         $scope.myBooks = mybooks;
+            //     });
+            //     break;
             default:
                 $http.get('/api/questions', { params: { filterBy: { ownerId: $scope.userId}}}).success(function(questions){
                     $scope.myQuestions = questions;

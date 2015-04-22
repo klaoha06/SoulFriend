@@ -13,12 +13,12 @@ angular.module('puanJaiApp')
   var category = category || 'noAnswer';
   var order = order || ['created'];
   var reverse = reverse || false;
-  var articlesFilter = articlesFilter || {};
-  var articlesOrder = order || ['-created'];
-  var articlesReverse = reverse || true;
-  var booksFilter = booksFilter || {};
-  var booksOrder = order || ['-created'];
-  var booksReverse = reverse || true;
+  // var articlesFilter = articlesFilter || {};
+  // var articlesOrder = order || ['-created'];
+  // var articlesReverse = reverse || true;
+  // var booksFilter = booksFilter || {};
+  // var booksOrder = order || ['-created'];
+  // var booksReverse = reverse || true;
   $scope.selectedTopic;
   $scope.popTags = [] || $scope.popTags;
   $scope.skip = 0;
@@ -159,33 +159,33 @@ angular.module('puanJaiApp')
   };
 
   // Get Articles
-  $scope.getArticles = function (f, o, r, t) {
-    socket.unsyncUpdates('article');
-    articlesFilter = f || articlesFilter;
-    if ($scope.selectedTopic){
-      articlesFilter.topic = $scope.selectedTopic;
-    }
-    articlesOrder = o || articlesOrder;
-    articlesReverse = r || articlesReverse;
-    $scope.selectedTopic = t || $scope.selectedTopic;
-    var sort;
-    if (articlesReverse === true) {
-      sort = '-' + articlesOrder;
-    } else {
-      sort = articlesOrder;
-    }
-    $http.get('/api/articles',{ params: {filterBy: articlesFilter, skip: $scope.skip, sort: sort}}).success(function(articles){
-      if ($scope.skip > 0){
-        $scope.articles = $scope.articles.concat(articles);
-      } 
-      else {
-        $scope.articles = articles;
-      }
-          socket.syncUpdates('article', $scope.articles, function(e, item, array){
-            $scope.articles = orderBy(array, o, r);
-          });
-    });
-  };
+  // $scope.getArticles = function (f, o, r, t) {
+  //   socket.unsyncUpdates('article');
+  //   articlesFilter = f || articlesFilter;
+  //   if ($scope.selectedTopic){
+  //     articlesFilter.topic = $scope.selectedTopic;
+  //   }
+  //   articlesOrder = o || articlesOrder;
+  //   articlesReverse = r || articlesReverse;
+  //   $scope.selectedTopic = t || $scope.selectedTopic;
+  //   var sort;
+  //   if (articlesReverse === true) {
+  //     sort = '-' + articlesOrder;
+  //   } else {
+  //     sort = articlesOrder;
+  //   }
+  //   $http.get('/api/articles',{ params: {filterBy: articlesFilter, skip: $scope.skip, sort: sort}}).success(function(articles){
+  //     if ($scope.skip > 0){
+  //       $scope.articles = $scope.articles.concat(articles);
+  //     } 
+  //     else {
+  //       $scope.articles = articles;
+  //     }
+  //         socket.syncUpdates('article', $scope.articles, function(e, item, array){
+  //           $scope.articles = orderBy(array, o, r);
+  //         });
+  //   });
+  // };
 
   // Get Books
   // $scope.getBooks = function (f, o, r, t) {
@@ -230,24 +230,24 @@ angular.module('puanJaiApp')
         localStorage.setItem('defaultTab', 'questions');
         $scope.resetSkip();
         break;
-      case 'articles':
-        $scope.defaultTab = 'articles';
-        if (!$scope.articles) {
-          $scope.getArticles(articlesFilter, articlesOrder, articlesReverse, $scope.selectedTopic);
-        }
-        localStorage.setItem('defaultTab', 'articles');
-        $scope.getArticles();
-        $scope.resetSkip();
-        break;
-      case 'books':
-        $scope.defaultTab = 'books';
-        if (!$scope.articles) {
-          $scope.getArticles(articlesFilter, articlesOrder, articlesReverse, $scope.selectedTopic);
-        }
-        localStorage.setItem('defaultTab', 'books');
-        $scope.getArticles();
-        $scope.resetSkip();
-        break;
+      // case 'articles':
+      //   $scope.defaultTab = 'articles';
+      //   if (!$scope.articles) {
+      //     $scope.getArticles(articlesFilter, articlesOrder, articlesReverse, $scope.selectedTopic);
+      //   }
+      //   localStorage.setItem('defaultTab', 'articles');
+      //   $scope.getArticles();
+      //   $scope.resetSkip();
+      //   break;
+      // case 'books':
+      //   $scope.defaultTab = 'books';
+      //   if (!$scope.articles) {
+      //     $scope.getArticles(articlesFilter, articlesOrder, articlesReverse, $scope.selectedTopic);
+      //   }
+      //   localStorage.setItem('defaultTab', 'books');
+      //   $scope.getArticles();
+      //   $scope.resetSkip();
+      //   break;
       default:
         $scope.getQuestions(category, order, reverse, $scope.selectedTopic);
         $scope.getArticles(articlesFilter, articlesOrder, articlesReverse, $scope.selectedTopic);
@@ -288,9 +288,9 @@ angular.module('puanJaiApp')
     $location.path('/questions/'+model._id);
   };
 
-  $scope.goToArticle = function(articleId){
-    $location.path('/articles/'+articleId);
-  };
+  // $scope.goToArticle = function(articleId){
+  //   $location.path('/articles/'+articleId);
+  // };
 
     $scope.searchQuestions = function(input) {
       $scope.userInput = input;
@@ -391,10 +391,10 @@ angular.module('puanJaiApp')
       $scope.getQuestions();
     };
 
-    $scope.getMoreArticles = function(){
-      $scope.skip++;
-      $scope.getArticles();
-    };
+    // $scope.getMoreArticles = function(){
+    //   $scope.skip++;
+    //   $scope.getArticles();
+    // };
 
      // On leave page
      $scope.$on('$destroy', function () {
