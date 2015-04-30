@@ -1,7 +1,21 @@
-<div ng-controller="MainCtrl" class="container-fluid">
+<div ng-controller="MainCtrl" class="container-fluid" style="position:relative; padding-bottom: 15px;">
+<div style="position:absolute; width:100%; bottom:0; margin-left:-15px;">
+  <div class="background-blue-gradient" style="height: 500px;"></div>
+<img src="/assets/images/background.png" style="width:100%;">
+</div>
+<!--           <carousel interval="4000" style="display:block; margin:0 auto; width:50%; margin-bottom: 15px;">
+            <slide ng-repeat="slide in slides" active="slide.active" style="border-radius: 4px; cursor:pointer;" ng-click="goTo(slide.link)">
+              <img ng-src="{{slide.image}}" class="img-responsive img-rounded" style="margin:auto; height:300px; width:100%; border:1px solid #dddddd; border-radius:4px;">
+              <div class="carousel-caption">
+                <h1 style="font-size:3em; margin-bottom:65px;">{{slide.text}}</h1>
+              </div>
+            </slide>
+          </carousel>
 
-  <div id="questionSearch"class="input-group input-group-lg">
-   <span class="input-group-addon button" id="basic-addon1" href="" ng-click="onSubmitSearch()">ถามปัญหาใจ</span>
+       <div class="clearfix"></div> -->
+
+ <!--  <div id="questionSearch"class="input-group input-group-lg">
+   <span class="input-group-addon button" id="basic-addon1" href="" ng-click="onSubmitSearch()">ค้นหาปัญหาใจ</span>
    <input type="text" ng-model="customSelected" placeholder="" typeahead="question as question.name for question in searchQuestions($viewValue) | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" typeahead-on-select="goToQuestion($model)" class="form-control" aria-describedby="basic-addon1">
   </div>
 
@@ -16,7 +30,7 @@
        <b class="yellow">ความช่วยเหลือ:</b>
        <span ng-bind-html="match.model._source.answers_count | typeaheadHighlight:query"></span>
      </a>
-   </script>
+   </script> -->
    
    <div class="row">
      <div class="col-md-2">
@@ -26,34 +40,100 @@
                  <tr ng-repeat="topic in topics" class="nav nav-stacked">
                      <td ng-class="{true: 'background-yellow', false: ''}[topic.active]">
            <a class="mainTopic" ng-click="selectTopic(topic.title);" href=''>
-                     <i class="fa {{topic.icon}}" style="font-size: 0.7em;"></i><br/>
+                     <!-- <i class="fa {{topic.icon}}" style="font-size: 0.7em;"> </i> -->
                          {{topic.title}}
                  </a>
                      </td>
                  </tr>
-         </tbody>
-      </table>
-      <div id="popTags" class="well" style="padding:0; background-color: white; border-radius: 4px !important;">
-         <h2 style="text-align: center; font-size: 2em; padding-bottom:15px; border-bottom: 1px solid #dddddd; ">แท็กยอดนิยม</h2>
-         <jqcloud id="jqcloudtag" style="width:100%; display: block; margin:0 auto;" autoResize="true" words="popTags" height="370" width="155"shape="rectangular" removeOverflowing="false" steps="7" center="{x:0.5, y:0.45}"></jqcloud> 
-      </div>
-      <a ng-href="/tags"><h3 class="text-center">ดูแท็กทั่งหมด..</h3></a>
-      <hr>
+           </tbody>
+        </table>
+        <hr>
+
+      <div ng-include="'components/sidebar/sideBanners2.html'"></div>
+      <div class="clearfix"></div>
+
+
+        
+<!--         <a ng-href="/about">
+          <div id="aboutus" class="sidebarBox text-center col-md-12 col-sm-4 col-xs-12 no-gutter" style="background: #ED6769;">
+            <div class="smallPadding sidebarInnerBox yellowBorder">
+                <h2>รู้จักกับผู้สร้าง</h2>
+                <small>- ปรทัต -</small>
+            </div>
+            <img ng-src="/assets/images/hello.png"/>
+          </div>
+        </a>
+
+        <a ng-href="/service" style="position:relative;">
+          <div id="service" class="sidebarBox text-center pinkGradient col-md-12 col-sm-4 col-xs-12 no-gutter">
+            <div class="smallPadding sidebarInnerBox blueBorder">
+            <h2>บริการเพื่อนใจ</h2>
+            <small>- ทําฟรีด้วยรัก -</small>
+
+            </div>
+            <div style="position: absolute; left: 50%; bottom:0;">
+                <div id="mainTitle" style="position: relative; left: -50%; z-index:121;">
+                  <i class="fa fa-heart fa-2x red"></i>
+                </div>
+            </div>
+            <img ng-src="/assets/images/cutecat.png"/>
+          </div>
+        </a> -->
+
      </div>
 
     <div class="col-md-8">
       <div class="row">
         <div class="col-md-12">
-          <carousel interval="4000" style="margin-bottom: 15px;">
-            <slide ng-repeat="slide in slides" active="slide.active" style="border-radius: 4px; cursor:pointer;" ng-click="goTo(slide.link)">
-              <img ng-src="{{slide.image}}" class="img-responsive img-rounded" style="margin:auto; height:240px; width:100%; border:1px solid #dddddd; border-radius:4px;">
-              <div class="carousel-caption">
-                <h1 style="font-size:3em; margin-bottom:35px;">{{slide.text}}</h1>
-              </div>
-            </slide>
-          </carousel>
 
-          <div class="row">
+          <div style="width:100%; padding:15px 0;">
+              <form  class="row" style="margin-right: 0;
+  margin-left: 0;
+  background-color: aliceblue;
+  padding: 20px 15px;
+  border: 1px solid;
+  border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+  -webkit-border-radius: 3px;">
+                <div class="col-lg-1 col-md-2 col-sm-2 col-xs-12" style="padding:0 5px;">
+                  <img class="img-rounded userIcon" style="display: block; margin:15px auto; width:60px; height:60px" ng-src="{{currentUser.coverimg || '/assets/images/usericon.png'}}">
+                </div>
+                <div class="col-lg-11 col-md-10 col-sm-10 col-xs-12">
+                  <div id="searchQuestionForm" class="input-group input-group-lg">
+                        <textarea maxlength="150" type="text" rows="2" class="form-control" placeholder="ถามหรือค้นหาปัญหาใจได้ที่นี้" style="font-size:1.6em;"ng-model="customSelected" placeholder="" typeahead="question as question.name for question in searchQuestions($viewValue) | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" typeahead-on-select="goToQuestion($model)" class="form-control"ng-focus="isLoggedIn()"></textarea>
+                        <span class="input-group-btn">
+                          <button ng-hide="editingReport" class="btn btn-info" type="button" ng-click ="askQuestion()" style="height:98px;">ถามเพื่อนใจ</button>
+                        </span>
+                      </div><!-- /input-group -->
+                </div>
+        <!--         <span class="pull-right" style="margin:10px 15px;"><span ng-class="{true: 'red', false: 'green'}[reportInput.length > 300 || reportInput.length < 10 ]">{{300 - reportInput.length}}</span> อักขระ</span> -->
+
+              </form>
+
+          </div>
+
+           <script type="text/ng-template" id="customTemplate.html">
+             <a>
+              <b class="yellow">คะแนะความใกล้เคียง:</b>
+              <span ng-bind-html="match.model._score | number:2"></span>
+              -
+              <b class="yellow">ชื่อ:</b>
+               <span ng-bind-html="match.model._source.name | typeaheadHighlight:query"></span>
+               -
+               <b class="yellow">ความช่วยเหลือ:</b>
+               <span ng-bind-html="match.model._source.answers_count | typeaheadHighlight:query"></span>
+             </a>
+           </script>
+ <!--                  <
+ carousel interval="4000" style="margin-bottom: 15px;">
+                    <slide ng-repeat="slide in slides" active="slide.active" style="border-radius: 4px; cursor:pointer;" ng-click="goTo(slide.link)">
+                      <img ng-src="{{slide.image}}" class="img-responsive img-rounded" style="margin:auto; height:300px; width:100%; border:1px solid #dddddd; border-radius:4px;">
+                      <div class="carousel-caption">
+                        <h1 style="font-size:3em; margin-bottom:65px;">{{slide.text}}</h1>
+                      </div>
+                    </slide>
+                  </carousel> -->
+
+ <!--          <div class="row">
              <div class="col-md-4">
                <button class="btn btn-default postfixQuestionButton mainSwitchButtom" ng-click="switchMainTab('questions')">ดูคําถามเพื่อนใจ</button>
              </div>
@@ -63,11 +143,11 @@
              <div class="col-md-4">
                <button class="btn btn-default postfixQuestionButton mainSwitchButtom" ng-click="switchMainTab('books')">ดูหลังสือเพื่อนใจ</button>
              </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="row">
-       <tabset class="col-md-12" justified="true" ng-show="defaultTab === 'questions'">
+       <tabset class="col-md-12" justified="true">
 
        <div class="clearfix"></div>
 
@@ -75,6 +155,7 @@
              </tab>
 
            <div class="clearfix"></div>
+
 
          <div class="questions row" ng-model="questions">
           <div class="col-md-12" ng-repeat="question in questions" ng-class="questionAni">
@@ -89,10 +170,10 @@
                       <p ng-hide="{{question.answered}}">ยังไม่ได้คําตอบที่โดนใจ <i class="fa fa-frown-o blue fa-lg" ng-class="onQuestion"></i></p>
                   </div>
 
-                <div style="width: 170px;">
+                <div style="width: 170px; display: inline;">
                   <i class="fa fa-tag"></i>
                   <a class="topic" ng-href="/topics/{{question.topic}}">{{question.topic}} -</a>
-                  <a style="display:inline;" ng-repeat="tag in question.tags" ng-href="/tags/{{tag._id}}"><small>{{tag.name+" "}}</small></a> 
+                  <a ng-repeat="tag in question.tags" ng-href="/tags/{{tag._id}}"><span class="label label-info" style="margin:0 2.5px;">{{tag.name}}</span></a> 
                 </div>
                 <h2 style='font-size: 2.2em;'>{{question.name}}</h2>
               <a style="float:right;" ng-click="isCollapsed = !isCollapsed">...ขยาย</a>
@@ -115,14 +196,14 @@
               <div class="clearfix">
               </div>
 
-              <div class="questionPanel inline row">
+              <div class="questionPanel inline row background-blue">
 
-                <div class="userPanel col-md-4">
-                  <div class="row" style="border-right: 1px solid #dddddd;">
-                    <div class="col-md-4 no-gutter" style="margin: 15px 0;">
+                <div class="userPanel col-sm-4">
+                  <div class="row">
+                    <div class="col-md-4 col-sm-12 col-xs-4 no-gutter" style="margin: 15px 0;">
                       <img class="userIcon" ng-src="{{question.owner.coverimg}}" />
                     </div>
-                    <div class="col-md-8 no-gutter" style="margin: 15px 0; text-align: center; font-size:0.9em;">
+                    <div class="col-md-8 col-sm-12 col-xs-8 no-gutter" style="margin: 10px 0; text-align: center; font-size:0.9em;">
                       <a ng-href="/users/{{question.ownerId}}"><small>{{question.owner.username}}</small></a><br/>
                       <small>{{question.created | timeAgo}}</small><br/>
                       <!-- <small>{{question.created | date:'MMM d, y h:mm a'}}</small> -->
@@ -130,11 +211,11 @@
                   </div>
                 </div>
 
-                <div class="col-md-8">
-                <div class="row" style="text-align:center;">
+                <div class="col-sm-8">
+                <div class="row text-center background-yellow" style="border-left: 1px solid #dddddd;">
                   <p class="col-lg-3 col-sm-6 col-xs-6">ความช่วยเหลือ<br/>
                   <strong class="blue bigger"> {{question.answers_count | thousandSuffix}}</strong></p>
-                  <p class="col-lg-3 col-sm-6 col-xs-6">ได้ความสําคัญ<br/>
+                  <p class="col-lg-3 col-sm-6 col-xs-6">โหวต<br/>
                   <strong class="blue bigger"> {{question.votes_count | thousandSuffix}}</strong></p>
                   <p class="col-lg-3 col-sm-6 col-xs-6">ผู้เข้าชม<br/>
                   <strong class="blue bigger"> {{question.views | thousandSuffix}}</strong></p>
@@ -147,13 +228,13 @@
               <div>
                 <ul class="nav nav-pills">
                   <li>
-                    <a ng-click="shareFB('/questions/{{question._id}}')"><i class="fa fa-share"></i> แชร์</a>
+                    <a ng-click="shareFB('/questions/{{question._id}}')"><i class="fa fa-child"></i> แชร์</a>
                   </li>
-                  <li>
+          <!--         <li>
                     <a ng-click=""><i class="fa fa-gratipay"></i> เก็บใจ</a>
-                  </li>
+                  </li> -->
                   <li>
-                    <a ng-href="/questions/{{question._id}}"><i class="fa fa-child"></i> ช่วยเพื่อน</a>
+                    <a ng-href="/questions/{{question._id}}"><i class="fa fa-reply"></i> ช่วยเพื่อน</a>
                   </li>
                   <li>
                     <a ng-click="addJai(question._id, $element)"><i class="fa fa-gift"></i> ให้กําลังใจ</a>
@@ -172,17 +253,15 @@
         </div>
         </div>
 
-        <a ng-show="questions.length >= 20" class="btn btn-default" style="display:block" ng-click="getMoreQuestions()">ดูเพิ่ม</a>
+        <a ng-show="questions.length >= 20" class="btn btn-default" style="display:block; margin-bottom: 15px;" ng-click="getMoreQuestions()">ดูเพิ่ม</a>
 
         <div class="row animated pulse" ng-show="questions.length < 1 && selectedTopic.$ne !== null">
-          <hr>
-          <h2 style="text-align: center;">เป็นคนแรกที่ถามคําถามหัวข้อ <span class="bigger yellow">{{selectedTopic}}</span><br>มีเพื่อนใจมากมายที่รอให้การช่วยเหลือ!</h2><br>
-          <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" style="font-size: 2em; width:30%; margin:0 auto;" class="btn btn-primary btn-lg btn-block" ng-href="/ask"><i ng-class="shake" class="fa fa-child"></i> ถาม</a><br>
-          <hr>
+          <h1 style="text-align: center; font-size:3em;">เป็นคนแรกที่ถามคําถามหัวข้อ <span class="bigger yellow">{{selectedTopic}}</span><br>มีเพื่อนใจมากมายที่รอให้การช่วยเหลือ!</h1><br>
+          <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" style="font-size: 3em; width:30%; margin:0 auto;" class="btn btn-primary btn-lg btn-block" ng-href="/ask"><i ng-class="shake" class="fa fa-child"></i> ถาม</a><br>
         </div>
         </tabset>
 
-       <tabset class="col-md-12" justified="true" ng-show="defaultTab === 'articles'">
+      <!--  <tabset class="col-md-12" justified="true" ng-show="defaultTab === 'articles'">
 
         <div class="clearfix"></div>
 
@@ -229,8 +308,8 @@
           <a ng-show="articles.length >= 20" class="btn btn-default" style="display:block; margin:20px 0;" ng-click="getMoreArticles()">ดูเพิ่ม</a>
 
        </tabset>
-
-       <tabset class="col-md-12" justified="true" ng-show="defaultTab === 'books'">
+ -->
+      <!--  <tabset class="col-md-12" justified="true" ng-show="defaultTab === 'books'">
 
         <div class="clearfix"></div>
 
@@ -275,14 +354,16 @@
           </div>
         </div> 
           <a ng-show="articles.length >= 20" class="btn btn-default" style="display:block; margin:20px 0;" ng-click="getMoreArticles()">ดูเพิ่ม</a>
-       </tabset>
+       </tabset> -->
 
 
       </div>
     </div>
 
     <div class="col-md-2" style="overflow: hidden;">
-      <div ng-include="'components/sidebar/rightSidebar.html'"></div>
+      <!-- <div ng-include="'components/sidebar/rightSidebar.html'"></div> -->
+      <div ng-include="'components/sidebar/tagCloud.html'"></div>
+      <div ng-include="'components/sidebar/sideBanners1.html'"></div>
     </div>
 
    </div>

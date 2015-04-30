@@ -37,6 +37,24 @@ exports.index = function(req, res) {
        return res.status(200).json(questions);
       })
       break;
+    case 'viewsThisWeek':
+    var cutOff = new Date();
+    cutOff.setDate(cutOff.getDate()-7)
+    filterBy.created = { $gt: cutOff }
+      Question.find(filterBy).sort({views: -1}).skip(skip).limit(20).exec(function (err, questions){
+       if(err) { return handleError(res, err); }
+       return res.status(200).json(questions);
+      })
+      break;
+    case 'viewsThisMonth':
+    var c = new Date();
+    c.setDate(c.getDate()-30)
+    filterBy.created = { $gt: c } 
+      Question.find(filterBy).sort({views: -1}).skip(skip).limit(20).exec(function (err, questions){
+       if(err) { return handleError(res, err); }
+       return res.status(200).json(questions);
+      })
+      break;
     case 'votes_count':
       Question.find(filterBy).sort('-votes_count').skip(skip).limit(20).exec(function (err, questions){
           if(err) { return handleError(res, err); }

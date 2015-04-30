@@ -11,7 +11,7 @@ var UserSchema = new Schema({
     first: String,
     last: String
   },
-  coverimg: {type: String, default: 'https://kalie101.files.wordpress.com/2013/01/wpid-bn_avatar_builtin14.png'},
+  coverimg: {type: String, default: '/assets/images/usericon.png'},
   email: String,
   username: String,
   role: {
@@ -30,14 +30,14 @@ var UserSchema = new Schema({
   questions_count: {type: Number, default: 0},
   ansInQuestions_id: [{type: Schema.Types.ObjectId, ref: 'Question'}],
   answers_count: {type: Number, default: 0},
-  articles_id: [{type: Schema.Types.ObjectId, ref: 'Article'}],
-  articles_count: {type: Number, default: 0},
+  // articles_id: [{type: Schema.Types.ObjectId, ref: 'Article'}],
+  // articles_count: {type: Number, default: 0},
   jais_count: {type: Number, default: 0},
   jais_id: [{type: Schema.Types.ObjectId, ref: 'Question'}],
   comments_count: {type: Number, default: 0},
   commentInArticles_id: [{type: Schema.Types.ObjectId, ref: 'Article'}],
-  books_count: {type: Number, default: 0},
-  books_id: [{type: Schema.Types.ObjectId, ref: 'Book'}],
+  // books_count: {type: Number, default: 0},
+  // books_id: [{type: Schema.Types.ObjectId, ref: 'Book'}],
 });
 
 UserSchema.plugin(random);
@@ -70,8 +70,6 @@ UserSchema
       'reason': this.reason,
       'questions_id': this.questions_id,
       'questions_count': this.questions_count,
-      'articles_id': this.articles_id,
-      'articles_count': this.articles_count,
       'jais_count': this.jais_count,
       'answers_count': this.answers_count
     };

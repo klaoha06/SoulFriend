@@ -6,7 +6,7 @@ angular.module('puanJaiApp')
     $scope.textEditorInput = localStorage.getItem('questionContent');
     $scope.oldContent = localStorage.getItem('questionContent');
     $scope.searchResults;
-    $scope.searchInput = $cookieStore.get('questionTitle');
+    $scope.searchInput = localStorage.getItem('questionTitle');
     $scope.selectedTopic = $cookieStore.get('topic');
     $scope.tags = $cookieStore.get('tags');
     $scope.alerts = [];
@@ -69,14 +69,14 @@ angular.module('puanJaiApp')
       localStorage.removeItem('questionContent');
       $cookieStore.remove('topic');
       $cookieStore.remove('tags');
-      $cookieStore.remove('questionTitle');
+      localStorage.removeItem('questionTitle');
       $cookieStore.remove('questionContent');
     }
 
     // Search Questions
     $scope.$watch('searchInput', function(input){
       if (input){
-        $cookieStore.put('questionTitle', input);
+        localStorage.setItem('questionTitle', input);
         $http.get('/api/questions/search', { params: {userInput: input}}).success(function(result) {
           // console.log(result.hits.hits);
           $scope.searchResults = orderBy(result.hits.hits, '_score', true);

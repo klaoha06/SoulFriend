@@ -1,7 +1,11 @@
 <div ng-controller="RightCtrl">
-	<div id="help" class="text-center">
+
+<div ng-include="'components/sidebar/tagCloud.html'"></div>
+
+
+<!-- 	<div id="help" class="text-center">
 		<h2 class="text-center" style="font-size: 2.4em; margin-top:0;">งานอาสา</h2>
-		<!-- <small>เว็บนี้เป็นของทุกคนมาช่วยกันพัฒนา</small> -->
+		<small>เว็บนี้เป็นของทุกคนมาช่วยกันพัฒนา</small>
 		<div class="list-group text-center">
 		  <a class="list-group-item smallPadding background-yellow" ng-repeat="task in tasks | limitTo: 5">
 		  	<h4>{{task.name}}</h4>
@@ -10,7 +14,7 @@
 		</div>
 		<a ng-href="/help"><h4>ดูงานอาสาทั่งหมด..</h4></a>
 	</div>
-	<hr>
+	<hr> -->
 <!-- 	<div id="quoteOfTheDay" style="margin-bottom: 20px;">
 		<blockquote class="blockquote-reverse">
 		  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
@@ -20,62 +24,89 @@
 		</footer>
 	</div> -->
 
+<!-- 
 <a ng-href="/suggestion">
-	<div id="suggestionBox" ng-init="ideaImg='/assets/images/idea1.png'" ng-mouseover="ideaImg='/assets/images/idea.gif'" ng-mouseout="ideaImg='/assets/images/idea1.png'" style="border:1px solid #dddddd; text-align: center; background: #F1C632;">
+	<div class="sidebarBox col-md-12 col-sm-6 col-xs-12 no-gutter" id="suggestionBox" ng-init="ideaImg='/assets/images/idea1.png'" ng-mouseover="ideaImg='/assets/images/idea.gif'" ng-mouseout="ideaImg='/assets/images/idea1.png'" style="text-align: center; background: #F1C632;">
 		<div class="smallPadding sidebarInnerBox blueBorder">
 		<h2>เสนอไอเดียให้เพื่อนใจ</h2>
 		<small>- ยินดีฟังทุกเรื่องจ้า -</small>
 		</div>
-		<img ng-src="{{ideaImg}}" style="width:100%;"/>
+		<img ng-src="{{ideaImg}}"/>
 	</div>
-</a>
+</a> -->
+<!-- 
+<a ng-href="/suggestion">
+	<div class="sidebarBox col-md-12 col-sm-6 col-xs-12 no-gutter" id="suggestionBox" style="text-align: center;">
+		<div class="smallPadding sidebarInnerBox blueBorder">
+		<h2>เสนอไอเดียให้เพื่อนใจ</h2>
+		<small>- ยินดีฟังทุกเรื่องจ้า -</small>
+		</div>
+		<img ng-src="/assets/images/plane.jpg"/>
+	</div>
+</a> -->
+<!-- 
+<a ng-href="/suggestion" class="col-md-12 col-sm-4 col-xs-12 no-gutter" style="background-color:rgba(255, 249, 170, 0.2)">
+  <div class="triangle-right text-center" style="width:100%; color:black;">
+	  <h2>เสนอไอเดียให้เพื่อนใจ</h2>
+	  <small>- ยินดีฟังทุกเรื่องจ้า -</small>
+  </div>
+  <img ng-src="/assets/images/climb.png"/ style="width:100%;">
+</a> -->
 
-<a ng-href="/report">
-	<div id="reportProblem" class="haveBorder text-center" style="background: #1069C9;">
+<!-- <a ng-href="/report">
+	<div id="reportProblem" class="sidebarBox text-center col-md-12 col-sm-6 col-xs-12 no-gutter" style="background: #1069C9;">
 		<div class="smallPadding sidebarInnerBox yellowBorder">
 		<h2>แจ้งปัญหาของเว็บไซ</h2>
 		<small>- จะแก้เท่าที่แก้ได้ -</small>
 		</div>
-		<img ng-src="/assets/images/fix.png" style="width:100%;"/>
+		<img ng-src="/assets/images/fix.png"/>
 	</div>
+</a> -->
+<!-- style="background-color:rgba(255, 249, 170, 0.5)" -->
+
+<!-- <a ng-href="/report" class="col-md-12 col-sm-4 col-xs-12 no-gutter" style="background-color:rgba(255, 249, 170, 0.2)">
+  <div class="triangle-left text-center" style="width:100%; color:black;">
+  <h2>แจ้งปัญหาของเว็บไซ</h2>
+  <small>- จะแก้เท่าที่แก้ได้ -</small>
+  </div>
+  <img ng-src="/assets/images/repair.png"/ style="width:100%;">
 </a>
 
-<a ng-href="/service" style="position:relative;">
-	<div id="service" class="haveBorder text-center pinkGradient">
+<a ng-href="/about" class="col-md-12 col-sm-4 col-xs-12 no-gutter"style="background-color:rgba(255, 249, 170, 0.2)">
+  <div class="triangle-right text-center" style="width:100%; color:black;">
+    <h2>รู้จักกับผู้สร้าง</h2>
+    <small>- ปรทัต -</small>
+  </div>
+  <img ng-src="/assets/images/waves.gif" style="width:100%;"/>
+</a> -->
+
+<!-- <a ng-href="/service" style="position:relative;">
+	<div id="service" class="sidebarBox text-center pinkGradient col-md-12 col-sm-4 col-xs-12 no-gutter">
 		<div class="smallPadding sidebarInnerBox blueBorder">
 		<h2>บริการเพื่อนใจ</h2>
 		<small>- ทําฟรีด้วยรัก -</small>
 
 		</div>
 		<div style="position: absolute; left: 50%; bottom:0;">
-		    <div id="mainTitle" style="position: relative; left: -50%;">
+		    <div id="mainTitle" style="position: relative; left: -50%; z-index:121;">
 		      <i class="fa fa-heart fa-2x red"></i>
 		    </div>
 		</div>
-		<img ng-src="/assets/images/cutecat.png" style="width:100%;"/>
+		<img ng-src="/assets/images/cutecat.png"/>
 	</div>
 </a>
 
 
 <a ng-href="/about">
-	<div id="aboutus" class="haveBorder text-center" style="background: #ED6769;">
+	<div id="aboutus" class="sidebarBox text-center col-md-12 col-sm-4 col-xs-12 no-gutter" style="background: #ED6769;">
 		<div class="smallPadding sidebarInnerBox yellowBorder">
 				<h2>รู้จักกับผู้สร้าง</h2>
 				<small>- ปรทัต -</small>
 		</div>
-		<img ng-src="/assets/images/hello.png" style="width:100%;"/>
+		<img ng-src="/assets/images/hello.png"/>
 	</div>
-</a>
+</a> -->
 
-<a ng-href="/contact">
-	<div id="contactus" class="haveBorder text-center" style="background: #FAF2DD;">
-		<div class="smallPadding sidebarInnerBox blueBorder">
-				<h2>ติดต่อกับเรา</h2>
-				<small>- ตลอด 24 ชี่วโมง -</small>
-		</div>
-		<img ng-src="/assets/images/contact.jpg" style="width:100%;"/>
-	</div>
-</a>
 
 
 <!-- 	<div id="popArticles">

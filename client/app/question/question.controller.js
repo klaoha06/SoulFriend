@@ -36,9 +36,7 @@ angular.module('puanJaiApp')
     $scope.shareFB = function(url){
       Facebook.ui({
         method: 'share',
-        href: url, function(res){
-          console.log(res);
-        }
+        href: url
       });
     };
 

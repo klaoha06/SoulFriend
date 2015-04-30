@@ -37,13 +37,15 @@ angular.module('puanJaiApp')
     $scope.shareFB = function(url){
       Facebook.ui({
         method: 'share',
-        href: url, function(res){
-          console.log(res);
-          $scope.article.shares++;
-          $http.patch('/api/articles/' + $stateParams.id, $scope.article);
-        }
+        href: url
       });
     };
+
+    // , function(res){
+    //           console.log(res);
+    //           $scope.article.shares++;
+    //           $http.patch('/api/articles/' + $stateParams.id, $scope.article);
+    //         }
 
     $scope.deleteArticle = function(){
       if (!$scope.articleOwner()){

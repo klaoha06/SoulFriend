@@ -9,11 +9,7 @@ angular.module('puanJaiApp')
 		link:''
 	},
 	{
-		name: 'นักเขียน',
-		link: ''	
-	},
-	{
-		name: 'อาสาสมัคร',
+		name: 'นักออกแบบกราฟิกให้เว็บเพื่อนใจ',
 		link: ''
 	}
 	];

@@ -1,6 +1,6 @@
 <headroom tolerance="5" offset="400" classes='{"initial":"animated","pinned":"slideInDown","unpinned":"slideOutUp","top":"headroom--top","notTop":"headroom--not-top"}' class="navbar-fixed-top">
 <div class="navbar navbar-default background-yellow" ng-controller="NavbarCtrl" style="border-radius: 0;">
-  <div class="container">
+  <div class="container-fluid">
     <div class="navbar-header">
       <button class="navbar-toggle" type="button" ng-click="isCollapsed = !isCollapsed">
         <span class="sr-only">Toggle navigation</span>
@@ -8,7 +8,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a ng-href="/" class="navbar-brand">เพื่อนใจ</a>
+      <a ng-href="/" class="navbar-brand" style="font-size:1.4em; color:black;"><img ng-src="/assets/images/icon.gif" style="width:30px; height:25px; margin-top: -5px;">
+เพื่อนใจ</a>
     </div>
     <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main" style="text-align:center;">
       <ul class="nav navbar-nav" style="margin-top:0;">
@@ -18,20 +19,21 @@
         <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
             <a ng-href="{{item.link}}">{{item.title}}</a>
         </li>
-<!--         <li>
-            <span class="dropdown" dropdown on-toggle="toggled(open)">
+        <li>
+            <span class="dropdown" dropdown on-toggle="toggled(open)" style="line-height: 20px; padding:15px;position: relative;
+  display: block;text-decoration: none;">
               <a href class="dropdown-toggle" dropdown-toggle>
                 รู้จักกับเรา
               </a>
-              <ul class="dropdown-menu">
+              <ul class="dropdown-menu background-yellow">
                 <li ng-repeat="choice in abouts">
                   <a ng-href="{{choice.link}}">{{choice.title}}</a>
                 </li>
               </ul>
             </span>
-        </li> -->
+        </li>
         <li>
-          <a ng-mouseover="help='animated rubberBand'" ng-mouseleave="help=''" ng-href="/help" style="color:#428bca;"><i ng-class="help" class="fa fa-heart red"></i> เราต้องการความช่วยเหลือ!</a>
+          <a ng-mouseover="help='animated rubberBand'" ng-mouseleave="help=''" ng-href="/aboutcreator" style="color:#428bca;"><i ng-class="help" class="fa fa-heart red"></i> เราต้องการความช่วยเหลือ!</a>
         </li>
 <!--         <li>
             <span class="dropdown" dropdown on-toggle="toggled(open)">
@@ -55,7 +57,7 @@
               <a href="" class="dropdown-toggle" dropdown-toggle style="padding:7px;">
                 <img src="{{user.coverimg}}" style="width: 36px; height:36px; border-radius: 4px; box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.75);">
               </a>
-              <ul class="dropdown-menu" style="right: inherit;">
+              <ul class="dropdown-menu background-yellow" style="right: inherit;">
                 <li ng-repeat="choice in userOptions">
                   <a ng-href="{{choice.link}}">{{choice.title}}</a>
                 </li>
@@ -65,8 +67,8 @@
               </ul>
             </span>
         </li>
-        <li ng-show="isLoggedIn()"><a class="btn btn-info" ng-href="/share" style="color: white; padding: 8px; font-size: 1.1em; margin:5px;
-"><i class="fa fa-pencil"></i> ให้ความรู้</a></li>
+<!--         <li ng-show="isLoggedIn()"><a class="btn btn-info" ng-href="/share" style="color: white; padding: 8px; font-size: 1.1em; margin:5px;
+"><i class="fa fa-pencil"></i> ให้ความรู้</a></li> -->
         <li ng-show="isLoggedIn()"><a class="btn btn-info" ng-href="/ask" style="  color: white;
   padding: 8px;
   font-size: 1.1em;

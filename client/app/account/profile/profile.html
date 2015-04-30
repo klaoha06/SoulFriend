@@ -9,7 +9,7 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
            <img src="{{currentUser.coverimg}}" class="img-thumbnail picture hidden-sm hidden-xs" />
            <img src="{{currentUser.coverimg}}" class="img-thumbnail visible-sm visible-xs picture_mob" />
            <div class="header">
-                <h1>{{currentUser.username}}</h1>
+                <h1 style="color:black;">{{currentUser.username}}</h1>
                 <h4>{{currentUser.role}}</h4>
                 <p><small>{{currentUser.reason}}</small><p>
                 <p>{{currentUser.summary}}<p>
@@ -23,7 +23,7 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
             <div class="col-md-3 col-xs-3 well"><i class="fa fa-gift"></i> ให้กําลังใจ<br>{{currentUser.jais_count}}</div>
             <div class="col-md-3 col-xs-3 well"><i class="fa fa-heart"></i> ตอบปัญหา<br>{{currentUser.answers_count}}</div>
             <div class="col-md-3 col-xs-3 well"><i class="fa fa-question"></i> ถาม<br>{{currentUser.questions_count}}</div>
-            <div class="col-md-3 col-xs-3 well"><i class="fa fa-pencil"></i> ให้ความรู้<br>{{currentUser.articles_count}}</div>
+     <!--        <div class="col-md-3 col-xs-3 well"><i class="fa fa-pencil"></i> ให้ความรู้<br>{{currentUser.articles_count}}</div> -->
         </div>
     </div>
 
@@ -56,7 +56,7 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
                         <p class="col-lg-3 col-sm-3 col-xs-3">กําลังใจ<br/>
                         <strong class="blue bigger">{{question.jais_count | thousandSuffix}}</strong></p>
                       </div>
-                      <hr style="width: 80%; margin-top:5px; margin-bottom:5px;">
+                      <hr class="profileHR">
                       <p class="text-center">{{question.created | timeAgo}} - {{question.created | date:'MMM d, y'}}</p>
                     </div>
                   </div>
@@ -71,7 +71,7 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
           <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/ask')" role="button" style="width:100%;"><i ng-class="shake" class="fa fa-question"></i> ถามปัญหา!</a>
       </tab>
 
-      <tab select="onSelectCategory('myArticles')">
+<!--       <tab select="onSelectCategory('myArticles')">
         <tab-heading>ความรู้ที่ได้แบ่งบัน <span class="badge" style="font-size: inherit;">{{currentUser.articles_count | thousandSuffix}}</span></tab-heading>
         <div class="row">
           <div class="col-md-12">
@@ -98,7 +98,7 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
                       <p class="col-lg-3 col-sm-3 col-xs-3">ผู้เข้าชม<br/>
                       <strong class="blue bigger"> {{article.views | thousandSuffix}}</strong></p>
                     </div>
-                    <hr style="width: 80%; margin-top:5px; margin-bottom:5px;">
+                    <hr class="profileHR">
                     <p class="text-center">{{article.created | timeAgo}} - {{article.created | date:'MMM d, y'}}</p>
                   </div>
                 </div>
@@ -110,7 +110,7 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
           <h2>คุณยังไม่ได้แชร์บทความให้เพื่อนๆ</h2>
         </div>
           <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/share')" role="button" style="width:100%;"><i ng-class="shake" class="fa fa-pencil"></i> เขียนบทความ!</a>
-      </tab>
+      </tab> -->
 
       <tab select="onSelectCategory('myAnswersInQuestions')">
         <tab-heading>คําถามที่ได้ให้คําตอบ <span class="badge" style="font-size: inherit;">{{currentUser.answers_count | thousandSuffix}}</span></tab-heading>
@@ -149,7 +149,7 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
                         <p class="col-lg-4 col-sm-4 col-xs-4">คําตอบ<br/>
                         <strong class="blue bigger"> {{question.answers_count | thousandSuffix}}</strong></p>
                       </div>
-                      <hr style="width: 80%; margin-top:5px; margin-bottom:5px;">
+                      <hr class="profileHR">
                       <p class="text-center">{{question.created | timeAgo}} - {{question.created | date:'MMM d, y'}}</p>
                     </div>
                   </div>
@@ -163,7 +163,7 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
           <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/')" role="button" style="width:100%;"><i ng-class="shake" class="fa fa-heart"></i> ตอบปัญหาให้เพื่อนๆ!</a>
         </tab>
 
-        <tab select="onSelectCategory('myBooks')">
+<!--         <tab select="onSelectCategory('myBooks')">
           <tab-heading>หนังสือของฉัน <span class="badge" style="font-size: inherit;">{{currentUser.books_count | thousandSuffix}}</span></tab-heading>
           <div class="row">
             <div class="col-md-12">
@@ -187,7 +187,7 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
                           <p class="col-lg-4 col-sm-4 col-xs-4">แชร์<br/>
                           <strong class="blue bigger"> {{book.shares | thousandSuffix}}</strong></p>
                         </div>
-                        <hr style="width: 80%; margin-top:5px; margin-bottom:5px;">
+                        <hr class="profileHR">
                         <p class="text-center">{{book.created | timeAgo}} - {{book.created | date:'MMM d, y'}}</p>
                       </div>
                     </div>
@@ -199,7 +199,7 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
             <h2>คุณยังไม่ได้ร่วมบทความให้เป็นหนังสือ</h2>
           </div>
             <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/createbook')" role="button" style="width:100%;"><i ng-class="shake" class="fa fa-book"></i> ร่วมเล่ม!</a>
-          </tab>
+          </tab> -->
 
 
         
