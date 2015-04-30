@@ -299,7 +299,7 @@ exports.destroy = function(req, res) {
     if(!question) { return res.send(404); }
     if(question.ownerId) {
       User.findById(question.ownerId, function(err, user){
-        user.questions_id.pull(article._id);
+        user.questions_id.pull(question._id);
         user.questions_count--;
         user.save();
       })
