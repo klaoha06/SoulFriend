@@ -18,7 +18,8 @@ angular.module('puanJaiApp', [
   'textAngular.factories',
   'angular-parallax',
   'viewhead',
-  'angular-carousel'])
+  'angular-carousel',
+  'scroll-animate-directive'])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, FacebookProvider) {
     $urlRouterProvider
       .otherwise('/');

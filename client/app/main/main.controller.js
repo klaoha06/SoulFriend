@@ -1,6 +1,6 @@
 angular.module('puanJaiApp')
 .controller('MainCtrl', function ($scope, $http, socket, Auth, $location, $filter, Facebook) {
-  var currentUser = Auth.getCurrentUser();
+  $scope.currentUser = Auth.getCurrentUser();
   var userId = localStorage.getItem('userId');
   var orderBy = $filter('orderBy');
   if (localStorage.getItem('showQuestions') === 'false') {
@@ -56,18 +56,6 @@ angular.module('puanJaiApp')
 
   $scope.topics = [
   {
-    'title': 'การปัฎิบัติธรรม',
-    'link': '/topics/การปัฎิบัติธรรม',
-    'icon': 'fa-circle-thin',
-    'active': false
-  },
-  {
-    'title': 'สุขภาพ',
-    'link': '/topics/สุขภาพ',
-    'icon': 'fa-pagelines',
-    'active': false
-  },
-  {
     'title': 'ชีวิต',
     'link': '/topics/ชีวิต',
     'icon': 'fa-street-view',
@@ -99,9 +87,15 @@ angular.module('puanJaiApp')
 
   },
   {
-    'title': 'ธุรกิจ',
-    'link': '/topics/ธุรกิจ',
-    'icon': 'fa-building-o',
+    'title': 'สุขภาพ',
+    'link': '/topics/สุขภาพ',
+    'icon': 'fa-pagelines',
+    'active': false
+  },
+  {
+    'title': 'การปัฎิบัติธรรม',
+    'link': '/topics/การปัฎิบัติธรรม',
+    'icon': 'fa-circle-thin',
     'active': false
   },
   {
@@ -250,11 +244,17 @@ angular.module('puanJaiApp')
       //   break;
       default:
         $scope.getQuestions(category, order, reverse, $scope.selectedTopic);
-        $scope.getArticles(articlesFilter, articlesOrder, articlesReverse, $scope.selectedTopic);
+        // $scope.getArticles(articlesFilter, articlesOrder, articlesReverse, $scope.selectedTopic);
     }
   };
 
   $scope.switchMainTab(localStorage.getItem('defaultTab'));
+
+
+  $scope.askQuestion = function(){
+    localStorage.setItem('questionTitle', $scope.userInput);
+    $location.path('/ask');
+  };
 
   $scope.selectTopic = function(topic){
     $scope.resetSkip();
@@ -380,9 +380,7 @@ angular.module('puanJaiApp')
     $scope.shareFB = function(url){
       Facebook.ui({
         method: 'share',
-        href: url, function(res){
-          console.log(res);
-        }
+        href: url
       });
     };
 

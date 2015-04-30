@@ -2,6 +2,8 @@
 <div class="container-fluid">
 
 	<div class="col-md-2">
+		<!-- <div ng-include="'components/sidebar/sideBanners2.html'"></div> -->
+
 <!-- 		<div class="panel panel-default panel-card">
 			<div class="panel-heading">
 				<img ng-cloak class="ng-cloak" ng-src="https://unsplash.imgix.net/12/barley.jpg?q=75&fm=jpg&s=f39de5ca1970a13dbe6af6c86b3c47ec" />
@@ -67,16 +69,15 @@
 							<p class="bigger" ng-hide="{{question.answered}}">ยังไม่ได้คําตอบที่โดนใจ <i class="fa fa-frown-o blue" ng-class="onQuestion"></i></p>
 						</div> -->
 
-						<h2 style='font-size: 2.2em; margin-left:15px;'>{{question.name}}</h2>
-						<div style="margin: 0 10px;">
-							<i class="fa fa-tag"></i>
-							<a class="topic" ng-href="/topics/{{question.topic}}">{{question.topic}} -</a>
-							<a style="display:inline;" ng-repeat="tag in question.tags" ng-href="/tags/{{tag._id}}"><span class="label label-info" style="margin:0 5px;">{{tag.name}}</span></a>
+						<h2 style='font-size: 2.2em; margin:15px;'>{{question.name}}</h2>
+						<div style="margin: 5px 15px;">
+							<a class="topic" ng-href="/topics/{{question.topic}}"><span class="label label-primary">หัวข้อ: {{question.topic}}</span> -</a>
+							<a style="display:inline-block; margin:0 5px 10px 0;" ng-repeat="tag in question.tags" ng-href="/tags/{{tag._id}}"><span class="label label-info" style=""><i class="fa fa-tag"></i> {{tag.name}}</span></a>
 						</div>
 					</div>
 
 					<div class="questionContent">
-						<div ta-bind ng-model="question.body" style="word-wrap: break-word; padding:25px;"></div>
+						<div ta-bind ng-model="question.body" style="word-wrap: break-word; padding:15px; line-height: 2;"></div>
 						<hr style="width:85%; margin-bottom:10px;">
 						<div class="row" style="padding: 15px;margin-right: 0;margin-left:0;">
 							<div class="col-md-4">
@@ -224,7 +225,8 @@
 
 	<div class="col-md-2" style="overflow: hidden;">
 		คําถามที่คลายกัน
-		<div ng-include="'components/sidebar/rightSidebar.html'"></div>
+		<!-- <div ng-include="'components/sidebar/sideBanners1.html'"></div> -->
+
 	</div>
 
 </div>

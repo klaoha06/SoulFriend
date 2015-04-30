@@ -11,6 +11,10 @@ angular.module('puanJaiApp')
     {
       'title': 'ข่าวสาร',
       'link': 'https://www.facebook.com/pages/%E0%B9%80%E0%B8%9E%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%99%E0%B9%83%E0%B8%88-SoulFriend/1592541667644089?ref=hl'
+    },
+    {
+      'title': 'กิจกรรม',
+      'link': '/service'
     }
     ];
 
@@ -28,10 +32,10 @@ angular.module('puanJaiApp')
     //   'title': 'ให้ความรู้',
     //   'link': '/share'
     // },
-    {
-      'title': 'สมัครเป็นนักเขียน',
-      'link': '/writer'
-    },
+    // {
+    //   'title': 'สมัครเป็นนักเขียน',
+    //   'link': '/writer'
+    // },
     {
       'title': 'สมัครเป็นผู้แนะนําทางใจ',
       'link': '/assist'
@@ -40,25 +44,29 @@ angular.module('puanJaiApp')
       'title': 'ร่วมงานกับเรา',
       'link': '/help'
     },
-     {
-      'title': 'เราทํางานไม่ได้เงิน',
-      'link': '/help'
-    }
+    //  {
+    //   'title': 'เราทํางานไม่ได้เงิน',
+    //   'link': '/help'
+    // }
      ];
 
       $scope.abouts = [
      {
-       'title': 'รู้จักกับผู้สร้าง',
+       'title': 'เพื่อนใจทําไมกัน',
        'link': '/about'
      },
      {
-       'title': 'เพื่อนใจทําไมกัน',
-       'link': '/why'
+       'title': 'รู้จักกับผู้สร้าง',
+       'link': '/aboutcreator'
      },
      {
-       'title': 'มาเป็นส่วนหนึ่งกับเรา',
-       'link': '/join'
+       'title': 'ติดต่อ',
+       'link': '/contact'
      }
+     // {
+     //   'title': 'มาเป็นส่วนหนึ่งกับเรา',
+     //   'link': '/join'
+     // }
       ];
 
       $scope.userOptions = [

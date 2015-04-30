@@ -1,4 +1,4 @@
-#landingMain {
+/*#landingMain {
 	height:400px;
 	background-size: cover;
 }
@@ -7,7 +7,7 @@
 	margin: 0 auto;
 	display:block;
 }
-
+*/
 #mainTitle h1 {
 	font-size: 15em;
 }
@@ -16,7 +16,12 @@
 	width:590px;
 }
 
-.leftArrow {
+.img-thumbnail {
+  /*background-color: #FFF9AA;*/
+  /*border: 3px solid #428bca;*/
+}
+
+/*.leftArrow {
 	position: absolute;
 	left:15px;
 	z-index: 2;
@@ -38,7 +43,7 @@
 .slideArrow {
 	position: absolute;
 	top:230px;
-}
+}*/
 
 /*.carousel.fading {
   .carousel-inner {
@@ -68,7 +73,7 @@
   -o-transition-property: opacity;
   transition-property: opacity;
 }*/
-
+/*
 .carousel-fade {
   .carousel-inner {
     .item {
@@ -119,11 +124,47 @@
        -webkit-transform: translate3d(0, 0, 0);
        transform: translate3d(0, 0, 0);
     }
+}*/
+/*.arrow {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.arrow:before,
+.arrow:after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  width: 50%;
+  box-sizing: border-box;
+}
+.arrow:before {
+  right: 50%;
+  border-bottom: 20px solid rgba(0, 0, 0, 0.8);
+  border-right: 20px solid transparent;
+}
+.arrow:after {
+  left: 50%;
+  border-bottom: 20px solid rgba(0, 0, 0, 0.8);
+  border-left: 20px solid transparent;
+}*/
+
+@media(max-width: 1200px) {
+  #mainTitle h1{
+    font-size: 10em;
+    font-style: bold;
+    text-align: center;
+  }
+  #mainTitle {
+    width:600px;
+  }
 }
 
-@media(max-width: 600px) {
+@media(max-width: 900px) {
   #mainTitle h1{
-    font-size: 9em;
+    font-size: 7em;
     font-style: bold;
     text-align: center;
   }
@@ -135,23 +176,58 @@
 .mainLead {
 	font-size: 5em;
 	color:white;
+}
+
+#landingJoinUs {
+  font-size: 7em; text-align: center; border:3px solid #FFF9AA; width: 50%;
+    display: block;
+    margin: 0 auto; padding:20px; padding-bottom: 70px;   margin-bottom: 50px;
+    background-color: aliceblue;
+}
+
+/*.box.ng-hide{
+  display: block!important;
+  visibility: hidden!important;
+}
+
+.box.ng-hide-add {
+  animation: bounceOutLeft;
+  visibility: visible;
+}
+.box.ng-hide-remove {
+  animation: bounceInLeft;
+}*/
 	/*margin-top: 300px;*/
-	margin-top:0;
+/*	margin-top:0;
 }
 
 
 #mainInnerCarousel {
 	min-height: 500px;
-}
+}*/
+/*
+#mainImg:after {
+    content : "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity : 0.8;
+    z-index: -1;
+    background-color: white;
+}*/
+
 
 #bigFB {
 	margin: 20px auto;
 	font-size: 22px;
-	width: 270px;
+	width: 50%;
 	display: block;
 }
 
-#landingBtn {
+/*#landingBtn {
 	margin-top: 400px;
 }
 
@@ -173,4 +249,4 @@
 #MainCarousel li {
 	display: none;
 }
-
+*/

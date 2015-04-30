@@ -3,21 +3,19 @@
   <div class="background-blue-gradient" style="height: 500px;"></div>
 <img src="/assets/images/background.png" style="width:100%;">
 </div>
-<!--           <carousel interval="4000" style="margin-bottom: 15px;">
+<!--           <carousel interval="4000" style="display:block; margin:0 auto; width:50%; margin-bottom: 15px;">
             <slide ng-repeat="slide in slides" active="slide.active" style="border-radius: 4px; cursor:pointer;" ng-click="goTo(slide.link)">
               <img ng-src="{{slide.image}}" class="img-responsive img-rounded" style="margin:auto; height:300px; width:100%; border:1px solid #dddddd; border-radius:4px;">
               <div class="carousel-caption">
                 <h1 style="font-size:3em; margin-bottom:65px;">{{slide.text}}</h1>
               </div>
             </slide>
-          </carousel> -->
+          </carousel>
 
-       <!-- <div class="clearfix"></div> -->
+       <div class="clearfix"></div> -->
 
-
-
-  <div id="questionSearch"class="input-group input-group-lg">
-   <span class="input-group-addon button" id="basic-addon1" href="" ng-click="onSubmitSearch()">ถามปัญหาใจ</span>
+ <!--  <div id="questionSearch"class="input-group input-group-lg">
+   <span class="input-group-addon button" id="basic-addon1" href="" ng-click="onSubmitSearch()">ค้นหาปัญหาใจ</span>
    <input type="text" ng-model="customSelected" placeholder="" typeahead="question as question.name for question in searchQuestions($viewValue) | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" typeahead-on-select="goToQuestion($model)" class="form-control" aria-describedby="basic-addon1">
   </div>
 
@@ -32,7 +30,7 @@
        <b class="yellow">ความช่วยเหลือ:</b>
        <span ng-bind-html="match.model._source.answers_count | typeaheadHighlight:query"></span>
      </a>
-   </script>
+   </script> -->
    
    <div class="row">
      <div class="col-md-2">
@@ -42,8 +40,8 @@
                  <tr ng-repeat="topic in topics" class="nav nav-stacked">
                      <td ng-class="{true: 'background-yellow', false: ''}[topic.active]">
            <a class="mainTopic" ng-click="selectTopic(topic.title);" href=''>
-                         {{topic.title}}
                      <!-- <i class="fa {{topic.icon}}" style="font-size: 0.7em;"> </i> -->
+                         {{topic.title}}
                  </a>
                      </td>
                  </tr>
@@ -51,36 +49,8 @@
         </table>
         <hr>
 
-        <a ng-href="/about" class="col-md-12 col-sm-4 col-xs-12 no-gutter">
-          <div class="triangle-left text-center" style="width:100%; color:black;">
-            <h2>เกี่ยวกับเพื่อนใจ</h2>
-            <small>- ปรทัต -</small>
-          </div>
-          <img ng-src="/assets/images/logo.gif" style="width:100%;"/>
-        </a>
-
-        <a ng-href="/service" class="col-md-12 col-sm-4 col-xs-12 no-gutter">
-          <div class="triangle-right text-center" style="width:100%; color:black;">
-            <h2>บริการเพื่อนใจ</h2>
-            <small>- ทําฟรีด้วยรัก -</small>
-          </div>
-          <img ng-src="/assets/images/lighthouse.png" style="width:100%;"/>
-        </a>
-        <a ng-href="/contact" class="col-md-12 col-sm-4 col-xs-12 no-gutter">
- <!--          <div id="contactus" class="sidebarBox text-center col-md-12 col-sm-4 col-xs-12 no-gutter" style="background: #FAF2DD;">
-            <div class="smallPadding sidebarInnerBox blueBorder">
-                <h2>ติดต่อกับเรา</h2>
-                <small>- ตลอด 24 ชี่วโมง -</small>
-            </div>
-            <img ng-src="/assets/images/contact.jpg"/>
-          </div> -->
-          <div class="triangle-left text-center" style="width:100%; color:black;">
-            <h1>ติดต่อกับเรา</h1>
-            <small>- ตลอด 24 ชี่วโมง -</small>
-          </div>
-          <img ng-src="/assets/images/happy_sunday.jpg" style="width:100%;"/>
-        </a>
-
+      <div ng-include="'components/sidebar/sideBanners2.html'"></div>
+      <div class="clearfix"></div>
 
 
         
@@ -115,14 +85,53 @@
     <div class="col-md-8">
       <div class="row">
         <div class="col-md-12">
-                  <carousel interval="4000" style="margin-bottom: 15px;">
+
+          <div style="width:100%; padding:15px 0;">
+              <form  class="row" style="margin-right: 0;
+  margin-left: 0;
+  background-color: aliceblue;
+  padding: 20px 15px;
+  border: 1px solid;
+  border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+  -webkit-border-radius: 3px;">
+                <div class="col-lg-1 col-md-2 col-sm-2 col-xs-12" style="padding:0 5px;">
+                  <img class="img-rounded userIcon" style="display: block; margin:15px auto; width:60px; height:60px" ng-src="{{currentUser.coverimg || '/assets/images/usericon.png'}}">
+                </div>
+                <div class="col-lg-11 col-md-10 col-sm-10 col-xs-12">
+                  <div id="searchQuestionForm" class="input-group input-group-lg">
+                        <textarea maxlength="150" type="text" rows="2" class="form-control" placeholder="ถามหรือค้นหาปัญหาใจได้ที่นี้" style="font-size:1.6em;"ng-model="customSelected" placeholder="" typeahead="question as question.name for question in searchQuestions($viewValue) | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" typeahead-on-select="goToQuestion($model)" class="form-control"ng-focus="isLoggedIn()"></textarea>
+                        <span class="input-group-btn">
+                          <button ng-hide="editingReport" class="btn btn-info" type="button" ng-click ="askQuestion()" style="height:98px;">ถามเพื่อนใจ</button>
+                        </span>
+                      </div><!-- /input-group -->
+                </div>
+        <!--         <span class="pull-right" style="margin:10px 15px;"><span ng-class="{true: 'red', false: 'green'}[reportInput.length > 300 || reportInput.length < 10 ]">{{300 - reportInput.length}}</span> อักขระ</span> -->
+
+              </form>
+
+          </div>
+
+           <script type="text/ng-template" id="customTemplate.html">
+             <a>
+              <b class="yellow">คะแนะความใกล้เคียง:</b>
+              <span ng-bind-html="match.model._score | number:2"></span>
+              -
+              <b class="yellow">ชื่อ:</b>
+               <span ng-bind-html="match.model._source.name | typeaheadHighlight:query"></span>
+               -
+               <b class="yellow">ความช่วยเหลือ:</b>
+               <span ng-bind-html="match.model._source.answers_count | typeaheadHighlight:query"></span>
+             </a>
+           </script>
+ <!--                  <
+ carousel interval="4000" style="margin-bottom: 15px;">
                     <slide ng-repeat="slide in slides" active="slide.active" style="border-radius: 4px; cursor:pointer;" ng-click="goTo(slide.link)">
                       <img ng-src="{{slide.image}}" class="img-responsive img-rounded" style="margin:auto; height:300px; width:100%; border:1px solid #dddddd; border-radius:4px;">
                       <div class="carousel-caption">
                         <h1 style="font-size:3em; margin-bottom:65px;">{{slide.text}}</h1>
                       </div>
                     </slide>
-                  </carousel>
+                  </carousel> -->
 
  <!--          <div class="row">
              <div class="col-md-4">
@@ -147,6 +156,7 @@
 
            <div class="clearfix"></div>
 
+
          <div class="questions row" ng-model="questions">
           <div class="col-md-12" ng-repeat="question in questions" ng-class="questionAni">
             <div ng-mouseover="onQuestion='animated swing'" ng-mouseleave="onQuestion=''" class="panel panel-default animated fadeIn">
@@ -160,10 +170,10 @@
                       <p ng-hide="{{question.answered}}">ยังไม่ได้คําตอบที่โดนใจ <i class="fa fa-frown-o blue fa-lg" ng-class="onQuestion"></i></p>
                   </div>
 
-                <div style="width: 170px;">
+                <div style="width: 170px; display: inline;">
                   <i class="fa fa-tag"></i>
                   <a class="topic" ng-href="/topics/{{question.topic}}">{{question.topic}} -</a>
-                  <a style="display:inline;" ng-repeat="tag in question.tags" ng-href="/tags/{{tag._id}}"><small>{{tag.name+" "}}</small></a> 
+                  <a ng-repeat="tag in question.tags" ng-href="/tags/{{tag._id}}"><span class="label label-info" style="margin:0 2.5px;">{{tag.name}}</span></a> 
                 </div>
                 <h2 style='font-size: 2.2em;'>{{question.name}}</h2>
               <a style="float:right;" ng-click="isCollapsed = !isCollapsed">...ขยาย</a>
@@ -205,7 +215,7 @@
                 <div class="row text-center background-yellow" style="border-left: 1px solid #dddddd;">
                   <p class="col-lg-3 col-sm-6 col-xs-6">ความช่วยเหลือ<br/>
                   <strong class="blue bigger"> {{question.answers_count | thousandSuffix}}</strong></p>
-                  <p class="col-lg-3 col-sm-6 col-xs-6">ได้ความสําคัญ<br/>
+                  <p class="col-lg-3 col-sm-6 col-xs-6">โหวต<br/>
                   <strong class="blue bigger"> {{question.votes_count | thousandSuffix}}</strong></p>
                   <p class="col-lg-3 col-sm-6 col-xs-6">ผู้เข้าชม<br/>
                   <strong class="blue bigger"> {{question.views | thousandSuffix}}</strong></p>
@@ -218,13 +228,13 @@
               <div>
                 <ul class="nav nav-pills">
                   <li>
-                    <a ng-click="shareFB('/questions/{{question._id}}')"><i class="fa fa-share"></i> แชร์</a>
+                    <a ng-click="shareFB('/questions/{{question._id}}')"><i class="fa fa-child"></i> แชร์</a>
                   </li>
           <!--         <li>
                     <a ng-click=""><i class="fa fa-gratipay"></i> เก็บใจ</a>
                   </li> -->
                   <li>
-                    <a ng-href="/questions/{{question._id}}"><i class="fa fa-child"></i> ช่วยเพื่อน</a>
+                    <a ng-href="/questions/{{question._id}}"><i class="fa fa-reply"></i> ช่วยเพื่อน</a>
                   </li>
                   <li>
                     <a ng-click="addJai(question._id, $element)"><i class="fa fa-gift"></i> ให้กําลังใจ</a>
@@ -351,7 +361,9 @@
     </div>
 
     <div class="col-md-2" style="overflow: hidden;">
-      <div ng-include="'components/sidebar/rightSidebar.html'"></div>
+      <!-- <div ng-include="'components/sidebar/rightSidebar.html'"></div> -->
+      <div ng-include="'components/sidebar/tagCloud.html'"></div>
+      <div ng-include="'components/sidebar/sideBanners1.html'"></div>
     </div>
 
    </div>

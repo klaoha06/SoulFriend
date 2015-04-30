@@ -1,0 +1,18 @@
+.transLetter {
+	  font-size: 150px;
+  text-align: center;
+  background: url(http://lorempixel.com/1000/500/) fixed;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  display: block;
+  line-height: 140%;
+  font-weight: 900;
+  text-transform: uppercase;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  letter-spacing: 20px;
+}

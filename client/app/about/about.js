@@ -7,5 +7,10 @@ angular.module('puanJaiApp')
         url: '/about',
         templateUrl: 'app/about/about.html',
         controller: 'AboutCtrl'
+      })
+      .state('aboutcreator', {
+          url: '/aboutcreator',
+          templateUrl: 'app/about/aboutcreator.html',
+          controller: 'AboutCreatorCtrl'
       });
   });

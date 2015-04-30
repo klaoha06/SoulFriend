@@ -12,6 +12,28 @@
 .navbar {
 	border:none;
 }
+.navbar-default .navbar-nav > li > span > a {
+	color:#777777;
+}
+
+.navbar-default .navbar-nav > li > span > a:hover, .navbar-default .navbar-nav > li > span > a:focus {
+	color: #333333;
+	background-color: transparent;
+}
+
+.dropdown-menu > li > a {
+	color:#777777;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+	background-color: transparent;
+	color:black;
+}
+
+/*.navbar-default .navbar-nav > li > a {
+	color:#428bca;
+}*/
+
 /*.swingInX {
 	-moz-transform-origin: top;
 	-ie-transform-origin: top;

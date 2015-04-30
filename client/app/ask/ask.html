@@ -47,16 +47,17 @@
 						<hr/>
 						<h2 class="blue">ขั้นตอนที่ 3: เนื้อความ</h2>
 						<text-angular ta-toolbar="[['p','h1','h2','h3','quote', 'ul', 'ol','undo','redo','justifyLeft', 'justifyCenter','justifyRight', 'insertImage', 'insertLink', 'insertVideo']]" ng-model="textEditorInput"></text-angular>
-
+						<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[(textEditorInput | htmlToText).length > 7000 || (textEditorInput | htmlToText).length < 15]">{{7000 - (textEditorInput | htmlToText).length}}</span> อักขระ</span>
 						<hr/>
 
 			<h2 class="blue">ขั้นตอนที่ 4: ใส่แท็ก</h2>
-			<div class="input-group input-group-lg">
+			<div class="input-group input-group-lg" style="margin-bottom: 15px;">
 			    <span class="input-group-addon"><i class="fa fa-tags"></i> แท็ก</span>
-			    <tags-input ng-model="tags" class="ti-input-lg" display-property="name" placeholder="คําถามนี้เกี่ยวข้องกับอะไรบ้าง..." max-length="40" add-on-comma="false" maxTags="4" on-tag-added="storeTagInCookie()">
+			    <tags-input ng-model="tags" class="ti-input-lg" display-property="name" placeholder="คําถามนี้เกี่ยวข้องกับอะไรบ้าง..." max-length="21" add-on-comma="false" maxTags="4" on-tag-added="storeTagInCookie()">
 			    <auto-complete source="searchTags($query)" highlightMatchedText="true" select-first-match="false"></auto-complete>
 			    </tags-input>
 			</div>
+			<!-- <hr> -->
 
 			<script type="text/ng-template" id="tagSearch.html">
 			  <a>

@@ -24,7 +24,7 @@ exports.index = function(req, res) {
  * Get sample of users
  */
 exports.sampleusers = function(req, res) {
-  User.findRandom({},'-salt -hashedPassword -provider -jais_count -questions_count -articles_count -questions_id -articles_id -answers_count', {limit: 4}, function (err, users) {
+  User.findRandom({reason:{'$ne': null}},'username reason coverimg',{limit: 9}, function (err, users) {
     if(err) return res.send(500, err);
     return res.status(200).json(users);
   });
