@@ -7,12 +7,15 @@
 }
 
 #landingJoinUs {
-  font-size: 7em; text-align: center; border:3px solid #FFF9AA; width: 50%;
+  font-size: 5em; text-align: center; border:3px solid #FFF9AA; width: 60%;
   border-color:  #FFF9AA #FFF9AA #428bca #428bca;
   text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);         
     display: block;
-    margin: 0 auto; padding:0 20px; padding-bottom: 70px;   margin-bottom: 50px;
-    background-color: aliceblue;
+    margin: 0 auto; 
+    /*padding:0 20px; */
+    padding-bottom: 45px;   margin-bottom: 50px;
+    /*background-color: aliceblue;*/
+    color:white;
 }
 
 @media(max-width: 1200px) {

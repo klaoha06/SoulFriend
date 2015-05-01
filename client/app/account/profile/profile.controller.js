@@ -4,6 +4,8 @@ angular.module('puanJaiApp')
   .controller('profileCtrl', function ($scope, $http, socket, $stateParams, Auth, $cookieStore, User, $location) {
     if($cookieStore.get('token')) {
         $scope.currentUser = User.get();
+    } else {
+        $location.path('/login');
     }
     $scope.userId = localStorage.getItem('userId');
 

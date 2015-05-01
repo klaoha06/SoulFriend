@@ -12,7 +12,6 @@
 var _ = require('lodash');
 var Tag = require('./tag.model');
 var Question = require('../question/question.model');
-var Article = require('../article/article.model');
 
 // Get list of tags
 exports.index = function(req, res) {
@@ -44,26 +43,27 @@ exports.show = function(req, res) {
 // Get Questions by Tag's Id
 exports.tagQuestions = function(req, res) {
   var query = req.query.questions;
+  var skip = req.query.skip;
   if (typeof req.query.questions === 'string') {
     query = [req.query.questions];
   }
-  Question.find({ '_id':{ $in: query }}, function(err, questions){
+  Question.find({ '_id':{ $in: query }}).sort().skip(skip).limit(20).exec(function(err, questions){
     if (err) { return handleError(res, err); }
     return res.status(200).json(questions)
   })
 };
 
 // Get tag's articles by Id
-exports.tagArticles = function(req, res) {
-  var query = req.query.articles;
-  if (typeof req.query.articles === 'string') {
-    query = [req.query.articles];
-  }
-  Article.find({ '_id':{ $in: query }}, function(err, articles){
-    if (err) { return handleError(res, err); }
-    return res.status(200).json(articles)
-  })
-};
+// exports.tagArticles = function(req, res) {
+//   var query = req.query.articles;
+//   if (typeof req.query.articles === 'string') {
+//     query = [req.query.articles];
+//   }
+//   Article.find({ '_id':{ $in: query }}, function(err, articles){
+//     if (err) { return handleError(res, err); }
+//     return res.status(200).json(articles)
+//   })
+// };
 
 
 

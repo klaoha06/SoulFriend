@@ -5,9 +5,11 @@ exports.setup = function (User, config) {
   passport.use(new TwitterStrategy({
     consumerKey: config.twitter.clientID,
     consumerSecret: config.twitter.clientSecret,
-    callbackURL: config.twitter.callbackURL
+    callbackURL: config.twitter.callbackURL,
+    profileFields: ['name', 'emails', 'photos'], 
   },
   function(token, tokenSecret, profile, done) {
+    console.log(profile)
     User.findOne({
       'twitter.id_str': profile.id
     }, function(err, user) {
@@ -16,14 +18,17 @@ exports.setup = function (User, config) {
       }
       if (!user) {
         user = new User({
-          name: profile.displayName,
+          // name: profile.displayName,
           username: profile.username,
           role: 'user',
           provider: 'twitter',
+          summary: profile._json['description'],
+          coverimg: profile._json['profile_image_url'],
           twitter: profile._json
         });
         user.save(function(err) {
           if (err) return done(err);
+          console.log(user)
           return done(err, user);
         });
       } else {
