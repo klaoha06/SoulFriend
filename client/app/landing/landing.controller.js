@@ -14,9 +14,8 @@ angular.module('puanJaiApp')
        $window.location.href = '/auth/' + provider;
      };
 
-   });
+   })
 
-angular.module('puanJaiApp')
 .directive('disableAnimation', function($animate){
     return {
         restrict: 'A',

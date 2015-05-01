@@ -1,4 +1,4 @@
-<div ng-controller="MainCtrl" class="container-fluid" style="position:relative; padding-bottom: 15px;">
+<div class="container-fluid" ng-controller="MainCtrl" style="position:relative; padding-bottom: 15px;">
 <div style="position:absolute; width:100%; bottom:0; margin-left:-15px;">
   <div class="background-blue-gradient" style="height: 500px;"></div>
 <img src="/assets/images/background.png" style="width:100%;">
@@ -123,27 +123,6 @@
                <span ng-bind-html="match.model._source.answers_count | typeaheadHighlight:query"></span>
              </a>
            </script>
- <!--                  <
- carousel interval="4000" style="margin-bottom: 15px;">
-                    <slide ng-repeat="slide in slides" active="slide.active" style="border-radius: 4px; cursor:pointer;" ng-click="goTo(slide.link)">
-                      <img ng-src="{{slide.image}}" class="img-responsive img-rounded" style="margin:auto; height:300px; width:100%; border:1px solid #dddddd; border-radius:4px;">
-                      <div class="carousel-caption">
-                        <h1 style="font-size:3em; margin-bottom:65px;">{{slide.text}}</h1>
-                      </div>
-                    </slide>
-                  </carousel> -->
-
- <!--          <div class="row">
-             <div class="col-md-4">
-               <button class="btn btn-default postfixQuestionButton mainSwitchButtom" ng-click="switchMainTab('questions')">ดูคําถามเพื่อนใจ</button>
-             </div>
-             <div class="col-md-4">
-               <button class="btn btn-default postfixQuestionButton mainSwitchButtom" ng-click="switchMainTab('articles')">ดูบทความเพื่อนใจ</button>
-             </div>
-             <div class="col-md-4">
-               <button class="btn btn-default postfixQuestionButton mainSwitchButtom" ng-click="switchMainTab('books')">ดูหลังสือเพื่อนใจ</button>
-             </div>
-          </div> -->
         </div>
       </div>
       <div class="row">
@@ -255,107 +234,13 @@
 
         <a ng-show="questions.length >= 20" class="btn btn-default" style="display:block; margin-bottom: 15px;" ng-click="getMoreQuestions()">ดูเพิ่ม</a>
 
-        <div class="row animated pulse" ng-show="questions.length < 1 && selectedTopic.$ne !== null">
+        <div class="row" ng-show="questions.length < 1 && selectedTopic.$ne !== null" style="border-top:1px solid #dddddd;">
+          <div class="row animated pulse">
           <h1 style="text-align: center; font-size:3em;">เป็นคนแรกที่ถามคําถามหัวข้อ <span class="bigger yellow">{{selectedTopic}}</span><br>มีเพื่อนใจมากมายที่รอให้การช่วยเหลือ!</h1><br>
           <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" style="font-size: 3em; width:30%; margin:0 auto;" class="btn btn-primary btn-lg btn-block" ng-href="/ask"><i ng-class="shake" class="fa fa-child"></i> ถาม</a><br>
+          </div>
         </div>
         </tabset>
-
-      <!--  <tabset class="col-md-12" justified="true" ng-show="defaultTab === 'articles'">
-
-        <div class="clearfix"></div>
-
-        <tab ng-repeat="tab in articleTabs" heading="{{tab.title}}" ng-click="resetSkip(); getArticles(tab.filterBy, tab.orderBy, tab.reverse);" >
-        </tab>
-
-        <div class="clearfix"></div>
-
-        <div id="articleList" class="row haveBorder">
-          <div class="no-gutter col-sm-6 col-md-6" ng-repeat="article in articles">
-            <div class="mythumbnail animated fadeIn" article="{{article.coverImg}}" id="{{article._id}}" ng-click="goToArticle(article._id)" style="background-position: center;">
-              <div ng-show="article.owner.role === 'writer'" class="triangle-right" style="float:right;">
-                โดยนักเขียน
-              </div>
-              <div ng-show="article.owner.role === 'admin'" class="triangle-right" style="color:black; float:right;">
-                โดยผูสร้างเพื่อนใจ
-              </div>
-              <span class="label label-info" style="font-size:0.7em; position:absolute; left:12px; top:12px;">{{article.topic}}</span>
-              <div class="caption" ng-class="{true: 'bigPadding', false: 'smallPadding'}[article.name.length <= 65]">
-                <p>{{article.name}}</p>
-                <hr style="margin-bottom: 7px; margin-top:7px;">
-                <div class="row text-center">
-                  <div class="col-xs-4">
-                    <i class="fa fa-thumbs-up"></i><br>
-                    <small>{{article.votes_count}}</small>
-                  </div>
-                  <div class="col-xs-4">
-                    <i class="fa fa-share-alt"></i><br>
-                    <small>{{article.shares}}</small>
-                  </div>
-                  <div class="col-xs-4">
-                    <i class="fa fa-eye"></i><br>
-                    <small>{{article.views}}</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div ng-show="articles.length <= 0" class="text-center animated pulse">
-              <h2 style="text-align: center;">เป็นคนแรกที่เขียนบทความในหัวข้อ <span class="bigger yellow">{{selectedTopic}}</span></h2><br>
-              <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" style="font-size: 2em; width:30%; margin:0 auto;" class="btn btn-primary btn-lg btn-block" ng-href="/share"><i ng-class="shake" class="fa fa-pencil"></i> แชร์ความรู้!</a><br>
-          </div>
-        </div> 
-          <a ng-show="articles.length >= 20" class="btn btn-default" style="display:block; margin:20px 0;" ng-click="getMoreArticles()">ดูเพิ่ม</a>
-
-       </tabset>
- -->
-      <!--  <tabset class="col-md-12" justified="true" ng-show="defaultTab === 'books'">
-
-        <div class="clearfix"></div>
-
-        <tab ng-repeat="tab in bookTabs" heading="{{tab.title}}" ng-click="resetSkip(); getBooks(tab.filterBy, tab.orderBy, tab.reverse);" >
-        </tab>
-
-        <div class="clearfix"></div>
-
-        <div id="bookList" class="row haveBorder">
-          <div class="no-gutter col-sm-6 col-md-6" ng-repeat="book in myBooks">
-            <div class="mythumbnail animated fadeIn" book="{{book.coverImg}}" id="{{book._id}}" ng-click="goTobook(book._id)" style="background-position: center;">
-              <div ng-show="book.owner.role === 'writer'" class="triangle-right" style="float:right;">
-                โดยนักเขียน
-              </div>
-              <div ng-show="book.owner.role === 'admin'" class="triangle-right" style="color:black; float:right;">
-                โดยผูสร้างเพื่อนใจ
-              </div>
-              <span class="label label-info" style="font-size:0.7em; position:absolute; left:12px; top:12px;">{{book.topic}}</span>
-              <div class="caption" ng-class="{true: 'bigPadding', false: 'smallPadding'}[book.name.length <= 65]">
-                <p>{{book.name}}</p>
-                <hr style="margin-bottom: 7px; margin-top:7px;">
-                <div class="row text-center">
-                  <div class="col-xs-4">
-                    <i class="fa fa-thumbs-up"></i><br>
-                    <small>{{book.votes_count}}</small>
-                  </div>
-                  <div class="col-xs-4">
-                    <i class="fa fa-share-alt"></i><br>
-                    <small>{{book.shares}}</small>
-                  </div>
-                  <div class="col-xs-4">
-                    <i class="fa fa-eye"></i><br>
-                    <small>{{book.views}}</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div ng-show="articles.length <= 0" class="text-center animated pulse">
-              <h2 style="text-align: center;">เป็นคนแรกที่เขียนบทความในหัวข้อ <span class="bigger yellow">{{selectedTopic}}</span></h2><br>
-              <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" style="font-size: 2em; width:30%; margin:0 auto;" class="btn btn-primary btn-lg btn-block" ng-href="/share"><i ng-class="shake" class="fa fa-pencil"></i> แชร์ความรู้!</a><br>
-          </div>
-        </div> 
-          <a ng-show="articles.length >= 20" class="btn btn-default" style="display:block; margin:20px 0;" ng-click="getMoreArticles()">ดูเพิ่ม</a>
-       </tabset> -->
-
 
       </div>
     </div>
