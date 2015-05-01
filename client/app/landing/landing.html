@@ -1,166 +1,77 @@
-<div class="container-fluid no-gutter" ng-controller="LandingCtrl" style="overflow: hidden; margin-top: -40px;">
-
-
-<img class="hidden-xs"src="/assets/images/lake.jpg" alt="" parallax parallax-ratio="0.5" style="width:100%; position: relative;"/>
-<div class="visible-xs triangleRight" style="height:400px;"></div>
-
-<!-- <div id="mainImg" du-parallax y="background"  style="width:100%; position: relative; background:url('/assets/images/lake.jpg'); height:450px;"/> -->
-
-<!--   <div class="position:absolute;">
-    
+<div class="container-fluid no-gutter" ng-controller="LandingCtrl" style="position:relative; overflow: hidden; margin-top: -40px;">
+  <img class="hidden-xs" ng-src="/assets/images/lake.jpg" alt="" du-parallax y="background"  style="width:100%; position: relative;"/>
+  <div class="visible-xs" style="height:370px; position:relative;">
+    <i class="fa fa-chevron-down" style="position:absolute; bottom:0; right:47%;"></i>
   </div>
-  <hr class="animated slideLeft" style="color:black; height:20px; position:absolute; top:10px;z-index: 3;"> -->
-  
 
-<!-- </div> -->
-   <div style="position: absolute; left: 50%; z-index: 300; top:60px;">
-       <div id="mainTitle" class="animated fadeIn"style="position: relative; left: -50%;">
-         <h1>เพื่อนใจ</h1>
-         <h2 class="text-center" style="width:80%; margin:0 auto; display: block;">ชุมชนเพื่อเกื้อหนุนและพัฒนาจิตใจของกันและกัน</h1>
-       </div>
-   </div>
-<!--    <div style='position: relative;
-     background: white;
-     z-index: 1;
-     padding: 100px 20px;
-     margin:0;' class="animated slideInUp">
-     
-     <div class="box animated slideInLeft" ani-view>
-       animate me!
+  <div style="position: absolute; left: 50%; z-index: 300; top:60px;">
+   <div id="mainTitle" class="animated fadeIn"style="position: relative; left: -50%;">
+     <h1>เพื่อนใจ</h1>
+     <h2 class="text-center" style="width:80%; margin:0 auto; display: block;">ชุมชนเพื่อเกื้อหนุนและพัฒนาจิตใจของกันและกัน</h1>
      </div>
-     <a id="bigFB" class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
-       <i class="fa fa-facebook" style="color:white;"></i> Connect with Facebook
-     </a>
-
-   </div> -->
-
-<!--    <div class="arrow" style='width: 0px;
-height: 0px;
-border-style: solid;
-border-width: 50px 50px 0 50px;
-border-color: #076591 transparent transparent transparent; position:relative; bottom:-50px; z-index: 22;
-background-color: transparent;
-display:block;
-margin:0 auto;'></div> -->
-
-        <!-- <div class="arrow"></div> -->
-   <div style='position: relative;
-     background: white;
-     z-index: 1;
-     margin:0;
-     text-align: center;
-     min-height: 1200px;
-     ' class="animated slideInUp row" style="margin-right: 0; margin-left:0;">
-    <div ani-view>
-      <h1 class="triangleLeft animated fadeIn" style="font-size: 7em; margin:0;">วิธีใช้</h1>
-    </div>
-    <div class="col-md-8 triangleRight animated fadeInLeft" style="padding:50px;"ani-scroll="380">
-      <div class="box" >
-        <h1 style="font-size: 6em;">1. แบ่งบันปัญหาใจ</h1>
-        <p style='text-align: center; text-justify: inter-word; padding:15px;'>ไม่ว่าจะเป็นเรื่องอะไรที่ทําให้เราติดใจ เล็กหรือใหญ่;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj</p>
-      </div>
-    </div>
-    <div class="col-md-4">
-      
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-md-4">
-      
-    </div>
-    <div class="col-md-8 triangleLeft animated fadeInRight" style="padding:50px;" ani-scroll="850">
-      <div class="box">
-        <h1 style="font-size: 6em;">2. ช่วยกันตอบปัญหาใจ</h1>
-        <p>;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj</p>
-      </div>
-    </div>
-    <div class="col-md-10 triangleRight animated fadeInLeft" style="padding:50px;" ani-scroll="1200">
-      <div class="box">
-        <h1 style="font-size: 6em;">3. ได้เพื่อนใหม่ ได้คําตอบ และได้ทําให้โลกนี้อบอุ่นขึ้น</h1>
-        <p>;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj</p>
-      </div>
-    </div>
-<!--     <div class="col-md-4">
-      
-    </div> -->
-  <!--   <div class="col-md-12 triangleLeft">
-      <div class="box" ani-view>
-        <h1 style="font-size: 5em;">4. ช่วยเพื่อนใจคนอื่นและได้ทําให้โลกนี้อบอุ่นขึ้น</h1>
-        <p>;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj</p>
-      </div>
-    </div> -->
    </div>
-
-  
-<!-- <div class=""  du-parallax y="background"  style="width:100%; position: relative; height:600px; z-index: -2;">
-<hr class="animated slideLeft" style="color:black; height:20px; position:absolute; top:10px;z-index: 3;">
+   <div style='position: relative;
+   background: white;
+   z-index: 1;
+   margin:0;
+   text-align: center;
+   min-height: 1000px;
+   ' class="animated slideInUp row" style="margin-right: 0; margin-left:0;">
+   <div class="col-md-8 triangleRight box" style="padding:50px;"ani-scroll="320">
+    <h1 style="font-size: 6em;">1. แบ่งบันปัญหาใจ</h1>
+    <p style='text-align: center; text-justify: inter-word; padding:15px;'>ไม่ว่าจะเป็นเรื่องอะไรที่ทําให้เราติดใจ เล็กหรือใหญ่;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj</p>
+  </div>
+  <div class="col-md-4"></div>
+  <div class="clearfix"></div>
+  <div class="col-md-4"></div>
+  <div class="col-md-8 triangleLeft box" style="padding:50px;" ani-scroll="820">
+    <h1 style="font-size: 6em;">2. ช่วยกันตอบปัญหาใจ</h1>
+    <p>;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj</p>
+  </div>
+  <div class="col-md-10 triangleRight box" style="padding:50px;" ani-scroll="1170">
+    <h1 style="font-size: 6em;">3. ได้เพื่อนใหม่ ได้คําตอบ และได้ทําให้โลกนี้อบอุ่นขึ้น</h1>
+    <p>;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj;ldsjfl;dsakjf;sajfd;ajas;fjas;fjds;ajfadkls;fj</p>
+  </div>
 </div>
 
-<h1 style='position: relative;
-  background: #ebebeb;
-  z-index: 1;
-  padding: 100px 20px;'>Bacon strip steak ground round, tongue pastrami short ribs pork chop venison turducken sausage sirloin. Flank chicken pork chop capicola turkey turducken cow pork loin biltong meatball drumstick pancetta filet mignon ground round fatback. Ham hock jerky short ribs brisket. Meatloaf shoulder pork chop capicola, sirloin swine pig pork. Jerky ribeye hamburger pork loin sirloin kevin bresaola boudin chuck flank. Ham hock pork belly chicken jerky rump bresaola.</h1> -->
-  <div style="position:relative;">  
-    <div class="col-md-6"></div>
-     <div class="col-md-6 triangleLeft" style="  min-height: 100px;">
-     </div>
-     <div style="position:relative; top:50px; padding-bottom: 50px;">      
-       <h1 id="landingJoinUs" ng-mouseover="shake='animated rubberBand'" ng-mouseleave="shake=''">
-       <!-- <i class="fa fa-heart red"style="font-size: 0.8em;" ng-class="shake"></i>  -->
-       มาเป็นส่วนร่วมกับเรา
-
-        <a id="bigFB" class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
-          <i class="fa fa-facebook" style="color:white;"></i> Connect with Facebook
-        </a>
-
-     </div>
+<div style="position:relative;">  
+  <div class="col-md-6 col-xs-6"></div>
+  <div class="col-md-6 col-xs-6 triangleLeft" style="  min-height: 100px;">
   </div>
-
+  <div style="position:relative; top:50px; padding-bottom: 50px;">      
+   <h1 id="landingJoinUs" ng-mouseover="shake='animated rubberBand'" ng-mouseleave="shake=''">
+     มาเป็นส่วนร่วมกับเรา <i class="fa fa-heart red" style="font-size: 0.7em;" ng-class="shake"></i>
+     <a id="bigFB" class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
+      <i class="fa fa-facebook" style="color:white;"></i> Connect with Facebook
+    </a>
+  </div>
+</div>
 
 <div class="clearfix"></div>
 
-<div class="container-fluid background-yellow">
-    <carousel interval="4000" style="display:block; margin:0 auto; width:100%; margin-bottom: 50px; margin-top: 50px; padding: 0 12%;">
-      <slide ng-repeat="users in userGroups" class="animated fadeIn">
-        <div class="row">
-          <div ng-repeat="user in users"class="col-md-4">
-            <div style="position:absolute: top:10px;">
-              <img class="img-circle" ng-src="{{user.coverimg}}" style="border: 3px solid #428bca;"/>
-              <p style="margin: 15px 0;">"{{user.reason}}"</p>
-              <small>- {{user.username}}</small>
-            </div>
+<div class="container-fluid background-yellow" style="min-height: 420px;">
+  <carousel ng-show="userGroups" interval="4000" style="display:block; margin:0 auto; width:100%; margin-bottom: 50px; margin-top: 50px; padding: 0 12%;" disable-animation="true">
+    <slide ng-repeat="users in userGroups" class="animated fadeIn">
+      <div class="row">
+        <div ng-repeat="user in users"class="col-md-4">
+          <div style="position:absolute: top:10px;">
+            <img class="img-circle" ng-src="{{user.coverimg}}" style="border: 3px solid #428bca;"/>
+            <p style="margin: 15px 0;"><i class="fa fa-quote-left pull-left"></i>
+{{user.reason}}</p>
+            <small>- {{user.username}}</small>
           </div>
         </div>
-
-<!--         <img ng-src="http://420placehold.it/ocean/1400-300" class="img-responsive" style="margin:auto; width:100%;"> -->
-      </slide>
-    </carousel>
-
-  </div>
-      <!-- <slide>
-
-      <img ng-src="http://420placehold.it/ocean/1400-300" class="img-responsive" style="margin:auto; width:100%;">
-        <div style="position: absolute; left: 50%; z-index: 300;">
-            <div id="mainTitle" style="position: relative; left: -50%;">
-              <h1 class="animated fadeIn">เพื่อนใจ</h1>
-            </div>
-        </div> -->
-
-      <!-- </slide> -->
-      <!-- <slide> -->
- <!--        <img ng-src="http://420placehold.it/ocean/1400-300" class="img-responsive" style="margin:auto; width:100%;">
-        <div class="carousel-caption">
-          <h1 style="font-size:3em; margin-bottom:65px;">dsajfl;sdakjfl;sadjfadls;fdsfj</h1>
-        </div> -->
-      <!-- </slide> -->
-
+      </div>
+    </slide>
+  </carousel>
+</div>
 
 <script id="template/carousel/carousel.html" type="text/ng-template">
-<div ng-mouseenter="pause(); rightArrow='show animated slideInRight'; leftArrow='show animated slideInLeft'" ng-mouseleave="play(); rightArrow='show animated fadeOutRight'; leftArrow='show animated fadeOutLeft';" class="carousel" ng-swipe-right="prev()" ng-swipe-left="next()">
+  <div ng-mouseenter="pause(); rightArrow='show animated slideInRight'; leftArrow='show animated slideInLeft'" ng-mouseleave="play(); rightArrow='show animated fadeOutRight'; leftArrow='show animated fadeOutLeft';" class="carousel" ng-swipe-right="prev()" ng-swipe-left="next()">
     <div class="carousel-inner" ng-transclude></div>
     <a class="left carousel-control" ng-click="prev()" ng-show="slides.length > 1"><span class="glyphicon glyphicon-chevron-left yellow" ng-class="leftArrow"></span></a>
     <a class="right carousel-control" ng-click="next()" ng-show="slides.length > 1"><span class="glyphicon glyphicon-chevron-right yellow" ng-class="rightArrow"></span></a>
-</div>
+  </div>
 </script>
-
 
 </div>
