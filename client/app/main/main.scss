@@ -133,9 +133,9 @@ a:hover {
   font-size: 1.1em;
 }
 
-.mainSwitchButtom {
+/*.mainSwitchButtom {
   width:100%; display:block; margin:0px auto 15px auto; font-size: 1.2em;
-}
+}*/
 
 .bigPadding {
   padding:20px;
@@ -144,27 +144,6 @@ a:hover {
 
 .smallPadding {
   padding: 7px;
-}
-
-#banner {
-    border-bottom: none;
-    margin-top: -20px;
-}
-
-#banner h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
-    text-shadow: 2px 2px black;
-}
-
-.hero-unit {
-    position: relative;
-    padding: 30px 15px;
-    color: white;
-    text-align: center;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-    background: #4393B9;
 }
 
 .logo {
@@ -264,97 +243,6 @@ a:hover {
       border: 1px solid;
       border-color: #e5e6e9 #dfe0e4 #d0d1d5;
       -webkit-border-radius: 3px;
-}
-
-.panel-default > .panel-leftheading
-{
-    color: #333;
-    background-color: #f5f5f5;
-}
-
-.panel-primary > .panel-leftheading
-{
-    color: #fff;
-    background-color: #428bca;
-    border-color: #428bca;
-}
-
-.panel-success > .panel-leftheading
-{
-    color: #3c763d;
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-}
-
-.panel-info > .panel-leftheading
-{
-    color: #31708f;
-    background-color: #d9edf7;
-    border-color: #bce8f1;
-}
-
-.panel-warning > .panel-leftheading
-{
-    color: #8a6d3b;
-    background-color: #fcf8e3;
-    border-color: #faebcc;
-}
-
-.panel-danger > .panel-leftheading
-{
-    color: #a94442;
-    background-color: #f2dede;
-    border-color: #ebccd1;
-}
-
-.panel-leftheading
-{
-    width: 42px;
-    padding: 10px 15px;
-    border-right: 1px solid transparent;
-    border-bottom: 1px solid transparent;
-    border-top-right-radius: 3px;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
-    float: left;
-    height: 100%;
-    position: absolute;
-}
-
-.panel-lefttitle
-{
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-left: 15px;
-    font-size: 16px;
-    color: inherit;
-    -webkit-transform: rotate(90deg);
-    -webkit-transform-origin: left top;
-    -moz-transform: rotate(90deg);
-    -moz-transform-origin: left top;
-    -ms-transform: rotate(90deg);
-    -ms-transform-origin: left top;
-    -o-transform: rotate(90deg);
-    -o-transform-origin: left top;
-    transform: rotate(90deg);
-    transform-origin: left top;
-    position: absolute;
-    white-space: nowrap;
-}
-
-.panel-rightbody
-{
-    float: left;
-    margin-left: 45px;
-    padding: 15px;
-}
-
-.nav-pills li {
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -ms-user-select: none;
 }
 
 .questionPanel {
