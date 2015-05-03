@@ -11,7 +11,6 @@ angular.module('puanJaiApp')
     function getQuestionsFromTag() {
       var questionsToChunk = _.chunk($scope.tag.questions_id,10);
       var questionsToQuery = questionsToChunk[$scope.skip];
-      // debugger;
       if (questionsToChunk.length <= $scope.skip) {
         // alert('ไม่มีคําถามในแท็กนี้แล้วครับ');
         return;
@@ -81,8 +80,4 @@ angular.module('puanJaiApp')
       }
     };
 
-     // On leave page
-    // $scope.$on('$destroy', function () {
-    //   socket.unsyncUpdates('article');
-    // });
   });

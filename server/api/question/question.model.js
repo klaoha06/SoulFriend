@@ -24,7 +24,7 @@ var QuestionSchema = new Schema({
   views: { type: Number, default: 0},
   shares: { type: Number, default: 0},
   answered: { type: Boolean, default: false},
-  likedAns: { type: Number, default: 0},
+  likedAns: { type: Number, default: 0, es_indexed: true},
   answers: Array,
   answers_count: { type: Number, default: 0, es_indexed: true},
   popularity: { type: Number, default: 0},

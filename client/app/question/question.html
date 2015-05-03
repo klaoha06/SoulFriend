@@ -1,9 +1,14 @@
 <view-title>{{question.name}} -</view-title>
 <div class="container-fluid">
 
-	<div class="col-md-2">
-	</div>
+	<div class="col-md-2"></div>
 
+	<div ng-show="error === 'Not Found'" class="col-md-8 text-center animated pulse" style="margin:40px 0;"><i class="fa fa-frown-o fa-4x"></i><br><h1 style="font-size: 3em;">ไม่มีคําถามนี้ในระบบ</h1><br><p>คําถามนี้อาจจะถูกลบไปแล้ว</p><br>
+	 <a class="btn btn-lg puanjaiBorder" style="color:black;"ng-href="/">
+	   กลับสู่หน้าหลัก
+	</a>
+	</div>
+	
 	<div ng-show="question" class="col-md-8" style="margin: 15px 0;">
 		<div ng-mouseover="onQuestion='animated swing'" ng-mouseleave="onQuestion=''" class="panel panel-default animated fadeIn">
 			<div class="row">
@@ -180,19 +185,40 @@
 			<div ng-hide="userAnsIndex >= 0">
 				<form>
 					<text-angular ta-toolbar="[['p','h1','h2','h3','quote', 'ul', 'ol','undo','redo','justifyLeft', 'justifyCenter','justifyRight', 'insertImage', 'insertLink', 'insertVideo', 'charcount']]" ng-model="textEditorInput" ng-focus="isLoggedIn()"></text-angular>
-					<input ng-hide="editingAns" ng-mouseover="shake='animated rubberBand'" ng-mouseleave="shake=''" class="btn btn-default" type="submit" ng-click="onSubmit()" value="ช่วยเพื่อนใจ" style="background: linear-gradient(white, #fff9aa); font-size: 1.5em; width:100%;"></input>
-					<input ng-show="editingAns" ng-mouseover="shake='animated rubberBand'" ng-mouseleave="shake=''" class="btn btn-default" type="submit" ng-click="onEditAns()" value="แก้ไขคําตอบ" style="background: linear-gradient(white, #fff9aa); font-size: 1.5em; width:100%;"></input>
+					<input ng-hide="editingAns" ng-mouseover="shake='animated rubberBand'" ng-mouseleave="shake=''" class="btn btn-default" type="submit" ng-click="onSubmit()" value="ช่วยเพื่อนใจ" style="background: linear-gradient(white, #fff9aa); font-size: 1.5em; width:100%; border-radius: 0;"></input>
+					<input ng-show="editingAns" ng-mouseover="shake='animated rubberBand'" ng-mouseleave="shake=''" class="btn btn-default" type="submit" ng-click="onEditAns()" value="แก้ไขคําตอบ" style="background: linear-gradient(white, #fff9aa); font-size: 1.5em; width:100%; border-radius: 0;"></input>
 					<!-- 			<a  class="btn btn-default questionHelpBtn" href="/questions/{{question._id}}" role="button"><i ng-class="shake" class="fa fa-heart red"></i> ให้ความช่วยเหลือ</a> -->
 				</form>
 			</div>
 
+				<div class="col-md-12 haveBorder text-center" style="border-radius:3px;margin:15px 0;">
+					<h2>คําถามที่อาจใกล้เคียงกัน</h2>
+					<carousel interval="0" style="display:block; margin:0 auto; width:100%; margin-bottom: 50px; padding: 0 12%;" disable-animation="true">
+					  <slide ng-repeat="questions in questionGroups">
+					    <div class="row">
+					      <div class="col-md-4" ng-repeat="question in questions" style="z-index: 23;">
+					    	<a ng-href="/questions/{{question._id}}">
+								
+								<h3>{{question._source.name}}</h3>
+
+								<span class="black">ความใกล้เคียง - </span>{{question._score | number:2}}<br>
+								<span class="black">คําตอบ - </span>{{question._source.answers_count}}<br>
+								<span class="black">คําตอบที่โดน - </span>{{question._source.likedAns}}
+								
+
+					      </a>
+					      </div>
+					    </div>
+					  </slide>
+					</carousel>
+				</div>
+
 		</div>
 	</div>
 
-	<div class="col-md-2" style="overflow: hidden;">
-		คําถามที่คลายกัน
+	<div class="col-md-2">
+		<!-- คําถามที่คลายกัน -->
 		<!-- <div ng-include="'components/sidebar/sideBanners1.html'"></div> -->
-
 	</div>
 
 </div>
