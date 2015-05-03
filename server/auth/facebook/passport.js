@@ -27,6 +27,10 @@ exports.setup = function (User, config) {
             role: 'user',
             username: profile.username || profile.displayName,
             provider: 'facebook',
+            facebook: {
+                  link: profile.profileUrl,
+                  id: profile.id
+                }
           });
           user.save(function(err) {
             if (err) done(err);
