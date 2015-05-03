@@ -1,10 +1,11 @@
 angular.module('puanJaiApp')
-  .controller('questionCtrl', function ($scope, $http, socket, $stateParams, Auth, $location, Facebook, $cookieStore) {
+  .controller('questionCtrl', function ($scope, $http, socket, $stateParams, Auth, $filter, $location, Facebook, $cookieStore) {
     $scope.textEditorInput;
     $scope.currentUser = Auth.getCurrentUser();
-    $scope.editingAns = false;
+    var orderBy = $filter('orderBy');
     var userId = localStorage.getItem('userId');
     var questionId;
+    $scope.editingAns = false;
 
     function getUserAns() {
       $scope.userAnsIndex = _.findIndex($scope.question.answers,{'user_id': userId});
@@ -28,9 +29,19 @@ angular.module('puanJaiApp')
       if ($scope.currentUser){
         getUserAns();
       }
+      $http.get('/api/questions/search', { params: {userInput: $scope.question.name}}).success(function(result) {
+        var searchResults = orderBy(result.hits.hits, '_score', true);
+        console.log(searchResults);
+        $scope.questionGroups = _.chunk(searchResults, 3);
+      });
       socket.syncUpdates('question', $scope.question, function(event, oldquestion, newquestion){
         _.merge($scope.question, newquestion);
       });
+    })
+
+    .error(function(res){
+      $scope.error = res;
+      console.log($scope.error)
     });
 
     $scope.shareFB = function(url){

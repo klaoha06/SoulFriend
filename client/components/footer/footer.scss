@@ -1,5 +1,17 @@
 .footer {
-    text-align: center;
-    padding: 30px 0;
-    border-top: 1px solid #E5E5E5;
+	text-align: center;
+	padding: 30px 0;
+	border-top: 1px solid #E5E5E5;
+}
+
+#footerLinks > ul > li {
+	margin:5px auto;
+}
+
+#footerLinks > ul > li > a{
+	font-size: 1.2em;
+}
+
+#footerContact > a > i {
+	margin:0 5px;
 }

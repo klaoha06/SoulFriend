@@ -35,7 +35,7 @@ iframe{
 }
 
 .page-header > h1 {
-  font-size: 4em;
+  font-size: 5em;
 }
 
 /*img {
@@ -54,6 +54,10 @@ mark {
 a:hover {
   text-decoration: none;
   cursor: pointer;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+  background-color: aliceblue;
 }
 
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus{
@@ -94,7 +98,8 @@ a:hover {
 }
 
 .haveBorder {
-  border: 1px solid #dddddd;
+  border: 1px solid;
+  border-color: #e5e6e9 #dfe0e4 #d0d1d5;
 }
 
 .background-blue {
@@ -207,7 +212,6 @@ a:hover {
 .triangleRight {
   border: solid 3px;
   border-color: #FFF9AA #428bca transparent transparent;
-  padding: 5px;
 }
 
 .triangle-left {
@@ -223,7 +227,11 @@ a:hover {
 .triangleLeft {
   border: solid 3px;
   border-color: #428bca transparent transparent #FFF9AA;
-  padding: 5px;
+}
+
+.triangleBottomLeft {
+  border: solid 3px;
+  border-color: transparent transparent #428bca #FFF9AA ;
 }
 
 #askQuestion {
@@ -307,6 +315,10 @@ a:hover {
 
 .blue {
   color:#428bca;
+}
+
+.text-shadow {
+  text-shadow: 1px 1px 2px #969696;
 }
 
 .white {
