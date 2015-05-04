@@ -50,6 +50,24 @@
 					<div class="questionContent">
 						<div ta-bind ng-model="question.body" style="word-wrap: break-word; padding:15px; line-height: 2;"></div>
 						<hr style="width:85%; margin-bottom:10px;">
+						<div class="row">
+							<div class="col-md-12">
+						<form ng-show="editingComment" class="comment-form">
+								  <p class="input-group">
+								    <input type="text" class="form-control" placeholder="เขียนที่นี้.." ng-model="newComment" style="font-size:1.2em;">
+								    <span ng-hide="editing" class="input-group-btn">
+								      <button type="submit" class="btn btn-info" ng-click="addComment()" style="border-radius: 0;">ให้ความคิดเห็น</button>
+								    </span>
+								    <span ng-show="editing" class="input-group-btn" >
+								      <button type="submit" class="btn btn-info" ng-click="editMyComment()" style="border-radius: 0;">แก้ความคิดเห็น</button>
+								    </span>
+								  </p>
+								  <span id="helpBlock" class="help-block"><span ng-class="{true: 'red', false: 'green'}[newComment.length > 150 || newComment.length < 3 ]">{{150 - newComment.length}}</span> อักขระ</span>
+								  <hr style='  width: 85%;
+  margin-bottom: 10px;'>
+								</form>
+								</div>
+						</div>
 						<div class="row" style="padding: 15px;margin-right: 0;margin-left:0;">
 							<div class="col-md-4">
 								<div class="row userPanelQuestion">
@@ -77,7 +95,7 @@
 										<a ng-hide="questionOwner()"ng-click="report()"><i class="fa fa-ban"></i> แจ้งความไม่เหมาะสม</a>
 									</div>
 									<div class="col-md-6" style="margin-top:15px;">
-										<a ng-click=""><i class="fa fa-comment"></i> ให้ความคิดเห็น</a>
+										<a ng-click="openEditor()"><i class="fa fa-comment"></i> ให้ความคิดเห็น</a>
 									</div>
 								</div>
 
@@ -127,6 +145,8 @@
 						<div style="text-align: right; margin-bottom: 10px;">							
 							<a ng-click="" style="margin: 15px;"><i class="fa fa-ban"></i> แจ้งความไม่เหมาะสม</a>
 							<a ng-click="" style="margin: 15px;"><i class="fa fa-comment"></i> ให้ความคิดเห็น</a>
+							<a ng-show="answer.user_id === currentUser._id" ng-click="deleteMyAns()" style="margin: 15px;"><i class="fa fa-trash-o"></i> ลบคําตอบนี้</a>
+							<a ng-show="answer.user_id === currentUser._id" ng-click="editMyAns()" style="margin: 15px;"><i class="fa fa-pencil"></i> แก้ไขคําตอบนี้</a>
 						</div>
 					</div>
 
@@ -148,9 +168,9 @@
 
 				<!-- <hr style="width: 80%;"/> -->
 			</div>
-			<h3 style="text-decoration: underline; text-align: center; font-size: 1.5em;">การช่วยเหลือของคุณ</h3>
+			<!-- <h3 style="text-decoration: underline; text-align: center; font-size: 1.5em;">การช่วยเหลือของคุณ</h3> -->
 			<!-- <div ng-class="{true: 'hide', false: '' }[userAnsIndex < 0]"> -->
-			<div class="animated fadeIn" ng-show="textEditorInput || userAns">
+			<div class="animated fadeIn" ng-show="textEditorInput && !userAns">
 				<div class="row answersInQuestion animated fadeIn">
 					<div class="col-md-12">
 						<div class="row" style="background: aliceblue; border-bottom: 1px solid #dddddd;
@@ -166,14 +186,13 @@
 							<small ng-show="userAns.created">
 								- {{userAns.created | timeAgo}} - {{userAns.created | date:'MMM d, y h:mm a'}}</small>
 								</p>
-								<!-- <small>{{userAns.created | date:'MMM d, y h:mm a'}}</small> -->
+								<small>{{userAns.created | date:'MMM d, y h:mm a'}}</small>
 							</div>
 
 						</div>
 
 						<div class="textAngular" ng-bind-html="userAns.content || textEditorInput" style="word-wrap: break-word; padding:25px;"></div>
 						<div style="text-align: right; margin-bottom: 10px;">							
-							<!-- <a ng-click="" style="margin: 15px;"><i class="fa fa-ban"></i> แจ้งความไม่เหมาะสม</a> -->
 							<a ng-show="userAns" ng-click="" style="margin: 15px;"><i class="fa fa-comment"></i> ความคิดเห็น</a>
 							<a ng-show="userAns" ng-click="deleteMyAns()" style="margin: 15px;"><i class="fa fa-trash-o"></i> ลบคําตอบนี้</a>
 							<a ng-show="userAns" ng-click="editMyAns()" style="margin: 15px;"><i class="fa fa-pencil"></i> แก้ไขคําตอบนี้</a>
@@ -200,7 +219,7 @@
 					    	<a ng-href="/questions/{{question._id}}">
 								
 								<h3>{{question._source.name}}</h3>
-
+								<hr>
 								<span class="black">ความใกล้เคียง - </span>{{question._score | number:2}}<br>
 								<span class="black">คําตอบ - </span>{{question._source.answers_count}}<br>
 								<span class="black">คําตอบที่โดน - </span>{{question._source.likedAns}}

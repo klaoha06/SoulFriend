@@ -6,6 +6,7 @@ angular.module('puanJaiApp')
     var userId = localStorage.getItem('userId');
     var questionId;
     $scope.editingAns = false;
+    $scope.editingComment=false;
 
     function getUserAns() {
       $scope.userAnsIndex = _.findIndex($scope.question.answers,{'user_id': userId});
@@ -31,7 +32,6 @@ angular.module('puanJaiApp')
       }
       $http.get('/api/questions/search', { params: {userInput: $scope.question.name}}).success(function(result) {
         var searchResults = orderBy(result.hits.hits, '_score', true);
-        console.log(searchResults);
         $scope.questionGroups = _.chunk(searchResults, 3);
       });
       socket.syncUpdates('question', $scope.question, function(event, oldquestion, newquestion){
@@ -41,7 +41,6 @@ angular.module('puanJaiApp')
 
     .error(function(res){
       $scope.error = res;
-      console.log($scope.error)
     });
 
     $scope.shareFB = function(url){
@@ -203,7 +202,7 @@ angular.module('puanJaiApp')
     $scope.deleteMyAns = function(){
       var r = confirm("ต้องการลบคําตอบนี้?");
       if (r === true) {
-        getUserAns();
+        $scope.userAnsIndex = _.findIndex($scope.question.answers,{'user_id': userId});
         $scope.question.answers.splice($scope.userAnsIndex, 1);
         $scope.question.answers_count--;
         $http.patch('/api/questions/' + $stateParams.id, {questionToUpdate: $scope.question}).success(function(res) {
@@ -268,6 +267,63 @@ angular.module('puanJaiApp')
       } else {
         return;
       }
+    };
+
+    $scope.addComment = function() {
+      if(typeof $scope.newComment === 'undefined') {
+        return;
+      }
+      if ($scope.newComment.length < 3 || $scope.newComment.length > 150) {
+        return;
+      }
+
+      if (Auth.isLoggedIn()) {
+        var user = Auth.getCurrentUser();
+        var newComment = { 
+          content: $scope.newComment,
+          user_id: user._id,
+          user: {
+            username: user.username,
+            name: user.name,
+            coverimg: user.coverimg
+          },
+          created: Date.now()
+        };
+        $scope.article.comments.push(newComment);
+        $scope.article.comments_count++;
+        $http.post('/api/articles/' +  $stateParams.id + '/comments', newComment);
+        $scope.alreadyCommented = true;
+        $scope.newComment = '';
+      } else {
+        $location.path('/login');
+        alert('กรุณาเข้าสู้ระบบก่อนเข้าร่วมการสนทนา')
+      }
+    };
+
+    $scope.deleteMyComment = function(){
+      var r = confirm("ต้องการลบความคิดเห็นนี้?");
+      if (r === true) {
+        $scope.userCommentIndex = _.findIndex($scope.article.comments,{'user_id': userId});
+        $scope.article.comments.splice($scope.userCommentIndex, 1);
+        $scope.article.comments_count--;
+        $http.patch('/api/articles/' + $stateParams.id, $scope.article).success(function(res) {
+          $scope.alreadyCommented=false;
+        });
+      } else {
+        return;
+      }
+    };
+
+    $scope.editMyComment = function(){
+      $scope.userCommentIndex = _.findIndex($scope.article.comments,{'user_id': userId});
+      $scope.article.comments[$scope.userCommentIndex].content = $scope.newComment;
+      $scope.editing=false;
+      $http.patch('/api/articles/' + $stateParams.id, $scope.article);
+    };
+
+    $scope.openEditor = function(commentContent){
+      $scope.editingComment=!$scope.editingComment;
+      $scope.newComment = commentContent;
     };
 
      // On leave page

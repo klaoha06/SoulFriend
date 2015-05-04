@@ -16,6 +16,7 @@ var QuestionSchema = new Schema({
   searchname: { type: Array, es_indexed:true },
   name: { type: String, es_indexed:true },
   body: String,
+  comments: Array,
   jais: Array,
   jais_count: { type: Number, default: 0},
   upvotes: Array,
