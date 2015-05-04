@@ -1,5 +1,5 @@
 <view-title>{{::question.name}} -</view-title>
-<div class="container-fluid">
+<div class="container-fluid" style="min-height: 100%">
 
 	<div class="col-md-2"></div>
 
@@ -9,8 +9,8 @@
 	</a>
 	</div>
 	
-	<div ng-show="question" class="col-md-8 animated fadeIn" style="margin: 15px 0;">
-		<div class="panel panel-default">
+	<div ng-show="question" class="col-md-8" style="margin: 15px 0;">
+		<div ng-mouseover="onQuestion='animated swing'" ng-mouseleave="onQuestion=''" class="panel panel-default animated fadeIn">
 			<div class="row">
 				<div class="col-md-2">
 					<ul class="nav nav-pills questionSidePanel">
@@ -37,7 +37,7 @@
 							<p class="bigger" ng-hide="{{question.answered}}">ยังไม่ได้คําตอบที่โดนใจ <i class="fa fa-frown-o blue" ng-class="onQuestion"></i></p>
 						</div> -->
 
-						<h1 style='margin:15px;'>{{::question.name}}</h2>
+						<h2 style='font-size: 2.2em; margin:15px;'>{{::question.name}}</h2>
 						<div style="margin: 5px 15px;">
 							<a class="topic" ng-href="/topics/{{question.topic}}"><span class="label label-primary">หัวข้อ: {{question.topic}}</span> -</a>
 							<a style="display:inline-block; margin:0 5px 10px 0;" ng-repeat="tag in question.tags" ng-href="/tags/{{tag._id}}"><span class="label label-info" style=""><i class="fa fa-tag"></i> {{tag.name}}</span></a>
@@ -105,7 +105,7 @@
 			
 			<hr style="margin:0;"/>
 
-			<div ng-show="question.answers.length<=0" style="text-align: center;" class="animated pulse">
+			<div ng-show="question.answers.length==0 && !textEditorInput" style="text-align: center;" class="animated pulse">
 				<!-- <i class="fa fa-frown-o blue"></i> -->
 				<h2 style="text-align: center;">ยังไม่ได้ความช่วยเหลือ</h2>
 				<p>รู้จักคนที่สามารถช่วยเพื่อนใจได้ <span class="blue">ฝากแชร์การด้วยจ้า</span></p>
@@ -116,7 +116,6 @@
 
 				<!-- <h2 class="animated pulse" style="text-align: center;">เป็นคนแรกที่ช่วย</h2> -->
 			</div>
-
 			<div ng-show="question.answers">
 				<h2 style="text-align: center; text-decoration: underline;
 				">คําตอบเพื่อนใจทั่งหมด</h2>

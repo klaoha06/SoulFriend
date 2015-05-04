@@ -1,5 +1,7 @@
+'use strict'
+
 angular.module('puanJaiApp')
-  .controller('questionCtrl', function ($scope, $http, socket, $stateParams, Auth, $filter, $location, Facebook, $cookieStore, $rootScope) {
+  .controller('questionCtrl1', function ($scope, $http, socket, $stateParams, Auth, $filter, $location, Facebook, $cookieStore, $rootScope) {
     // $scope.textEditorInput;
     $scope.currentUser = $rootScope.user || Auth.getCurrentUser();
     var orderBy = $filter('orderBy');
@@ -30,6 +32,10 @@ angular.module('puanJaiApp')
       if ($scope.currentUser){
         getUserAns();
       }
+      $http.get('/api/questions/search', { params: {userInput: $scope.question.name}}).success(function(result) {
+        var searchResults = orderBy(result.hits.hits, '_score', true);
+        $scope.questionGroups = _.chunk(searchResults, 3);
+      });
       socket.syncUpdates('question', $scope.question, function(event, oldquestion, newquestion){
         _.merge($scope.question, newquestion);
       });
@@ -38,14 +44,6 @@ angular.module('puanJaiApp')
     .error(function(res){
       $scope.error = res;
     });
-
-    if ($scope.question) {  	
-	    $http.get('/api/questions/search', { params: {userInput: $scope.question.name}}).success(function(result) {
-	      var searchResults = orderBy(result.hits.hits, '_score', true);
-	      $scope.questionGroups = _.chunk(searchResults, 3);
-	    });
-    }
-
 
     $scope.shareFB = function(url){
       Facebook.ui({
@@ -206,11 +204,11 @@ angular.module('puanJaiApp')
     $scope.deleteMyAns = function(){
       var r = confirm("ต้องการลบคําตอบนี้?");
       if (r === true) {
-        var userAnsIndex = _.findIndex($scope.question.answers,{'user_id': userId});
-        $scope.question.answers.splice(userAnsIndex, 1);
+        $scope.userAnsIndex = _.findIndex($scope.question.answers,{'user_id': userId});
+        $scope.question.answers.splice($scope.userAnsIndex, 1);
         $scope.question.answers_count--;
         $http.patch('/api/questions/' + $stateParams.id, {questionToUpdate: $scope.question}).success(function(res) {
-          // getUserAns();
+          getUserAns();
         });
       } else {
         return;
