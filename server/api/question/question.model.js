@@ -13,6 +13,7 @@ var QuestionSchema = new Schema({
   	role: String,
     coverimg: String
   },
+  comments: Array,
   searchname: { type: Array, es_indexed:true },
   name: { type: String, es_indexed:true },
   body: String,
