@@ -34,6 +34,9 @@ angular.module('puanJaiApp')
       }
       if (!$scope.questionGroups) {      
         $http.get('/api/questions/search', { params: {userInput: $scope.question.name}}).success(function(result) {
+          _.remove(result.hits.hits, function(q){
+            return q._id === $scope.question._id;
+          });
           var searchResults = orderBy(result.hits.hits, '_score', true);
           $scope.questionGroups = _.chunk(searchResults, 3);
         });
@@ -73,7 +76,7 @@ angular.module('puanJaiApp')
     $scope.editQuestion = function(){
       localStorage.setItem('editQuestion', $scope.question._id);
       localStorage.setItem('questionContent', $scope.question.body);
-      $cookieStore.put('questionTitle', $scope.question.name);
+      localStorage.setItem('questionTitle', $scope.question.name);
       $cookieStore.put('tags', $scope.question.tags);
       $cookieStore.put('topic', $scope.question.topic);
       $location.path('/ask');
@@ -137,7 +140,7 @@ angular.module('puanJaiApp')
           } else {
             $scope.question.answers[index].votes_count++;
             $scope.question.answers[index].upvotes.push(userId);
-           $http.patch('/api/questions/' + $stateParams.id, {questionToUpdate: $scope.question}).success(function(res) {
+           $http.patch('/api/questions/' + $stateParams.id + '/answers', $scope.question.answers).success(function(res) {
             console.log(res);
            });
           }
@@ -157,7 +160,7 @@ angular.module('puanJaiApp')
           } else {
             $scope.question.answers[index].votes_count--;
             $scope.question.answers[index].downvotes.push(userId);
-           $http.patch('/api/questions/' + $stateParams.id, {questionToUpdate: $scope.question}).success(function(res) {
+           $http.patch('/api/questions/' + $stateParams.id + '/answers', $scope.question.answers).success(function(res) {
             console.log(res);
            });
           }
@@ -178,7 +181,7 @@ angular.module('puanJaiApp')
                 $scope.question.answered = false;
               }
             });
-           $http.patch('/api/questions/' + $stateParams.id, {questionToUpdate: $scope.question}).success(function(res) {
+           $http.patch('/api/questions/' + $stateParams.id, $scope.question).success(function(res) {
             // console.log(res);
            });
       } else {
@@ -204,15 +207,15 @@ angular.module('puanJaiApp')
       }
     };
 
-    $scope.deleteMyAns = function(){
-      var r = confirm("ต้องการลบคําตอบนี้?");
+    $scope.deleteMyAns = function(index){
+      var r = confirm("ลบคําตอบนี้?");
       if (r === true) {
-        $scope.question.answers.splice($scope.userAnsIndex, 1);
         $scope.question.answers_count--;
-        getUserAns();
-        $http.patch('/api/questions/' + $stateParams.id, {questionToUpdate: $scope.question}).success(function(res) {
-          // getUserAns();
+        $http.delete('/api/questions/' + $stateParams.id + '/answers/' + $scope.question.answers[index].user_id).success(function(res) {
+          getUserAns();
         });
+        $scope.question.answers.splice(index, 1);
+        console.log($scope.question.answers)
       } else {
         return;
       }
@@ -227,7 +230,7 @@ angular.module('puanJaiApp')
     $scope.onEditAns = function(){
       $scope.userAnsIndex = _.findIndex($scope.question.answers,{'user_id': userId});
       $scope.question.answers[$scope.userAnsIndex].content = $scope.textEditorInput;
-      $http.patch('/api/questions/' + $stateParams.id, {questionToUpdate: $scope.question});
+      $http.patch('/api/questions/' + $stateParams.id, $scope.question);
       $scope.editingAns=false;
       $scope.textEditorInput = false;  
     };
@@ -298,7 +301,7 @@ angular.module('puanJaiApp')
           created: Date.now()
         };
         $scope.question.comments.push(newComment);
-        $http.patch('/api/questions/' + $stateParams.id, {questionToUpdate: $scope.question}).success(function(res) {
+        $http.patch('/api/questions/' + $stateParams.id, $scope.question).success(function(res) {
          // console.log(res);
         });
         // $http.patch('/api/questions/' +  $stateParams.id, newComment);
@@ -329,7 +332,10 @@ angular.module('puanJaiApp')
           created: Date.now()
         };
         answerInQuestion.comments.push(newComment);
-        $http.patch('/api/questions/' + $stateParams.id, {questionToUpdate: $scope.question}).success(function(res) {
+        // $http.patch('/api/questions/' + $stateParams.id, $scope.question).success(function(res) {
+        //  // console.log(res);
+        // });
+        $http.patch('/api/questions/' + $stateParams.id + '/answers', $scope.question.answers).success(function(res) {
          // console.log(res);
         });
         $scope.isCollapsedInAns = false;
@@ -350,7 +356,7 @@ angular.module('puanJaiApp')
         } else {        
           $scope.question.comments.splice(index, 1);
         }
-          $http.patch('/api/questions/' + $stateParams.id, {questionToUpdate: $scope.question}).success(function(res) {
+          $http.patch('/api/questions/' + $stateParams.id, $scope.question).success(function(res) {
             // $scope.alreadyCommented=false;
           });
       } else {

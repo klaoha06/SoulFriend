@@ -25,7 +25,7 @@
 						</li>
 						<hr style="width:80%;">
 						<li>
-							<a ng-click="shareFB('/questions/{{question._id}}')"><i class="fa fa-share"></i><br>แชร์</a>
+							<a ng-click="shareFB('/questions/{{::question._id}}')"><i class="fa fa-share"></i><br>แชร์</a>
 						</li>
 			<!-- 			<li>
 							<a ng-click=""><i class="fa fa-gratipay"></i><br>เก็บใจ</a>
@@ -40,10 +40,10 @@
 							<p class="bigger" ng-hide="{{question.answered}}">ยังไม่ได้คําตอบที่โดนใจ <i class="fa fa-frown-o blue" ng-class="onQuestion"></i></p>
 						</div> -->
 
-						<h2 style='font-size: 2.2em; margin:15px;'>{{question.name}}</h2>
+						<h2 style='font-size: 2.2em; margin:15px;'>{{::question.name}}</h2>
 						<div style="margin: 5px 15px;">
-							<a class="topic" ng-href="/topics/{{question.topic}}"><span class="label label-primary">หัวข้อ: {{question.topic}}</span> -</a>
-							<a style="display:inline-block; margin:0 5px 10px 0;" ng-repeat="tag in question.tags" ng-href="/tags/{{tag._id}}"><span class="label label-info" style=""><i class="fa fa-tag"></i> {{tag.name}}</span></a>
+							<a class="topic" ng-href="/topics/{{::question.topic}}"><span class="label label-primary">หัวข้อ: {{::question.topic}}</span> -</a>
+							<a style="display:inline-block; margin:0 5px 10px 0;" ng-repeat="tag in question.tags" ng-href="/tags/{{::tag._id}}"><span class="label label-info" style=""><i class="fa fa-tag"></i> {{::tag.name}}</span></a>
 						</div>
 					</div>
 
@@ -117,13 +117,15 @@
 				</div>
 			</div>
 			
-			<hr style="margin:0;"/>
+			<!-- <hr style="margin:0;"/> -->
 
-			<div ng-show="question.answers.length==0" style="text-align: center;" class="animated pulse">
+			<div ng-show="question.answers.length <= 0" style="text-align: center;" class="animated pulse" disable-animation="true">
+				<hr style="width: 80%;"/>
+
 				<!-- <i class="fa fa-frown-o blue"></i> -->
 				<h2 style="text-align: center;">ยังไม่ได้ความช่วยเหลือ</h2>
 				<p>รู้จักคนที่สามารถช่วยเพื่อนใจได้ <span class="blue">ฝากแชร์การด้วยจ้า</span></p>
-				<a class="btn btn-facebook btn-lg white" ng-click="shareFB('/questions/{{question._id}}')">
+				<a class="btn btn-facebook btn-lg white" ng-click="shareFB('/questions/{{::question._id}}')">
 					<i class="fa fa-facebook white"></i> แชร์บน Facebook!
 				</a>
 				<hr style="width: 80%;"/>
@@ -134,8 +136,7 @@
 				<h2>{{question.answers_count}} คําตอบเพื่อนใจ</h2>
 			</div>
 
-				<div class="row haveBorder answersInQuestion animated fadeIn" ng-repeat="answer in question.answers | orderBy:'votes_count': true" style="border-bottom: 1px solid #dddddd;">
-
+				<div class="row haveBorder answersInQuestion animated fadeIn" ng-repeat="answer in question.answers | orderBy:'votes_count': true" style="border-bottom: 1px solid #dddddd;" disable-animation="true">
 					<div class="col-md-10">
 						<div class="row" style="background: aliceblue; border-bottom: 1px solid #dddddd;">
 						<div class="col-md-2 no-gutter" style="margin: 15px 0;">
@@ -149,8 +150,8 @@
 						</div>
 
 						<div class="textAngular" ng-bind-html="answer.content" style="word-wrap: break-word; padding:25px;"></div>
-
-						<div class="col-md-10 col-md-offset-1" ng-repeat="comment in answer.comments">
+						<hr>
+						<div class="col-md-11 col-md-offset-1" style="padding:0;"ng-repeat="comment in answer.comments">
 							<p style="padding:0; font-size:16px; color:rgb(110, 109, 109);">{{comment.content}} - <span style="color:#999; font-size: 14px;">{{::comment.created | timeAgo}} โดย {{::comment.username}}
 								<span ng-show="comment.user_id === currentUser._id">
 								<a ng-click="openEditor(comment.content, 'question', $index)"><i class="fa fa-pencil"></i></a>
@@ -179,7 +180,7 @@
 						<div style="text-align: right; margin-bottom: 10px;">							
 							<!-- <a ng-click="" style="margin: 15px;"><i class="fa fa-ban"></i> แจ้งความไม่เหมาะสม</a> -->
 							<a ng-click="isCollapsedInAns = !isCollapsedInAns;" style="margin: 15px;"><i class="fa fa-comment"></i> ให้ความคิดเห็น</a>
-							<a ng-show="answer.user_id === currentUser._id" ng-click="deleteMyAns()" style="margin: 15px;"><i class="fa fa-trash-o"></i> ลบคําตอบนี้</a>
+							<a ng-show="answer.user_id === currentUser._id" ng-click="deleteMyAns($index);" style="margin: 15px;"><i class="fa fa-trash-o"></i> ลบคําตอบนี้</a>
 							<a ng-show="answer.user_id === currentUser._id" ng-click="editMyAns()" style="margin: 15px;"><i class="fa fa-pencil"></i> แก้ไขคําตอบนี้</a>
 						</div>
 					</div>
@@ -241,7 +242,7 @@
 					<!-- 			<a  class="btn btn-default questionHelpBtn" href="/questions/{{question._id}}" role="button"><i ng-class="shake" class="fa fa-heart red"></i> ให้ความช่วยเหลือ</a> -->
 				</form>
 			</div>
-				<div class="col-md-12 haveBorder text-center" style="border-radius:3px;margin:15px 0;">
+				<div ng-show="questionGroups.length >= 1"class="col-md-12 haveBorder text-center" style="border-radius:3px;margin:15px 0;">
 					<h2>คําถามที่อาจใกล้เคียงกัน</h2>
 					<carousel interval="0" style="display:block; margin:0 auto; width:100%; margin-bottom: 50px; padding: 0 12%;" disable-animation="true">
 					  <slide ng-repeat="questions in questionGroups">
@@ -253,9 +254,7 @@
 
 								<span class="black">ความใกล้เคียง - </span>{{::question._score | number:2}}<br>
 								<span class="black">คําตอบ - </span>{{::question._source.answers_count}}<br>
-								<span class="black">คําตอบที่โดน - </span>{{::question._source.likedAns}}
-								
-
+								<span class="black">คําตอบที่โดน - </span>{{::question._source.likedAns}}		
 					      </a>
 					      </div>
 					    </div>

@@ -1,5 +1,21 @@
 angular.module('puanJaiApp')
-  .controller('askCtrl', function ($scope, $http, socket, $stateParams, Auth, $location, $cookieStore, $filter) {
+  .directive('scrollPosition', function($window) {
+    return {
+      scope: {
+        scroll: '=scrollPosition'
+      },
+      link: function(scope, element, attrs) {
+        var windowEl = angular.element($window);
+        var handler = function() {
+          scope.scroll = windowEl.scrollTop();
+        }
+        windowEl.on('scroll', scope.$apply.bind(scope, handler));
+        handler();
+      }
+    };
+  })
+
+  .controller('askCtrl', function ($scope, $http, socket, $stateParams, Auth, $location, $cookieStore, $filter, $window) {
     var orderBy = $filter('orderBy');
     var user = Auth.getCurrentUser();
     $scope.editQuestion = localStorage.getItem('editQuestion');
@@ -10,6 +26,31 @@ angular.module('puanJaiApp')
     $scope.selectedTopic = $cookieStore.get('topic');
     $scope.tags = $cookieStore.get('tags');
     $scope.alerts = [];
+    $scope.scroll = 0;
+
+    $scope.$evalAsync(function() {
+      $scope.height = document.getElementById('ask').offsetHeight;
+      console.log($scope.height)
+      // $scope.height =document.getElementById('ask').scrollHeight;
+      // console.log($window.scroll());
+      // console.log($window.height())
+    } );
+
+    // console.log(document.getElementById('ask').scrollHeight)
+
+    // $scope.$watch($(window).scrollTop(), function(y){
+    //   console.log(y)
+    // })
+
+    // $window.scroll(function() {
+    //   console.log('hi')
+    //    // if($window.scrollTop() + $window.height() > document.height() - 200) {
+    //    //     $('#button').addClass('fixed_button');
+    //    // }else{
+    //    //     $('#button').removeClass('fixed_button');
+    //    // }
+    // });
+
 
     $scope.topics = [
     {
@@ -192,7 +233,7 @@ angular.module('puanJaiApp')
             tags: partitionedTags[1],
             topic: $scope.selectedTopic
           };
-          $http.patch('/api/questions/' + $stateParams.id, {questionToUpdate: questionToUpdate, newTags: partitionedTags[0]}).success(function(res){
+          $http.patch('/api/questions/' + localStorage.getItem('editQuestion'), {questionToUpdate: questionToUpdate, newTags: partitionedTags[0]}).success(function(res){
             resetFormVariables();
             $location.path(/questions/ + res._id);
           });

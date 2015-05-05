@@ -14,6 +14,7 @@ router.post('/', controller.create);
 router.put('/:id', controller.update);
 router.put('/:id/newanswer', controller.addAnswer);
 router.patch('/:id/answers', controller.updateAns);
+router.delete('/:id/answers/:user_id', controller.deleteAns);
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);
 
