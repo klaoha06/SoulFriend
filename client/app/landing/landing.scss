@@ -15,12 +15,39 @@
     padding-bottom: 35px;   margin-bottom: 10px;
     color:white;
 }
+#mainTitle h2{
+  margin-top: 30px;
+  width:80%; margin:0 auto; display: block;
+}
+
+#enterMain {  
+margin: 15px auto;
+font-size: 22px;
+width: 30%;
+display: block;
+}
+
+@media(max-width: 768px) {
+  #mainTitle h1 {
+    color:black;
+  }
+  #mainTitle h2{
+    color:black;
+    margin-top: 0;
+    widows: 80%;
+  }
+  #enterMain {
+    color:black;
+  }
+
+}
 
 @media(max-width: 1200px) {
   #mainTitle h1{
     font-size: 10em;
     font-style: bold;
     text-align: center;
+    margin-bottom: 20px;
   }
   #mainTitle {
     width:600px;
