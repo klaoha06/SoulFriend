@@ -215,7 +215,6 @@ angular.module('puanJaiApp')
           getUserAns();
         });
         $scope.question.answers.splice(index, 1);
-        console.log($scope.question.answers)
       } else {
         return;
       }
