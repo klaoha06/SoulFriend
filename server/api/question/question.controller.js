@@ -210,7 +210,7 @@ exports.addJai = function(req, res) {
 // Updates an existing thing in the DB.
 exports.update = function(req, res) {
   var newTags = req.body.newTags;
-  var questionToUpdate = req.body.questionToUpdate;
+  var questionToUpdate = req.body.questionToUpdate || req.body;
   if (newTags) {
     var promise = Tag.create(newTags, function(){
       var tagsToJoin = arguments;
@@ -219,15 +219,31 @@ exports.update = function(req, res) {
       }
     });
     promise.then(function(){
-      Question.findByIdAndUpdate(questionToUpdate._id, questionToUpdate, function(err, question){
+      Question.findById(req.params.id, function(err, question){
         if (err) { return handleError(res, err); }
-        return res.status(200).send(question)
+        if(!question) { return res.send(404); }
+        var updated = _.merge(question, questionToUpdate);
+        question.markModified('comments');
+        question.markModified('tags');
+        question.markModified('answers');
+        updated.save(function (err) {
+          if (err) { return handleError(res, err); }
+          return res.status(200).json(question);
+        })
       })
     })
   } else {
-    Question.findByIdAndUpdate(questionToUpdate._id, questionToUpdate, function(err ,question){
+    Question.findById(req.params.id, function(err, question){
       if (err) { return handleError(res, err); }
-      return res.status(200).send(question)
+      if(!question) { return res.send(404); }
+      var updated = _.merge(question, questionToUpdate);
+      question.markModified('comments');
+      question.markModified('tags');
+      question.markModified('answers');
+      updated.save(function (err) {
+        if (err) { return handleError(res, err); }
+        return res.status(200).json(question);
+      })
     })
   }
 };
@@ -255,6 +271,31 @@ exports.addAnswer = function(req, res) {
   });
 };
 
+exports.deleteAns = function(req, res) {
+  Question.findById(req.params.id, function (err, question) {
+    if (err) { return handleError(res, err); }
+    if(!question) { return res.send(404); }
+    _.remove(question.answers, function(answer){
+       return answer.user_id === req.params.user_id
+    })
+    question.markModified('answers');
+    question.answers_count--;
+    question.save(function (err) {
+      if (err) { return handleError(res, err); }
+      res.status(200).json(question);
+      User.findById(req.params.user_id, function(err, user){
+        if(!user){ return res.send(404)}
+        user.ansInQuestions_id.pull(question._id)
+        user.answers_count--;
+        user.save(function(err,u){
+          // console.log(u)
+          return;
+        })
+      })
+    });
+  });
+};
+
 exports.myAns = function(req, res){
   User.findById(req.query.userId, function(err, user){
     Question.find({ '_id':{ $in: user.ansInQuestions_id }}, function(err, questions){
@@ -269,6 +310,7 @@ exports.updateAns = function(req, res) {
   Question.findById(req.params.id, function (err, question) {
     if (err) { return handleError(res, err); }
     if(!question) { return res.send(404); }
+    question.answers = req.body;
     question.markModified('answers');
     question.save(function (err) {
       if (err) { return handleError(res, err); }

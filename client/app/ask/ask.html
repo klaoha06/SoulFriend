@@ -1,4 +1,4 @@
-<div class="container" style="padding: 0 25px;">
+<div id="ask" class="container" style="padding: 0 25px; position:relative;">
 
 
 	<div class="row">
@@ -69,25 +69,26 @@
 			</script>
 
 		</div>
-		<div class="col-md-4 fixed" style="padding-left: 0; padding-right: 0;">
+		<div style="padding-left: 0; padding-right: 0;margin-bottom: 15px;" ng-class="{absoluteCol: scroll+590 >= height, fixed: scroll+590 < height}">
+		<span class='scroll-debug' scroll-position="scroll"></span>
+
 				
 					<div id="howToAsk">
 					<h2 class="blue">วิธีการถาม</h2>
 
-						<p>วีธีการถาม วีธีการถาม วีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธ ีการถามวีธีการถามวีธีการถามวีธีการถามวีธี</p>
+						<p>วีธีการาม วีธีการถาม วีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธ ีการถามวีธีการถามวีธีการถามวีธีการถามวีธี</p>
 						<p>วีธีการถาม วีธีการถาม วีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธ ีการถามวีธีการถามวีธีการถามวีธีการถามวีธี</p>
 						<p>วีธีการถาม วีธีการถาม วีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธ ีการถามวีธีการถามวีธีการถามวีธีการถามวีธี</p>
 
 					</div>
 					<a ng-hide="editQuestion" type="submit" ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default postfixQuestionButton" role="button" ng-click="onQuestionFormSubmit()"><i ng-class="shake" class="fa fa-child"></i> โพสต์คําถาม</a>
 					<a ng-show="editQuestion" type="submit" ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default postfixQuestionButton" role="button" ng-click="onQuestionFormSubmit()"><i ng-class="shake" class="fa fa-pencil"></i> แก้ไขคําถามนี้</a>
-					<hr>
 					<alert ng-repeat="alert in alerts" type="{{alert.type}}" class="animated fadeIn" close="closeAlert($index)">{{alert.msg}}</alert>
+
 
 
 			
 		</div>
 	</div>
-
 
 </div>

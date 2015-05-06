@@ -7,6 +7,10 @@
 var question = require('./question.model');
 
 exports.register = function(socket) {
+	question.schema.post('findByIdAndUpdate', function (doc) {
+		onSave(socket, doc);
+	});
+
   question.schema.post('save', function (doc) {
     onSave(socket, doc);
   });

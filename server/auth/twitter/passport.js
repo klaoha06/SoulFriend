@@ -9,7 +9,6 @@ exports.setup = function (User, config) {
     profileFields: ['name', 'emails', 'photos'], 
   },
   function(token, tokenSecret, profile, done) {
-    console.log(profile)
     User.findOne({
       'twitter.id_str': profile.id
     }, function(err, user) {
@@ -28,7 +27,6 @@ exports.setup = function (User, config) {
         });
         user.save(function(err) {
           if (err) return done(err);
-          console.log(user)
           return done(err, user);
         });
       } else {
