@@ -31,7 +31,6 @@ exports.setup = function (User, config) {
         });
         user.save(function(err) {
           if (err) return done(err);
-          console.log(user)
           return done(err, user);
         });
       } else {
