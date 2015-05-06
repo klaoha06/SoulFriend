@@ -335,7 +335,6 @@ exports.report = function(req, res) {
 
 // Deletes a thing from the DB.
 exports.destroy = function(req, res) {
-  console.log(req.params.id)
   Question.findById(req.params.id, function (err, question) {
     if(err) { return handleError(res, err); }
     if(!question) { return res.send(404); }
@@ -346,6 +345,21 @@ exports.destroy = function(req, res) {
         user.save();
       })
     }
+    Tag.find({ '_id':{ $in:  _.pluck(question.tags, '_id') }}, function(err, tags){
+      if (err) { return handleError(res, err); }
+      tags.forEach(function(tag){
+          Tag.findById(tag._id, function (err, t){
+              t.questions_count--;
+              t.popular_count--;
+              t.questions_id.pull(question._id);
+              if (t.questions_id.length <= 0) {
+                t.remove();
+              } else {
+                t.save()
+              }
+          })
+      })
+    })
     question.remove(function(err) {
       if(err) { return handleError(res, err); }
       return res.send(204);

@@ -8,7 +8,7 @@ angular.module('puanJaiApp')
         var windowEl = angular.element($window);
         var handler = function() {
           scope.scroll = windowEl.scrollTop();
-        }
+        };
         windowEl.on('scroll', scope.$apply.bind(scope, handler));
         handler();
       }
@@ -30,26 +30,7 @@ angular.module('puanJaiApp')
 
     $scope.$evalAsync(function() {
       $scope.height = document.getElementById('ask').offsetHeight;
-      console.log($scope.height)
-      // $scope.height =document.getElementById('ask').scrollHeight;
-      // console.log($window.scroll());
-      // console.log($window.height())
     } );
-
-    // console.log(document.getElementById('ask').scrollHeight)
-
-    // $scope.$watch($(window).scrollTop(), function(y){
-    //   console.log(y)
-    // })
-
-    // $window.scroll(function() {
-    //   console.log('hi')
-    //    // if($window.scrollTop() + $window.height() > document.height() - 200) {
-    //    //     $('#button').addClass('fixed_button');
-    //    // }else{
-    //    //     $('#button').removeClass('fixed_button');
-    //    // }
-    // });
 
 
     $scope.topics = [
