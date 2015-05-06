@@ -3,7 +3,6 @@
 box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
 	<div class="row background-blue" style="border-bottom: 1px solid #dddddd;">
 		<div class="col-md-3 bg_blur">
-    	    <!-- <a href="#" class="follow_btn hidden-xs">Follow</a> -->
 		</div>
         <div class="col-md-9  col-xs-12" style="background:white; min-height: 200px; padding-bottom:40px;">
            <img src="{{currentUser.coverimg}}" class="img-thumbnail picture hidden-sm hidden-xs" />
@@ -23,7 +22,6 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
             <div class="col-md-3 col-xs-3 well"><i class="fa fa-gift"></i> ให้กําลังใจ<br>{{currentUser.jais_count}}</div>
             <div class="col-md-3 col-xs-3 well"><i class="fa fa-heart"></i> ตอบปัญหา<br>{{currentUser.answers_count}}</div>
             <div class="col-md-3 col-xs-3 well"><i class="fa fa-question"></i> ถาม<br>{{currentUser.questions_count}}</div>
-     <!--        <div class="col-md-3 col-xs-3 well"><i class="fa fa-pencil"></i> ให้ความรู้<br>{{currentUser.articles_count}}</div> -->
         </div>
     </div>
 
@@ -68,50 +66,8 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
         <div ng-show="myQuestions.length <= 0"class="row text-center" style="border:1px solid #dddddd; padding:15px; border-radius: 4px;">
           <h2>คุณยังไม่ได้ถามคําถามใจ</h2>
         </div>
-          <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/ask')" role="button" style="width:100%;"><i ng-class="shake" class="fa fa-question"></i> ถามปัญหา!</a>
+          <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/ask')" role="button" style="width:100%;"><i ng-class="shake" class="fa fa-question"></i> ถามปัญหา</a>
       </tab>
-
-<!--       <tab select="onSelectCategory('myArticles')">
-        <tab-heading>ความรู้ที่ได้แบ่งบัน <span class="badge" style="font-size: inherit;">{{currentUser.articles_count | thousandSuffix}}</span></tab-heading>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="list-group">
-                <a ng-repeat="article in myArticles" class="list-group-item" ng-href="/articles/{{article._id}}">
-                <div class="row">
-                  <div class="col-md-8">
-                    <h3>{{article.name}}</h3>
-                    <br>
-                    <div>
-                      <i class="fa fa-tag"></i>                       
-                      <p style="display:inline;" >{{article.topic}} - </p>
-                      <small ng-repeat="tag in article.tags"> {{tag.name}}</small>
-                    </div>
-                  </div>
-                  <div class="col-md-4 background-yellow" style="border-left: 1px solid #dddddd; border-bottom: 1px solid #dddddd; padding: 5px;">
-                    <div class="row" style="text-align:center;">
-                      <p class="col-lg-3 col-sm-3 col-xs-3">ความเห็น<br/>
-                      <strong class="blue bigger"> {{article.comments_count | thousandSuffix}}</strong></p>
-                      <p class="col-lg-3 col-sm-3 col-xs-3">แชร์<br/>
-                      <strong class="blue bigger"> {{article.shares | thousandSuffix}}</strong></p>
-                      <p class="col-lg-3 col-sm-3 col-xs-3">โหวต<br/>
-                      <strong class="blue bigger"> {{article.votes_count | thousandSuffix}}</strong></p>
-                      <p class="col-lg-3 col-sm-3 col-xs-3">ผู้เข้าชม<br/>
-                      <strong class="blue bigger"> {{article.views | thousandSuffix}}</strong></p>
-                    </div>
-                    <hr class="profileHR">
-                    <p class="text-center">{{article.created | timeAgo}} - {{article.created | date:'MMM d, y'}}</p>
-                  </div>
-                </div>
-                </a>    
-            </div>
-          </div>
-        </div>
-        <div ng-show="myArticles.length <= 0"class="row text-center" style="border:1px solid #dddddd; padding:15px; border-radius: 4px;">
-          <h2>คุณยังไม่ได้แชร์บทความให้เพื่อนๆ</h2>
-        </div>
-          <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/share')" role="button" style="width:100%;"><i ng-class="shake" class="fa fa-pencil"></i> เขียนบทความ!</a>
-      </tab> -->
-
       <tab select="onSelectCategory('myAnswersInQuestions')">
         <tab-heading>คําถามที่ได้ให้คําตอบ <span class="badge" style="font-size: inherit;">{{currentUser.answers_count | thousandSuffix}}</span></tab-heading>
         <div class="row">
@@ -121,10 +77,7 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
                   <div class="row">
                     <div class="col-md-8" style="padding:10px;">
                       <h3>{{question.name}}</h3>
-<!--                       <div ng-repeat="answer in question.answers">
-                        <div ng-show="answer.user_id === userId" ng-bind-html="answer.content"></div>
 
-                      </div> -->
                       <br>
                       <div>
                         <i class="fa fa-tag"></i>                     
@@ -160,72 +113,8 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
         <div ng-show="myAnswersInQuestions.length <= 0"class="row text-center" style="border:1px solid #dddddd; padding:15px; border-radius: 4px;">
           <h2>คุณยังไม่ได้ให้ความช่วยเหลือเพื่อนๆ</h2>
         </div>
-          <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/')" role="button" style="width:100%;"><i ng-class="shake" class="fa fa-heart"></i> ตอบปัญหาให้เพื่อนๆ!</a>
+          <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/')" role="button" style="width:100%;"><i ng-class="shake" class="fa fa-heart"></i> ตอบปัญหาให้เพื่อนๆ</a>
         </tab>
-
-<!--         <tab select="onSelectCategory('myBooks')">
-          <tab-heading>หนังสือของฉัน <span class="badge" style="font-size: inherit;">{{currentUser.books_count | thousandSuffix}}</span></tab-heading>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="list-group">
-                  <a ng-repeat="boook in myBooks" class="list-group-item" ng-href="/books/{{book._id}}">
-                    <div class="row">
-                      <div class="col-md-8" style="padding:10px;">
-                        <h3>{{book.name}}</h3>
-                        <br>
-                        <div>
-                          <i class="fa fa-tag"></i>                     
-                          <p style="display:inline;" >{{book.topic}} - </p>
-                          <small ng-repeat="tag in book.tags"> {{tag.name}}</small>
-                        </div>
-                      <div class="col-md-3 background-yellow" style="border-left: 1px solid #dddddd; border-bottom: 1px solid #dddddd; padding: 5px;">
-                        <div class="row" style="text-align:center;">
-                          <p class="col-lg-4 col-sm-4 col-xs-4">โหวต<br/>
-                          <strong class="blue bigger"> {{book.votes_count | thousandSuffix}}</strong></p>
-                          <p class="col-lg-4 col-sm-4 col-xs-4">ผู้เข้าชม<br/>
-                          <strong class="blue bigger"> {{book.views | thousandSuffix}}</strong></p>
-                          <p class="col-lg-4 col-sm-4 col-xs-4">แชร์<br/>
-                          <strong class="blue bigger"> {{book.shares | thousandSuffix}}</strong></p>
-                        </div>
-                        <hr class="profileHR">
-                        <p class="text-center">{{book.created | timeAgo}} - {{book.created | date:'MMM d, y'}}</p>
-                      </div>
-                    </div>
-                  </a>    
-              </div>
-            </div>
-          </div>
-          <div ng-show="myBooks.length <= 0" class="row text-center" style="border:1px solid #dddddd; padding:15px; border-radius: 4px;">
-            <h2>คุณยังไม่ได้ร่วมบทความให้เป็นหนังสือ</h2>
-          </div>
-            <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/createbook')" role="button" style="width:100%;"><i ng-class="shake" class="fa fa-book"></i> ร่วมเล่ม!</a>
-          </tab> -->
-
-
-        
-
     </tabset>
-
-<!--     <div class="row" style="text-align:center;">
-        <div class="col-md-4">
-            <h4>คําถามใจ</h4>
-            <div class="list-group">
-                <a ng-repeat="question in myQuestions" class="list-group-item" href="/questions/{{question._id}}">
-                    <h4>{{question.name}}</h4>
-                    <p>{{question}}</p>
-                </a>
-                
-            </div>
-        </div>
-        <div class="col-md-4">ความรู้ที่ได้แบ่งบัน{{myArticles}}</div>
-        <div class="col-md-4">คําตอบที่ได้ให้{{myAnswersInQuestions}}</div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            ใจที่เก็บไว้
-            {{myFav}}
-        </div>
-    </div> -->
-
 
 </div>
