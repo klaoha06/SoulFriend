@@ -23,10 +23,15 @@ exports.setup = function (User, config) {
           provider: 'twitter',
           summary: profile._json['description'],
           coverimg: profile._json['profile_image_url'],
-          twitter: profile._json
+          twitter: {
+            id: profile._json['id'],
+            id_str: profile._json['id_str'],
+            name: profile._json['name']
+          }
         });
         user.save(function(err) {
           if (err) return done(err);
+          console.log(user)
           return done(err, user);
         });
       } else {
