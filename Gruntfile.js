@@ -20,11 +20,34 @@ module.exports = function (grunt) {
     buildcontrol: 'grunt-build-control'
   });
 
+  grunt.loadNpmTasks('grunt-html-snapshot');
+
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
   // Define the configuration for all the tasks
   grunt.initConfig({
+
+    htmlSnapshot: {
+      debug: {
+        options: {
+          snapshotPath: 'snapshots/',
+          sitePath: 'http://127.0.0.1:9000/',
+          msWaitForPages: 1200,
+          urls: [
+            '/',
+            '/about',
+            '/aboutcreator',
+            '/contact',
+            '/main',
+            '/questions/:id'
+          ]
+        }
+      },
+      prod: {
+        options: {}
+      }
+    },
 
     // Project settings
     pkg: grunt.file.readJSON('package.json'),
