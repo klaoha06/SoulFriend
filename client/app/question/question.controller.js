@@ -60,10 +60,10 @@ angular.module('puanJaiApp')
         method: 'feed',
         name: $scope.question.name,
         link: 'http://puanjai.com/questions/'+$scope.question._id,
-        // picture: '',
-        // caption: post.caption,
-        description: $scope.question.content,
-        message: ''
+        picture: '/assets/images/biglogo.png',
+        caption: $scope.question.body,
+        description: $scope.question.body,
+        message: $scope.question.name
       });
     };
 
