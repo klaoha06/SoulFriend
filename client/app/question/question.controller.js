@@ -52,9 +52,18 @@ angular.module('puanJaiApp')
     });
 
     $scope.shareFB = function(url){
+      // Facebook.ui({
+      //   method: 'share',
+      //   href: url
+      // });
       Facebook.ui({
-        method: 'share',
-        href: url
+        method: 'feed',
+        name: $scope.question.name,
+        link: 'http://puanjai.com/questions/'+$scope.question._id,
+        // picture: '',
+        // caption: post.caption,
+        description: $scope.question.content,
+        message: ''
       });
     };
 
