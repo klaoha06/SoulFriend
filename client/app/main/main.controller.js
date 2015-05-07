@@ -319,7 +319,7 @@ angular.module('puanJaiApp')
         name: questionName,
         link: 'http://puanjai.com/questions/'+questionId,
         picture: 'https://d13yacurqjgara.cloudfront.net/users/60166/screenshots/2028575/love_sunrise.jpg',
-        caption: htmlToText(questionBody),
+        caption: 'เพื่อนใจ - ชุมชนเพื่อแบ่งปันปัญหาใจและช่วยกันพัฒนาจิตใจ',
         description: htmlToText(questionBody),
         message: questionName
       });
