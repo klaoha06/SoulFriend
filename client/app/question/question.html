@@ -1,4 +1,5 @@
-<view-title>{{question.name || 'ไม่มีคําถามนี้ในระบบ'}} -</view-title>
+<view-title>{{::question.name || 'ไม่มีคําถามนี้ในระบบ'}} -</view-title>
+<meta name="description" content="ปัญหาใจ - {{::question.body | htmlToText}}">
 <meta property="og:title" content="{{::question.name}}" view-head/>
 <meta property="og:site_name" content="เพื่อนใจ Soul Friend"view-head/>
 <meta property="og:image" itemprop="image primaryImageOfPage" content="/assets/imageview-heads/biglogo.png"/>
@@ -7,7 +8,6 @@
 <meta property="fb:app_id" content="816905961709405" view-head/>
 <meta property="og:type" content="website" view-head/>
 <meta property="og:locale" content="th_TH" view-head/>
-
 
 <div class="container-fluid">
 

@@ -60,7 +60,7 @@ angular.module('puanJaiApp')
         name: $scope.question.name,
         link: 'http://puanjai.com/questions/'+$scope.question._id,
         picture: 'https://d13yacurqjgara.cloudfront.net/users/60166/screenshots/2028575/love_sunrise.jpg',
-        caption: 'เพื่อนใจ - ชุมชนเพื่อแบ่งปันปัญหาใจและช่วยกันพัฒนาจิตใจ',
+        caption: 'เพื่อนใจ - ชุมชนเพื่อแบ่งปันปัญหาใจและช่วยกันพัฒนาความสุข',
         description: htmlToText($scope.question.body),
         message: $scope.question.name
       });
