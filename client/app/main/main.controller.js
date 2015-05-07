@@ -312,10 +312,16 @@ angular.module('puanJaiApp')
     //   });
     // });
 
-    $scope.shareFB = function(url){
+    $scope.shareFB = function(questionName, questionId, questionBody){
+      var htmlToText = $filter('htmlToText');
       Facebook.ui({
-        method: 'share',
-        href: url
+        method: 'feed',
+        name: questionName,
+        link: 'http://puanjai.com/questions/'+questionId,
+        picture: 'https://d13yacurqjgara.cloudfront.net/users/60166/screenshots/2028575/love_sunrise.jpg',
+        caption: htmlToText(questionBody),
+        description: htmlToText(questionBody),
+        message: questionName
       });
     };
 

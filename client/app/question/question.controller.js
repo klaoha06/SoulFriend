@@ -41,6 +41,7 @@ angular.module('puanJaiApp')
           $scope.questionGroups = _.chunk(searchResults, 3);
         });
       }
+
       socket.syncUpdates('question', $scope.question, function(event, oldquestion, newquestion){
         _.merge($scope.question, newquestion);
       });
@@ -50,19 +51,17 @@ angular.module('puanJaiApp')
       $scope.error = res;
       console.log($scope.error)
     });
+ 
 
     $scope.shareFB = function(url){
-      // Facebook.ui({
-      //   method: 'share',
-      //   href: url
-      // });
+      var htmlToText = $filter('htmlToText');
       Facebook.ui({
         method: 'feed',
         name: $scope.question.name,
         link: 'http://puanjai.com/questions/'+$scope.question._id,
-        picture: '/assets/images/biglogo.png',
-        caption: $scope.question.body,
-        description: $scope.question.body,
+        picture: 'https://d13yacurqjgara.cloudfront.net/users/60166/screenshots/2028575/love_sunrise.jpg',
+        caption: htmlToText($scope.question.body),
+        description: htmlToText($scope.question.body),
         message: $scope.question.name
       });
     };
