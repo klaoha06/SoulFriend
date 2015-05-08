@@ -35,53 +35,29 @@ angular.module('puanJaiApp')
 
     $scope.topics = [
     {
+      'title': 'ชีวิต',
+    },
+    {
       'title': 'ความรัก',
-      'link': '/topics/ความรัก',
-      'icon': 'fa-heart',
-      'active': false
     },
     {
       'title': 'ครอบครัว',
-      'link': '/topics/ครอบครัว',
-      'icon': 'fa-home',
-      'active': false
     },
     {
       'title': 'เพื่อน',
-      'link': '/topics/เพื่อน',
-      'icon': 'fa-users',
-      'active': false
     },
     {
       'title': 'การงาน',
-      'link': '/topics/การงาน',
-      'icon': 'fa-briefcase',
-      'active': false
 
     },
     {
-      'title': 'ธุรกิจ',
-      'link': '/topics/ธุรกิจ',
-      'icon': 'fa-building-o',
-      'active': false
-    },
-    {
-      'title': 'ชีวิต',
-      'link': '/topics/ชีวิต',
-      'icon': 'fa-street-view',
-      'active': false
+      'title': 'สุขภาพ',
     },
     {
       'title': 'การปัฎิบัติธรรม',
-      'link': '/topics/การปัฎิบัติธรรม',
-      'icon': 'fa-circle-thin',
-      'active': false
     },
     {
       'title': 'อื่นๆ',
-      'link': '/topics/การปัฎิบัติธรรม',
-      'icon': 'fa-circle-thin',
-      'active': false
     }
     ];
 
