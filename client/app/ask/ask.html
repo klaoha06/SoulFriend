@@ -46,7 +46,7 @@
 
 						<hr/>
 						<h2 class="blue">ขั้นตอนที่ 3: เนื้อความ</h2>
-						<text-angular ta-toolbar="[['p','h1','h2','h3','quote', 'ul', 'ol','undo','redo','justifyLeft', 'justifyCenter','justifyRight', 'insertImage', 'insertLink', 'insertVideo']]" ng-model="textEditorInput"></text-angular>
+						<text-angular ta-toolbar="[['underline', 'italics', 'ul', 'ol', 'pre','undo','redo','justifyLeft', 'justifyCenter','justifyRight', 'insertImage', 'insertLink', 'insertVideo', 'html']]" ng-model="textEditorInput"></text-angular>
 						<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[(textEditorInput | htmlToText).length > 7000 || (textEditorInput | htmlToText).length < 15]">{{7000 - (textEditorInput | htmlToText).length}}</span> อักขระ</span>
 						<hr/>
 
