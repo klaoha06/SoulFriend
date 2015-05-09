@@ -19,7 +19,7 @@ angular.module('puanJaiApp')
 	  	// controller: 'MainCtrl'
 	  })
 	  .state('googleace9067e30b64044', {
-	  	url: '/googleace9067e30b64044',
+	  	url: '/googleace9067e30b64044.html',
 	  	templateUrl:'app/googleace9067e30b64044.html'
 	  });
 	});
