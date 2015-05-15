@@ -267,7 +267,7 @@ angular.module('puanJaiApp')
         };
         $scope.question.answers.push(newAnswer);
         $scope.question.answers_count++;
-        $http.put('/api/questions/' +  $stateParams.id + '/newanswer', newAnswer).success(function(res){
+        $http.post('/api/questions/' +  $stateParams.id + '/newanswer', newAnswer).success(function(res){
           getUserAns();
         });
         $scope.textEditorInput = false;  
@@ -360,12 +360,15 @@ angular.module('puanJaiApp')
           var ansIndex = _.findIndex($scope.question.answers,{'user_id': answerId});
           var ans = $scope.question.answers[ansIndex];
           ans.comments.splice(index, 1);
-        } else {        
-          $scope.question.comments.splice(index, 1);
-        }
-          $http.patch('/api/questions/' + $stateParams.id, $scope.question).success(function(res) {
+          $http.patch('/api/questions/' + $stateParams.id + '/answers', $scope.question.answers).success(function(res) {
             // $scope.alreadyCommented=false;
           });
+        } else {       
+          $scope.question.comments.splice(index, 1);
+          $http.patch('/api/questions/' + $stateParams.id + '/comments', $scope.question.comments).success(function(res) {
+            // $scope.alreadyCommented=false;
+          });
+        }
       } else {
         return;
       }

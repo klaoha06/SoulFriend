@@ -47,6 +47,19 @@ User.create({
   coverimg: Faker.image.avatar(),
   summary: Faker.lorem.sentence(),
   reason: Faker.lorem.sentences(),
+  email: 'laohasongkram.supakorn@gmail.com',
+  username: Faker.internet.userName(),
+  password: 'test'
+})
+User.create({
+  provider: 'local',
+  name: {
+    first: Faker.name.firstName(),
+    last: Faker.name.lastName()
+  },
+  coverimg: Faker.image.avatar(),
+  summary: Faker.lorem.sentence(),
+  reason: Faker.lorem.sentences(),
   email: 'test@test.com',
   username: Faker.internet.userName(),
   password: 'test'

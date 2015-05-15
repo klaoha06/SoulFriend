@@ -11,6 +11,7 @@ var QuestionSchema = new Schema({
   owner: {
   	username: String,
   	role: String,
+    email: String,
     coverimg: String
   },
   comments: Array,
