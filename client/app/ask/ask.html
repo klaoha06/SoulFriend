@@ -8,7 +8,7 @@
 			<div id="findAnswer">
 			<textarea id="askStepOne" class="form-control" rows="3" ng-model="searchInput" placeholder="ถามปัญหาใจ..." style="font-size: 1.2em;" popover-placement="bottom" popover="On the Right!" popover-trigger="show">
 			</textarea>
-			<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[searchInput.length > 84 || searchInput.length < 8]">{{84 - searchInput.length}}</span> อักขระ</span>
+			<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[searchInput.length > 100 || searchInput.length < 8]">{{100 - searchInput.length}}</span> อักขระ</span>
 			</div>
 			<div ng-if="searchResults.length > 0">
 				<h2 class="text-center">คําถามที่คลายกันที่อาจมีคําตอบแล้ว</h2>
@@ -84,10 +84,6 @@
 					<a ng-hide="editQuestion" type="submit" ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default postfixQuestionButton" role="button" ng-click="onQuestionFormSubmit()"><i ng-class="shake" class="fa fa-child"></i> โพสต์คําถาม</a>
 					<a ng-show="editQuestion" type="submit" ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default postfixQuestionButton" role="button" ng-click="onQuestionFormSubmit()"><i ng-class="shake" class="fa fa-pencil"></i> แก้ไขคําถามนี้</a>
 					<alert ng-repeat="alert in alerts" type="{{alert.type}}" class="animated fadeIn" close="closeAlert($index)">{{alert.msg}}</alert>
-
-
-
-			
 		</div>
 	</div>
 

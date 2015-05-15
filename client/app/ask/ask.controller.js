@@ -174,8 +174,8 @@ angular.module('puanJaiApp')
           $scope.alerts.push({ type: 'danger', msg: 'กรุณาเลือกชื่อของคําถามด้วยครับ' })
         }
         if ($scope.searchInput){        
-          if ($scope.searchInput.length > 84 || $scope.searchInput.length < 8) {
-            $scope.alerts.push({ type: 'danger', msg: 'กรุณาใช่ระหว่าง 8 ถึง 150 อักขระในการถามคําถาม' })
+          if ($scope.searchInput.length > 100 || $scope.searchInput.length < 8) {
+            $scope.alerts.push({ type: 'danger', msg: 'กรุณาใช่ระหว่าง 8 ถึง 100 อักขระในการถามคําถาม' })
           }
         } else {
           $scope.alerts.push({ type: 'danger', msg: 'กรุณาใช่ระหว่าง 8 ถึง 150 อักขระในการถามคําถาม' })
