@@ -21,5 +21,9 @@ angular.module('puanJaiApp')
 	  .state('googleace9067e30b64044', {
 	  	url: '/googleace9067e30b64044.html',
 	  	templateUrl:'app/googleace9067e30b64044.html'
+	  })
+	  .state('sitemap', {
+	  	url: '/sitemap.xml',
+	  	templateUrl:'app/sitemap.xml'
 	  });
 	});
