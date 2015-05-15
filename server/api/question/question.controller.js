@@ -15,6 +15,22 @@ var User = require('../user/user.model');
 var Tag = require('../tag/tag.model');
 var wordcut = require("wordcut");
 var ObjectId = require('mongoose').Types.ObjectId;
+var path           = require('path'),
+  templatesDir   = path.resolve(__dirname, '../..', 'templates'),
+  emailTemplates = require('email-templates'),
+  nodemailer     = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'laohasongkram.supakorn@gmail.com',
+        pass: 'zgqyafnkuekgcjzn'
+    }
+});
+
+function htmlToPlaintext(text) {
+  return String(text).replace(/<[^>]+>/gm, '');
+}
 
 wordcut.init('./node_modules/wordcut/data/tdict-std.txt');
 
@@ -222,10 +238,10 @@ exports.update = function(req, res) {
       Question.findById(req.params.id, function(err, question){
         if (err) { return handleError(res, err); }
         if(!question) { return res.send(404); }
-        var updated = _.merge(question, questionToUpdate);
-        question.markModified('comments');
         question.markModified('tags');
         question.markModified('answers');
+        question.markModified('comments');
+        var updated = _.merge(question, questionToUpdate);
         updated.save(function (err) {
           if (err) { return handleError(res, err); }
           return res.status(200).json(question);
@@ -236,16 +252,30 @@ exports.update = function(req, res) {
     Question.findById(req.params.id, function(err, question){
       if (err) { return handleError(res, err); }
       if(!question) { return res.send(404); }
-      var updated = _.merge(question, questionToUpdate);
-      question.markModified('comments');
       question.markModified('tags');
       question.markModified('answers');
+      question.markModified('comments');
+      var updated = _.merge(question, questionToUpdate);
       updated.save(function (err) {
         if (err) { return handleError(res, err); }
         return res.status(200).json(question);
       })
     })
   }
+};
+
+// Updates an existing thing in the DB.
+exports.updateQuestionComment = function(req, res) {
+    Question.findById(req.params.id, function(err, question){
+      if (err) { return handleError(res, err); }
+      if(!question) { return res.send(404); }
+      question.comments = req.body;
+      question.markModified('comments');
+      question.save(function (err) {
+        if (err) { return handleError(res, err); }
+        return res.status(200).json(question);
+      })
+    })
 };
 
 // Updates an existing thing in the DB.
@@ -263,10 +293,24 @@ exports.addAnswer = function(req, res) {
         user.ansInQuestions_id.push(question._id)
         user.answers_count++;
         user.save(function(err,u){
-          // console.log(u)
+          var toText = htmlToPlaintext(question.body);
+          var mailOptions = {
+              from:  'puanjai.com - <laohasongkram.supakorn@gmail.com>', // sender address
+              to: question.owner.email, // list of receivers
+              subject: '[puanjai.com] มีคนใจดีช่วยตอบปัญหาใจคุณ!', // Subject line
+              text: toText,
+              html: '<div><h3>คําถาม "'+ question.name +'" ได้รับการช่วยเหลือจาก ' + user.username + '</h3><br>' + 'มีข้อความดั่งนี้..<br><br><div style="background-color:aliceblue; border: 1px solid #dddddd; border-radius: 4px;">' + question.body + '</div><br><a href="http://puanjai.com/questions/' +question._id+'">ไปดูที่เพื่อนใจ</a></div>' // html body
+          };
+          transporter.sendMail(mailOptions, function(error, info){
+              if(error){
+                  console.log(error);
+              }else{
+                  console.log('Message sent: ' + info.response);
+              }
+          });
         })
       })
-      return res.status(200).send(question)
+      res.status(200).send(question)
     });
   });
 };

@@ -173,7 +173,7 @@
 				</form>
 			</div>
 
-			<div style="text-align: right; margin-bottom: 10px;">							
+			<div class="questionOptions" style="text-align: right; margin-bottom: 10px;">							
 				<!-- <a ng-click="" style="margin: 15px;"><i class="fa fa-ban"></i> แจ้งความไม่เหมาะสม</a> -->
 				<a ng-click="isCollapsedInAns = !isCollapsedInAns;" style="margin: 15px;"><i class="fa fa-comment"></i> ให้ความคิดเห็น</a>
 				<a ng-show="answer.user_id === currentUser._id" ng-click="deleteMyAns($index);" style="margin: 15px;"><i class="fa fa-trash-o"></i> ลบคําตอบนี้</a>
@@ -199,10 +199,10 @@
 
 	<div ng-hide="userAnsIndex >= 0" style="padding: 0 15px 15px 15px;">
 		<h2 style="text-align: center; font-size: 2em;">การช่วยเหลือของคุณ</h2>
-		<form>
+		<form id="answerInput">
 			<text-angular ta-toolbar="[['underline', 'italics', 'ul', 'ol', 'pre','undo','redo','justifyLeft', 'justifyCenter','justifyRight', 'insertImage', 'insertLink', 'insertVideo', 'html', 'charcount']]" ng-model="textEditorInput" ng-focus="isLoggedIn()"></text-angular>
-			<input ng-hide="editingAns" class="btn btn-default" type="submit" ng-click="onSubmit()" value="ช่วยเพื่อนใจ" style="background: linear-gradient(white, #fff9aa); font-size: 1.5em; width:100%; border-radius: 0; margin-top:15px;"></input>
-			<input ng-show="editingAns"class="btn btn-default" type="submit" ng-click="onEditAns()" value="แก้ไขคําตอบ" style="background: linear-gradient(white, #fff9aa); font-size: 1.5em; width:100%; border-radius: 0; margin-top:15px;"></input>
+			<input ng-hide="editingAns" class="btn btn-default" type="submit" ng-click="onSubmit()" value="ช่วยเพื่อนใจ"></input>
+			<input ng-show="editingAns"class="btn btn-default" type="submit" ng-click="onEditAns()" value="แก้ไขคําตอบ"></input>
 		</form>
 	</div>
 	</div>
@@ -230,7 +230,6 @@
 </div>
 </div>
 
-<div class="col-lg-2 col-sm-12">
-</div>
+<div class="col-lg-2 col-sm-12"></div>
 
 </div>

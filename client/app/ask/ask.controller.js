@@ -198,9 +198,10 @@ angular.module('puanJaiApp')
           var newQuestion = { 
             ownerId: user._id,
             owner: {
-              username: user.username,
+              email: user.email,
+              coverimg: user.coverimg,
               role: user.role,
-              coverimg: user.coverimg
+              username: user.username
             },
             name: $scope.searchInput,
             body: $scope.textEditorInput,
