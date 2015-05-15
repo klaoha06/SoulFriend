@@ -53,7 +53,7 @@
 						<div ta-bind ng-model="question.body" style="word-wrap: break-word; padding:15px; line-height: 2;"></div>
 						<hr style="width:85%; margin-bottom:10px;">
 						<div class="col-md-10 col-md-offset-1" ng-repeat="comment in question.comments">
-							<p style="padding:0; font-size:16px; color:rgb(110, 109, 109);">{{comment.content}}
+							<p style="padding:0; font-size:18px; color:rgb(110, 109, 109);">{{comment.content}}
 								{{::comment.username}} - <span style="color:#999; font-size: 14px;">{{::comment.created | timeAgo}} โดย {{::comment.user.username}}
 								<span ng-show="comment.user_id === currentUser._id">
 									<a ng-click="openEditor(comment.content, 'question', $index)"><i class="fa fa-pencil"></i></a>
