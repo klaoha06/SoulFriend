@@ -11,7 +11,7 @@
 
 <div class="container-fluid">
 
-	<div class="col-md-2"></div>
+	<div class="col-lg-2 col-sm-12"></div>
 
 	<div ng-show="error === 'Not Found'" class="col-md-8 text-center animated pulse" style="margin:40px 0;"><i class="fa fa-frown-o fa-4x"></i><br><h1 style="font-size: 3em;">ไม่มีคําถามนี้ในระบบ</h1><br><p>คําถามนี้อาจจะถูกลบไปแล้ว</p><br>
 		<a class="btn btn-lg puanjaiBorder" style="color:black;"ng-href="/">
@@ -19,10 +19,10 @@
 		</a>
 	</div>
 	
-	<div ng-show="question" class="col-md-8" style="margin: 15px 0;">
+	<div ng-show="question" class="col-lg-8 col-md-12 col-sm-12" style="margin: 15px 0;">
 		<div class="panel panel-default animated fadeIn">
 			<div class="row">
-				<div class="col-md-2">
+				<div class="col-md-2 col-sm-2">
 					<ul class="nav nav-pills questionSidePanel">
 						<li>
 							<a ng-click="upVote(question._id, $element)">โหวตขึ้น<br><i class="fa fa-thumbs-up"></i></a>
@@ -49,12 +49,12 @@
 						</div>
 					</div>
 
-					<div class="questionContent">
+					<div>
 						<div ta-bind ng-model="question.body" style="word-wrap: break-word; padding:15px; line-height: 2;"></div>
 						<hr style="width:85%; margin-bottom:10px;">
 						<div class="col-md-10 col-md-offset-1" ng-repeat="comment in question.comments">
 							<p style="padding:0; font-size:18px; color:rgb(110, 109, 109);">{{comment.content}}
-								{{::comment.username}} - <span style="color:#999; font-size: 14px;">{{::comment.created | timeAgo}} โดย {{::comment.user.username}}
+								{{::comment.username}} - <span style="color:#999; font-size: 16px;">{{::comment.created | timeAgo}} โดย {{::comment.user.username}}
 								<span ng-show="comment.user_id === currentUser._id">
 									<a ng-click="openEditor(comment.content, 'question', $index)"><i class="fa fa-pencil"></i></a>
 									<a ng-click="deleteMyComment($index)"><i class="fa fa-trash-o"></i></a>
@@ -71,7 +71,7 @@
 						<p class="input-group">
 							<input type="text" maxlength="150" class="form-control" placeholder="เขียนที่นี้.." ng-model="newComment" style="font-size:1.2em;">
 							<span ng-hide="editing" class="input-group-btn">
-								<button type="submit" class="btn btn-info" ng-click="addComment()" style="border-radius: 0;">ให้ความคิดเห็น</button>
+								<button type="submit" class="btn btn-info" ng-click="addComment()" style="border-radius: 0;">ให้ความคิดเห็นแก่คําถาม</button>
 							</span>
 							<span ng-show="editing" class="input-group-btn" >
 								<button type="submit" class="btn btn-info" ng-click="editMyComment()" style="border-radius: 0;">แก้ความคิดเห็น</button>
@@ -95,20 +95,18 @@
 						</div>
 					</div>
 					<div class="col-md-8 text-center">
-						<div ng-show="questionOwner()" class="row">
-							<div class="col-md-6" style="margin-top:15px;">
+						<div class="row questionOptions">
+							<div ng-show="questionOwner()" class="col-md-6 col-lg-4" style="margin-top:15px;">
 								<a ng-click="editQuestion()"><i class="fa fa-pencil"></i> แก้ไขคําถามนี้</a>
 							</div>
-							<div class="col-md-6" style="margin-top:15px;">
+							<div ng-show="questionOwner()" class="col-md-6 col-lg-4" style="margin-top:15px;">
 								<a ng-click="deleteQuestion()"><i class="fa fa-trash-o"></i> ลบคําถามนี้</a>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6" style="margin-top:15px;">
-								<a ng-hide="questionOwner()"ng-click="report()"><i class="fa fa-ban"></i> แจ้งความไม่เหมาะสม</a>
+							<div ng-hide="questionOwner()" class="col-md-6 col-lg-4" style="margin-top:15px;">
+								<a ng-click="report()"><i class="fa fa-ban"></i> แจ้งความไม่เหมาะสม</a>
 							</div>
-							<div class="col-md-6" style="margin-top:15px;">
-								<a ng-click="isCollapsed = !isCollapsed"><i class="fa fa-comment"></i> ให้ความคิดเห็น</a>
+							<div class="col-md-6 col-lg-4" style="margin-top:15px;">
+								<a ng-click="isCollapsed = !isCollapsed"><i class="fa fa-comment"></i> ให้ความคิดเห็นแก่คําถาม</a>
 							</div>
 						</div>
 
@@ -117,22 +115,21 @@
 				</div>
 			</div>				
 		</div>
-	</div>
 	
 
-	<div ng-show="question.answers.length <= 0" style="text-align: center;">
-		<hr style="width: 80%;"/>
-
-		<h2 style="text-align: center;">ยังไม่ได้ความช่วยเหลือ</h2>
-		<p>รู้จักคนที่สามารถช่วยเพื่อนใจได้ <span class="blue">ฝากแชร์การด้วยจ้า</span></p>
-		<a class="btn btn-facebook btn-lg white" ng-click="shareFB('puanjai.com/questions/{{::question._id}}')">
-			<i class="fa fa-facebook white"></i> แชร์บน Facebook!
-		</a>
-		<hr style="width: 80%;"/>
+	<div ng-show="question.answers.length <= 0" class="background-blue"style="text-align: center;">
+		<hr/>
+		<h2 style="text-align: center;">ยังไม่ได้ความช่วยเหลือ <i class="fa fa-frown-o"></i></h2>
+		<p>เป็นคนแรกที่ช่วย <span class="blue">{{question.owner.username}}</span> <small>หรือ</small> ช่วยแชร์คําามบน 		<a ng-click="shareFB('puanjai.com/questions/{{::question._id}}')">Facebook</a></p>
+		
+		<!-- <small>หรือ</small>
+		<p>รู้จักคนที่สามารถช่วยเพื่อนใจได้ฝากแชร์การด้วยจ้า</p>
+ -->
+		<hr/>
 
 	</div>
-	<div ng-show="question.answers.length>=1">
-		<h2>{{question.answers_count}} คําตอบเพื่อนใจ</h2>
+	<div ng-show="question.answers.length>=1" style="padding:0 15px; border-top: 1px solid #dddddd;">
+		<h1>{{question.answers_count}} คําตอบเพื่อนใจ</h1>
 	</div>
 
 	<div class="row haveBorder answersInQuestion" ng-repeat="answer in question.answers | orderBy:'votes_count': true" style="border-bottom: 1px solid #dddddd;">
@@ -151,7 +148,7 @@
 				<div class="textAngular" ng-bind-html="answer.content" style="word-wrap: break-word; padding:25px;"></div>
 				<hr>
 				<div class="col-md-11 col-md-offset-1" style="padding:0;"ng-repeat="comment in answer.comments">
-					<p style="padding:0; font-size:16px; color:rgb(110, 109, 109);">{{comment.content}} - <span style="color:#999; font-size: 14px;">{{::comment.created | timeAgo}} โดย {{::comment.username}}
+					<p style="padding:0; font-size:16px; color:rgb(110, 109, 109);">{{comment.content}} - <span style="color:#999; font-size: 16px;">{{::comment.created | timeAgo}} โดย {{::comment.username}}
 						<span ng-show="comment.user_id === currentUser._id">
 							<a ng-click="openEditor(comment.content, 'question', $index)"><i class="fa fa-pencil"></i></a>
 							<a ng-click="deleteMyComment($index, 'answer', answer.user_id)"><i class="fa fa-trash-o"></i></a>
@@ -200,14 +197,16 @@
 		</div>
 	</div>
 
-	<div ng-hide="userAnsIndex >= 0">
-		<h3 style="text-decoration: underline; text-align: center; font-size: 1.5em;">การช่วยเหลือของคุณ</h3>
+	<div ng-hide="userAnsIndex >= 0" style="padding: 0 15px 15px 15px;">
+		<h2 style="text-align: center; font-size: 2em;">การช่วยเหลือของคุณ</h2>
 		<form>
 			<text-angular ta-toolbar="[['underline', 'italics', 'ul', 'ol', 'pre','undo','redo','justifyLeft', 'justifyCenter','justifyRight', 'insertImage', 'insertLink', 'insertVideo', 'html', 'charcount']]" ng-model="textEditorInput" ng-focus="isLoggedIn()"></text-angular>
-			<input ng-hide="editingAns" class="btn btn-default" type="submit" ng-click="onSubmit()" value="ช่วยเพื่อนใจ" style="background: linear-gradient(white, #fff9aa); font-size: 1.5em; width:100%; border-radius: 0;"></input>
-			<input ng-show="editingAns"class="btn btn-default" type="submit" ng-click="onEditAns()" value="แก้ไขคําตอบ" style="background: linear-gradient(white, #fff9aa); font-size: 1.5em; width:100%; border-radius: 0;"></input>
+			<input ng-hide="editingAns" class="btn btn-default" type="submit" ng-click="onSubmit()" value="ช่วยเพื่อนใจ" style="background: linear-gradient(white, #fff9aa); font-size: 1.5em; width:100%; border-radius: 0; margin-top:15px;"></input>
+			<input ng-show="editingAns"class="btn btn-default" type="submit" ng-click="onEditAns()" value="แก้ไขคําตอบ" style="background: linear-gradient(white, #fff9aa); font-size: 1.5em; width:100%; border-radius: 0; margin-top:15px;"></input>
 		</form>
 	</div>
+	</div>
+
 	<div ng-show="questionGroups.length >= 1"class="col-md-12 haveBorder text-center" style="border-radius:3px;margin:15px 0;">
 		<h2>คําถามที่อาจใกล้เคียงกัน</h2>
 		<carousel interval="0" style="display:block; margin:0 auto; width:100%; margin-bottom: 50px; padding: 0 12%;">
@@ -231,7 +230,7 @@
 </div>
 </div>
 
-<div class="col-md-2">
+<div class="col-lg-2 col-sm-12">
 </div>
 
 </div>
