@@ -248,16 +248,16 @@ angular.module('puanJaiApp')
           return String(text).replace(/<[^>]+>/gm, '');
         }
         var text = htmlToPlaintext($scope.textEditorInput);
-        if (text.length < 40 || text.length > 6000) {
-          alert('คําตอบต้องมียาวระหว่าง 40 ถึง 6000 อักขระ');
+        if (text.length < 15 || text.length > 6000) {
+          alert('คําตอบต้องมียาวระหว่าง 15 ถึง 6000 อักขระ');
           return;
         }
         var newAnswer = {
-          content: $scope.textEditorInput,
-          username: $scope.currentUser.username,
-          name: $scope.currentUser.name,
           user_id: userId,
+          username: $scope.currentUser.username,
           coverimg: $scope.currentUser.coverimg,
+          name: $scope.currentUser.name,
+          content: $scope.textEditorInput,
           comments:[],
           votes_count: 0,
           upvotes: [],

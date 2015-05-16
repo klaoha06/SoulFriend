@@ -119,8 +119,11 @@ exports.show = function(req, res) {
     if(err) { return handleError(res, err); }
     if(!question) { return res.send(404); }
     res.status(200).json(question);
-    question.views++;
-    question.save();
+    var random = Math.floor((Math.random() * 10) + 1);
+    if (random <= 8) {
+      question.views++;
+      question.save();
+    }
   });
 };
 
@@ -389,6 +392,11 @@ exports.destroy = function(req, res) {
         user.save();
       })
     }
+
+    // Tag.update({'_id':{ $in: _.pluck(question.tags, '_id')}}, { $pull:{questions_id: question._id }, $inc: {popular_count: -1, questions_count: -1} } , { multi: true }, function(err , affected){
+    //   console.log(affected)
+    // })
+
     Tag.find({ '_id':{ $in:  _.pluck(question.tags, '_id') }}, function(err, tags){
       if (err) { return handleError(res, err); }
       tags.forEach(function(tag){
@@ -403,6 +411,9 @@ exports.destroy = function(req, res) {
               }
           })
       })
+    })
+    User.update({'_id':{ $in: _.pluck(question.answers, 'user_id')}}, {$pull: {  ansInQuestions_id: question._id }, $inc: {answers_count: -1} } , { multi: true }, function(err, affected){
+      console.log(affected)
     })
     question.remove(function(err) {
       if(err) { return handleError(res, err); }
