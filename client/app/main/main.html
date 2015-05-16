@@ -55,7 +55,7 @@
                   <div id="searchQuestionForm" class="input-group input-group-lg">
                         <textarea maxlength="150" type="text" rows="2" class="form-control" placeholder="ถามหรือค้นหาปัญหาใจได้ที่นี้" style="font-size:1.6em;"ng-model="customSelected" placeholder="" typeahead="question as question.name for question in searchQuestions($viewValue) | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" typeahead-on-select="goToQuestion($model)" class="form-control"ng-focus="isLoggedIn()"></textarea>
                         <span class="input-group-btn">
-                          <button ng-hide="editingReport" class="btn btn-info" type="button" ng-click ="askQuestion()" style="height:98px;">ถามเพื่อนใจ</button>
+                          <button ng-hide="editingReport" class="btn btn-info" type="button" ng-click ="askQuestion()" style="height:106px;">ถามเพื่อนใจ</button>
                         </span>
                       </div><!-- /input-group -->
                 </div>
