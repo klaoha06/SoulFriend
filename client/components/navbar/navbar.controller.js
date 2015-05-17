@@ -10,7 +10,7 @@ angular.module('puanJaiApp')
     $scope.menu = [
     {
       'title': 'ข่าวสาร',
-      'link': 'https://www.facebook.com/pages/%E0%B9%80%E0%B8%9E%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%99%E0%B9%83%E0%B8%88-SoulFriend/1592541667644089?ref=hl'
+      'link': 'https://www.facebook.com/pages/%E0%B9%80%E0%B8%9E%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%99%E0%B9%83%E0%B8%88/1592540364334390?ref=hl'
     },
     {
       'title': 'กิจกรรม',

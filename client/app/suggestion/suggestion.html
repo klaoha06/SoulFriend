@@ -5,7 +5,21 @@
 	  <h1>แนะนําและเสนอไอเดียให้เพื่อนใจ<br><small>ยินดีรับฟังความคิดเห็นของทุกคนครับ</small></h1>
 	</div>
 
-	<div class="panel panel-info">
+	<div id="disqus_thread" style="padding:20px;"></div>
+	<script type="text/javascript">
+	    /* * * CONFIGURATION VARIABLES * * */
+	    var disqus_shortname = 'puanjai';
+
+	    /* * * DON'T EDIT BELOW THIS LINE * * */
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+<!-- 	<div class="panel panel-info">
 	  <div class="panel-heading"><i class="fa fa-slideshare fa-lg"></i> คําแนะนํา</div>
 	  <div class="panel-body">
 	    <p>
@@ -23,7 +37,7 @@
 		  	        <button ng-show="editingSuggestion" class="btn btn-info" type="button" ng-click="editSuggestion()" style="height:78px;">แก้ไขคําแนะนํา</button>
 		  	        <button ng-hide="editingSuggestion" class="btn btn-info" type="button" ng-click="createSuggestion()" style="height:78px;">ให้คําแนะนํา</button>
 		  	      </span>
-		  	    </div><!-- /input-group -->
+		  	    </div>
 	  	</div>
 	  	<span class="pull-right" style="margin:10px 15px;"><span ng-class="{true: 'red', false: 'green'}[suggestionInput.length > 300 || suggestionInput.length < 10 ]">{{300 - suggestionInput.length}}</span> อักขระ</span>
 
@@ -59,6 +73,6 @@
 
 
 	</div>
-	<a ng-show="suggestions.length >= 20" class="btn btn-default" style="display:block; margin:20px 0;" ng-click="getMoreSuggestions()">ดูเพิ่ม</a>
+	<a ng-show="suggestions.length >= 20" class="btn btn-default" style="display:block; margin:20px 0;" ng-click="getMoreSuggestions()">ดูเพิ่ม</a> -->
 
 </div>

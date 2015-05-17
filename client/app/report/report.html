@@ -5,6 +5,20 @@
 	  <h1>แจ้งปัญหาของเว็บไชต์ <small>ถ้ามีปัญหาอะไรทางเราจะพยายามแก้ให้ได้เร็วที่สุดครับ</small></h1>
 	</div>
 
+	<div id="disqus_thread" style="padding:20px;"></div>
+	<script type="text/javascript">
+	    /* * * CONFIGURATION VARIABLES * * */
+	    var disqus_shortname = 'puanjai';
+
+	    /* * * DON'T EDIT BELOW THIS LINE * * */
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<!-- 
 	<div class="panel panel-info">
 	  <div class="panel-heading"><i class="fa fa-wrench fa-lg"></i> แจ้งปัญหา</div>
 	  <div class="panel-body">
@@ -22,7 +36,7 @@
 		  	        <button ng-show="editingReport" class="btn btn-info" type="button" ng-click="editReport()" style="height:78px;">แก้ไขการแจ้งปัญหา</button>
 		  	        <button ng-hide="editingReport" class="btn btn-info" type="button" ng-click="createReport()" style="height:78px;">แจ้งปัญหา</button>
 		  	      </span>
-		  	    </div><!-- /input-group -->
+		  	    </div>
 	  	</div>
 	  	<span class="pull-right" style="margin:10px 15px;"><span ng-class="{true: 'red', false: 'green'}[reportInput.length > 300 || reportInput.length < 10 ]">{{300 - reportInput.length}}</span> อักขระ</span>
 
@@ -58,6 +72,6 @@
 
 
 	</div>
-	<a ng-show="reports.length >= 20" class="btn btn-default" style="display:block; margin:20px 0;" ng-click="getMoreReports()">ดูเพิ่ม</a>
+	<a ng-show="reports.length >= 20" class="btn btn-default" style="display:block; margin:20px 0;" ng-click="getMoreReports()">ดูเพิ่ม</a> -->
 
 </div>
