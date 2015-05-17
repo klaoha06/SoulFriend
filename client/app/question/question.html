@@ -132,13 +132,13 @@
 		<h1>{{question.answers_count}} คําตอบเพื่อนใจ</h1>
 	</div>
 
-	<div class="row haveBorder answersInQuestion" ng-repeat="answer in question.answers | orderBy:'votes_count': true" style="border-bottom: 1px solid #dddddd;">
+	<div class="row answersInQuestion" ng-repeat="answer in question.answers | orderBy:'votes_count': true" style="border-bottom: 1px solid #dddddd; border-top: 1px solid #dddddd;">
 		<div class="col-md-10">
 			<div class="row" style="background: aliceblue; border-bottom: 1px solid #dddddd;">
 				<div class="col-md-2 no-gutter" style="margin: 15px 0;">
 					<img class="userIcon" ng-src="{{::answer.coverimg}}" />
 				</div>
-				<div class="col-md-10 col-xs-12 no-gutter" style="margin: 10px; font-size:0.9em;">
+				<div class="col-md-10 col-xs-12 no-gutter" style="padding: 10px; font-size:0.9em;">
 					<p style="margin: 15px 15px 15px 0;"><a ng-href="/users/{{::question.ownerId}}">{{::answer.username}}</a><small>
 						- {{::answer.created | timeAgo}} - {{::answer.created | date:'MMM d, y h:mm a'}}</small></p>
 					</div>
