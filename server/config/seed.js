@@ -12,8 +12,8 @@
 var User = require('../api/user/user.model');
 var Question = require('../api/question/question.model');
 var Tag = require('../api/tag/tag.model');
-var Suggestion = require('../api/suggestion/suggestion.model');
-var Report = require('../api/report/report.model');
+// var Suggestion = require('../api/suggestion/suggestion.model');
+// var Report = require('../api/report/report.model');
 var http = require('http');
 
 var opts = {
@@ -35,8 +35,8 @@ req.end();
 // // For Reset
 User.collection.drop();
 Question.collection.drop();
-Suggestion.collection.drop();
-Report.collection.drop();
+// Suggestion.collection.drop();
+// Report.collection.drop();
 Tag.collection.drop();
 User.create({
   provider: 'local',
