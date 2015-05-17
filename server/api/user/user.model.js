@@ -11,7 +11,7 @@ var UserSchema = new Schema({
     first: String,
     last: String
   },
-  coverimg: {type: String},
+  coverimg: {type: String, default: '/assets/images/usericon.png'},
   email: String,
   username: String,
   role: {
