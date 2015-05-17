@@ -67,11 +67,11 @@
 
 				
 				<div collapse="isCollapsed" style="width: 80%; margin:0 auto;">
-					<form class="comment-form">
+					<form class="comment-form" style="display: inline-flex; width:100%;">
 						<p class="input-group">
-							<input type="text" maxlength="150" class="form-control" placeholder="เขียนที่นี้.." ng-model="newComment" style="font-size:1.2em;">
+							<input type="text" maxlength="150" class="form-control" placeholder=" ให้ความคิดเห็นแก่คําถามที่นี่.." ng-model="newComment" style="font-size:1em;">
 							<span ng-hide="editing" class="input-group-btn">
-								<button type="submit" class="btn btn-info" ng-click="addComment()" style="border-radius: 0;">ให้ความคิดเห็นแก่คําถาม</button>
+								<button type="submit" class="btn btn-info" ng-click="addComment()" style="border-radius: 0;">ให้ความคิดเห็น</button>
 							</span>
 							<span ng-show="editing" class="input-group-btn" >
 								<button type="submit" class="btn btn-info" ng-click="editMyComment()" style="border-radius: 0;">แก้ความคิดเห็น</button>
