@@ -7,7 +7,7 @@ var timeStamps = require('mongoose-times');
 var mongoosastic = require('mongoosastic');
 
 var QuestionSchema = new Schema({
-  anonymous: { type: Array, es_indexed:false },
+  anonymous: { type: Boolean, es_indexed:false },
 	ownerId: { type: Schema.Types.ObjectId, ref: 'User' },
   owner: {
   	username: String,

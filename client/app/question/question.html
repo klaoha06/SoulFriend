@@ -149,10 +149,10 @@
 				</div>
 				<div ta-bind ng-model="answer.content" style="word-wrap: break-word; padding:25px;"></div>
 				<hr>
-				<div class="col-md-11 col-md-offset-1" style="padding:0;"ng-repeat="comment in answer.comments">
+				<div class="col-md-11 col-md-offset-1" style="padding:0;"ng-repeat="comment in answer.comments track by $index">
 					<p style="padding:0; font-size:16px; color:rgb(110, 109, 109);">{{comment.content}} - <span style="color:#999; font-size: 16px;">{{::comment.created | timeAgo}} โดย {{::comment.username}}
-						<span ng-if="comment.user_id === currentUser._id">
-							<a ng-click="openEditor(comment.content, 'question', $index)"><i class="fa fa-pencil"></i></a>
+						<span ng-show="comment.user_id === currentUser._id">
+							<a ng-click="openEditorForAns(comment.content, answer.user_id, $index); isCollapsedInAns = !isCollapsedInAns;"><i class="fa fa-pencil"></i></a>
 							<a ng-click="deleteMyComment($index, 'answer', answer.user_id)"><i class="fa fa-trash-o"></i></a>
 						</span>
 					</span>
@@ -161,15 +161,16 @@
 			</div>
 
 			<div class="clearfix"></div>
+			{{isCollapsedInAns}}
 			<div collapse="isCollapsedInAns" style="width: 80%; margin:0 auto;">
 				<form class="comment-form">
 					<p class="input-group">
-						<input type="text" maxlength="150" class="form-control" placeholder="ให้ความเห็นที่นี้.." ng-model="newCommentForAns" style="font-size:1.2em;">
-						<span ng-hide="editing" class="input-group-btn">
-							<button type="submit" class="btn btn-info" ng-click="addCommentToAns(newCommentForAns, answer.user_id); isCollapsedInAns =! isCollapsedInAns; newCommentForAns = '';" style="border-radius: 0;">ให้ความคิดเห็น</button>
+						<input ng-model="newCommentForAns" type="text" maxlength="150" class="form-control" placeholder="ให้ความเห็นที่นี้.." style="font-size:1.2em;">
+						<span ng-hide="editingForAns" class="input-group-btn">
+							<button type="submit" class="btn btn-info" ng-click="addCommentToAns(answer.user_id);" style="border-radius: 0;">ให้ความคิดเห็น</button>
 						</span>
-						<span ng-show="editing" class="input-group-btn" >
-							<button type="submit" class="btn btn-info" ng-click="editMyComment(); isCollapsedInAns != isCollapsedInAns; newCommentForAns = ''" style="border-radius: 0;">แก้ความคิดเห็น</button>
+						<span ng-show="editingForAns" class="input-group-btn" >
+							<button type="submit" class="btn btn-info" ng-click="editMyCommentForAns(newCommentForAns);" style="border-radius: 0;">แก้ความคิดเห็น</button>
 						</span>
 					</p>
 				</form>
@@ -177,7 +178,7 @@
 
 			<div class="questionOptions" style="text-align: right; margin-bottom: 10px;">							
 				<!-- <a ng-click="" style="margin: 15px;"><i class="fa fa-ban"></i> แจ้งความไม่เหมาะสม</a> -->
-				<a ng-click="isCollapsedInAns = !isCollapsedInAns;" style="margin: 15px;"><i class="fa fa-comment"></i> ให้ความคิดเห็น</a>
+				<a ng-click=" isCollapsedInAns = !isCollapsedInAns; editingForAns=false; newCommentForAns='';" style="margin: 15px;"><i class="fa fa-comment"></i> ให้ความคิดเห็น</a>
 				<a ng-if="answer.user_id === currentUser._id" ng-click="deleteMyAns($index);" style="margin: 15px;"><i class="fa fa-trash-o"></i> ลบคําตอบนี้</a>
 				<a ng-if="answer.user_id === currentUser._id" ng-click="editMyAns()" style="margin: 15px;"><i class="fa fa-pencil"></i> แก้ไขคําตอบนี้</a>
 			</div>
@@ -199,8 +200,8 @@
 		</div>
 	</div>
 
-	<div ng-if="userAnsIndex <= 0" style="padding: 0 15px 15px 15px;">
-		<h2 style="text-align: center; font-size: 2em;">การช่วยเหลือของคุณ</h2>
+	<div ng-hide="userAnsIndex >= 0" style="padding: 0 15px 15px 15px;">
+		<h2 class="text-center" style="font-size: 2em;">การช่วยเหลือของคุณ</h2>
 		<form id="answerInput">
 			<text-angular ta-toolbar="[['underline', 'italics', 'ul', 'ol', 'pre','undo','redo','justifyLeft', 'justifyCenter','justifyRight', 'insertImage', 'insertLink', 'insertVideo', 'html', 'charcount']]" ng-model="textEditorInput" ng-focus="isLoggedIn()"></text-angular>
 			<input ng-hide="editingAns" class="btn btn-default" type="submit" ng-click="onSubmit()" value="ช่วยเพื่อนใจ"></input>
@@ -209,7 +210,7 @@
 	</div>
 	</div>
 
-	<div ng-if="questionGroups.length >= 1"class="col-md-12 haveBorder text-center" style="border-radius:3px;margin:15px 0;">
+	<div ng-if="questionGroups.length >= 1" class="col-md-12 haveBorder text-center" style="border-radius:3px;margin:15px 0; background-color: white;">
 		<h2>คําถามที่อาจใกล้เคียงกัน</h2>
 		<carousel interval="0" style="display:block; margin:0 auto; width:100%; margin-bottom: 50px; padding: 0 12%;">
 			<slide ng-repeat="questions in questionGroups">
@@ -218,6 +219,7 @@
 						<a ng-href="/questions/{{::question._id}}">
 							
 							<h3>{{::question._source.name}}</h3>
+							<hr style="border-top: 2px solid #FFF577;">
 
 							<span class="black">ความใกล้เคียง - </span>{{::question._score | number:2}}<br>
 							<span class="black">คําตอบ - </span>{{::question._source.answers_count}}<br>
