@@ -198,14 +198,7 @@ angular.module('puanJaiApp')
     } else { 
       $scope.selectedTopic = topic;
     }
-    // switch($scope.defaultTab) {
-    //   case 'questions':
-    //   $scope.getQuestions(null,null,null,$scope.selectedTopic);
-    //   break;
-    //   case 'articles':
-    //   $scope.getArticles(null,null,null,$scope.selectedTopic);
-    //   break;
-    // }
+    $scope.getQuestions(null,null,null,$scope.selectedTopic);
     angular.forEach($scope.topics, function(t){
       if (t.title === topic) {
         t.active = !t.active;
