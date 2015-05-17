@@ -30,14 +30,10 @@ var UserSchema = new Schema({
   questions_count: {type: Number, default: 0},
   ansInQuestions_id: [{type: Schema.Types.ObjectId, ref: 'Question'}],
   answers_count: {type: Number, default: 0},
-  // articles_id: [{type: Schema.Types.ObjectId, ref: 'Article'}],
-  // articles_count: {type: Number, default: 0},
   jais_count: {type: Number, default: 0},
   jais_id: [{type: Schema.Types.ObjectId, ref: 'Question'}],
   comments_count: {type: Number, default: 0},
   commentInArticles_id: [{type: Schema.Types.ObjectId, ref: 'Article'}],
-  // books_count: {type: Number, default: 0},
-  // books_id: [{type: Schema.Types.ObjectId, ref: 'Book'}],
 });
 
 UserSchema.plugin(random);
@@ -137,6 +133,7 @@ UserSchema
     else
       next();
   });
+
 
 /**
  * Methods

@@ -3,8 +3,19 @@
 
 	<div class="row">
 		<div class="col-md-7">
-		<h3 style="text-align: center; font-size: 3em;">ถามปัญหาใจ</h3>
-			<h2 class="blue">ขั้นตอนที่ 1: ถาม</h2>
+		<h3 style="text-align: center; font-size: 3em;">ถามปัญหาใจ <img ng-src="/assets/images/icon.gif" style="width:60px; height:50px; margin-top: -5px;"></h3>
+			<hr>
+			<h2 class="blue">ขั้นตอนที่ 1: ถามโดยระบุหรือไม่ระบุชื่อ</h2>
+			<form class="row">
+				<div class="col-md-6 text-center">
+			<input type="radio" ng-model="anonymous" value="1" checked> <span class="bigger">ระบุชื่อ</span>
+			</div>
+			<div class="col-md-6 text-center">
+			<input type="radio" ng-model="anonymous" value="0"> <span class="bigger">ไม่ระบุชื่อ</span>
+			</div>
+			</form>
+			<hr>
+			<h2 class="blue">ขั้นตอนที่ 2: ถาม</h2>
 			<div id="findAnswer">
 			<textarea id="askStepOne" class="form-control" rows="3" ng-model="searchInput" placeholder="ถามปัญหาใจ..." style="font-size: 1.2em;" popover-placement="bottom" popover="On the Right!" popover-trigger="show">
 			</textarea>

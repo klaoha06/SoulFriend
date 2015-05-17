@@ -63,7 +63,7 @@
        <a id="bigFB" class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
         <i class="fa fa-facebook" style="color:white;"></i> สมัครผ่าน Facebook</a>
       <p>หรือ</p>
-       <a id="bigFB" class="btn puanjaiBorder" ng-href="/login">
+       <a id="bigFB" class="btn puanjaiBorder" href="/login">
         <i class="fa fa-login" style="color:white;"></i> สมัครเป็นเพื่อนใจ
       </a>
   </div>
@@ -72,7 +72,7 @@
 
 <div class="clearfix"></div>
 
-<div ng-show="userGroups.length > 1" class="container-fluid background-yellow" style="min-height: 420px;">
+<div ng-if="userGroups.length > 1" class="container-fluid background-yellow" style="min-height: 420px;">
   <carousel interval="4000" style="display:block; margin:0 auto; width:100%; margin-bottom: 50px; margin-top: 50px; padding: 0 12%;" disable-animation="true">
     <slide ng-repeat="users in userGroups" class="animated fadeIn">
       <div class="row">

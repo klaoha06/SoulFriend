@@ -211,7 +211,7 @@ exports.addJai = function(req, res) {
       if (err) { return handleError(res, err); }
        res.status(200).json(question);
        User.findById(req.body.userId, function(err, user){
-        if(!user){ return res.send(404)}
+        console.log(err)
         user.jais_count++;
         user.jais_id.push(question._id);
         user.save();
@@ -358,7 +358,8 @@ exports.deleteAns = function(req, res) {
       if (err) { return handleError(res, err); }
       res.status(200).json(question);
       User.findById(req.params.user_id, function(err, user){
-        if(!user){ return res.send(404)}
+        // if(!user){ return res.send(404)}
+        console.log(err)
         user.ansInQuestions_id.pull(question._id)
         user.answers_count--;
         user.save(function(err,u){

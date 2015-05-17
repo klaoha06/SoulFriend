@@ -27,6 +27,7 @@ angular.module('puanJaiApp')
     $scope.tags = $cookieStore.get('tags');
     $scope.alerts = [];
     $scope.scroll = 0;
+    $scope.anonymous = localStorage.getItem('questionAnonymmous') || 1;
 
     $scope.$evalAsync(function() {
       $scope.height = document.getElementById('ask').offsetHeight;
@@ -63,11 +64,12 @@ angular.module('puanJaiApp')
 
     function resetFormVariables() {
       $scope.textEditorInput = '';
+      localStorage.removeItem('questionTitle');
       localStorage.removeItem('editQuestion');
       localStorage.removeItem('questionContent');
+      localStorage.removeItem('questionAnonymous');
       $cookieStore.remove('topic');
       $cookieStore.remove('tags');
-      localStorage.removeItem('questionTitle');
       $cookieStore.remove('questionContent');
     }
 
@@ -182,9 +184,16 @@ angular.module('puanJaiApp')
           }
         });
 
+        if ($scope.anonymous === 'true' || $scope.anonymous === '1' || $scope.anonymous === 1) {
+          $scope.anonymous = true;
+        } else {
+          $scope.anonymous = false;
+        }
+
         if (localStorage.getItem('editQuestion')) {
           var questionToUpdate = { 
             _id: $scope.editQuestion,
+            anonymous: $scope.anonymous,
             name: $scope.searchInput,
             body: $scope.textEditorInput,
             tags: partitionedTags[1],
@@ -203,6 +212,7 @@ angular.module('puanJaiApp')
               role: user.role,
               username: user.username
             },
+            anonymous: $scope.anonymous,
             name: $scope.searchInput,
             body: $scope.textEditorInput,
             tags: partitionedTags[1],

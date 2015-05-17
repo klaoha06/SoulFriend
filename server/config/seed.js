@@ -44,7 +44,6 @@ User.create({
     first: Faker.name.firstName(),
     last: Faker.name.lastName()
   },
-  coverimg: Faker.image.avatar(),
   summary: Faker.lorem.sentence(),
   reason: Faker.lorem.sentences(),
   email: 'laohasongkram.supakorn@gmail.com',
@@ -57,7 +56,6 @@ User.create({
     first: Faker.name.firstName(),
     last: Faker.name.lastName()
   },
-  coverimg: Faker.image.avatar(),
   summary: Faker.lorem.sentence(),
   reason: Faker.lorem.sentences(),
   email: 'test@test.com',

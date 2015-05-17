@@ -13,7 +13,7 @@
 
 	<div class="col-lg-2 col-sm-12"></div>
 
-	<div ng-show="error === 'Not Found'" class="col-md-8 text-center animated pulse" style="margin:40px 0;"><i class="fa fa-frown-o fa-4x"></i><br><h1 style="font-size: 3em;">ไม่มีคําถามนี้ในระบบ</h1><br><p>คําถามนี้อาจจะถูกลบไปแล้ว</p><br>
+	<div ng-if="error === 'Not Found'" class="col-md-8 text-center animated pulse" style="margin:40px 0;"><i class="fa fa-frown-o fa-4x"></i><br><h1 style="font-size: 3em;">ไม่มีคําถามนี้ในระบบ</h1><br><p>คําถามนี้อาจจะถูกลบไปแล้ว</p><br>
 		<a class="btn btn-lg puanjaiBorder black" ng-href="/">
 			กลับสู่หน้าหลัก
 		</a>
@@ -56,7 +56,7 @@
 						<div class="col-md-10 col-md-offset-1" ng-repeat="comment in question.comments">
 							<p style="padding:0; font-size:18px; color:rgb(110, 109, 109);">{{comment.content}}
 								{{::comment.username}} - <span style="color:#999; font-size: 16px;">{{::comment.created | timeAgo}} โดย {{::comment.user.username}}
-								<span ng-show="comment.user_id === currentUser._id">
+								<span ng-if="comment.user_id === currentUser._id">
 									<a ng-click="openEditor(comment.content, 'question', $index)"><i class="fa fa-pencil"></i></a>
 									<a ng-click="deleteMyComment($index)"><i class="fa fa-trash-o"></i></a>
 								</span>
@@ -83,13 +83,18 @@
 
 
 				<div class="row" style="padding: 15px;margin-right: 0;margin-left:0;">
-					<div class="col-md-4">
+					<div class="col-md-4 col-xs-12">
 						<div class="row userPanelQuestion">
-							<div class="col-lg-4 col-md-12 no-gutter" style="margin: 15px 0;">
-								<img class="userIcon" ng-src="{{question.owner.coverimg}}" />
+							<div class="col-lg-4 col-md-4 col-xs-4 no-gutter" style="margin: 15px 0;">
+								<img ng-if="question.anonymous"class="userIcon" src="https://placeimg.com/150/150/nature" />
+
+								<img ng-if="!question.anonymous" class="userIcon" ng-src="{{::question.owner.coverimg}}" />
 							</div>
-							<div class="col-lg-8 col-md-12 no-gutter" style="margin: 10px 0; text-align: center; font-size:0.9em;">
-								<a ng-href="/users/{{question.ownerId}}" style="font-size: 1em">{{question.owner.username}}</a><br/>
+							<div class="col-lg-8 col-md-6 col-xs-4 no-gutter text-center" style="margin: 10px 0; font-size:0.9em;">
+								<a ng-if="question.anonymous">เพื่อนใจ</a>
+								<a ng-if="!question.anonymous" ng-href="/users/{{question.ownerId}}">{{question.owner.username}}</a>
+
+								<br/>
 								<small>{{question.created | timeAgo}}</small><br/>
 								<small>{{question.created | date:'MMM d, y h:mm a'}}</small>
 							</div>
@@ -103,7 +108,7 @@
 							<div ng-show="questionOwner()" class="col-md-6 col-lg-4" style="margin-top:15px;">
 								<a ng-click="deleteQuestion()"><i class="fa fa-trash-o"></i> ลบคําถามนี้</a>
 							</div>
-							<div ng-hide="questionOwner()" class="col-md-6 col-lg-4" style="margin-top:15px;">
+							<div ng-if="!questionOwner()" class="col-md-6 col-lg-4" style="margin-top:15px;">
 								<a ng-click="report()"><i class="fa fa-ban"></i> แจ้งความไม่เหมาะสม</a>
 							</div>
 							<div class="col-md-6 col-lg-4" style="margin-top:15px;">
@@ -118,18 +123,15 @@
 		</div>
 	
 
-	<div ng-show="question.answers.length <= 0" class="background-blue"style="text-align: center;">
+	<div ng-if="question.answers.length <= 0" class="background-blue"style="text-align: center;">
 		<hr/>
 		<h2 style="text-align: center;">ยังไม่ได้ความช่วยเหลือ <i class="fa fa-frown-o"></i></h2>
-		<p>เป็นคนแรกที่ช่วย <span class="blue">{{question.owner.username}}</span> <small>หรือ</small> ช่วยแชร์คําามบน 		<a ng-click="shareFB('puanjai.com/questions/{{::question._id}}')">Facebook</a></p>
+		<p>เป็นคนแรกที่ช่วย <span ng-if="!question.anonymous"class="blue">{{question.owner.username}}</span> <small>หรือ</small> ช่วยแชร์คําามบน 		<a ng-click="shareFB('puanjai.com/questions/{{::question._id}}')">Facebook</a></p>
 		
-		<!-- <small>หรือ</small>
-		<p>รู้จักคนที่สามารถช่วยเพื่อนใจได้ฝากแชร์การด้วยจ้า</p>
- -->
 		<hr/>
 
 	</div>
-	<div ng-show="question.answers.length>=1" style="padding:0 15px; border-top: 1px solid #dddddd;">
+	<div ng-if="question.answers.length>=1" style="padding:0 15px; border-top: 1px solid #dddddd;">
 		<h1>{{question.answers_count}} คําตอบเพื่อนใจ</h1>
 	</div>
 
@@ -149,7 +151,7 @@
 				<hr>
 				<div class="col-md-11 col-md-offset-1" style="padding:0;"ng-repeat="comment in answer.comments">
 					<p style="padding:0; font-size:16px; color:rgb(110, 109, 109);">{{comment.content}} - <span style="color:#999; font-size: 16px;">{{::comment.created | timeAgo}} โดย {{::comment.username}}
-						<span ng-show="comment.user_id === currentUser._id">
+						<span ng-if="comment.user_id === currentUser._id">
 							<a ng-click="openEditor(comment.content, 'question', $index)"><i class="fa fa-pencil"></i></a>
 							<a ng-click="deleteMyComment($index, 'answer', answer.user_id)"><i class="fa fa-trash-o"></i></a>
 						</span>
@@ -176,8 +178,8 @@
 			<div class="questionOptions" style="text-align: right; margin-bottom: 10px;">							
 				<!-- <a ng-click="" style="margin: 15px;"><i class="fa fa-ban"></i> แจ้งความไม่เหมาะสม</a> -->
 				<a ng-click="isCollapsedInAns = !isCollapsedInAns;" style="margin: 15px;"><i class="fa fa-comment"></i> ให้ความคิดเห็น</a>
-				<a ng-show="answer.user_id === currentUser._id" ng-click="deleteMyAns($index);" style="margin: 15px;"><i class="fa fa-trash-o"></i> ลบคําตอบนี้</a>
-				<a ng-show="answer.user_id === currentUser._id" ng-click="editMyAns()" style="margin: 15px;"><i class="fa fa-pencil"></i> แก้ไขคําตอบนี้</a>
+				<a ng-if="answer.user_id === currentUser._id" ng-click="deleteMyAns($index);" style="margin: 15px;"><i class="fa fa-trash-o"></i> ลบคําตอบนี้</a>
+				<a ng-if="answer.user_id === currentUser._id" ng-click="editMyAns()" style="margin: 15px;"><i class="fa fa-pencil"></i> แก้ไขคําตอบนี้</a>
 			</div>
 		</div>
 
@@ -188,16 +190,16 @@
 					<h3 style="text-align: center;">{{answer.votes_count}}</h3>
 					<a ng-click="downVoteAns(answer.user_id)"><i class="fa fa-thumbs-down"></i><br>โหวตลง</a>
 					<hr style="margin-top:0; margin-bottom: 0;">
-					<a ng-show="questionOwner()" ng-click="makeGoodAns(answer.user_id)"><i class="fa fa-heart fa-2x" style="margin:10px;" ng-class="{true: 'fa-heart red', false: 'fa-heart-o grey'}[answer.goodAns]"></i><br>โดนใจ</a>
+					<a ng-if="questionOwner()" ng-click="makeGoodAns(answer.user_id)"><i class="fa fa-heart fa-2x" style="margin:10px;" ng-class="{true: 'fa-heart red', false: 'fa-heart-o grey'}[answer.goodAns]"></i><br>โดนใจ</a>
 				</li>
-				<div ng-show="answer.goodAns && !questionOwner()" class="text-center">
+				<div ng-if="answer.goodAns && !questionOwner()" class="text-center">
 					<i class="fa fa-heart fa-2x" style="margin:10px;" ng-class="{true: 'fa-heart red', false: 'fa-heart-o grey'}[answer.goodAns]"></i><br><p class="blue">โดนใจ</p>
 				</div>
 			</ul>
 		</div>
 	</div>
 
-	<div ng-hide="userAnsIndex >= 0" style="padding: 0 15px 15px 15px;">
+	<div ng-if="userAnsIndex <= 0" style="padding: 0 15px 15px 15px;">
 		<h2 style="text-align: center; font-size: 2em;">การช่วยเหลือของคุณ</h2>
 		<form id="answerInput">
 			<text-angular ta-toolbar="[['underline', 'italics', 'ul', 'ol', 'pre','undo','redo','justifyLeft', 'justifyCenter','justifyRight', 'insertImage', 'insertLink', 'insertVideo', 'html', 'charcount']]" ng-model="textEditorInput" ng-focus="isLoggedIn()"></text-angular>
@@ -207,7 +209,7 @@
 	</div>
 	</div>
 
-	<div ng-show="questionGroups.length >= 1"class="col-md-12 haveBorder text-center" style="border-radius:3px;margin:15px 0;">
+	<div ng-if="questionGroups.length >= 1"class="col-md-12 haveBorder text-center" style="border-radius:3px;margin:15px 0;">
 		<h2>คําถามที่อาจใกล้เคียงกัน</h2>
 		<carousel interval="0" style="display:block; margin:0 auto; width:100%; margin-bottom: 50px; padding: 0 12%;">
 			<slide ng-repeat="questions in questionGroups">
