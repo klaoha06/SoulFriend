@@ -85,6 +85,7 @@ angular.module('puanJaiApp')
       localStorage.setItem('editQuestion', $scope.question._id);
       localStorage.setItem('questionContent', $scope.question.body);
       localStorage.setItem('questionTitle', $scope.question.name);
+      localStorage.setItem('questionAnonymous', $scope.question.anonymous);
       $cookieStore.put('tags', $scope.question.tags);
       $cookieStore.put('topic', $scope.question.topic);
       $location.path('/ask');

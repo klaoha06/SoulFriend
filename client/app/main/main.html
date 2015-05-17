@@ -97,7 +97,7 @@
 
                   <div class="panel qStatusPanel">
                       <!-- <p>ได้คําตอบแล้ว {{question.answered}}</p> -->
-                      <p ng-show="{{question.answered}}">ได้ความช่วยเหลือจากเพื่อนใจเแล้ว <i class="fa fa-smile-o fa-lg blue" ng-class="onQuestion"></i></p>
+                      <p ng-if="{{question.answered}}">ได้ความช่วยเหลือจากเพื่อนใจเแล้ว <i class="fa fa-smile-o fa-lg blue" ng-class="onQuestion"></i></p>
                       <p ng-hide="{{question.answered}}">ยังไม่ได้คําตอบที่โดนใจ <i class="fa fa-frown-o blue fa-lg" ng-class="onQuestion"></i></p>
                   </div>
 
@@ -130,7 +130,7 @@
 
                 <div class="userPanel col-sm-4">
                   <div class="row">
-                    <div class="col-md-4 col-sm-12 col-xs-4 no-gutter" style="margin: 15px 0;">
+                    <div class="col-md-4 col-sm-12 col-xs-4 no-gutter" style="margin: 8px 0;">
                       <img class="userIcon" ng-src="{{question.owner.coverimg}}" />
                     </div>
                     <div class="col-md-8 col-sm-12 col-xs-8 no-gutter" style="margin: 10px 0; text-align: center; font-size:0.9em;">
@@ -177,9 +177,9 @@
         </div>
         </div>
 
-        <a ng-show="questions.length >= 20" class="btn btn-default" style="display:block; margin-bottom: 15px;" ng-click="getMoreQuestions()">ดูเพิ่ม</a>
+        <a ng-if="questions.length >= 20" class="btn btn-default" style="display:block; margin-bottom: 15px;" ng-click="getMoreQuestions()">ดูเพิ่ม</a>
 
-        <div class="row" ng-show="questions.length < 1 && selectedTopic.$ne !== null" style="border-top:1px solid #dddddd;">
+        <div class="row" ng-if="questions.length < 1 && selectedTopic.$ne !== null" style="border-top:1px solid #dddddd;">
           <div class="row animated pulse">
           <h1 style="text-align: center; font-size:3em;">เป็นคนแรกที่ถามคําถามหัวข้อ <span class="bigger yellow">{{selectedTopic}}</span><br>มีเพื่อนใจมากมายที่รอให้การช่วยเหลือ!</h1><br>
           <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" style="font-size: 3em; width:30%; margin:0 auto;" class="btn btn-primary btn-lg btn-block" ng-href="/ask"><i ng-class="shake" class="fa fa-child"></i> ถาม</a><br>
