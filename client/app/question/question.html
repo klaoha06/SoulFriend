@@ -9,12 +9,12 @@
 <meta property="og:type" content="website" view-head/>
 <meta property="og:locale" content="th_TH" view-head/>
 
-<div class="container-fluid">
+<div class="container-fluid background-blue-gradient">
 
 	<div class="col-lg-2 col-sm-12"></div>
 
 	<div ng-show="error === 'Not Found'" class="col-md-8 text-center animated pulse" style="margin:40px 0;"><i class="fa fa-frown-o fa-4x"></i><br><h1 style="font-size: 3em;">ไม่มีคําถามนี้ในระบบ</h1><br><p>คําถามนี้อาจจะถูกลบไปแล้ว</p><br>
-		<a class="btn btn-lg puanjaiBorder" style="color:black;"ng-href="/">
+		<a class="btn btn-lg puanjaiBorder black" ng-href="/">
 			กลับสู่หน้าหลัก
 		</a>
 	</div>
@@ -26,15 +26,16 @@
 					<ul class="nav nav-pills questionSidePanel">
 						<li>
 							<a ng-click="upVote(question._id, $element)">โหวตขึ้น<br><i class="fa fa-thumbs-up"></i></a>
-							<h3 style="text-align: center;">{{question.votes_count}}</h3>
-							<a ng-click="downVote(question._id, $element)"><i class="fa fa-thumbs-down"></i><br>โหวตลง</a><hr style="width:80%;">
+							<h3>{{question.votes_count}}</h3>
+							<a ng-click="downVote(question._id, $element)"><i class="fa fa-thumbs-down"></i><br>โหวตลง</a>
+							<hr>
 						</li>
 						<li>		
-							<h3 style="text-align: center;">{{question.jais_count}}</h3>						
+							<h3>{{question.jais_count}}</h3>						
 							<a ng-click="addJai(question._id, $element)"><i class="fa fa-gift"></i><br>ให้กําลังใจ</a>
 						</li>
-						<hr style="width:80%;">
 						<li>
+							<hr>
 							<a ng-click="shareFB('puanjai.com/questions/{{::question._id}}')"><i class="fa fa-share"></i><br>แชร์</a>
 						</li>
 					</ul>
@@ -45,7 +46,7 @@
 						<h2 style='font-size: 2.2em; margin:15px;'>{{::question.name}}</h2>
 						<div style="margin: 5px 15px;">
 							<a class="topic" ng-href="/topics/{{::question.topic}}"><span class="label label-primary">หัวข้อ: {{::question.topic}}</span> -</a>
-							<a style="display:inline-block; margin:0 5px 10px 0;" ng-repeat="tag in question.tags" ng-href="/tags/{{::tag._id}}"><span class="label label-info" style=""><i class="fa fa-tag"></i> {{::tag.name}}</span></a>
+							<a style="display:inline-block; margin:0 5px 10px 0;" ng-repeat="tag in question.tags" ng-href="/tags/{{::tag._id}}"><span class="label label-info"><i class="fa fa-tag"></i> {{::tag.name}}</span></a>
 						</div>
 					</div>
 
@@ -67,11 +68,11 @@
 
 				
 				<div collapse="isCollapsed" style="width: 80%; margin:0 auto;">
-					<form class="comment-form">
+					<form class="comment-form" style="display: inline-flex; width:100%;">
 						<p class="input-group">
-							<input type="text" maxlength="150" class="form-control" placeholder="เขียนที่นี้.." ng-model="newComment" style="font-size:1.2em;">
+							<input type="text" maxlength="150" class="form-control" placeholder=" ให้ความคิดเห็นแก่คําถามที่นี่.." ng-model="newComment" style="font-size:1em;">
 							<span ng-hide="editing" class="input-group-btn">
-								<button type="submit" class="btn btn-info" ng-click="addComment()" style="border-radius: 0;">ให้ความคิดเห็นแก่คําถาม</button>
+								<button type="submit" class="btn btn-info" ng-click="addComment()" style="border-radius: 0;">ให้ความคิดเห็น</button>
 							</span>
 							<span ng-show="editing" class="input-group-btn" >
 								<button type="submit" class="btn btn-info" ng-click="editMyComment()" style="border-radius: 0;">แก้ความคิดเห็น</button>

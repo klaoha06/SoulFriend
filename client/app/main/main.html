@@ -106,7 +106,7 @@
                   <a class="topic" ng-href="/topics/{{question.topic}}">{{question.topic}} -</a>
                   <a ng-repeat="tag in question.tags" ng-href="/tags/{{tag._id}}"><span class="label label-info" style="margin:0 2.5px;">{{tag.name}}</span></a> 
                 </div>
-                <h2 style='font-size: 2.2em;'>{{question.name}}</h2>
+                <a ng-href="/questions/{{::question._id}}" style="text-decoration: none; color:black;"><h2 style='font-size: 2.2em;'>{{::question.name}}</h2></a>
               <a style="float:right;" ng-click="isCollapsed = !isCollapsed">...ขยาย</a>
                 </div>
 
@@ -116,7 +116,7 @@
 
               <div class="questionContent" collapse="isCollapsed" >
                 <p>{{question.body | htmlToText | limitTo:550 }}</p>
-                <a ng-mouseover="shake='animated rubberBand'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" href="/questions/{{question._id}}" role="button"><i ng-class="shake" class="fa fa-heart red"></i> ให้ความช่วยเหลือ</a>
+                <a ng-mouseover="shake='animated rubberBand'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn background-yellow-gradient" href="/questions/{{question._id}}" role="button"><i ng-class="shake" class="fa fa-heart red"></i> ให้ความช่วยเหลือ</a>
                 <br/>
                 <li style="text-align: center;">
                   <a ng-href="/questions/{{question._id}}">- อ่านต่อ -</a>
