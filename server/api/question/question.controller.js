@@ -311,7 +311,8 @@ exports.addAnswer = function(req, res) {
                 // An example users object with formatted email function
                 var locals = {
                   question: question,
-                  answerer: user
+                  answerer: user,
+                  answer: req.body
                 };
 
                 // Send a single email
