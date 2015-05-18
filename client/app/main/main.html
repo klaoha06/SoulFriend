@@ -97,7 +97,7 @@
 
                   <div class="panel qStatusPanel">
                       <!-- <p>ได้คําตอบแล้ว {{question.answered}}</p> -->
-                      <p ng-if="{{question.answered}}">ได้ความช่วยเหลือจากเพื่อนใจเแล้ว <i class="fa fa-smile-o fa-lg blue" ng-class="onQuestion"></i></p>
+                      <p ng-show="{{question.answered}}">ได้ความช่วยเหลือจากเพื่อนใจเแล้ว <i class="fa fa-smile-o fa-lg blue" ng-class="onQuestion"></i></p>
                       <p ng-hide="{{question.answered}}">ยังไม่ได้คําตอบที่โดนใจ <i class="fa fa-frown-o blue fa-lg" ng-class="onQuestion"></i></p>
                   </div>
 

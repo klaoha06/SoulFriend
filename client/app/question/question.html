@@ -62,7 +62,7 @@
 								</span>
 							</span>
 						</p>
-						<hr style="margin:10px 0;">							
+						<hr style="margin:10px 0;">
 					</div>
 				</div>
 
@@ -112,7 +112,7 @@
 								<a ng-click="report()"><i class="fa fa-ban"></i> แจ้งความไม่เหมาะสม</a>
 							</div>
 							<div class="col-md-6 col-lg-4" style="margin-top:15px;">
-								<a ng-click="isCollapsed = !isCollapsed"><i class="fa fa-comment"></i> ให้ความคิดเห็นแก่คําถาม</a>
+								<a ng-click="isCollapsed = !isCollapsed; newComment = ''; editing = false;"><i class="fa fa-comment"></i> ให้ความคิดเห็นแก่คําถาม</a>
 							</div>
 						</div>
 
@@ -138,7 +138,7 @@
 	<div class="row answersInQuestion" ng-repeat="answer in question.answers | orderBy:'votes_count': true" style="border-bottom: 1px solid #dddddd; border-top: 1px solid #dddddd;">
 		<div class="col-md-10">
 			<div class="row" style="background: aliceblue; border-bottom: 1px solid #dddddd;">
-				<div class="col-md-2 no-gutter" style="margin: 15px 0;">
+				<div class="col-md-2 no-gutter" style="margin: 10px 0;">
 					<img class="userIcon" ng-src="{{::answer.coverimg}}" />
 				</div>
 				<div class="col-md-10 col-xs-12 no-gutter" style="padding: 10px; font-size:0.9em;">
@@ -151,31 +151,29 @@
 				<hr>
 				<div class="col-md-11 col-md-offset-1" style="padding:0;"ng-repeat="comment in answer.comments track by $index">
 					<p style="padding:0; font-size:16px; color:rgb(110, 109, 109);">{{comment.content}} - <span style="color:#999; font-size: 16px;">{{::comment.created | timeAgo}} โดย {{::comment.username}}
-						<span ng-show="comment.user_id === currentUser._id">
-							<!-- <a ng-click="openEditorForAns(comment.content, answer.user_id, $index); isCollapsedInAns = !isCollapsedInAns; editingForAns = true; newCommentForAns=comment.content;"><i class="fa fa-pencil"></i></a> -->
-							<a ng-click="deleteMyComment($index, 'answer', answer.user_id)"><i class="fa fa-trash-o"></i></a>
-						</span>
+							<a ng-show="comment.user_id === currentUser._id" ng-click="openEditorForAns(comment.content, answer.user_id, $index); editingForAns = true; newCommentForAns=comment.content; isCollapsed2 = !isCollapsed2;"><i class="fa fa-pencil"></i></a>
+							<a ng-show="comment.user_id === currentUser._id" ng-click="deleteMyComment($index, 'answer', answer.user_id)"><i class="fa fa-trash-o"></i></a>
 					</span>
 				</p>
+				<div collapse="isCollapsed2" style="width: 80%; margin:0 auto;">
+						<p class="input-group">
+							<input type="text" maxlength="150" class="form-control" placeholder="ให้ความเห็นที่นี้.." style="font-size:1.2em;" ng-model="newCommentForAns"/>
+							<span class="input-group-btn" >
+								<button type="button" class="btn btn-info" ng-click="isCollapsed2 = !isCollapsed2; editMyCommentForAns(newCommentForAns , $index); newCommentForAns = '';" style="border-radius: 0;">แก้ความคิดเห็น</button>
+							</span>
+						</p>
+				</div>
 				<hr style="margin:10px 0;">							
 			</div>
 
-			<div class="clearfix"></div>
-	<!-- 		{{isCollapsedInAns}}
-			{{isCollapsed2}}
-			{{newCommentForAns}} -->
-			<div id="collapse2" collapse="isCollapsedInAns" style="width: 80%; margin:0 auto;">
-				<form class="comment-form">
+			<div collapse="isCollapsedInAns" style="width: 80%; margin:0 auto;">
 					<p class="input-group">
 						<input type="text" maxlength="150" class="form-control" placeholder="ให้ความเห็นที่นี้.." style="font-size:1.2em;" ng-model="newCommentForAns"/>
 						<span ng-hide="editingForAns" class="input-group-btn">
-							<button type="submit" class="btn btn-info" ng-click="addCommentToAns(newCommentForAns, answer.user_id); isCollapsedInAns = !isCollapsedInAns;" style="border-radius: 0;">ให้ความคิดเห็น</button>
+							<button type="button" class="btn btn-info" ng-click="addCommentToAns(newCommentForAns, answer.user_id); isCollapsedInAns = !isCollapsedInAns;" style="border-radius: 0;">ให้ความคิดเห็น</button>
 						</span>
-						<span ng-show="editingForAns" class="input-group-btn" >
-							<button type="submit" class="btn btn-info" ng-click="editMyCommentForAns(newCommentForAns);" style="border-radius: 0;">แก้ความคิดเห็น</button>
-						</span>
+
 					</p>
-				</form>
 			</div>
 
 			<div class="questionOptions" style="text-align: right; margin-bottom: 10px;">							
@@ -186,13 +184,13 @@
 			</div>
 		</div>
 
-		<div class="col-md-2" style="background:#FFF9AA; border-left: 1px solid #dddddd; border-bottom: 1px solid #dddddd;">
+		<div class="col-md-2 background-yellow" style="border-left: 1px solid #dddddd; border-bottom: 1px solid #dddddd; padding:0;">
 			<ul class="nav nav-pills answerSidePanel">
 				<li>
 					<a ng-click="upVoteAns(answer.user_id)">โหวตขึ้น<br><i class="fa fa-thumbs-up"></i></a>
 					<h3 style="text-align: center;">{{answer.votes_count}}</h3>
 					<a ng-click="downVoteAns(answer.user_id)"><i class="fa fa-thumbs-down"></i><br>โหวตลง</a>
-					<hr style="margin-top:0; margin-bottom: 0;">
+					<hr style="margin-top:0; margin-bottom: 0; width:80%; ">
 					<a ng-if="questionOwner()" ng-click="makeGoodAns(answer.user_id)"><i class="fa fa-heart fa-2x" style="margin:10px;" ng-class="{true: 'fa-heart red', false: 'fa-heart-o grey'}[answer.goodAns]"></i><br>โดนใจ</a>
 				</li>
 				<div ng-if="answer.goodAns && !questionOwner()" class="text-center">
