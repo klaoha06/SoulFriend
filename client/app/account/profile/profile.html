@@ -32,8 +32,11 @@
             <div class="list-group" style="margin-bottom: 0;">
                 <a ng-repeat="question in myQuestions" class="list-group-item" ng-href="/questions/{{question._id}}">
                   <div class="row">
-                    <div class="col-md-8">
-                      <h3>{{question.name}}</h3>
+                    <div class="col-md-8" style="position: relative;">
+                      <div ng-if="question.anonymous"class="triangle-right" style="position:absolute; right:129px; z-index:23;">
+                        <p><i class="fa fa-user-secret"></i> ถามโดยไม่ระบุชื่อ</p>
+                      </div>
+                      <h3 style="margin-top: 0; padding-top: 20px;">{{question.name}}</h3>
                       <br>
                       <div>
                         <i class="fa fa-tag"></i>                     
