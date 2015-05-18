@@ -60,13 +60,13 @@ angular.module('puanJaiApp')
        'link': '/aboutcreator'
      },
      {
+       'title': 'มาเป็นส่วนหนึ่งกับเรา',
+       'link': '/support'
+     },
+     {
        'title': 'ติดต่อ',
        'link': '/contact'
-     }
-     // {
-     //   'title': 'มาเป็นส่วนหนึ่งกับเรา',
-     //   'link': '/join'
-     // }
+     },
       ];
 
       $scope.userOptions = [

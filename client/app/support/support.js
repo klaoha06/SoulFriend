@@ -4,7 +4,7 @@ angular.module('puanJaiApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('support', {
-        url: '/supportus',
+        url: '/support',
         templateUrl: 'app/support/support.html',
         controller: 'SupportCtrl'
       });
