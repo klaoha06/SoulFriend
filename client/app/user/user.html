@@ -1,6 +1,4 @@
-<div class="container" style="margin-top: 20px; margin-bottom: 20px; border: 1px solid #dddddd; -webkit-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75);
-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
+<div class="container haveBorder" style="margin-top: 20px; margin-bottom: 20px; padding-bottom:15px; border-radius: 4px;">
   <div class="row background-blue" style="border-bottom: 1px solid #dddddd;">
     <div class="col-md-3 bg_blur">
           <!-- <a href="#" class="follow_btn hidden-xs">Follow</a> -->
@@ -23,7 +21,6 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
             <div class="col-md-3 col-xs-3 well"><i class="fa fa-gift"></i> ให้กําลังใจ<br>{{currentUser.jais_count}}</div>
             <div class="col-md-3 col-xs-3 well"><i class="fa fa-heart"></i> ตอบปัญหา<br>{{currentUser.answers_count}}</div>
             <div class="col-md-3 col-xs-3 well"><i class="fa fa-question"></i> ถาม<br>{{currentUser.questions_count}}</div>
-            <div class="col-md-3 col-xs-3 well"><i class="fa fa-pencil"></i> ให้ความรู้<br>{{currentUser.articles_count}}</div>
         </div>
     </div>
 
@@ -45,7 +42,7 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
                         <small ng-repeat="tag in question.tags"> {{tag.name}}</small>
                       </div>
                     </div>
-                    <div class="col-md-4 background-yellow" style="border-left: 1px solid #dddddd; border-bottom: 1px solid #dddddd; padding: 5px;">
+                    <div class="col-md-4 background-yellow" style="border-left: 1px solid #dddddd; padding: 5px;">
                       <div class="row" style="text-align:center;">
                         <p class="col-lg-3 col-sm-3 col-xs-3">คนช่วย<br/>
                         <strong class="blue bigger"> {{question.answers_count | thousandSuffix}}</strong></p>
@@ -70,48 +67,11 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
         </div>
       </tab>
 
-      <tab select="onSelectCategory('myArticles')">
-        <tab-heading>ความรู้ที่ได้แบ่งบัน <span class="badge" style="font-size: inherit;">{{currentUser.articles_count | thousandSuffix}}</span></tab-heading>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="list-group">
-                <a ng-repeat="article in myArticles" class="list-group-item" href="/articles/{{article._id}}">
-                <div class="row">
-                  <div class="col-md-8">
-                    <h3>{{article.name}}</h3>
-                    <br>
-                    <div>
-                      <i class="fa fa-tag"></i>                       
-                      <p style="display:inline;" >{{article.topic}} - </p>
-                      <small ng-repeat="tag in article.tags"> {{tag.name}}</small>
-                    </div>
-                  </div>
-                  <div class="col-md-4 background-yellow" style="border-left: 1px solid #dddddd; border-bottom: 1px solid #dddddd; padding: 5px;">
-                    <div class="row" style="text-align:center;">
-                      <p class="col-lg-3 col-sm-3 col-xs-3">ความเห็น<br/>
-                      <strong class="blue bigger"> {{article.comments_count | thousandSuffix}}</strong></p>
-                      <p class="col-lg-3 col-sm-3 col-xs-3">แชร์<br/>
-                      <strong class="blue bigger"> {{article.shares | thousandSuffix}}</strong></p>
-                      <p class="col-lg-3 col-sm-3 col-xs-3">โหวต<br/>
-                      <strong class="blue bigger"> {{article.votes_count | thousandSuffix}}</strong></p>
-                      <p class="col-lg-3 col-sm-3 col-xs-3">ผู้เข้าชม<br/>
-                      <strong class="blue bigger"> {{article.views | thousandSuffix}}</strong></p>
-                    </div>
-                    <hr style="width: 80%; margin-top:5px; margin-bottom:5px;">
-                    <p class="text-center">{{article.created | timeAgo}} - {{article.created | date:'MMM d, y'}}</p>
-                  </div>
-                </div>
-                </a>    
-            </div>
-          </div>
-        </div>
-        <div ng-show="myArticles.length <= 0"class="row text-center" style="border:1px solid #dddddd; padding:15px; border-radius: 4px;">
-          <h2>ยังไม่ได้แชร์บทความให้เพื่อนๆ</h2>
-        </div>
-      </tab>
-
       <tab select="onSelectCategory('myAnswersInQuestions')">
         <tab-heading>คําถามที่ได้ให้คําตอบ <span class="badge" style="font-size: inherit;">{{currentUser.answers_count | thousandSuffix}}</span></tab-heading>
+        <div ng-show="myAnswersInQuestions.length <= 0"class="row text-center" style=" padding:15px; border-radius: 4px; border-top: 1px solid #dddddd;">
+          <h2>คุณยังไม่ได้ให้ความช่วยเหลือเพื่อนๆ</h2>
+        </div>
         <div class="row">
           <div class="col-md-12">
             <div class="list-group">
@@ -154,9 +114,6 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75); border-radius: 4px;">
                 </a>    
             </div>
           </div>
-        </div>
-        <div ng-show="myAnswersInQuestions.length <= 0"class="row text-center" style="border:1px solid #dddddd; padding:15px; border-radius: 4px;">
-          <h2>คุณยังไม่ได้ให้ความช่วยเหลือเพื่อนๆ</h2>
         </div>
         </tab>
     </tabset>

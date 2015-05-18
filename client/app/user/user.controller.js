@@ -19,13 +19,8 @@ angular.module('puanJaiApp')
     $scope.onSelectCategory = function(category){
         switch(category){
             case 'myQuestions':
-                $http.get('/api/questions', { params: { filterBy: { ownerId: $scope.userId}}}).success(function(questions){
+                $http.get('/api/questions', { params: { filterBy: { ownerId: $scope.userId, anonymous: false}}}).success(function(questions){
                     $scope.myQuestions = questions;
-                });
-                break;
-            case 'myArticles':
-                $http.get('/api/articles', { params: { filterBy: { ownerId: $scope.userId}}}).success(function(articles){
-                    $scope.myArticles = articles;
                 });
                 break;
             case 'myAnswersInQuestions':
@@ -34,7 +29,7 @@ angular.module('puanJaiApp')
                 });
                 break;
             default:
-                $http.get('/api/questions', { params: { filterBy: { ownerId: $scope.userId}}}).success(function(questions){
+                $http.get('/api/questions', { params: { filterBy: { ownerId: $scope.userId, anonymous: false}}}).success(function(questions){
                     $scope.myQuestions = questions;
                 });
         }
