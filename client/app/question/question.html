@@ -92,11 +92,11 @@
 							</div>
 							<div class="col-lg-8 col-md-6 col-xs-4 no-gutter text-center" style="margin: 10px 0; font-size:0.9em;">
 								<a ng-if="question.anonymous">เพื่อนใจ</a>
-								<a ng-if="!question.anonymous" ng-href="/users/{{question.ownerId}}">{{question.owner.username}}</a>
+								<a ng-if="!question.anonymous" ng-href="/users/{{::question.ownerId}}">{{::question.owner.username}}</a>
 
 								<br/>
 								<small>{{question.created | timeAgo}}</small><br/>
-								<small>{{question.created | date:'MMM d, y h:mm a'}}</small>
+								<small>{{::question.created | date:'MMM d, y h:mm a'}}</small>
 							</div>
 						</div>
 					</div>
@@ -126,7 +126,7 @@
 	<div ng-if="question.answers.length <= 0" class="background-blue"style="text-align: center;">
 		<hr/>
 		<h2 style="text-align: center;">ยังไม่ได้ความช่วยเหลือ <i class="fa fa-frown-o"></i></h2>
-		<p>เป็นคนแรกที่ช่วย <span ng-if="!question.anonymous"class="blue">{{question.owner.username}}</span> <small>หรือ</small> ช่วยแชร์คําามบน 		<a ng-click="shareFB('puanjai.com/questions/{{::question._id}}')">Facebook</a></p>
+		<p>เป็นคนแรกที่ช่วย <span ng-if="!question.anonymous"class="blue">{{::question.owner.username}}</span> <small>หรือ</small> ช่วยแชร์คําามบน 		<a ng-click="shareFB('puanjai.com/questions/{{::question._id}}')">Facebook</a></p>
 		
 		<hr/>
 
@@ -152,7 +152,7 @@
 				<div class="col-md-11 col-md-offset-1" style="padding:0;"ng-repeat="comment in answer.comments track by $index">
 					<p style="padding:0; font-size:16px; color:rgb(110, 109, 109);">{{comment.content}} - <span style="color:#999; font-size: 16px;">{{::comment.created | timeAgo}} โดย {{::comment.username}}
 						<span ng-show="comment.user_id === currentUser._id">
-							<a ng-click="openEditorForAns(comment.content, answer.user_id, $index); isCollapsedInAns = !isCollapsedInAns;"><i class="fa fa-pencil"></i></a>
+							<!-- <a ng-click="openEditorForAns(comment.content, answer.user_id, $index); isCollapsedInAns = !isCollapsedInAns; editingForAns = true; newCommentForAns=comment.content;"><i class="fa fa-pencil"></i></a> -->
 							<a ng-click="deleteMyComment($index, 'answer', answer.user_id)"><i class="fa fa-trash-o"></i></a>
 						</span>
 					</span>
@@ -161,13 +161,15 @@
 			</div>
 
 			<div class="clearfix"></div>
-			{{isCollapsedInAns}}
-			<div collapse="isCollapsedInAns" style="width: 80%; margin:0 auto;">
+	<!-- 		{{isCollapsedInAns}}
+			{{isCollapsed2}}
+			{{newCommentForAns}} -->
+			<div id="collapse2" collapse="isCollapsedInAns" style="width: 80%; margin:0 auto;">
 				<form class="comment-form">
 					<p class="input-group">
-						<input ng-model="newCommentForAns" type="text" maxlength="150" class="form-control" placeholder="ให้ความเห็นที่นี้.." style="font-size:1.2em;">
+						<input type="text" maxlength="150" class="form-control" placeholder="ให้ความเห็นที่นี้.." style="font-size:1.2em;" ng-model="newCommentForAns"/>
 						<span ng-hide="editingForAns" class="input-group-btn">
-							<button type="submit" class="btn btn-info" ng-click="addCommentToAns(answer.user_id);" style="border-radius: 0;">ให้ความคิดเห็น</button>
+							<button type="submit" class="btn btn-info" ng-click="addCommentToAns(newCommentForAns, answer.user_id); isCollapsedInAns = !isCollapsedInAns;" style="border-radius: 0;">ให้ความคิดเห็น</button>
 						</span>
 						<span ng-show="editingForAns" class="input-group-btn" >
 							<button type="submit" class="btn btn-info" ng-click="editMyCommentForAns(newCommentForAns);" style="border-radius: 0;">แก้ความคิดเห็น</button>
@@ -178,7 +180,7 @@
 
 			<div class="questionOptions" style="text-align: right; margin-bottom: 10px;">							
 				<!-- <a ng-click="" style="margin: 15px;"><i class="fa fa-ban"></i> แจ้งความไม่เหมาะสม</a> -->
-				<a ng-click=" isCollapsedInAns = !isCollapsedInAns; editingForAns=false; newCommentForAns='';" style="margin: 15px;"><i class="fa fa-comment"></i> ให้ความคิดเห็น</a>
+				<a type="button" ng-click=" isCollapsedInAns = !isCollapsedInAns; editingForAns = false; newCommentForAns = '';" style="margin: 15px;"><i class="fa fa-comment"></i> ให้ความคิดเห็น</a>
 				<a ng-if="answer.user_id === currentUser._id" ng-click="deleteMyAns($index);" style="margin: 15px;"><i class="fa fa-trash-o"></i> ลบคําตอบนี้</a>
 				<a ng-if="answer.user_id === currentUser._id" ng-click="editMyAns()" style="margin: 15px;"><i class="fa fa-pencil"></i> แก้ไขคําตอบนี้</a>
 			</div>

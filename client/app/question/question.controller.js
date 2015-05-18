@@ -8,6 +8,7 @@ angular.module('puanJaiApp')
     $scope.editingAns = false;
     $scope.isCollapsed = true;
     $scope.isCollapsedInAns = true;
+    $scope.collapsed = true;
     $scope.newCommentForAns = '';
 
     function getUserAns() {
@@ -320,13 +321,23 @@ angular.module('puanJaiApp')
       }
     };
 
-    $scope.addCommentToAns = function(answerUserId){
-      $scope.isCollapsedForAns=true;
-      console.log($scope.newCommentForAns)
-      if($scope.newCommentForAns === 'undefined') {
+    // // Store Content in Cookie
+    // $scope.$watch('newCommentForAns', function(input){
+    //   if (input) {
+    //     $scope.newCommentForAns = input;
+    //     console.log(input)
+    //     console.log($scope.newCommentForAns)
+    //   }
+    // });
+
+    $scope.addCommentToAns = function(newCommentForAns, answerUserId){
+      // console.log($scope.newCommentForAns)
+      // console.log($scope.newCommentForAns.yo)
+      // $scope.isCollapsedForAns=true;
+      if(newCommentForAns === 'undefined') {
         return;
       }
-      if ($scope.newCommentForAns.length < 3 || $scope.newCommentForAns.length > 150) {
+      if (newCommentForAns.length < 3 || newCommentForAns.length > 150) {
         return;
       }
       // $scope.isCollapsedInAns = true;
@@ -335,7 +346,7 @@ angular.module('puanJaiApp')
         var answerInQuestion = $scope.question.answers[answerIndex];
         var user = Auth.getCurrentUser();
         var newComment = { 
-          content: $scope.newCommentForAns,
+          content: newCommentForAns,
           user_id: $scope.currentUser._id,
           username: $scope.currentUser.username,
           created: Date.now()
@@ -347,7 +358,7 @@ angular.module('puanJaiApp')
         $http.patch('/api/questions/' + $stateParams.id + '/answers', $scope.question.answers).success(function(res) {
          // console.log(res);
         });
-        $scope.newCommentForAns = '';
+        newCommentForAns = '';
       } else {
         $location.path('/login');
         alert('กรุณาเข้าสู้ระบบก่อนเข้าร่วมการสนทนา')
@@ -426,23 +437,23 @@ angular.module('puanJaiApp')
 
     };
 
-    // Store Content in Cookie
-    $scope.$watch('newCommentForAns', function(input){
-      if (input) {
-        $scope.newCommentForAns = input;
-      }
-    });
 
-    $scope.$watch('isCollapsedInAns', function(input){
-      if (input) {
-        $scope.isCollapsedInAns = input;
-      }
-    });
+
+    // $scope.$watch('isCollapsedInAns', function(input){
+    //   if (input) {
+    //     $scope.isCollapsedInAns  = input;
+    //   }
+    // });
 
     $scope.openEditorForAns = function(commentContent, typeOrUserId, commentIndex){
-      $scope.isCollapsedInAns = !$scope.isCollapsedInAns;
-      $scope.newCommentForAns = commentContent;
       $scope.editingForAns = true;
+      $scope.isCollapsedInAns = !$scope.isCollapsedInAns;
+      // $scope.isCollapsed2 = !$scope.isCollapsed2;
+      $scope.newCommentForAns = commentContent;
+       // if(!$scope.$$phase)
+       //             {
+       //               $scope.$digest();
+       //             }
 
       // if ($scope.editin)
       console.log(commentContent)
@@ -451,10 +462,11 @@ angular.module('puanJaiApp')
       console.log($scope.newCommentForAns)
 
 
-      $scope.editMyCommentForAns = function(content){        
+      $scope.editMyCommentForAns = function(content){
+      debugger;        
           var AnsIndex = _.findIndex($scope.question.answers,{'user_id': typeOrUserId});
           var Ans = $scope.question.answers[AnsIndex];
-          if (commentIndex && commentContent) {
+          if (commentIndex) {
             Ans.comments[commentIndex].content = content;
           } else {
             console.log($scope.newCommentForAns);
