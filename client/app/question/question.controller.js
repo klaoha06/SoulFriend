@@ -8,7 +8,7 @@ angular.module('puanJaiApp')
     $scope.editingAns = false;
     $scope.isCollapsed = true;
     $scope.isCollapsedInAns = true;
-    $scope.collapsed = true;
+    $scope.isCollapsed2 = true;
     $scope.newCommentForAns = '';
 
     function getUserAns() {
@@ -317,23 +317,11 @@ angular.module('puanJaiApp')
         $scope.newComment = '';
       } else {
         $location.path('/login');
-        alert('กรุณาเข้าสู้ระบบก่อนเข้าร่วมการสนทนา')
+        alert('กรุณาเข้าสู้ระบบก่อนเข้าร่วมการสนทนา');
       }
     };
 
-    // // Store Content in Cookie
-    // $scope.$watch('newCommentForAns', function(input){
-    //   if (input) {
-    //     $scope.newCommentForAns = input;
-    //     console.log(input)
-    //     console.log($scope.newCommentForAns)
-    //   }
-    // });
-
     $scope.addCommentToAns = function(newCommentForAns, answerUserId){
-      // console.log($scope.newCommentForAns)
-      // console.log($scope.newCommentForAns.yo)
-      // $scope.isCollapsedForAns=true;
       if(newCommentForAns === 'undefined') {
         return;
       }
@@ -352,16 +340,13 @@ angular.module('puanJaiApp')
           created: Date.now()
         };
         answerInQuestion.comments.push(newComment);
-        // $http.patch('/api/questions/' + $stateParams.id, $scope.question).success(function(res) {
-        //  // console.log(res);
-        // });
         $http.patch('/api/questions/' + $stateParams.id + '/answers', $scope.question.answers).success(function(res) {
          // console.log(res);
         });
         newCommentForAns = '';
       } else {
         $location.path('/login');
-        alert('กรุณาเข้าสู้ระบบก่อนเข้าร่วมการสนทนา')
+        alert('กรุณาเข้าสู้ระบบก่อนเข้าร่วมการสนทนา');
       }
     };
 
@@ -386,50 +371,16 @@ angular.module('puanJaiApp')
       }
     };
 
-    // $scope.deleteMyCommentInAns = function(index){
-    //   var r = confirm("ต้องการลบความคิดเห็นนี้?");
-    //   if (r === true) {
-    //     $scope.question.answer[].comments.splice(index, 1);
-    //     $http.patch('/api/questions/' + $stateParams.id, {questionToUpdate: $scope.question}).success(function(res) {
-    //       // $scope.alreadyCommented=false;
-    //     });
-    //   } else {
-    //     return;
-    //   }
-    // };
-
     $scope.openEditor = function(commentContent, typeOrUserId, commentIndex){
         $scope.editing=true;
-      if (typeOrUserId === 'question') {
         $scope.isCollapsed = !$scope.isCollapsed;
         $scope.newComment = commentContent;
-        // $scope.editing=true;
-      } else {
-        $scope.isCollapsedInAns = !$scope.isCollapsedInAns;
-        $scope.newCommentForAns = commentContent;
-
-        console.log(commentContent)
-        console.log(typeOrUserId)
-        console.log(commentIndex)
-        console.log($scope.newCommentForAns)
-      }
 
       $scope.editMyComment = function(content){        
-        if (typeOrUserId === 'question') {
           $scope.isCollapsed = !$scope.isCollapsed;
           $scope.question.comments[commentIndex].content = $scope.newComment;
-        } else {
-          $scope.isCollapsedInAns = !$scope.isCollapsedInAns;
-          var AnsIndex = _.findIndex($scope.question.answers,{'user_id': typeOrUserId});
-          var Ans = $scope.question.answers[AnsIndex];
-          if (commentIndex && commentContent) {
-            Ans.comments[commentIndex].content = content;
-          } else {
-            console.log($scope.newCommentForAns);
-          }
-        }
+  
         $http.patch('/api/questions/' + $stateParams.id, {questionToUpdate: $scope.question}).success(function(res) {
-          // $scope.alreadyCommented=false;
           $scope.editing=false;
           $scope.newCommentForAns = '';
         });
@@ -438,48 +389,22 @@ angular.module('puanJaiApp')
     };
 
 
-
-    // $scope.$watch('isCollapsedInAns', function(input){
-    //   if (input) {
-    //     $scope.isCollapsedInAns  = input;
-    //   }
-    // });
-
     $scope.openEditorForAns = function(commentContent, typeOrUserId, commentIndex){
       $scope.editingForAns = true;
-      $scope.isCollapsedInAns = !$scope.isCollapsedInAns;
-      // $scope.isCollapsed2 = !$scope.isCollapsed2;
       $scope.newCommentForAns = commentContent;
-       // if(!$scope.$$phase)
-       //             {
-       //               $scope.$digest();
-       //             }
-
-      // if ($scope.editin)
-      console.log(commentContent)
-      console.log(typeOrUserId)
-      console.log(commentIndex)
-      console.log($scope.newCommentForAns)
-
 
       $scope.editMyCommentForAns = function(content){
-      debugger;        
           var AnsIndex = _.findIndex($scope.question.answers,{'user_id': typeOrUserId});
           var Ans = $scope.question.answers[AnsIndex];
-          if (commentIndex) {
-            Ans.comments[commentIndex].content = content;
-          } else {
-            console.log($scope.newCommentForAns);
-          }
+          Ans.comments[commentIndex].content = content;
+ 
         $http.patch('/api/questions/' + $stateParams.id, {questionToUpdate: $scope.question}).success(function(res) {
-          // $scope.alreadyCommented=false;
         });
+        $scope.isCollapsed2 = true;
         $scope.editingForAns=false;
         $scope.newCommentForAns = '';
       };
     };
-
-
 
      // On leave page
     $scope.$on('$destroy', function () {
