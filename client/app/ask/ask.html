@@ -40,7 +40,7 @@
 			       </table>
 			</div>
 			<hr/>
-			<h2 class="blue">ขั้นตอนที่ 2: เลือกหัวข้อ <h2>
+			<h2 class="blue">ขั้นตอนที่ 3: เลือกหัวข้อ <h2>
 			<div class="row">
 			  <div ng-repeat="topic in topics" class="col-sm-6 col-md-4" ng-class="{true: 'blue', false: ''}[topic.active]" ng-click="selectTopic(topic.title);" >
 			    <div class="thumbnail" ng-mouseover="animate='animated pulse background-yellow'" ng-mouseleave="animate='background-white'" ng-class="animate">
@@ -56,12 +56,12 @@
 			</div>
 
 						<hr/>
-						<h2 class="blue">ขั้นตอนที่ 3: เนื้อความ</h2>
+						<h2 class="blue">ขั้นตอนที่ 4: เนื้อความ</h2>
 						<text-angular ta-toolbar="[['underline', 'italics', 'ul', 'ol', 'pre','undo','redo','justifyLeft', 'justifyCenter','justifyRight', 'insertImage', 'insertLink', 'insertVideo', 'html']]" ng-model="textEditorInput"></text-angular>
 						<span id="helpBlock" class="help-block text-right"><span ng-class="{true: 'red', false: 'green'}[(textEditorInput | htmlToText).length > 7000 || (textEditorInput | htmlToText).length < 15]">{{7000 - (textEditorInput | htmlToText).length}}</span> อักขระ</span>
 						<hr/>
 
-			<h2 class="blue">ขั้นตอนที่ 4: ใส่แท็ก</h2>
+			<h2 class="blue">ขั้นตอนที่ 5: ใส่แท็ก</h2>
 			<div class="input-group input-group-lg" style="margin-bottom: 15px;">
 			    <span class="input-group-addon"><i class="fa fa-tags"></i> แท็ก</span>
 			    <tags-input ng-model="tags" class="ti-input-lg" display-property="name" placeholder="คําถามนี้เกี่ยวข้องกับอะไรบ้าง..." max-length="21" add-on-comma="false" maxTags="4" on-tag-added="storeTagInCookie()">
