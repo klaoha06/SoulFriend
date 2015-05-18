@@ -27,7 +27,10 @@
 
       <tab select="onSelectCategory('myQuestions')">
         <tab-heading>คําถามใจ <span class="badge" style="font-size: inherit;">{{currentUser.questions_count | thousandSuffix}}</span></tab-heading>
-        <div class="row borderTop">
+        <div ng-if="myQuestions.length <= 0"class="row text-center emptyResults borderTop">
+          <h2>คุณยังไม่ได้ถามคําถามใจ</h2>
+        </div>
+        <div class="row">
           <div class="col-md-12">
             <div class="list-group" style="margin-bottom: 0;">
                 <a ng-repeat="question in myQuestions" class="list-group-item" ng-href="/questions/{{question._id}}">
@@ -40,7 +43,7 @@
                       <br>
                       <div>
                         <i class="fa fa-tag"></i>                     
-                        <p style="display:inline;" >{{question.topic}} - </p>
+                        <p style="display:inline;" > {{question.topic}} - </p>
                         <small ng-repeat="tag in question.tags"> {{tag.name}}</small>
                       </div>
                     </div>
@@ -63,15 +66,14 @@
             </div>
           </div>
         </div>
-
-        <div ng-show="myQuestions.length <= 0"class="row text-center emptyResults">
-          <h2>คุณยังไม่ได้ถามคําถามใจ</h2>
-        </div>
           <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/ask')" role="button" style="width:100%;"><i ng-class="shake" class="fa fa-question"></i> ถามปัญหา</a>
       </tab>
       <tab select="onSelectCategory('myAnswersInQuestions')">
         <tab-heading>คําถามที่ได้ให้คําตอบ <span class="badge" style="font-size: inherit;">{{currentUser.answers_count | thousandSuffix}}</span></tab-heading>
-        <div class="row borderTop">
+        <div ng-if="myAnswersInQuestions.length <= 0"class="row text-center emptyResults borderTop">
+          <h2>คุณยังไม่ได้ให้ความช่วยเหลือเพื่อนๆ</h2>
+        </div>
+        <div class="row">
           <div class="col-md-12">
             <div class="list-group">
                 <a ng-repeat="question in myAnswersInQuestions" class="list-group-item" ng-href="/questions/{{question._id}}">
@@ -110,9 +112,6 @@
                 </a>    
             </div>
           </div>
-        </div>
-        <div ng-show="myAnswersInQuestions.length <= 0"class="row text-center emptyResults">
-          <h2>คุณยังไม่ได้ให้ความช่วยเหลือเพื่อนๆ</h2>
         </div>
           <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/')" role="button" style="width:100%;"><i ng-class="shake" class="fa fa-heart"></i> ตอบปัญหาให้เพื่อนๆ</a>
         </tab>
