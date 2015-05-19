@@ -66,7 +66,7 @@ exports.verify = function (req, res, next) {
     if (user) {
       user.emailVerification = true;
       user.save();
-      res.status(200);
+      return res.status(200);
     } else {
       return res.send(401);
     }
