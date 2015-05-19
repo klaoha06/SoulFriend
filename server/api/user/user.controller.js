@@ -64,9 +64,9 @@ exports.verify = function (req, res, next) {
     if (user) {
       user.emailVerification = true;
       user.save();
-      return res.status(200);
+      return res.redirect('http://www.puanjai.com/verified');
     } else {
-      return res.send(401);
+      return res.redirect('http://www.puanjai.com/notverified');
     }
   });
 };

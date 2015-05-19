@@ -22,6 +22,14 @@ angular.module('puanJaiApp')
 	  	url: '/googleace9067e30b64044.html',
 	  	templateUrl:'app/googleace9067e30b64044.html'
 	  })
+	  .state('verified', {
+	  	url:'/verified',
+	  	templateUrl:'components/etc/verified.html'
+	  })
+	  .state('notverified', {
+	  	url:'/notverified',
+	  	templateUrl:'components/etc/notverified.html'
+	  })
 	  .state('sitemap', {
 	  	url: '/sitemap.xml',
 	  	templateUrl:'app/sitemap.xml'
