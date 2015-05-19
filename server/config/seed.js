@@ -38,30 +38,30 @@ Question.collection.drop();
 // Suggestion.collection.drop();
 // Report.collection.drop();
 Tag.collection.drop();
-// User.create({
-//   provider: 'local',
-//   email: 'laohasongkram.supakorn@gmail.com',
-//   name: {
-//     first: Faker.name.firstName(),
-//     last: Faker.name.lastName()
-//   },
-//   summary: Faker.lorem.sentence(),
-//   reason: Faker.lorem.sentences(),
-//   username: Faker.internet.userName(),
-//   password: 'test'
-// })
 User.create({
   provider: 'local',
+  email: 'laohasongkram.supakorn@gmail.com',
   name: {
     first: Faker.name.firstName(),
     last: Faker.name.lastName()
   },
   summary: Faker.lorem.sentence(),
   reason: Faker.lorem.sentences(),
-  email: 'test@test.com',
   username: Faker.internet.userName(),
   password: 'test'
 })
+// User.create({
+//   provider: 'local',
+//   name: {
+//     first: Faker.name.firstName(),
+//     last: Faker.name.lastName()
+//   },
+//   summary: Faker.lorem.sentence(),
+//   reason: Faker.lorem.sentences(),
+//   email: 'test@test.com',
+//   username: Faker.internet.userName(),
+//   password: 'test'
+// })
 
 
 
