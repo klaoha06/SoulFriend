@@ -80,3 +80,6 @@ a.list-group-item:hover, a.list-group-item:focus {
     border-bottom:1px solid #dddddd; padding:15px;
 }
 
+.anonymousQuestion {
+    position:absolute; right:0; z-index:23; width:150px; text-align: center;
+}
