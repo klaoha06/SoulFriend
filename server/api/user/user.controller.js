@@ -67,7 +67,7 @@ exports.verify = function (req, res, next) {
     } else {
       return res.send(401);
     }
-    res.status(200).json(user.profile);
+    res.status(200);
   });
 };
 

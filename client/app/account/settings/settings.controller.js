@@ -2,12 +2,12 @@
 
 angular.module('puanJaiApp')
   .controller('SettingsCtrl', function ($scope) {
-    $scope.template = 'editprofile/editprofile.html';
+    $scope.template = 'editProfile/editprofile.html';
 
     $scope.sections = [
     {
       name: 'แก้ไขข้อมูลส่วนตัว',
-      template: 'editprofile/editprofile.html'
+      template: 'editProfile/editprofile.html'
     },
     {
       name: 'เปลี่ยนรหัส',
