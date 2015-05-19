@@ -59,8 +59,6 @@ exports.show = function (req, res, next) {
  *  Verify user
  */
 exports.verify = function (req, res, next) {
-  console.log(req)
-  console.log(req.params.hex)
   User.findOne({verificationCode: req.params.hex}, function (err, user) {
     if (err) return next(err);
     if (user) {
