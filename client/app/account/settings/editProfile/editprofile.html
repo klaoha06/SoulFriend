@@ -1,0 +1,28 @@
+<div ng-controller="EditProfileCtrl">
+<alert class="alert" ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"><span style="font-size:1.2em;"><i class="fa fa-{{alert.icon}}"></i> {{alert.msg}}</span></alert>
+<h1>แก้ไขข้อมูลส่วนตัว</h1>
+<hr>
+
+<h2>การยืนยันอีเมลของคุณ</h2> {{user.emailVerification}}
+<hr>
+
+<h2>ชื่อ</h2>
+ชื่อจริง {{user.name.first}}
+นามสกุล {{user.name.last}}
+ชื่อในเว็บ {{user.username}}
+<hr>
+
+<h2>อีเมล</h2> {{user.email}}  
+<hr>
+
+<h2>รูปปก</h2> {{user.coverimg}}
+<hr>
+
+<h2>เหตุผลที่อยากเป็นเพื่อนใจ</h2> {{user.reason}}
+<hr>
+
+<h2>ประวัติโดยสั่น</h2> {{user.summary}}
+<hr>
+
+<br>
+</div>
