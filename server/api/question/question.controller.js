@@ -14,19 +14,9 @@ var Question = require('./question.model');
 var User = require('../user/user.model');
 var Tag = require('../tag/tag.model');
 var wordcut = require("wordcut");
-var ObjectId = require('mongoose').Types.ObjectId;
-var config = require('../../config/environment');
-var path           = require('path'),
-  templatesDir   = path.resolve(__dirname, '../..', 'templates'),
-  emailTemplates = require('email-templates'),
-  nodemailer     = require('nodemailer');
-
-
-function htmlToPlaintext(text) {
-  return String(text).replace(/<[^>]+>/gm, '');
-}
-
 wordcut.init('./node_modules/wordcut/data/tdict-std.txt');
+var emailService = require('../../email/email.service')
+var ObjectId = require('mongoose').Types.ObjectId;
 
 // Get list of questions
 exports.index = function(req, res) {
@@ -134,7 +124,7 @@ exports.create = function(req, res) {
               t.popular_count++;
               t.questions_id.push(question._id);
               t.save(function(err, result){
-                if (err) { return handleError(res, err); }
+                // if (err) { return handleError(res, err); }
                 // console.log(result);
               })
           })
@@ -290,55 +280,12 @@ exports.addAnswer = function(req, res) {
         user.ansInQuestions_id.push(question._id)
         user.answers_count++;
         user.save(function(err,u){
-
-          emailTemplates(templatesDir, function(err, template) {
-            
-            if (err) {
-                console.log(err);
-              } else {
-
-                // ## Send a single email
-
-                // Prepare nodemailer transport object
-                var transport = nodemailer.createTransport({
-                    service: 'Gmail',
-                    auth: {
-                        user: 'puanjai.com@gmail.com',
-                        pass: config.puanjaiPass
-                    }
-                });
-
-                // An example users object with formatted email function
-                var locals = {
-                  question: question,
-                  answerer: user,
-                  answer: req.body
-                };
-
-                // Send a single email
-                template('newAnswerEmail', locals, function(err, html, text) {
-                  if (err) {
-                    console.log(err);
-                  } else {
-                    transport.sendMail({
-                      from: 'puanjai.com <puanjai.com@gmail.com>',
-                      to: question.owner.email,
-                      subject: '[puanjai.com] มีคนใจดีช่วยตอบปัญหาใจคุณ!',
-                      html: html,
-                      // generateTextFromHTML: true,
-                      text: text
-                    }, function(err, responseStatus) {
-                      if (err) {
-                        console.log(err);
-                      } else {
-                        console.log(responseStatus.response);
-                      }
-                    });
-                  }
-                });
-              }
-          });
-
+          var locals = {
+            question: question,
+            answerer: user,
+            answer: req.body
+          };
+          emailService.sendEmailOnNewAns(locals)
         })
       })
       res.status(200).send(question)
@@ -422,10 +369,6 @@ exports.destroy = function(req, res) {
       })
     }
 
-    // Tag.update({'_id':{ $in: _.pluck(question.tags, '_id')}}, { $pull:{questions_id: question._id }, $inc: {popular_count: -1, questions_count: -1} } , { multi: true }, function(err , affected){
-    //   console.log(affected)
-    // })
-
     Tag.find({ '_id':{ $in:  _.pluck(question.tags, '_id') }}, function(err, tags){
       if (err) { return handleError(res, err); }
       tags.forEach(function(tag){
@@ -442,7 +385,7 @@ exports.destroy = function(req, res) {
       })
     })
     User.update({'_id':{ $in: _.pluck(question.answers, 'user_id')}}, {$pull: {  ansInQuestions_id: question._id }, $inc: {answers_count: -1} } , { multi: true }, function(err, affected){
-      console.log(affected)
+      // console.log(affected)
     })
     question.remove(function(err) {
       if(err) { return handleError(res, err); }

@@ -48,10 +48,25 @@ exports.create = function (req, res, next) {
  * Get a single user
  */
 exports.show = function (req, res, next) {
-  var userId = req.params.id;
-  User.findById(userId, function (err, user) {
+  User.findById(req.params.id,function (err, user) {
     if (err) return next(err);
     if (!user) return res.send(401);
+    res.status(200).json(user.profile);
+  });
+};
+
+/**
+ *  Verify user
+ */
+exports.verify = function (req, res, next) {
+  User.findOne({verificationCode: req.params.hex}, function (err, user) {
+    if (err) return next(err);
+    if (user) {
+      user.emailVerification = true;
+      user.save();
+    } else {
+      return res.send(401);
+    }
     res.status(200).json(user.profile);
   });
 };
@@ -95,7 +110,7 @@ exports.me = function(req, res, next) {
   var userId = req.user._id;
   User.findOne({
     _id: userId
-  }, '-salt -hashedPassword', function(err, user) { // don't ever give out the password or salt
+  }, '-salt -hashedPassword -verificationCode -provider', function(err, user) { // don't ever give out the password or salt
     if (err) return next(err);
     if (!user) return res.json(401);
     res.json(user);

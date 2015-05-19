@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
 var random = require('mongoose-simple-random');
+var email = require('../../email/email.service');
 
 var UserSchema = new Schema({
   name: {
@@ -13,6 +14,8 @@ var UserSchema = new Schema({
   },
   coverimg: {type: String, default: '/assets/images/usericon.png'},
   email: String,
+  verificationCode: String,
+  emailVerification: { type: Boolean, default: false},
   username: String,
   role: {
     type: String,
@@ -60,6 +63,7 @@ UserSchema
       '_id': this._id,
       'email': this.email,
       'name': this.name,
+      'emailVerification': this.emailVerification,
       'username': this.username,
       'role': this.role,
       'coverimg': this.coverimg,
@@ -68,7 +72,7 @@ UserSchema
       'questions_id': this.questions_id,
       'questions_count': this.questions_count,
       'jais_count': this.jais_count,
-      'answers_count': this.answers_count
+      'answers_count': this.answers_count,
     };
   });
 
@@ -127,13 +131,14 @@ var validatePresenceOf = function(value) {
 UserSchema
   .pre('save', function(next) {
     if (!this.isNew) return next();
-
+  
     if (!validatePresenceOf(this.hashedPassword) && authTypes.indexOf(this.provider) === -1)
       next(new Error('Invalid password'));
     else
+      this.verificationCode = crypto.randomBytes(64).toString('base64');
+      email.sendEmailOnSignUp({ email: this.email, verificationCode: this.verificationCode});
       next();
   });
-
 
 /**
  * Methods
