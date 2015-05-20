@@ -55,7 +55,7 @@
         <li ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}" style="margin: 6px 0;">
             <span class="dropdown" dropdown on-toggle="toggled(open)">
               <a href="" class="dropdown-toggle" dropdown-toggle style="padding:7px;">
-                <img src="{{user.coverimg}}" style="width: 36px; height:36px; border-radius: 4px; box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.75);">
+                <img ng-src="{{user.coverimg}}" style="width: 36px; height:36px; border-radius: 4px; box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.75);">
               </a>
               <ul class="dropdown-menu background-yellow" style="right: inherit;">
                 <li ng-repeat="choice in userOptions">
