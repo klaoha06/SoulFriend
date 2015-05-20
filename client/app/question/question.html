@@ -156,24 +156,27 @@
 					</span>
 				</p>
 				<div collapse="isCollapsed2" style="width: 80%; margin:0 auto;">
+					<form class="comment-form" style="display: inline-flex; width:100%;">
 						<p class="input-group">
 							<input type="text" maxlength="150" class="form-control" placeholder="ให้ความเห็นที่นี้.." style="font-size:1.2em;" ng-model="newCommentForAns"/>
 							<span class="input-group-btn" >
 								<button type="button" class="btn btn-info" ng-click="isCollapsed2 = !isCollapsed2; editMyCommentForAns(newCommentForAns , $index); newCommentForAns = '';" style="border-radius: 0;">แก้ความคิดเห็น</button>
 							</span>
 						</p>
+						</form>
 				</div>
 				<hr style="margin:10px 0;">							
 			</div>
 
 			<div collapse="isCollapsedInAns" style="width: 80%; margin:0 auto;">
+					<form class="comment-form" style="display: inline-flex; width:100%;">
 					<p class="input-group">
 						<input type="text" maxlength="150" class="form-control" placeholder="ให้ความเห็นที่นี้.." style="font-size:1.2em;" ng-model="newCommentForAns"/>
 						<span ng-hide="editingForAns" class="input-group-btn">
 							<button type="button" class="btn btn-info" ng-click="addCommentToAns(newCommentForAns, answer.user_id); isCollapsedInAns = !isCollapsedInAns;" style="border-radius: 0;">ให้ความคิดเห็น</button>
 						</span>
-
 					</p>
+					</form>
 			</div>
 
 			<div class="questionOptions" style="text-align: right; margin-bottom: 10px;">							

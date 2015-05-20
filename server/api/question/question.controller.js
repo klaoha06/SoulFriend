@@ -337,7 +337,7 @@ exports.updateAns = function(req, res) {
     question.markModified('answers');
     question.save(function (err) {
       if (err) { return handleError(res, err); }
-      return res.json(200, question);
+      return res.status(200).json(question);
     });
   });
 };
