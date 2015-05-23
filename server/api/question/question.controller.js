@@ -130,15 +130,15 @@ exports.create = function(req, res) {
           })
         }
       User.findById(question.ownerId, function(err, user){
-        if(!user){ return res.send(404)}
+        // if(!user){ return res.send(404)}
         user.questions_id.push(question._id);
         user.questions_count++;
         user.save(function(err,u){
-          User.find({ '_id':{ $in: u.follower_id }}).select('email username').exec(function(err, usersEmail){
-
-          emailService.sendOnCreateQuestion(usersEmail, question)
-
-          })
+          if (!question.anonymous) {          
+            User.find({ '_id':{ $in: u.follower_id }}).select('email username').exec(function(err, usersEmail){
+              emailService.sendOnCreateQuestion(usersEmail, question)
+            })
+          }
         })
       })
       return res.status(200).json(question)
