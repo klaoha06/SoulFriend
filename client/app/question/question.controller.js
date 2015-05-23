@@ -32,6 +32,7 @@ angular.module('puanJaiApp')
       };
       if ($scope.currentUser){
         getUserAns();
+        $scope.followed = _.includes($scope.currentUser.following_id, $scope.question.ownerId);
       }
       if (!$scope.questionGroups) {      
         $http.get('/api/questions/search', { params: {userInput: $scope.question.name}}).success(function(result) {
@@ -257,6 +258,7 @@ angular.module('puanJaiApp')
           user_id: userId,
           username: $scope.currentUser.username,
           coverimg: $scope.currentUser.coverimg,
+          email: $scope.currentUser.email,
           name: $scope.currentUser.name,
           content: $scope.textEditorInput,
           comments:[],
@@ -309,10 +311,9 @@ angular.module('puanJaiApp')
           created: Date.now()
         };
         $scope.question.comments.push(newComment);
-        $http.patch('/api/questions/' + $stateParams.id, $scope.question).success(function(res) {
+        $http.post('/api/questions/' + $stateParams.id + '/comments', newComment).success(function(res) {
          // console.log(res);
         });
-        // $http.patch('/api/questions/' +  $stateParams.id, newComment);
         $scope.isCollapsed=true;
         $scope.newComment = '';
       } else {
@@ -340,7 +341,10 @@ angular.module('puanJaiApp')
           created: Date.now()
         };
         answerInQuestion.comments.push(newComment);
-        $http.patch('/api/questions/' + $stateParams.id + '/answers', $scope.question.answers).success(function(res) {
+        // $http.patch('/api/questions/' + $stateParams.id + '/answers', $scope.question.answers).success(function(res) {
+        //  // console.log(res);
+        // });
+        $http.post('/api/questions/' + $stateParams.id + '/answers/' + answerInQuestion.user_id + '/comments', $scope.question.answers).success(function(res) {
          // console.log(res);
         });
         newCommentForAns = '';
@@ -358,12 +362,10 @@ angular.module('puanJaiApp')
           var ans = $scope.question.answers[ansIndex];
           ans.comments.splice(index, 1);
           $http.patch('/api/questions/' + $stateParams.id + '/answers', $scope.question.answers).success(function(res) {
-            // $scope.alreadyCommented=false;
           });
         } else {       
           $scope.question.comments.splice(index, 1);
           $http.patch('/api/questions/' + $stateParams.id + '/comments', $scope.question.comments).success(function(res) {
-            // $scope.alreadyCommented=false;
           });
         }
       } else {
@@ -404,6 +406,20 @@ angular.module('puanJaiApp')
         $scope.editingForAns=false;
         $scope.newCommentForAns = '';
       };
+    };
+
+    $scope.follow = function(){
+      $scope.followed = true;
+      $http.put('/api/users/' + $scope.currentUser._id + '/follow/' + $scope.question.ownerId).success(function(currentUser){
+        // console.log(currentUser);
+      });
+    };
+
+    $scope.unfollow = function(){
+      $scope.followed = false;
+      $http.delete('/api/users/' + $scope.currentUser._id + '/follow/' + $scope.question.ownerId).success(function(currentUser){
+        // console.log(currentUser);
+      });
     };
 
      // On leave page

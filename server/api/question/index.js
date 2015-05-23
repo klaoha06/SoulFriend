@@ -13,8 +13,10 @@ router.get('/:id', controller.show);
 router.post('/', controller.create);
 router.put('/:id', controller.update);
 router.post('/:id/newanswer', controller.addAnswer);
-router.patch('/:id/answers', controller.updateAns);
+router.post('/:id/comments', controller.addComment);
 router.patch('/:id/comments', controller.updateQuestionComment);
+router.patch('/:id/answers', controller.updateAns);
+router.post('/:id/answers/:questionId/comments', controller.AddCommentToAns)
 router.delete('/:id/answers/:user_id', controller.deleteAns);
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);

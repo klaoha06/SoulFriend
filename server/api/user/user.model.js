@@ -12,7 +12,7 @@ var UserSchema = new Schema({
     first: String,
     last: String
   },
-  coverimg: {type: String, default: '/assets/images/usericon.png'},
+  coverimg: String,
   email: String,
   verificationCode: String,
   emailVerification: { type: Boolean, default: false},
@@ -36,7 +36,10 @@ var UserSchema = new Schema({
   jais_count: {type: Number, default: 0},
   jais_id: [{type: Schema.Types.ObjectId, ref: 'Question'}],
   comments_count: {type: Number, default: 0},
-  commentInArticles_id: [{type: Schema.Types.ObjectId, ref: 'Article'}],
+  follower_id: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  follower_count:{type: Number, default: 0},
+  following_id: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  following_count:{type: Number, default: 0}
 });
 
 UserSchema.plugin(random);
@@ -73,6 +76,10 @@ UserSchema
       'questions_count': this.questions_count,
       'jais_count': this.jais_count,
       'answers_count': this.answers_count,
+      'follower_count': this.follower_count,
+      'follower_id': this.follower_id,
+      'following_count': this.following_count,
+      'following_id': this.following_id
     };
   });
 
@@ -131,10 +138,12 @@ var validatePresenceOf = function(value) {
 UserSchema
   .pre('save', function(next) {
     if (!this.isNew) return next();
-  
     if (!validatePresenceOf(this.hashedPassword) && authTypes.indexOf(this.provider) === -1)
       next(new Error('Invalid password'));
     else
+      if (!this.coverimg || this.coverimg === '') {
+        this.coverimg = 'http://flathash.com/' + crypto.randomBytes(6).toString('base64');
+      }
       this.verificationCode = crypto.randomBytes(64).toString('base64');
       email.sendEmailOnSignUp({ email: this.email, verificationCode: this.verificationCode});
       next();
