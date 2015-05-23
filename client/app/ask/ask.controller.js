@@ -208,15 +208,11 @@ angular.module('puanJaiApp')
           }
         });
 
-        console.log($scope.anonymous)
-
         if ($scope.anonymous === 'true' || $scope.anonymous === '1' || $scope.anonymous === 1) {
           $scope.anonymous = true;
         } else {
           $scope.anonymous = false;
         }
-
-        console.log($scope.anonymous)
 
         if (localStorage.getItem('editQuestion')) {
           var questionToUpdate = { 

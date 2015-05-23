@@ -1,13 +1,21 @@
 <div class="container haveBorder" style="margin-top: 20px; margin-bottom: 20px; padding-bottom:15px; border-radius: 4px;">
-  <div class="row background-blue" style="border-bottom: 1px solid #dddddd;">
+  <div class="row background-blue" style="border-bottom: 1px solid #dddddd; position: relative;">
+  <div class="follow_btn" style="position:absolute; right:5px; z-index:23; top:5px">
+    <div ng-if="!followed && !questionOwner()" >
+    <button class="btn btn-info btn-lg" role="button" ng-click="follow()"><i class="fa fa-user-plus"></i> ฟอลโล่ หรือ ติดตาม</button>
+    </div>
+    <div ng-if="followed && !questionOwner()">
+      <button class="btn btn-success btn-lg" role="button" ng-click="unfollow()"><i class="fa fa-heart"></i> ฟอลโล่ หรือ ติดตามอยู่</button><br>
+    </div>
+  </div>
     <div class="col-md-3 bg_blur">
           <!-- <a href="#" class="follow_btn hidden-xs">Follow</a> -->
     </div>
-        <div class="col-md-9  col-xs-12" style="background:white; min-height: 200px; padding-bottom:40px;">
-           <img src="{{currentUser.coverimg}}" class="img-thumbnail picture hidden-sm hidden-xs" />
-           <img src="{{currentUser.coverimg}}" class="img-thumbnail visible-sm visible-xs picture_mob" />
+        <div class="col-md-9 col-xs-12" style="background:white; min-height: 200px; padding-bottom:40px;">
+           <img ng-src="{{currentUser.coverimg}}" class="img-thumbnail picture hidden-sm hidden-xs" />
+           <img ng-src="{{currentUser.coverimg}}" class="img-thumbnail visible-sm visible-xs picture_mob" />
            <div class="header">
-                <h1>{{currentUser.username}}</h1>
+                <h1 style="display: inline-flex">{{currentUser.username}}</h1>
                 <h4>{{currentUser.role}}</h4>
                 <p><small>{{currentUser.reason}}</small><p>
                 <p>{{currentUser.summary}}<p>
@@ -18,9 +26,11 @@
   <div class="row nav">    
         <div class="col-md-4"></div>
         <div class="col-md-8 col-xs-12" style="margin: 0px;padding: 0px; margin-top:-25px;">
-            <div class="col-md-3 col-xs-3 well"><i class="fa fa-gift"></i> ให้กําลังใจ<br>{{currentUser.jais_count}}</div>
-            <div class="col-md-3 col-xs-3 well"><i class="fa fa-heart"></i> ตอบปัญหา<br>{{currentUser.answers_count}}</div>
-            <div class="col-md-3 col-xs-3 well"><i class="fa fa-question"></i> ถาม<br>{{currentUser.questions_count}}</div>
+          <div class="col-md-2 col-xs-4 well"><i class="fa fa-gift"></i> ให้กําลังใจ<br>{{currentUser.jais_count}}</div>
+          <div class="col-md-2 col-xs-4 well"><i class="fa fa-heart"></i> ตอบปัญหา<br>{{currentUser.answers_count}}</div>
+          <div class="col-md-2 col-xs-4 well"><i class="fa fa-question"></i> ถาม<br>{{currentUser.questions_count}}</div>
+          <div class="col-md-2 col-xs-4 well"><i class="fa fa-ambulance"></i> ติดตาม<br>{{currentUser.following_count}}</div>
+          <div class="col-md-2 col-xs-4 well"><i class="fa fa-heart-o"></i> มีคนตาม<br>{{currentUser.follower_count}}</div>
         </div>
     </div>
 

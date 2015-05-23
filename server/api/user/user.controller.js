@@ -55,6 +55,40 @@ exports.show = function (req, res, next) {
   });
 };
 
+exports.addFollowerFollowing = function(req, res, next) {
+  User.findById(req.params.currentUserId, function (err, user) {
+      user.following_id.push(req.params.questionOwnerId);
+      user.following_count++;
+      user.save(function(err) {
+        if (err) return validationError(res, err);
+        res.status(200).json(user.profile);
+      });
+  });
+  User.findById(req.params.questionOwnerId, function(err, user){
+    if (err) {console.log(err)}
+    user.follower_id.push(req.params.currentUserId)
+    user.follower_count++;
+    user.save()
+  })
+};
+
+exports.removeFollowerFollowing = function(req, res, next) {
+  User.findById(req.params.currentUserId, function (err, user) {
+      user.following_id.pull(req.params.questionOwnerId);
+      user.following_count--;
+      user.save(function(err) {
+        if (err) return validationError(res, err);
+        res.status(200).json(user.profile);
+      });
+  });
+  User.findById(req.params.questionOwnerId, function(err, user){
+    if (err) {console.log(err)}
+    user.follower_id.pull(req.params.currentUserId)
+    user.follower_count--;
+    user.save()
+  })
+};
+
 /**
  *  Verify user
  */

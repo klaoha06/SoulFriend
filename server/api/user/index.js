@@ -14,6 +14,8 @@ router.get('/me', auth.isAuthenticated(), controller.me);
 router.get('/verify/:hex', controller.verify);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.get('/:id', auth.isAuthenticated(), controller.show);
+router.put('/:currentUserId/follow/:questionOwnerId', auth.isAuthenticated(), controller.addFollowerFollowing);
+router.delete('/:currentUserId/follow/:questionOwnerId', auth.isAuthenticated(), controller.removeFollowerFollowing);
 router.post('/', controller.create);
 
 module.exports = router;

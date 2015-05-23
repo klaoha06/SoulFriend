@@ -134,7 +134,11 @@ exports.create = function(req, res) {
         user.questions_id.push(question._id);
         user.questions_count++;
         user.save(function(err,u){
-          // console.log(u)
+          User.find({ '_id':{ $in: u.follower_id }}).select('email username').exec(function(err, usersEmail){
+
+          emailService.sendOnCreateQuestion(usersEmail, question)
+
+          })
         })
       })
       return res.status(200).json(question)
@@ -251,19 +255,7 @@ exports.update = function(req, res) {
   }
 };
 
-// Updates an existing thing in the DB.
-exports.updateQuestionComment = function(req, res) {
-    Question.findById(req.params.id, function(err, question){
-      if (err) { return handleError(res, err); }
-      if(!question) { return res.send(404); }
-      question.comments = req.body;
-      question.markModified('comments');
-      question.save(function (err) {
-        if (err) { return handleError(res, err); }
-        return res.status(200).json(question);
-      })
-    })
-};
+
 
 // Updates an existing thing in the DB.
 exports.addAnswer = function(req, res) {
@@ -291,6 +283,38 @@ exports.addAnswer = function(req, res) {
       res.status(200).send(question)
     });
   });
+};
+
+exports.addComment = function(req, res) {
+  Question.findById(req.params.id, function(err, question){
+    if (err) { return handleError(res, err); }
+    if(!question) { return res.send(404); }
+    question.comments.push(req.body);
+    question.markModified('comments');
+    question.save(function (err) {
+      if (err) { return handleError(res, err); }
+      var locals = {
+        question: question,
+        newComment: req.body
+      }
+      emailService.sendOnNewCommentInQuestion(locals)
+      res.status(200).json(question);
+    })
+  })
+}
+
+// Updates an existing thing in the DB.
+exports.updateQuestionComment = function(req, res) {
+    Question.findById(req.params.id, function(err, question){
+      if (err) { return handleError(res, err); }
+      if(!question) { return res.send(404); }
+      question.comments = req.body;
+      question.markModified('comments');
+      question.save(function (err) {
+        if (err) { return handleError(res, err); }
+        return res.status(200).json(question);
+      })
+    })
 };
 
 exports.deleteAns = function(req, res) {
@@ -338,6 +362,27 @@ exports.updateAns = function(req, res) {
     question.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.status(200).json(question);
+    });
+  });
+};
+
+exports.AddCommentToAns = function(req, res) {
+  Question.findById(req.params.id, function (err, question) {
+    if (err) { return handleError(res, err); }
+    if(!question) { return res.send(404); }
+    question.answers = req.body;
+    question.markModified('answers');
+    question.save(function (err) {
+      if (err) { return handleError(res, err); }
+      res.status(200).json(question);
+      var ans = _.where(question.answers, {user_id: req.params.questionId})
+      var comment = _.last(ans[0].comments)
+      var locals = {
+        question: question,
+        answer: ans[0],
+        newComment: comment
+      }
+      emailService.sendOnNewCommentInAns(locals)
     });
   });
 };

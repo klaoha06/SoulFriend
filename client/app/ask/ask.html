@@ -69,7 +69,6 @@
 			    </tags-input>
 			</div>
 			<!-- <hr> -->
-
 			<script type="text/ng-template" id="tagSearch.html">
 			  <a>
 			  	<b class="yellow">ชื่อ:</b>
@@ -78,25 +77,25 @@
 			      <span bind-html-unsafe="match.model.popular_count"></span>
 			  </a>
 			</script>
-
+			
 		</div>
 		<div style="padding-left: 0; padding-right: 0;margin-bottom: 15px;" ng-class="{absoluteCol: scroll+590 >= height, fixed: scroll+590 < height}">
 		<span class='scroll-debug' scroll-position="scroll"></span>
 
 				
-					<div id="howToAsk">
-					<h2 class="blue">วิธีการถาม</h2>
-
-						<p>วีธีการาม วีธีการถาม วีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธ ีการถามวีธีการถามวีธีการถามวีธีการถามวีธี</p>
-						<p>วีธีการถาม วีธีการถาม วีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธ ีการถามวีธีการถามวีธีการถามวีธีการถามวีธี</p>
-						<p>วีธีการถาม วีธีการถาม วีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธีการถามวีธ ีการถามวีธีการถามวีธีการถามวีธีการถามวีธี</p>
-
+					<div id="howToAsk">					
+					<h2 class="blue text-center">ทําไมต้องถาม..</h2>
+						<ul>
+							<li>เพื่อฝึกที่จะแบ่งบันปัญหาใจของเราเอง ฝึกที่จะเป็นคนเปิดเผยและยอมรับต่อความจริง</li>
+							<li>เป็นการฝึกที่จะให้โดยไม่หวังผลตอบแทน</li>
+							<li>เผื่อคําถามที่เราได้ถามอาจจะได้เป็นแสงนําทางให้คนอื่นๆที่อาจจะมีปัญหาเหมือนๆกันให้ได้เจอคําตอบนั้นโดยเร็ว</li>
+						</ul>
+						<hr>
 					</div>
+					<alert ng-repeat="alert in alerts" type="{{alert.type}}" class="animated fadeIn" close="closeAlert($index)">{{alert.msg}}</alert>
 					<a ng-hide="editQuestion" type="submit" ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default postfixQuestionButton" role="button" ng-click="onQuestionFormSubmit()"><i ng-class="shake" class="fa fa-child"></i> โพสต์คําถาม</a>
 					<a ng-show="editQuestion" type="submit" ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default postfixQuestionButton" role="button" ng-click="onQuestionFormSubmit()"><i ng-class="shake" class="fa fa-pencil"></i> แก้ไขคําถามนี้</a>
-					<alert ng-repeat="alert in alerts" type="{{alert.type}}" class="animated fadeIn" close="closeAlert($index)">{{alert.msg}}</alert>
 		</div>
 	</div>
-
 </div>
 </div>

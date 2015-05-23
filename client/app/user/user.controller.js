@@ -1,10 +1,13 @@
 'use strict';
 angular.module('puanJaiApp')
-  .controller('userPageCtrl', function ($scope, $cookieStore, $http, socket, $stateParams, $location) {
+  .controller('userPageCtrl', function ($scope, $cookieStore, $http, socket, $stateParams, $location, Auth) {
     $scope.userId = $stateParams.id;
+    $scope.usingUser = Auth.getCurrentUser();
+
 
     $http.get('/api/users/' + $stateParams.id, {query: {access_token: $cookieStore.get('token') }}).success(function(user){
         $scope.currentUser = user;
+        $scope.followed = _.includes($scope.usingUser.following_id, $stateParams.id);
     });
 
     $http.get('/api/questions', { params: { filterBy: { ownerId: $scope.userId}}}).success(function(questions){
@@ -33,6 +36,20 @@ angular.module('puanJaiApp')
                     $scope.myQuestions = questions;
                 });
         }
+    };
+
+    $scope.follow = function(){
+      $scope.followed = true;
+      $http.put('/api/users/' + $scope.usingUser._id + '/follow/' + $stateParams.id).success(function(usingUser){
+        // console.log(usingUser);
+      });
+    };
+
+    $scope.unfollow = function(){
+      $scope.followed = false;
+      $http.delete('/api/users/' + $scope.usingUser._id + '/follow/' + $stateParams.id).success(function(usingUser){
+        // console.log(currentUser);
+      });
     };
     
   });
