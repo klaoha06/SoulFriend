@@ -81,6 +81,10 @@
     background-color: #345;    
 }
 
+.panel-default > .panel-heading {
+    background-color: aliceblue;
+}
+
 /********************************/
 /*          Panel cards         */
 /********************************/
@@ -125,7 +129,7 @@
     width: 70px;
     height: 70px;
     background-color: #fff;
-    border-radius: 50%;
+    border-radius: 6px;
     opacity: 1;
 /*    -webkit-box-shadow: 0 0 0 3px #fff;
             box-shadow: 0 0 0 3px #fff;*/
@@ -138,7 +142,7 @@
 }
 
 .panel.panel-card .panel-body {
-    padding-top: 40px;
+    padding-top: 75px;
     padding-bottom: 20px;
 
 /*    -webkit-transition: padding 400ms ease-in-out;
