@@ -12,7 +12,7 @@
 <div class="container-fluid background-blue-gradient" style="padding-top: 15px;">
 
 	<div class="col-sm-12 col-lg-2">
-		<div ng-if="question" class="panel panel-default panel-card haveBorder">
+		<div ng-if="question && !question.anonymous" class="panel panel-default panel-card haveBorder">
 			<div class="panel-heading">
 			<img ng-cloak class="ng-cloak"ng-src="https://placeimg.com/880/640/nature" />
 			</div>

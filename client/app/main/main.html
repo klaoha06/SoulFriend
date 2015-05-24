@@ -106,7 +106,7 @@
                   <a class="topic" ng-href="/topics/{{question.topic}}">{{question.topic}} -</a>
                   <a ng-repeat="tag in question.tags" ng-href="/tags/{{tag._id}}"><span class="label label-info" style="margin:0 2.5px;">{{tag.name}}</span></a> 
                 </div>
-                <a ng-href="/questions/{{::question._id}}" style="text-decoration: none; color:black;"><h2 style='font-size: 2.2em;'>{{::question.name}}</h2></a>
+                <a ng-href="/questions/{{::question._id}}" style="text-decoration: none; color:black;"><h2 style='font-size: 2.2em; margin-top: 25px; margin-bottom: 0;'>{{::question.name}}</h2></a>
               <a style="float:right;" ng-click="isCollapsed = !isCollapsed">...ขยาย</a>
                 </div>
 
