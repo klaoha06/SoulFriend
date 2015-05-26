@@ -144,8 +144,8 @@ UserSchema
       if (!this.coverimg || this.coverimg === '') {
         this.coverimg = 'http://flathash.com/' + crypto.randomBytes(6).toString('base64');
       }
-      this.verificationCode = crypto.randomBytes(64).toString('base64');
-      email.sendEmailOnSignUp({ email: this.email, verificationCode: this.verificationCode});
+      // this.verificationCode = crypto.randomBytes(64).toString('base64');
+      // email.sendEmailOnSignUp({ email: this.email, verificationCode: this.verificationCode});
       next();
   });
 

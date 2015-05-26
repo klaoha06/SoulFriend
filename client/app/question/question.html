@@ -73,7 +73,7 @@
 					</div>
 
 					<div style="padding:15px;">
-						<div ta-bind ng-model="question.body" style="word-wrap: break-word; padding:15px; line-height: 2;"></div>
+						<div class="textOutput"ta-bind ng-model="question.body" style="word-wrap: break-word; padding:15px; line-height: 2;"></div>
 						<hr style="width:85%; margin-bottom:10px;">
 						<div class="col-md-10 col-md-offset-1" ng-repeat="comment in question.comments">
 							<p style="padding:0; font-size:18px; color:rgb(110, 109, 109);">{{comment.content}}
@@ -169,7 +169,7 @@
 					</div>
 
 				</div>
-				<div ta-bind ng-model="answer.content" style="word-wrap: break-word; padding:25px;"></div>
+				<div class="textOutput"ta-bind ng-model="answer.content" style="word-wrap: break-word; padding:25px;"></div>
 				<hr>
 				<div class="col-md-11 col-md-offset-1" style="padding:0;"ng-repeat="comment in answer.comments track by $index">
 					<p style="padding:0; font-size:16px; color:rgb(110, 109, 109);">{{comment.content}} - <span style="color:#999; font-size: 16px;">{{::comment.created | timeAgo}} โดย {{::comment.username}}

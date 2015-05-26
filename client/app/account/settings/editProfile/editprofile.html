@@ -3,26 +3,78 @@
 <h1>แก้ไขข้อมูลส่วนตัว</h1>
 <hr>
 
-<h2>การยืนยันอีเมลของคุณ</h2> {{user.emailVerification}}
+<h2>การยืนยันอีเมลของคุณ</h2>
+  <div class="text-center" ng-if="!user.emailVerification">
+    <h2>ยังไม่ได้รับการยืนยัน</h2>
+    <small>กรุณาเช็คอีเมลคุณ</small>
+    <small>หรือ</small>
+  <button class="btn btn-danger btn-lg floatCenter bigger"><i class="fa fa-envelope-o"></i> ส่งอีเมลไปให้ยืนยันอีกที</button>
+  </div>
+  <button ng-if="user.emailVerification" class="btn btn-success btn-lg floatCenter bigger"><i class="fa fa-check"></i> ยืนยันแล้ว</button>
+    <span id="helpBlock" class="help-block text-center">เพื่อเป็นการยืนยันตัวตนที่แท้จริง และเพื่อประโยชน์ในการติดต่อเวลาเพื่อนใจท่านอื่นมาช่วยตอบปัญหาของคุณหรือมาร่วมสนทนาในคําถามของคุณ</span>
 <hr>
 
 <h2>ชื่อ</h2>
-ชื่อจริง {{user.name.first}}
-นามสกุล {{user.name.last}}
-ชื่อในเว็บ {{user.username}}
+<form class="form-group">
+  <label for="inputEmail3" class="col-sm-3 control-label text-right">ชื่อจริง</label>
+  <div class="col-sm-5">
+    <input type="text" class="form-control" placeholder="ชื่อ" ng-model="user.name.first" maxlength="20" required>
+  </div>
+  <div class="col-sm-6"></div>
+  <div class="clearfix"></div><br>
+  <label for="inputEmail3" class="col-sm-3 control-label text-right" required>นามสกุล</label>
+  <div class="col-sm-5">
+    <input type="text" class="form-control" placeholder="ชื่อ" ng-model="user.name.last" maxlength="35" required>
+  </div>
+  <div class="col-sm-6"></div>
+  <div class="clearfix"></div><br>
+
+  <label for="inputEmail3" class="col-sm-3 control-label text-right">ชื่อที่แสดงในเว็บเพือนใจ</label>
+  <div class="col-sm-5">
+    <input type="text" class="form-control" placeholder="ชื่อ" ng-model="user.username" maxlength="20" required>
+  </div>
+  <div class="col-sm-6"></div>
+  <div class="clearfix"></div><br>
+
+
+<hr>
+  <h2>อีเมล</h2>
+    <label class="col-sm-3 control-label text-right" for="exampleInputEmail2">อีเมล</label>
+    <div class="col-sm-5">
+    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="อีเมล" ng-model="user.email" popover-placement="right" popover="I appeared on focus! Click away and I'll vanish..."  popover-trigger="focus" maxlength="65" required>
+    </div>
+    <div class="col-sm-6"></div>
+      <div class="clearfix"></div>
+
 <hr>
 
-<h2>อีเมล</h2> {{user.email}}  
+<h2>รูปปก</h2> 
+  <label class="col-sm-3 control-label text-right" for="exampleInputEmail2">ลิงค์ของรูปภาพ</label>
+  <div class="col-sm-5">
+  <input type="email" class="form-control" id="exampleInputEmail2" placeholder="ลิงค์" ng-model="user.coverimg" popover-placement="right" popover="I appeared on focus! Click away and I'll vanish..."  popover-trigger="focus">
+  </div>
+  <div class="col-sm-6"></div>
+    <div class="clearfix"></div>
+
 <hr>
 
-<h2>รูปปก</h2> {{user.coverimg}}
+<h2>เหตุผลที่อยากเป็นเพื่อนใจ</h2>
+  <div class="col-sm-6 col-sm-offset-2">
+  <textarea type="text" class="form-control" rows="3" id="exampleInputEmail2" placeholder="เหตุผล" ng-model="user.reason" maxlength="500"></textarea>
+  </div>
+  <div class="col-sm-6"></div>
+    <div class="clearfix"></div>
 <hr>
 
-<h2>เหตุผลที่อยากเป็นเพื่อนใจ</h2> {{user.reason}}
+<h2>ประวัติโดยสั่น</h2>
+  <div class="col-sm-6 col-sm-offset-2">
+  <textarea type="text" class="form-control" rows="3" id="exampleInputEmail2" placeholder="ประวัติโดยสั่น" ng-model="user.summary" maxlength="500"></textarea>
+  </div>
+  <div class="col-sm-6"></div>
+    <div class="clearfix"></div>
+</form>
 <hr>
 
-<h2>ประวัติโดยสั่น</h2> {{user.summary}}
-<hr>
-
+<button class="btn btn-primary btn-lg" style="width: 60%; font-size: 1.2em; margin:0 auto; display: block">แก้ไขข้อมูลส่วนตัว</button>
 <br>
 </div>
