@@ -63,9 +63,9 @@
 					</ul>
 				</div>
 
-				<div class="col-md-10 no-gutter">
+				<div class="col-md-10 no-gutter" style="padding-right: 15px;">
 					<div class="topPanel">
-						<h2 style='font-size: 2.2em; margin:15px;'>{{::question.name}}</h2>
+						<h2 style='font-size: 3em; margin:15px;'>{{::question.name}}</h2>
 						<div style="margin: 5px 15px;">
 							<a class="topic" ng-href="/topics/{{::question.topic}}"><span class="label label-primary">หัวข้อ: {{::question.topic}}</span> -</a>
 							<a style="display:inline-block; margin:0 5px 10px 0;" ng-repeat="tag in question.tags" ng-href="/tags/{{::tag._id}}"><span class="label label-info"><i class="fa fa-tag"></i> {{::tag.name}}</span></a>

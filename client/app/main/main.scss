@@ -2,62 +2,15 @@
   display: none !important;
 }
 
-/*@font-face {
-    font-family: font6;
-    src:url(/assets/fonts/EDPenSook.ttf);
-}*/
-@font-face {
-    font-family: font1;
-    src:url(/assets/fonts/1.ttf);
-}
-
-@font-face {
-    font-family: font2;
-    src:url(/assets/fonts/Nithan.ttf);
-}
-
-@font-face {
-    font-family: font3;
-    src:url(/assets/fonts/ASGMatrathanLight.ttf);
-}
-
 @font-face {
     font-family: font4;
     src:url(/assets/fonts/CSPraJad.otf);
 }
-
-@font-face {
-    font-family: font5;
-    src:url(/assets/fonts/DRdeco.ttf);
-}
 @font-face {
     font-family: font6;
     src:url(/assets/fonts/EDPenSook.ttf);
 }
-@font-face {
-    font-family: font7;
-    src:url(/assets/fonts/kruengprung.ttf);
-}
-@font-face {
-    font-family: font8;
-    src:url(/assets/fonts/PGVIM.ttf);
-}
-@font-face {
-    font-family: font9;
-    src:url(/assets/fonts/Quark-light.otf);
-}
-@font-face {
-    font-family: font10;
-    src:url(/assets/fonts/torsilp-wadkhen.ttf);
-}
-@font-face {
-    font-family: font11;
-    src:url(/assets/fonts/WDB_Bangna.ttf);
-}
-@font-face {
-    font-family: font12;
-    src:url(/assets/fonts/LayijiRuDuuRon.ttf);
-}
+
 
 * {
     font-family: font6;
@@ -356,6 +309,10 @@ a:hover {
   display:inline;
 }
 
+.questionTitle {
+  font-size: 2em; margin-top: 25px; margin-bottom: 0; font-family: font4;
+}
+
 .nav-pills {
   display:table;
   margin: 0 auto;
@@ -444,14 +401,15 @@ a:hover {
   padding:10px;
 }
 
-.questionContent p {
+.questionContent > * {
   padding:15px;
+  font-family: font4;
 }
 
 .questionHelpBtn {
   display: block;
   width:250px;
-  margin: 10px auto;
+  margin: 0px auto;
   font-size: 1.5em;
   color: #428bca;
 }
