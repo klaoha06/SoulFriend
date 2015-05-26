@@ -41,7 +41,7 @@
                 <a ng-repeat="question in myQuestions" class="list-group-item" ng-href="/questions/{{question._id}}">
                   <div class="row">
                     <div class="col-md-8" style="position: relative;">
-                      <div ng-if="question.anonymous" class="triangle-right anonymousQuestion">
+                      <div ng-if="question.anonymous" class="anonymousQuestion triangle-right" style="width: 150px;">
                         <p><i class="fa fa-user-secret"></i> ถามโดยไม่ระบุชื่อ</p>
                       </div>
                       <h3 style="margin-top: 0; padding-top: 20px;">{{question.name}}</h3>
@@ -71,7 +71,7 @@
             </div>
           </div>
         </div>
-          <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/ask')" role="button" style="width:100%;"><i ng-class="shake" class="fa fa-question"></i> ถามปัญหา</a>
+          <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/ask')" role="button" style="width:100%; margin:15px 0;"><i ng-class="shake" class="fa fa-question"></i> ถามปัญหา</a>
       </tab>
       <tab select="onSelectCategory('myAnswersInQuestions')">
         <tab-heading>คําถามที่ได้ให้คําตอบ <span class="badge" style="font-size: inherit;">{{currentUser.answers_count | thousandSuffix}}</span></tab-heading>
@@ -118,7 +118,7 @@
             </div>
           </div>
         </div>
-          <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/')" role="button" style="width:100%;"><i ng-class="shake" class="fa fa-heart"></i> ตอบปัญหาให้เพื่อนๆ</a>
+          <a ng-mouseover="shake='animated bounce'" ng-mouseleave="shake=''" class="btn btn-default questionHelpBtn" ng-click="goTo('/')" role="button" style="width:100%; margin:15px 0;"><i ng-class="shake" class="fa fa-heart"></i> ตอบปัญหาให้เพื่อนๆ</a>
         </tab>
     </tabset>
 
