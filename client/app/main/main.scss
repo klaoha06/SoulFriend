@@ -3,9 +3,14 @@
 }
 
 @font-face {
+    font-family: font4;
+    src:url(/assets/fonts/CSPraJad.otf);
+}
+@font-face {
     font-family: font6;
     src:url(/assets/fonts/EDPenSook.ttf);
 }
+
 
 * {
     font-family: font6;
@@ -36,6 +41,11 @@ iframe{
 
 .page-header > h1 {
   font-size: 5em;
+}
+
+.floatCenter {
+  margin: 0 auto;
+  display: block;
 }
 
 /*img {
@@ -299,6 +309,10 @@ a:hover {
   display:inline;
 }
 
+.questionTitle {
+  font-size: 2em; margin-top: 25px; margin-bottom: 0; font-family: font4;
+}
+
 .nav-pills {
   display:table;
   margin: 0 auto;
@@ -387,14 +401,15 @@ a:hover {
   padding:10px;
 }
 
-.questionContent p {
+.questionContent > * {
   padding:15px;
+  font-family: font4;
 }
 
 .questionHelpBtn {
   display: block;
   width:250px;
-  margin: 10px auto;
+  margin: 0px auto;
   font-size: 1.5em;
   color: #428bca;
 }

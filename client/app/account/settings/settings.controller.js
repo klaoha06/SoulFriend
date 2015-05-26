@@ -13,6 +13,14 @@ angular.module('puanJaiApp')
       name: 'เปลี่ยนรหัส',
       template: 'changepass/changepassword.html'
     },
+    // {
+    //   name: 'ลืมรหัส',
+    //   template: 'changepass/changepassword.html'
+    // },
+    //     {
+    //   name: 'ลืมรหัส',
+    //   template: 'changepass/changepassword.html'
+    // }
     ];
 
     $scope.setSection = function(sectionTemplate){

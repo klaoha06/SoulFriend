@@ -7,7 +7,7 @@ angular.module('puanJaiApp')
 		$scope.userGroups = _.chunk(sampleUsers, 3);
 	});
 
-	$scope.background = parallaxHelper.createAnimator(-0.5);
+	$scope.background = parallaxHelper.createAnimator(-0.3);
 
      // Login with FB
      $scope.loginOauth = function(provider) {
