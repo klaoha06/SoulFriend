@@ -15,7 +15,11 @@ angular.module('puanJaiApp')
     }
 
     $scope.editProfile = function(form){
-      if(form.$valid) {
+      if (!$scope.user.password && $scope.user.provider === 'local') {
+        $scope.alerts.push({msg: 'กรุณาใส่รหัสก่อนแก้ไขข้อมูล'});
+        return;
+      }
+      if(form.$valid && !form.$pristine) {
         var editedProfile = {
           name: {
             first: $scope.user.name.first,
@@ -32,9 +36,14 @@ angular.module('puanJaiApp')
         .then( function(){
           $scope.alerts.push({msg:'แก้ไขข้อมูลส่วนตัวเรียบร้อย', type:'success'});
         })
-        .catch( function(){
+        .catch( function(err){
+          if (err.status === 422) {
+            $scope.alerts.push({msg: 'มีคนใช้อีเมลนี้แล้ว กรุณาใส่อีเมลใหม่'});
+          }
+          if (err.status === 403) {
+            $scope.alerts.push({msg: 'รหัสผิด กรุณาใส่รหัสอีกครั่ง'});
+          }
           // form.password.$setValidity('mongoose', false);
-          $scope.alerts.push({msg: 'รหัสผิด กรุณาใส่รหัสใหม่'});
         });
       }
     };
