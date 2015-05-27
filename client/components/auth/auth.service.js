@@ -105,6 +105,17 @@ angular.module('puanJaiApp')
         }).$promise;
       },
 
+      editProfile: function(newProfile, callback) {
+        var cb = callback || angular.noop;
+
+        return User.editProfile({ id: $rootScope.user._id }, { user: newProfile
+        }, function(user) {
+          return cb(user);
+        }, function(err) {
+          return cb(err);
+        }).$promise;
+      },
+
       /**
        * Gets all available info on authenticated user
        *

@@ -7,7 +7,6 @@
       </div>
     <div class="col-sm-10 col-sm-offset-1">
       <form class="form" name="form" ng-submit="register(form)" novalidate>
-      <!-- <h1>สมัครผ่านเว็บอื่น</h1> -->
       <div class="text-center">
         <a class="btn btn-facebook btn-lg" href="" ng-click="loginOauth('facebook')">
           <i class="fa fa-facebook white"></i> สมัครผ่าน Facebook
@@ -20,7 +19,6 @@
         </a>
       </div>
       <p style="color:#AAAAAA; text-align: center; margin:15px 0;">หรือสมัครกลับเพื่อนใจโดยกรอกใบสมัครด้านล่าง</p>
-        <!-- <h1>สมัครผ่านเว็บเพื่อนใจ</h1> -->
         <div class="form-group" ng-class="{ 'has-success': form.name.$valid && submitted,
                                             'has-error': form.name.$invalid && submitted }">
           <label>ชื่อจริง</label>

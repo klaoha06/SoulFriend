@@ -185,6 +185,9 @@ UserSchema.methods = {
     if (!password || !this.salt) return '';
     var salt = new Buffer(this.salt, 'base64');
     return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
+  },
+  sendVerificationEmail: function(){
+    return email.sendEmailOnSignUp({ email: this.email, verificationCode: this.verificationCode});
   }
 };
 

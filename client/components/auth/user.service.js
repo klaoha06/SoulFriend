@@ -12,6 +12,12 @@ angular.module('puanJaiApp')
           controller:'password'
         }
       },
+      editProfile: {
+        method: 'PUT',
+        params: {
+          controller:'editprofile'
+        }
+      },
       get: {
         method: 'GET',
         params: {
