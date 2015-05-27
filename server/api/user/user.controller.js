@@ -149,16 +149,26 @@ exports.changePassword = function(req, res, next) {
 
 exports.editProfile = function(req, res, next) {
   var user = req.user;
+  var updated;
   User.findById(user._id, function (err, user) {
-    if(user.authenticate(req.body.user.password)) {
+    if(user.provider === 'local') {
+      if(user.authenticate(req.body.user.password)) {
+        delete req.body.user.password
+        updated = _.merge(user, req.body.user);
+        updated.save(function(err) {
+          if (err) return validationError(res, err);
+          res.send(200);
+        });
+      } else {
+        res.send(403);
+      }
+    } else {
       delete req.body.user.password
-      var updated = _.merge(user, req.body.user);
+      updated = _.merge(user, req.body.user);
       updated.save(function(err) {
         if (err) return validationError(res, err);
         res.send(200);
       });
-    } else {
-      res.send(403);
     }
   });
 };
@@ -170,7 +180,7 @@ exports.me = function(req, res, next) {
   var userId = req.user._id;
   User.findOne({
     _id: userId
-  }, '-salt -hashedPassword -verificationCode -provider', function(err, user) { // don't ever give out the password or salt
+  }, '-salt -hashedPassword -verificationCode', function(err, user) { // don't ever give out the password or salt
     if (err) return next(err);
     if (!user) return res.json(401);
     res.json(user);

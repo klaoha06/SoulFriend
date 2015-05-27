@@ -1,7 +1,6 @@
 <div ng-controller="EditProfileCtrl">
 <h1 class="text-center">แก้ไขข้อมูลส่วนตัว - Edit Your Profile</h1>
 <hr>
-
 <h2>การยืนยันอีเมลของคุณ</h2>
   <div ng-if="!user.emailVerification" class="text-center col-sm-12 emailValidation" ng-if="!user.emailVerification">
     <h2 class="red">ยังไม่ได้รับการยืนยัน</h2>
@@ -93,14 +92,14 @@
     <div class="clearfix"></div>
 <hr>
 
-<div ng-if="form.$dirty"class="input-group input-group-lg col-sm-8 col-sm-offset-2">
-  <span class="input-group-addon white" id="sizing-addon1" style="  background-color: #ec971f;">กรุณายืนยันรหัสก่อนแก้ไขข้อมูลส่วนตัว</span>
-  <input name="password" type="password" class="form-control" placeholder="รหัส" aria-describedby="sizing-addon1" ng-model="user.password">
+<div ng-if="form.$dirty && user.provider === 'local'"class="input-group input-group-lg col-sm-10 col-sm-offset-1">
+  <span class="input-group-addon white" id="sizing-addon1" style="  background-color: #ec971f; font-size: 1.2em;">กรุณายืนยันรหัสก่อนแก้ไขข้อมูลส่วนตัว</span>
+  <input name="password" type="password" class="form-control" placeholder="รหัส" aria-describedby="sizing-addon1" ng-model="user.password" style="height: 53px;">
   <hr>
 </div>
-<!-- <br> -->
 </form>
-<button ng-class="{true: 'disabled', false: ''}[!user.password || form.$invalid]"type="submit" class="btn btn-primary btn-lg floatCenter" style="width: 70%; font-size: 1.2em;" ng-click="editProfile(form)">แก้ไขข้อมูลส่วนตัว</button>
+<button ng-if="user.provider === 'local'" ng-class="{true: 'disabled', false: ''}[!user.password || form.$invalid]"type="submit" class="btn btn-primary btn-lg floatCenter" style="width: 83.33%; font-size: 1.2em;" ng-click="editProfile(form)">แก้ไขข้อมูลส่วนตัว</button>
+<button ng-if="user.provider !== 'local'" ng-class="{true: 'disabled', false: ''}[form.$invalid || form.$pristine]"type="submit" class="btn btn-primary btn-lg floatCenter" style="width: 83.33%; font-size: 1.2em;" ng-click="editProfile(form)">แก้ไขข้อมูลส่วนตัว</button>
 <br>
 <alert class="alert text-center col-sm-10 col-sm-offset-1" ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"><span style="font-size:1.2em;"><i class="fa fa-{{alert.icon}}"></i> {{alert.msg}}</span></alert>
 </div>

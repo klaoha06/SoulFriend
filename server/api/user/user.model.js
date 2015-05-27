@@ -79,7 +79,8 @@ UserSchema
       'follower_count': this.follower_count,
       'follower_id': this.follower_id,
       'following_count': this.following_count,
-      'following_id': this.following_id
+      'following_id': this.following_id,
+      'provider': this.provider
     };
   });
 
