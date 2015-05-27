@@ -57,8 +57,4 @@ angular.module('puanJaiApp')
       $http.get('/api/users/' + $scope.user._id + '/sendverificationemail');
     };
 
-    $scope.allowEdit = function(){
-
-    }
-
   });
