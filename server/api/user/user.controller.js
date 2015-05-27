@@ -99,7 +99,7 @@ exports.verify = function (req, res, next) {
   User.findOne({verificationCode: req.params.hex}, function (err, user) {
     if (err) return next(err);
     if (user) {
-      console.log('user found')
+      console.log('user found using '+user.verificationCode)
       user.emailVerification = true;
       user.save();
       return res.redirect('http://www.puanjai.com/verified');
