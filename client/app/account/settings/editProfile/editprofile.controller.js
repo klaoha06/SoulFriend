@@ -8,6 +8,9 @@ angular.module('puanJaiApp')
     if ($cookieStore.get('token')) {    
        User.get(function(res){
          $scope.user = res;
+         if (!$scope.user.email) {
+          $scope.alerts.push({msg: 'คุณยังไม่ได้ใส่อีเมลของคุณ กรุณาใส่อีเมล', type: 'danger', icon: 'envelope-o'});
+         }
          if ($scope.user.emailVerification === false) {
           $scope.alerts.push({msg: 'อีเมลของคุณยังไม่ได้การยืนยัง กรุณาเช็คอีเมลของคุณ', type: 'danger', icon: 'envelope-o'});
          }
