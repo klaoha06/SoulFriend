@@ -9,7 +9,7 @@
 <meta property="og:type" content="website" view-head/>
 <meta property="og:locale" content="th_TH" view-head/>
 
-<div class="container-fluid background-blue-gradient" style="padding-top: 15px;">
+<div class="container-fluid background-blue-gradient" style="padding-top: 15px;" itemscope itemtype="http://schema.org/Question">
 
 	<div class="col-sm-12 col-lg-2">
 		<div ng-if="question && !question.anonymous" class="panel panel-default panel-card haveBorder">
@@ -48,7 +48,7 @@
 					<ul class="nav nav-pills questionSidePanel">
 						<li>
 							<a ng-click="upVote(question._id, $element)">โหวตขึ้น<br><i class="fa fa-thumbs-up"></i></a>
-							<h3>{{question.votes_count}}</h3>
+							<h3 itemprop="upVoteCount">{{question.votes_count}}</h3>
 							<a ng-click="downVote(question._id, $element)"><i class="fa fa-thumbs-down"></i><br>โหวตลง</a>
 							<hr>
 						</li>
@@ -65,7 +65,7 @@
 
 				<div class="col-md-10 no-gutter" style="padding-right: 15px;">
 					<div class="topPanel">
-						<h2 style='font-size: 3em; margin:15px;'>{{::question.name}}</h2>
+						<h2 itemprop="name"style='font-size: 3em; margin:15px;'>{{::question.name}}</h2>
 						<div style="margin: 5px 15px;">
 							<a class="topic" ng-href="/topics/{{::question.topic}}"><span class="label label-primary">หัวข้อ: {{::question.topic}}</span> -</a>
 							<a style="display:inline-block; margin:0 5px 10px 0;" ng-repeat="tag in question.tags" ng-href="/tags/{{::tag._id}}"><span class="label label-info"><i class="fa fa-tag"></i> {{::tag.name}}</span></a>
@@ -73,7 +73,7 @@
 					</div>
 
 					<div style="padding:15px;">
-						<div class="textOutput"ta-bind ng-model="question.body" style="word-wrap: break-word; padding:15px; line-height: 2;"></div>
+						<div itemprop="text" class="textOutput"ta-bind ng-model="question.body" style="word-wrap: break-word; padding:15px; line-height: 2;"></div>
 						<hr style="width:85%; margin-bottom:10px;">
 						<div class="col-md-10 col-md-offset-1" ng-repeat="comment in question.comments">
 							<p style="padding:0; font-size:18px; color:rgb(110, 109, 109);">{{comment.content}}
@@ -118,7 +118,7 @@
 
 								<br/>
 								<small>{{question.created | timeAgo}}</small><br/>
-								<small>{{::question.created | date:'MMM d, y h:mm a'}}</small>
+								<small itemprop="dateCreated" datetime="{{::question.created}}">{{::question.created | date:'MMM d, y h:mm a'}}</small>
 							</div>
 						</div>
 					</div>
@@ -154,22 +154,22 @@
 
 	</div>
 	<div ng-if="question.answers.length>=1" style="padding:0 15px; border-top: 1px solid #dddddd;">
-		<h1>{{question.answers_count}} คําตอบเพื่อนใจ</h1>
+		<h1 itemprop="answerCount">{{question.answers_count}} คําตอบเพื่อนใจ</h1>
 	</div>
 
-	<div class="row answersInQuestion" ng-repeat="answer in question.answers | orderBy:'votes_count': true" style="border-bottom: 1px solid #dddddd; border-top: 1px solid #dddddd;">
+	<div itemprop="suggestedAnswer acceptedAnswer" itemscope itemtype="http://schema.org/Answer" class="row answersInQuestion" ng-repeat="answer in question.answers | orderBy:'votes_count': true" style="border-bottom: 1px solid #dddddd; border-top: 1px solid #dddddd;">
 		<div class="col-md-10">
 			<div class="row" style="background: aliceblue; border-bottom: 1px solid #dddddd;">
 				<div class="col-md-2 no-gutter" style="margin: 10px 0;">
 					<img class="userIcon" ng-src="{{::answer.coverimg}}" />
 				</div>
 				<div class="col-md-10 col-xs-12 no-gutter" style="padding: 10px; font-size:0.9em;">
-					<p style="margin: 15px 15px 15px 0;"><a ng-href="/users/{{::question.ownerId}}">{{::answer.username}}</a><small>
+					<p style="margin: 15px 15px 15px 0;"><a ng-href="/users/{{::question.ownerId}}">{{::answer.username}}</a><small itemprop="dateCreated" datetime="{{::answer.created">
 						- {{::answer.created | timeAgo}} - {{::answer.created | date:'MMM d, y h:mm a'}}</small></p>
 					</div>
 
 				</div>
-				<div class="textOutput"ta-bind ng-model="answer.content" style="word-wrap: break-word; padding:25px;"></div>
+				<div itemprop="text" class="textOutput"ta-bind ng-model="answer.content" style="word-wrap: break-word; padding:25px;"></div>
 				<hr>
 				<div class="col-md-11 col-md-offset-1" style="padding:0;"ng-repeat="comment in answer.comments track by $index">
 					<p style="padding:0; font-size:16px; color:rgb(110, 109, 109);">{{comment.content}} - <span style="color:#999; font-size: 16px;">{{::comment.created | timeAgo}} โดย {{::comment.username}}
@@ -213,7 +213,7 @@
 			<ul class="nav nav-pills answerSidePanel">
 				<li>
 					<a ng-click="upVoteAns(answer.user_id)">โหวตขึ้น<br><i class="fa fa-thumbs-up"></i></a>
-					<h3 style="text-align: center;">{{answer.votes_count}}</h3>
+					<h3 itemprop="upvoteCount" class="text-center">{{answer.votes_count}}</h3>
 					<a ng-click="downVoteAns(answer.user_id)"><i class="fa fa-thumbs-down"></i><br>โหวตลง</a>
 					<hr style="margin-top:0; margin-bottom: 0; width:80%; ">
 					<a ng-if="questionOwner()" ng-click="makeGoodAns(answer.user_id)"><i class="fa fa-heart fa-2x" style="margin:10px;" ng-class="{true: 'fa-heart red', false: 'fa-heart-o grey'}[answer.goodAns]"></i><br>โดนใจ</a>
