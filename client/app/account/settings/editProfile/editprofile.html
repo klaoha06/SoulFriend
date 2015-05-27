@@ -1,37 +1,48 @@
 <div ng-controller="EditProfileCtrl">
-<alert class="alert" ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"><span style="font-size:1.2em;"><i class="fa fa-{{alert.icon}}"></i> {{alert.msg}}</span></alert>
-<h1>แก้ไขข้อมูลส่วนตัว</h1>
+<h1 class="text-center">แก้ไขข้อมูลส่วนตัว - Edit Your Profile</h1>
 <hr>
 
 <h2>การยืนยันอีเมลของคุณ</h2>
-  <div class="text-center" ng-if="!user.emailVerification">
-    <h2>ยังไม่ได้รับการยืนยัน</h2>
-    <small>กรุณาเช็คอีเมลคุณ</small>
-    <small>หรือ</small>
-  <button class="btn btn-danger btn-lg floatCenter bigger"><i class="fa fa-envelope-o"></i> ส่งอีเมลไปให้ยืนยันอีกที</button>
+  <div ng-if="!user.emailVerification" class="text-center col-sm-12 emailValidation" ng-if="!user.emailVerification">
+    <h2 class="red">ยังไม่ได้รับการยืนยัน</h2>
+    <button ng-if="notSent"class="btn btn-danger btn-lg floatCenter bigger" style="margin:15px auto;" ng-click="sendVerificationEmail()"><i class="fa fa-envelope-o"></i> ส่งอีเมลไปให้ยืนยันอีกครั่ง</button>
+    <button ng-if="!notSent"class="btn btn-info btn-lg floatCenter bigger" style="margin:15px auto;"><i class="fa fa-envelope-o"></i> เราได้ส่งอีเมลไปหาคุณแล้ว กรุณาเช็คอีเมลของคุณเพื่อยืนยัน</button>
+    
   </div>
-  <button ng-if="user.emailVerification" class="btn btn-success btn-lg floatCenter bigger"><i class="fa fa-check"></i> ยืนยันแล้ว</button>
-    <span id="helpBlock" class="help-block text-center">เพื่อเป็นการยืนยันตัวตนที่แท้จริง และเพื่อประโยชน์ในการติดต่อเวลาเพื่อนใจท่านอื่นมาช่วยตอบปัญหาของคุณหรือมาร่วมสนทนาในคําถามของคุณ</span>
+  <div ng-if="user.emailVerification"class="text-center col-sm-12 emailValidation">
+  <h2 class="red">่ได้รับการยืนยันแล้ว</h2>
+  <button class="btn btn-success btn-lg floatCenter bigger" style="margin:15px auto;"><i class="fa fa-check"></i> ได้รับการยืนยันแล้ว</button>
+  </div>
+    <span id="helpBlock" class="help-block text-center">เพื่อเป็นการยืนยันตัวตนที่แท้จริง และเพื่อประโยชน์หรือช่องทางในการติดต่อเวลาเพื่อนใจท่านอื่นมาช่วยตอบปัญหาของคุณหรือมาร่วมสนทนาในคําถามของคุณ</span>
+  <div class="clearfix"></div><br>
 <hr>
 
 <h2>ชื่อ</h2>
-<form class="form-group">
+<form class="form-group editUserForm" name="form">
   <label for="inputEmail3" class="col-sm-3 control-label text-right">ชื่อจริง</label>
-  <div class="col-sm-5">
-    <input type="text" class="form-control" placeholder="ชื่อ" ng-model="user.name.first" maxlength="20" required>
+  <div class="col-sm-7">
+    <input type="text" name="firstname" class="form-control" placeholder="ชื่อ" ng-model="user.name.first" maxlength="20" required>
+    <p class="help-block red" ng-show="form.firstname.$error.required">
+      กรุณาใส่ชื่อจริงของคุณ
+    </p>
   </div>
   <div class="col-sm-6"></div>
   <div class="clearfix"></div><br>
   <label for="inputEmail3" class="col-sm-3 control-label text-right" required>นามสกุล</label>
-  <div class="col-sm-5">
-    <input type="text" class="form-control" placeholder="ชื่อ" ng-model="user.name.last" maxlength="35" required>
+  <div class="col-sm-7">
+    <input type="text" name="lastname" class="form-control" placeholder="ชื่อ" ng-model="user.name.last" maxlength="35" required>
+    <p class="help-block red" ng-show="form.lastname.$error.required">
+      กรุณาใส่ชื่อนามสกุลของคุณ
+    </p>
   </div>
   <div class="col-sm-6"></div>
   <div class="clearfix"></div><br>
-
   <label for="inputEmail3" class="col-sm-3 control-label text-right">ชื่อที่แสดงในเว็บเพือนใจ</label>
-  <div class="col-sm-5">
-    <input type="text" class="form-control" placeholder="ชื่อ" ng-model="user.username" maxlength="20" required>
+  <div class="col-sm-7">
+    <input type="text" name="username" class="form-control" placeholder="ชื่อที่แสดงในเว็บ" ng-model="user.username" maxlength="20" required>
+    <p class="help-block red" ng-show="form.username.$error.required">
+      กรุณาใส่ชื่อที่แสดงในเว็บ
+    </p>
   </div>
   <div class="col-sm-6"></div>
   <div class="clearfix"></div><br>
@@ -40,8 +51,14 @@
 <hr>
   <h2>อีเมล</h2>
     <label class="col-sm-3 control-label text-right" for="exampleInputEmail2">อีเมล</label>
-    <div class="col-sm-5">
-    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="อีเมล" ng-model="user.email" popover-placement="right" popover="I appeared on focus! Click away and I'll vanish..."  popover-trigger="focus" maxlength="65" required>
+    <div class="col-sm-7">
+    <input type="email" class="form-control" name="email" id="exampleInputEmail2" placeholder="อีเมล" ng-model="user.email" popover-placement="top" popover="เพื่อเป็นการยืนยันตัวตนที่แท้จริง และเพื่อประโยชน์หรือช่องทางในการติดต่อเวลาเพื่อนใจท่านอื่นมาช่วยตอบปัญหาของคุณหรือมาร่วมสนทนาในคําถามหรือคําตอบของคุณ"  popover-trigger="focus" maxlength="65" required>
+    <p class="help-block red" ng-show="form.email.$error.email">
+      ไม่สามารถใช้อีเมลนี้ได้
+    </p>
+    <p class="help-block red" ng-show="form.email.$error.required">
+      กรุณาใส่อีเมลของคุณ
+    </p>
     </div>
     <div class="col-sm-6"></div>
       <div class="clearfix"></div>
@@ -50,8 +67,10 @@
 
 <h2>รูปปก</h2> 
   <label class="col-sm-3 control-label text-right" for="exampleInputEmail2">ลิงค์ของรูปภาพ</label>
-  <div class="col-sm-5">
-  <input type="email" class="form-control" id="exampleInputEmail2" placeholder="ลิงค์" ng-model="user.coverimg" popover-placement="right" popover="I appeared on focus! Click away and I'll vanish..."  popover-trigger="focus">
+  <div class="col-sm-7">
+  <input type="url" class="form-control" id="exampleInputEmail2" placeholder="ลิงค์" ng-model="user.coverimg" popover-placement="top" popover="กรุณาใช้รูปที่เล็กเท่า icon หรือ เล็กกว่า 300px x 300px"  popover-trigger="focus"><br>
+  <img class="floatCenter haveBorder" ng-src="{{user.coverimg}}">
+  <br>
   </div>
   <div class="col-sm-6"></div>
     <div class="clearfix"></div>
@@ -59,7 +78,7 @@
 <hr>
 
 <h2>เหตุผลที่อยากเป็นเพื่อนใจ</h2>
-  <div class="col-sm-6 col-sm-offset-2">
+  <div class="col-sm-8 col-sm-offset-2">
   <textarea type="text" class="form-control" rows="3" id="exampleInputEmail2" placeholder="เหตุผล" ng-model="user.reason" maxlength="500"></textarea>
   </div>
   <div class="col-sm-6"></div>
@@ -67,14 +86,21 @@
 <hr>
 
 <h2>ประวัติโดยสั่น</h2>
-  <div class="col-sm-6 col-sm-offset-2">
+  <div class="col-sm-8 col-sm-offset-2">
   <textarea type="text" class="form-control" rows="3" id="exampleInputEmail2" placeholder="ประวัติโดยสั่น" ng-model="user.summary" maxlength="500"></textarea>
   </div>
   <div class="col-sm-6"></div>
     <div class="clearfix"></div>
-</form>
 <hr>
 
-<button class="btn btn-primary btn-lg" style="width: 60%; font-size: 1.2em; margin:0 auto; display: block">แก้ไขข้อมูลส่วนตัว</button>
+<div ng-if="form.$dirty"class="input-group input-group-lg col-sm-8 col-sm-offset-2">
+  <span class="input-group-addon white" id="sizing-addon1" style="  background-color: #ec971f;">กรุณายืนยันรหัสก่อนแก้ไขข้อมูลส่วนตัว</span>
+  <input name="password" type="password" class="form-control" placeholder="รหัส" aria-describedby="sizing-addon1" ng-model="user.password">
+  <hr>
+</div>
+<!-- <br> -->
+</form>
+<button ng-class="{true: 'disabled', false: ''}[!user.password || form.$invalid]"type="submit" class="btn btn-primary btn-lg floatCenter" style="width: 70%; font-size: 1.2em;" ng-click="editProfile(form)">แก้ไขข้อมูลส่วนตัว</button>
 <br>
+<alert class="alert text-center col-sm-10 col-sm-offset-1" ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"><span style="font-size:1.2em;"><i class="fa fa-{{alert.icon}}"></i> {{alert.msg}}</span></alert>
 </div>

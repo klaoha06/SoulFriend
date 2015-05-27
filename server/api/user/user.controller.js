@@ -4,6 +4,8 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+var _ = require('lodash');
+
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -105,6 +107,14 @@ exports.verify = function (req, res, next) {
   });
 };
 
+exports.sendVerificationEmail = function(req,res,next){
+  User.findById(req.params.id, function (err, user) {
+    if (err) return next(err);
+      user.sendVerificationEmail();
+      return res.send(200)
+  });
+}
+
 /**
  * Deletes a user
  * restriction: 'admin'
@@ -128,6 +138,22 @@ exports.changePassword = function(req, res, next) {
     if(user.authenticate(oldPass)) {
       user.password = newPass;
       user.save(function(err) {
+        if (err) return validationError(res, err);
+        res.send(200);
+      });
+    } else {
+      res.send(403);
+    }
+  });
+};
+
+exports.editProfile = function(req, res, next) {
+  var user = req.user;
+  User.findById(user._id, function (err, user) {
+    if(user.authenticate(req.body.user.password)) {
+      delete req.body.user.password
+      var updated = _.merge(user, req.body.user);
+      updated.save(function(err) {
         if (err) return validationError(res, err);
         res.send(200);
       });

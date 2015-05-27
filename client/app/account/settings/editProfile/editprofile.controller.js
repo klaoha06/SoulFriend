@@ -1,21 +1,51 @@
 'use strict';
 
 angular.module('puanJaiApp')
-  .controller('EditProfileCtrl', function ($scope, $cookieStore, User) {
+  .controller('EditProfileCtrl', function ($scope, $cookieStore, User, Auth, $http) {
     $scope.alerts = [];
+    $scope.notSent = true;
 
     if ($cookieStore.get('token')) {    
        User.get(function(res){
          $scope.user = res;
-         console.log(res)
          if ($scope.user.emailVerification === false) {
-          $scope.alerts.push({msg: 'อีเมลของคุณยังไม่ได้การยืนยัง กรุณาเช็คอีเมลของคุณ', type: 'danger', icon: 'envelope-o'})
+          $scope.alerts.push({msg: 'อีเมลของคุณยังไม่ได้การยืนยัง กรุณาเช็คอีเมลของคุณ', type: 'danger', icon: 'envelope-o'});
          }
        });
     }
 
+    $scope.editProfile = function(form){
+      if(form.$valid) {
+        var editedProfile = {
+          name: {
+            first: $scope.user.name.first,
+            last: $scope.user.name.last
+          },
+          coverimg: $scope.user.coverimg,
+          email: $scope.user.email,
+          summary: $scope.user.summary,
+          reason: $scope.user.reason,
+          username: $scope.user.username,
+          password: $scope.user.password
+        };
+        Auth.editProfile(editedProfile)
+        .then( function(){
+          $scope.alerts.push({msg:'แก้ไขข้อมูลส่วนตัวเรียบร้อย', type:'success'});
+        })
+        .catch( function(){
+          // form.password.$setValidity('mongoose', false);
+          $scope.alerts.push({msg: 'รหัสผิด กรุณาใส่รหัสใหม่'});
+        });
+      }
+    };
+
     $scope.closeAlert = function(index){
       $scope.alerts.splice(index,1);
+    };
+
+    $scope.sendVerificationEmail = function(){
+      $scope.notSent = false;
+      $http.get('/api/users/' + $scope.user._id + '/sendverificationemail');
     };
 
   });

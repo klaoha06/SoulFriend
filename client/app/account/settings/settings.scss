@@ -1,5 +1,5 @@
 #settingSection {
-	border-right: 1px solid #dddddd;
+	/*border-right: 1px solid #dddddd;*/
 }
 #settingSection ul {
 	width: 100%;
@@ -17,6 +17,8 @@
 
 #mainEdit {
 	padding:15px;
+	border-left:1px solid #dddddd;
+	border-top: 1px solid #dddddd;
 }
 
 #mainEdit h1 {
@@ -31,5 +33,16 @@
 	background-color: white;
 	border-top: 1px solid #dddddd;
 	border-bottom: 1px solid #dddddd;
-	width:101%;
+	width:100.2%;
+	z-index:12;
+}
+
+/*edit user form*/
+.editUserForm > div > input, .editUserForm > div > textarea {
+	font-size: 1em;
+	font-family: font4;
+}
+
+.emailValidation > * {
+	display: inline;
 }

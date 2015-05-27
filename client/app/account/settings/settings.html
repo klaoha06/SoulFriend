@@ -3,6 +3,7 @@
     <div id="settingSection" class="col-sm-2 no-gutter">
     <ul class="nav nav-pills nav-stacked text-center">
       <h1>รายการ</h1>
+      <hr style="margin:0">
       <li ng-repeat="section in sections"><a ng-class="{true: 'sectionActive', false: ''}[section.template === template]" ng-click="setSection(section.template);">{{section.name}}</a></li>
     </ul>
     </div>

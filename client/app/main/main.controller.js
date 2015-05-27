@@ -125,35 +125,6 @@ angular.module('puanJaiApp')
     });
   };
 
-  // Get Articles
-  // $scope.getArticles = function (f, o, r, t) {
-  //   socket.unsyncUpdates('article');
-  //   articlesFilter = f || articlesFilter;
-  //   if ($scope.selectedTopic){
-  //     articlesFilter.topic = $scope.selectedTopic;
-  //   }
-  //   articlesOrder = o || articlesOrder;
-  //   articlesReverse = r || articlesReverse;
-  //   $scope.selectedTopic = t || $scope.selectedTopic;
-  //   var sort;
-  //   if (articlesReverse === true) {
-  //     sort = '-' + articlesOrder;
-  //   } else {
-  //     sort = articlesOrder;
-  //   }
-  //   $http.get('/api/articles',{ params: {filterBy: articlesFilter, skip: $scope.skip, sort: sort}}).success(function(articles){
-  //     if ($scope.skip > 0){
-  //       $scope.articles = $scope.articles.concat(articles);
-  //     } 
-  //     else {
-  //       $scope.articles = articles;
-  //     }
-  //         socket.syncUpdates('article', $scope.articles, function(e, item, array){
-  //           $scope.articles = orderBy(array, o, r);
-  //         });
-  //   });
-  // };
-
   $scope.resetSkip = function(){
     $scope.skip = 0;
   };
@@ -168,18 +139,8 @@ angular.module('puanJaiApp')
         localStorage.setItem('defaultTab', 'questions');
         $scope.resetSkip();
         break;
-      // case 'articles':
-      //   $scope.defaultTab = 'articles';
-      //   if (!$scope.articles) {
-      //     $scope.getArticles(articlesFilter, articlesOrder, articlesReverse, $scope.selectedTopic);
-      //   }
-      //   localStorage.setItem('defaultTab', 'articles');
-      //   $scope.getArticles();
-      //   $scope.resetSkip();
-      //   break;
       default:
         $scope.getQuestions(category, order, reverse, $scope.selectedTopic);
-        // $scope.getArticles(articlesFilter, articlesOrder, articlesReverse, $scope.selectedTopic);
     }
   };
 
@@ -216,9 +177,6 @@ angular.module('puanJaiApp')
     $location.path('/questions/'+model._id);
   };
 
-  // $scope.goToArticle = function(articleId){
-  //   $location.path('/articles/'+articleId);
-  // };
 
     $scope.searchQuestions = function(input) {
       $scope.userInput = input;
@@ -229,21 +187,21 @@ angular.module('puanJaiApp')
       });
     };
     
-    $scope.setCurrentSlide = function(){
-      var indicators = document.getElementsByClassName('carousel-indicators')[0].children;
-      if (indicators.length === 5) {
-        for (var i = 0; i < $scope.sampleusers.length; i++) {
-          console.log($scope.sampleusers);
-          var cssString = "background-size: cover; background-image: url('" + $scope.sampleusers[i].coverimg + "');";
-          indicators[i].style.cssText = cssString;
-          // if (indicators[i].className === 'ng-scope active') {
-          //   indicators[i].className = indicators[i].className + " animated pulse";
-          // } else {
-          //   indicators[i].className = indicators[i].className.replace(" animated pulse", "")
-          // }
-        }
-      }
-    };
+    // $scope.setCurrentSlide = function(){
+    //   var indicators = document.getElementsByClassName('carousel-indicators')[0].children;
+    //   if (indicators.length === 5) {
+    //     for (var i = 0; i < $scope.sampleusers.length; i++) {
+    //       console.log($scope.sampleusers);
+    //       var cssString = "background-size: cover; background-image: url('" + $scope.sampleusers[i].coverimg + "');";
+    //       indicators[i].style.cssText = cssString;
+    //       // if (indicators[i].className === 'ng-scope active') {
+    //       //   indicators[i].className = indicators[i].className + " animated pulse";
+    //       // } else {
+    //       //   indicators[i].className = indicators[i].className.replace(" animated pulse", "")
+    //       // }
+    //     }
+    //   }
+    // };
 
     $scope.upVote = function(questionId){
       if (Auth.isLoggedIn()){
@@ -322,11 +280,6 @@ angular.module('puanJaiApp')
       $scope.skip++;
       $scope.getQuestions();
     };
-
-    // $scope.getMoreArticles = function(){
-    //   $scope.skip++;
-    //   $scope.getArticles();
-    // };
 
      // On leave page
      $scope.$on('$destroy', function () {

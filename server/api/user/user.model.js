@@ -144,8 +144,8 @@ UserSchema
       if (!this.coverimg || this.coverimg === '') {
         this.coverimg = 'http://flathash.com/' + crypto.randomBytes(6).toString('base64');
       }
-      this.verificationCode = crypto.randomBytes(64).toString('base64');
-      email.sendEmailOnSignUp({ email: this.email, verificationCode: this.verificationCode});
+      // this.verificationCode = crypto.randomBytes(64).toString('base64');
+      // email.sendEmailOnSignUp({ email: this.email, verificationCode: this.verificationCode});
       next();
   });
 
@@ -185,6 +185,9 @@ UserSchema.methods = {
     if (!password || !this.salt) return '';
     var salt = new Buffer(this.salt, 'base64');
     return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
+  },
+  sendVerificationEmail: function(){
+    return email.sendEmailOnSignUp({ email: this.email, verificationCode: this.verificationCode});
   }
 };
 
