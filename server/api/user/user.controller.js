@@ -95,16 +95,13 @@ exports.removeFollowerFollowing = function(req, res, next) {
  *  Verify user
  */
 exports.verify = function (req, res, next) {
-  console.log('hitting with ' + req.params.hex)
   User.findOne({verificationCode: req.params.hex}, function (err, user) {
     if (err) return next(err);
     if (user) {
-      console.log('user found using '+user.verificationCode)
       user.emailVerification = true;
       user.save();
       return res.redirect('http://www.puanjai.com/verified');
     } else {
-      console.log('user not found')
       return res.redirect('http://www.puanjai.com/notverified');
     }
   });
