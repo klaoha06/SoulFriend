@@ -20,7 +20,7 @@
 <form class="form-group editUserForm" name="form">
   <label for="inputEmail3" class="col-sm-3 control-label text-right">ชื่อจริง</label>
   <div class="col-sm-7">
-    <input type="text" name="firstname" class="form-control" placeholder="ชื่อ" ng-model="user.name.first" maxlength="20" required>
+    <input type="text" name="firstname" class="form-control" placeholder="ชื่อ" ng-model="user.name.first | limitTo:20" maxlength="20" required>
     <p class="help-block red" ng-show="form.firstname.$error.required">
       กรุณาใส่ชื่อจริงของคุณ
     </p>
@@ -29,7 +29,7 @@
   <div class="clearfix"></div><br>
   <label for="inputEmail3" class="col-sm-3 control-label text-right" required>นามสกุล</label>
   <div class="col-sm-7">
-    <input type="text" name="lastname" class="form-control" placeholder="ชื่อ" ng-model="user.name.last" maxlength="35" required>
+    <input type="text" name="lastname" class="form-control" placeholder="ชื่อ" ng-model="user.name.last | limitTo:35" maxlength="35" required>
     <p class="help-block red" ng-show="form.lastname.$error.required">
       กรุณาใส่ชื่อนามสกุลของคุณ
     </p>
@@ -38,7 +38,7 @@
   <div class="clearfix"></div><br>
   <label for="inputEmail3" class="col-sm-3 control-label text-right">ชื่อที่แสดงในเว็บเพือนใจ</label>
   <div class="col-sm-7">
-    <input type="text" name="username" class="form-control" placeholder="ชื่อที่แสดงในเว็บ" ng-model="user.username" maxlength="20" required>
+    <input type="text" name="username" class="form-control" placeholder="ชื่อที่แสดงในเว็บ" ng-model="user.username | limitTo:21" maxlength="21" required>
     <p class="help-block red" ng-show="form.username.$error.required">
       กรุณาใส่ชื่อที่แสดงในเว็บ
     </p>
@@ -50,7 +50,7 @@
   <h2>อีเมล</h2>
     <label class="col-sm-3 control-label text-right" for="exampleInputEmail2">อีเมล</label>
     <div class="col-sm-7">
-    <input type="email" class="form-control" name="email" id="exampleInputEmail2" placeholder="อีเมล" ng-model="user.email" popover-placement="top" popover="เพื่อเป็นการยืนยันตัวตนที่แท้จริง และเพื่อประโยชน์หรือช่องทางในการติดต่อเวลาเพื่อนใจท่านอื่นมาช่วยตอบปัญหาของคุณหรือมาร่วมสนทนาในคําถามหรือคําตอบของคุณ"  popover-trigger="focus" maxlength="65" required>
+    <input type="email" class="form-control" name="email" id="exampleInputEmail2" placeholder="อีเมล" ng-model="user.email | limitTo:65" popover-placement="top" popover="เพื่อเป็นการยืนยันตัวตนที่แท้จริง และเพื่อประโยชน์หรือช่องทางในการติดต่อเวลาเพื่อนใจท่านอื่นมาช่วยตอบปัญหาของคุณหรือมาร่วมสนทนาในคําถามหรือคําตอบของคุณ"  popover-trigger="focus" maxlength="65" required>
     <p class="help-block red" ng-show="form.email.$error.email">
       ไม่สามารถใช้อีเมลนี้ได้
     </p>
@@ -77,7 +77,7 @@
 
 <h2>เหตุผลที่อยากเป็นเพื่อนใจ</h2>
   <div class="col-sm-8 col-sm-offset-2">
-  <textarea type="text" class="form-control" rows="3" id="exampleInputEmail2" placeholder="เหตุผล" ng-model="user.reason" maxlength="500"></textarea>
+  <textarea type="text" class="form-control" rows="3" id="exampleInputEmail2" placeholder="เหตุผล" ng-model="user.reason | limitTo:500" maxlength="500"></textarea>
   </div>
   <div class="col-sm-6"></div>
     <div class="clearfix"></div>
@@ -85,7 +85,7 @@
 
 <h2>ประวัติโดยสั่น</h2>
   <div class="col-sm-8 col-sm-offset-2">
-  <textarea type="text" class="form-control" rows="3" id="exampleInputEmail2" placeholder="ประวัติโดยสั่น" ng-model="user.summary" maxlength="500"></textarea>
+  <textarea type="text" class="form-control" rows="3" id="exampleInputEmail2" placeholder="ประวัติโดยสั่น" ng-model="user.summary | limitTo:500" maxlength="500"></textarea>
   </div>
   <div class="col-sm-6"></div>
     <div class="clearfix"></div>
