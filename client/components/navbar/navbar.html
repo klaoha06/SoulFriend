@@ -12,7 +12,7 @@
 เพื่อนใจ</a>
     </div>
     <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main" style="text-align:center;">
-      <ul class="nav navbar-nav" style="margin-top:0;">
+      <ul ng-hide="searching"class="nav navbar-nav" style="margin-top:0;">
         <li>
           <a href="/main" ng-hide="isLoggedIn()">หน้าหลัก</a>
         </li>
@@ -35,23 +35,23 @@
         <li>
           <a ng-mouseover="help='animated rubberBand'" ng-mouseleave="help=''" ng-href="/aboutcreator" style="color:#428bca;"><i ng-class="help" class="fa fa-heart red"></i> เราต้องการความช่วยเหลือ!</a>
         </li>
-<!--         <li>
-            <span class="dropdown" dropdown on-toggle="toggled(open)">
-              <a href class="dropdown-toggle" dropdown-toggle>
-                ช่วยเหลือเพื่อนใจ
-              </a>
-              <ul class="dropdown-menu" style="right: inherit;">
-                <li ng-repeat="choice in helps">
-                  <a ng-href="{{choice.link}}">{{choice.title}}</a>
-                </li>
-              </ul>
-            </span>
-        </li> -->
       </ul>
 
-      <ul class="nav navbar-nav navbar-right navActionButton" style="margin-top:0;">
+			<form ng-show="searching">
+      <input maxlength="120" type="text" class="form-control animated fadeIn" placeholder="ค้นหา.." style="font-family: font4;font-size: 0.9em; margin-top: 7px; width:70%; display:inline; margin-bottom: 7px" ng-model="customSelected" typeahead="question as question.name for question in searchQuestions($viewValue) | filter:{name:$viewValue}" typeahead-template-url="navTemplate.html" typeahead-on-select="goToQuestion($model)"typeahead-wait-ms="300">
+      <!-- <a><i class="fa fa-search"></i></a> -->
+      <a ng-click="searching = false;"><i class="fa fa-times"></i></a>
+      </form>
+      <script type="text/ng-template" id="navTemplate.html">
+      	<a>
+          <h4 ng-bind-html="match.model._source.name | typeaheadHighlight:query" style="font-family:font4"></h4>
+        </a>
+      </script>
 
-        <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
+      <ul ng-hide="searching"class="nav navbar-nav navbar-right navActionButton" style="margin-top:0;">
+        <li><a ng-click="searching = !searching" style="background:none;"><i class="fa fa-search"></i> ค้นหา</a>
+</li>
+        <li ng-if="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
         <li ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}" style="margin: 6px 0;">
             <span class="dropdown" dropdown on-toggle="toggled(open)">
               <a href="" class="dropdown-toggle" dropdown-toggle style="padding:7px;">
@@ -63,7 +63,6 @@
                 </li>
                 <hr style="margin-bottom: 0; margin-top: 0;">
                 <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout(); closeCollapse();">ออกจากระบบ</a></li>
-
               </ul>
             </span>
         </li>
@@ -77,9 +76,6 @@
         <!-- <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}"><a ng-href="/signup">สมัครเป็นเพื่อนใจ</a></li> -->
         <li ng-hide="isLoggedIn()" ng-click="closeCollapse()"><a class="btn btn-info" href="/login" style="color: white; padding: 8px; margin:5px;
 "><i class="fa fa-sign-in"></i> เข้าสู้ระบบ</a></li>
-        <!-- <li ng-show="isLoggedIn()"><a ng-href="/users/{{userId}}" style="padding-bottom:0;"><img src="{{user.coverimg}}" style="width: 40px; height:40px;"></a></li> -->
-        <!-- <li ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}"><a href="/settings"><span class="glyphicon glyphicon-cog"></span></a></li> -->
-        <!-- <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout(); closeCollapse();">ออกจากระบบ</a></li> -->
       </ul>
     </div>
   </div>
