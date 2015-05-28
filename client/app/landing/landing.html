@@ -89,10 +89,10 @@
 </div>
 
 <script id="template/carousel/carousel.html" type="text/ng-template">
-  <div ng-mouseenter="pause(); rightArrow='show animated slideInRight'; leftArrow='show animated slideInLeft'" ng-mouseleave="play(); rightArrow='show animated fadeOutRight'; leftArrow='show animated fadeOutLeft';" class="carousel" ng-swipe-right="prev()" ng-swipe-left="next()">
+  <div ng-mouseenter="pause(); rightArrow='show animated slideInRight'; leftArrow='show animated slideInLeft'" ng-mouseleave="play(); rightArrow='show animated fadeOutRight'; leftArrow='show animated fadeOutLeft';" class="carousel" ng-swipe-right="prev()" ng-swipe-left="next()" disable-animation="true">
     <div class="carousel-inner" ng-transclude></div>
-    <a class="left carousel-control" ng-click="prev()" ng-show="slides.length > 1"><span class="glyphicon glyphicon-chevron-left yellow" ng-class="leftArrow"></span></a>
-    <a class="right carousel-control" ng-click="next()" ng-show="slides.length > 1"><span class="glyphicon glyphicon-chevron-right yellow" ng-class="rightArrow"></span></a>
+    <a class="left carousel-control" ng-click="prev()" ng-show="slides.length > 1"><span class="glyphicon glyphicon-chevron-left yellow" ng-class="leftArrow"disable-animation="true"></span></a>
+    <a class="right carousel-control" ng-click="next()" ng-show="slides.length > 1"><span class="glyphicon glyphicon-chevron-right yellow" ng-class="rightArrow"disable-animation="true"></span></a>
   </div>
 </script>
 

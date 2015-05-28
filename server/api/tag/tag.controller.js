@@ -24,7 +24,7 @@ exports.index = function(req, res) {
 
 // Text Search
 exports.search = function(req, res) {
-  var q = req.query.userInput.toLowerCase();
+  var q = req.query.q.toLowerCase();
   Tag.find({'name': {'$regex': q}}).sort('popular_count').limit(5).select('name').exec(function(err, results){
       if(err) { return handleError(res, err); }
         return res.status(200).json(results)
@@ -52,20 +52,6 @@ exports.tagQuestions = function(req, res) {
     return res.status(200).json(questions)
   })
 };
-
-// Get tag's articles by Id
-// exports.tagArticles = function(req, res) {
-//   var query = req.query.articles;
-//   if (typeof req.query.articles === 'string') {
-//     query = [req.query.articles];
-//   }
-//   Article.find({ '_id':{ $in: query }}, function(err, articles){
-//     if (err) { return handleError(res, err); }
-//     return res.status(200).json(articles)
-//   })
-// };
-
-
 
 // Creates a new tag in the DB.
 exports.create = function(req, res) {

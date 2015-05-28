@@ -101,7 +101,7 @@ angular.module('puanJaiApp')
     $scope.$watch('searchInput', function(input){
       if (input){
         localStorage.setItem('questionTitle', input);
-        $http.get('/api/questions/search', { params: {userInput: input}}).success(function(result) {
+        $http.get('/api/questions/search', { params: {q: input}}).success(function(result) {
           // console.log(result.hits.hits);
           $scope.searchResults = orderBy(result.hits.hits, '_score', true);
         });
@@ -139,7 +139,7 @@ angular.module('puanJaiApp')
 
     // Autocomplete Tags
     $scope.searchTags = function(input) {
-      return $http.get('/api/tags/search', { params: {userInput: input}}).success(function(res){
+      return $http.get('/api/tags/search', { params: {q: input}}).success(function(res){
         $scope.searchedTags = res;
       });
     };

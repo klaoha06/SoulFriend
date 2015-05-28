@@ -28,6 +28,11 @@ angular.module('puanJaiApp', [
     $locationProvider.html5Mode(true).hashPrefix('!');
     FacebookProvider.init('816905961709405');
   })
+  .config(
+      ['$animateProvider',
+      function ($animateProvider) {
+          $animateProvider.classNameFilter(/carousel/);
+      }])
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
     return {
