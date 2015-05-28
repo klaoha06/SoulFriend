@@ -53,7 +53,7 @@
                 </div>
                 <div class="col-lg-11 col-md-10 col-sm-10 col-xs-12">
                   <div id="searchQuestionForm" class="input-group input-group-lg">
-                        <textarea maxlength="150" type="text" rows="2" class="form-control" placeholder="ถามหรือค้นหาปัญหาใจได้ที่นี้" style="font-size:1.6em;"ng-model="customSelected" placeholder="" typeahead="question as question.name for question in searchQuestions($viewValue) | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" typeahead-on-select="goToQuestion($model)" class="form-control"ng-focus="isLoggedIn()"></textarea>
+                        <textarea maxlength="150" type="text" rows="2" class="form-control" placeholder="ถามหรือค้นหาปัญหาใจได้ที่นี้" style="font-size:1.6em;"ng-model="customSelected" placeholder="" typeahead="question as question.name for question in searchQuestions($viewValue) | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" typeahead-on-select="goToQuestion($model)" class="form-control"ng-focus="isLoggedIn()" typeahead-wait-ms="300"></textarea>
                         <span class="input-group-btn">
                           <button ng-hide="editingReport" class="btn btn-info" type="button" ng-click ="askQuestion()" style="height:106px;">ถามเพื่อนใจ</button>
                         </span>

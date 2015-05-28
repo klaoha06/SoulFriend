@@ -178,15 +178,29 @@ angular.module('puanJaiApp')
   };
 
 
-    $scope.searchQuestions = function(input) {
-      $scope.userInput = input;
-      return $http.get('/api/questions/search', { params: {q: input}}).then(function(response){
+  var output;
+  $scope.searchQuestions = function(input) {
+    $scope.userInput = input;
+    if (input.length < 3) {
+      output = [];
+      return [];
+    }
+    return $http.get('/api/questions/search', { params: {q: input}}).then(function(response){
+      if (response.data.hits.hits.length > 0){
+        output = response.data.hits.hits;
+      }
+      if (output){ 
+        return output.map(function(item){
+          return item;
+        });
+      } else {
         return response.data.hits.hits.map(function(item){
           return item;
         });
-      });
-    };
-    
+      }
+    });
+  };
+  
     // $scope.setCurrentSlide = function(){
     //   var indicators = document.getElementsByClassName('carousel-indicators')[0].children;
     //   if (indicators.length === 5) {

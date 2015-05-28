@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('puanJaiApp')
-  .controller('NavbarCtrl', function ($rootScope, $scope, $location, Auth, $state, $window) {
+  .controller('NavbarCtrl', function ($rootScope, $scope, $location, Auth, $state, $window, $http) {
     $rootScope.$on('userUpdated', function(event, data){
       $scope.user = data;
       $scope.userId = $scope.user._id;
@@ -99,6 +99,39 @@ angular.module('puanJaiApp')
 
     $scope.isActive = function(route) {
       return route === $location.path();
+    };
+
+    $scope.search = function(){
+      $scope.searching = true;
+    };
+
+    var output;
+    $scope.searchQuestions = function(input) {
+      $scope.userInput = input;
+      if (input.length < 3) {
+        output = [{_source: {name:'ไม่มีสิ่งที่หาในระบบ : ('}}];
+        return [{_source: {name:'ไม่มีสิ่งที่หาในระบบ : ('}}];
+      }
+      return $http.get('/api/questions/search', { params: {q: input}}).then(function(response){
+        if (response.data.hits.hits.length > 0){
+          output = response.data.hits.hits;
+        }
+        if (output){ 
+          return output.map(function(item){
+            return item;
+          });
+        } else {
+          return response.data.hits.hits.map(function(item){
+            return item;
+          });
+        }
+      });
+    };
+
+    $scope.goToQuestion = function(model){
+      $location.path('/questions/'+model._id);
+      $scope.customSelected = '';
+      $scope.searching = false;
     };
 
   });
