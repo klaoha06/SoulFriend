@@ -90,7 +90,7 @@ exports.index = function(req, res) {
 
 // Text Search
 exports.search = function(req, res) {
-  Question.search({ query_string:{query: wordcut.cut(req.query.userInput) }}, function (err, results) {
+  Question.search({ query_string:{query: wordcut.cut(req.query.q) }}, function (err, results) {
     if(err) { return handleError(res, err); }
       return res.status(200).json(results)
   })

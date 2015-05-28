@@ -120,99 +120,99 @@ User.create({
 //   )
 // })
 
-// User.find({}).remove(function() {
-//   for (var c = 0; c < 10; c++) {
-//     User.create({
-//       provider: 'local',
-//       name: {
-//         first: Faker.name.firstName(),
-//         last: Faker.name.lastName()
-//       },
-//       coverimg: Faker.image.avatar(),
-//       summary: Faker.lorem.sentence(),
-//       reason: Faker.lorem.sentences(),
-//       email: Faker.internet.email(),
-//       username: Faker.internet.userName(),
-//       password: 'test'
-//     })
-//   }
-//   User.create({
-//     provider: 'local',
-//     name: {
-//       first: Faker.name.firstName(),
-//       last: Faker.name.lastName()
-//     },
-//     coverimg: Faker.image.avatar(),
-//     summary: Faker.lorem.sentence(),
-//     reason: Faker.lorem.sentences(),
-//     email: 'test@test.com',
-//     username: Faker.internet.userName(),
-//     password: 'test'
-//   }, {
-//     provider: 'local',
-//     name: {
-//       first: 'Supakorn',
-//       last: 'Laohasongkram'
-//     },
-//     coverimg: Faker.image.avatar(),
-//     summary: Faker.lorem.sentence(),
-//     reason: Faker.lorem.sentences(),
-//     role: 'admin',
-//     email: 'admin@admin.com',
-//     username: Faker.internet.userName(),
-//     password: 'admin'
-//   }, function() {
-//     User.find(function(err, users){
-//       for (var i in users) {
-//         for (var yo = 0; yo < 10; yo++) {
+User.find({}).remove(function() {
+  for (var c = 0; c < 10; c++) {
+    User.create({
+      provider: 'local',
+      name: {
+        first: Faker.name.firstName(),
+        last: Faker.name.lastName()
+      },
+      coverimg: Faker.image.avatar(),
+      summary: Faker.lorem.sentence(),
+      reason: Faker.lorem.sentences(),
+      email: Faker.internet.email(),
+      username: Faker.internet.userName(),
+      password: 'test'
+    })
+  }
+  User.create({
+    provider: 'local',
+    name: {
+      first: Faker.name.firstName(),
+      last: Faker.name.lastName()
+    },
+    coverimg: Faker.image.avatar(),
+    summary: Faker.lorem.sentence(),
+    reason: Faker.lorem.sentences(),
+    email: 'test@test.com',
+    username: Faker.internet.userName(),
+    password: 'test'
+  }, {
+    provider: 'local',
+    name: {
+      first: 'Supakorn',
+      last: 'Laohasongkram'
+    },
+    coverimg: Faker.image.avatar(),
+    summary: Faker.lorem.sentence(),
+    reason: Faker.lorem.sentences(),
+    role: 'admin',
+    email: 'admin@admin.com',
+    username: Faker.internet.userName(),
+    password: 'admin'
+  }, function() {
+    User.find(function(err, users){
+      for (var i in users) {
+        for (var yo = 0; yo < 10; yo++) {
 
-//           Question.find({}).remove(function(){        
-//             Question.create({
-//               searchname: 'สวัสดี|ครับ| |ผม|ชื่อ|กร|ครับ| |ยิน|ดี|ที่|ได้|รู้|จัก',
-//               name: 'สวัสดีครับ ผมชื่อกรครับยินดีที่ได้รู้จัก',
-//               body: Faker.lorem.paragraph(),
-//               votes: ['yoyoyo','yoyo'],
-//               votes_count: Faker.random.number(100),
-//               jais_count: Faker.random.number(100),
-//               answers_count: Faker.random.number(10),
-//               views: Faker.random.number(100),
-//               tags: [{name:'เพื่อน'},{name: 'การงาน'}],
-//               topic: 'ครอบครัว',
-//               owner: {
-//                 _ownerId: users[i]._id,
-//                 username: users[i].username,
-//                 role: users[i].role,
-//                 coverimg: Faker.image.avatar()
-//               },
-//               created: Faker.date.recent()
-//             })
+          Question.find({}).remove(function(){        
+            Question.create({
+              searchname: 'สวัสดี|ครับ| |ผม|ชื่อ|กร|ครับ| |ยิน|ดี|ที่|ได้|รู้|จัก',
+              name: 'สวัสดีครับ ผมชื่อกรครับยินดีที่ได้รู้จัก',
+              body: Faker.lorem.paragraph(),
+              votes: ['yoyoyo','yoyo'],
+              votes_count: Faker.random.number(100),
+              jais_count: Faker.random.number(100),
+              answers_count: Faker.random.number(10),
+              views: Faker.random.number(100),
+              tags: [{name:'เพื่อน'},{name: 'การงาน'}],
+              topic: 'ครอบครัว',
+              owner: {
+                _ownerId: users[i]._id,
+                username: users[i].username,
+                role: users[i].role,
+                coverimg: Faker.image.avatar()
+              },
+              created: Faker.date.recent()
+            })
 
-//             Question.create({
-//               searchname: 'ผ|มอ|ยา|กทํา|เว็บ|ให้|เสร็จ| |ผม|ชื่อ|กร|ครับ',
-//               name: 'ผมอยากทําเว็บให้เสร็จ ผมชื่อกรครับ',
-//               body: Faker.lorem.paragraph(),
-//               votes: ['yoyoyo','yoyo'],
-//               votes_count: Faker.random.number(100),
-//               jais_count: Faker.random.number(100),
-//               answers_count: Faker.random.number(10),
-//               views: Faker.random.number(100),
-//               tags: [{name:'ธุรกิจ'},{name:'ครอบครัว'}],
-//               topic: 'การงาน',
-//               owner: {
-//                 _ownerId: users[i]._id,
-//                 username: users[i].username,
-//                 role: users[i].role,
-//                 coverimg: Faker.image.avatar()
-//               },
-//               created: Faker.date.past()
-//             })
+            Question.create({
+              searchname: 'ผ|มอ|ยา|กทํา|เว็บ|ให้|เสร็จ| |ผม|ชื่อ|กร|ครับ',
+              name: 'ผมอยากทําเว็บให้เสร็จ ผมชื่อกรครับ',
+              body: Faker.lorem.paragraph(),
+              votes: ['yoyoyo','yoyo'],
+              votes_count: Faker.random.number(100),
+              jais_count: Faker.random.number(100),
+              answers_count: Faker.random.number(10),
+              views: Faker.random.number(100),
+              tags: [{name:'ธุรกิจ'},{name:'ครอบครัว'}],
+              topic: 'การงาน',
+              owner: {
+                _ownerId: users[i]._id,
+                username: users[i].username,
+                role: users[i].role,
+                coverimg: Faker.image.avatar()
+              },
+              created: Faker.date.past()
+            })
 
-//           })  
-//         }
-//       }
-//     })
-// });
-// });
+          })  
+        }
+      }
+    })
+});
+});
 
 // Article.find({}).remove(function(){    
 //   Article.create({

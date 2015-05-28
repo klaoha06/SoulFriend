@@ -35,7 +35,7 @@ angular.module('puanJaiApp')
         $scope.followed = _.includes($scope.currentUser.following_id, $scope.question.ownerId);
       }
       if (!$scope.questionGroups) {      
-        $http.get('/api/questions/search', { params: {userInput: $scope.question.name}}).success(function(result) {
+        $http.get('/api/questions/search', { params: {q: $scope.question.name}}).success(function(result) {
           _.remove(result.hits.hits, function(q){
             return q._id === $scope.question._id;
           });

@@ -180,7 +180,7 @@ angular.module('puanJaiApp')
 
     $scope.searchQuestions = function(input) {
       $scope.userInput = input;
-      return $http.get('/api/questions/search', { params: {userInput: input}}).then(function(response){
+      return $http.get('/api/questions/search', { params: {q: input}}).then(function(response){
         return response.data.hits.hits.map(function(item){
           return item;
         });

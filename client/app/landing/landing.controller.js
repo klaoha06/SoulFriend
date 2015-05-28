@@ -2,6 +2,7 @@
 
 angular.module('puanJaiApp')
 .controller('LandingCtrl', function ($scope, $http, $window, parallaxHelper) {
+    $scope.background = parallaxHelper.createAnimator(-0.3);
 
 	$http.get('/api/users/sampleusers').success(function(sampleUsers){
 		$scope.userGroups = _.chunk(sampleUsers, 3);
