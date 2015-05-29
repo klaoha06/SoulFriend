@@ -1,4 +1,4 @@
-<div class="container haveBorder" style="margin-top: 20px; margin-bottom: 20px;">
+<div class="container haveBorder" style="margin-top: 20px; margin-bottom: 20px; border-radius: 4px;">
 	<div class="row background-blue" style="border-bottom: 1px solid #dddddd; position:relative;">
     <a href="/settings" style="position:absolute; right:5px; z-index:23;">
       <i class="fa fa-cog"></i> แก้ไขข้อมูลส่วนตัว 
@@ -89,8 +89,8 @@
                       <br>
                       <div>
                         <i class="fa fa-tag"></i>                     
-                        <p style="display:inline;" >{{question.topic}} - </p>
-                        <small ng-repeat="tag in question.tags"> {{tag.name}}</small>
+                        <p style="display:inline;" > {{question.topic}} - </p>
+                        <small ng-repeat="tag in question.tags"> {{tag.name}} </small>
                       </div>
                     </div>
                     <div ng-show="question.answered" class="col-md-1" style="text-align: center; padding:10px;">
