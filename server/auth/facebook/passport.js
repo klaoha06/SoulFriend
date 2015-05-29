@@ -16,14 +16,14 @@ exports.setup = function (User, config) {
         if (err) {
           return done(err);
         }
-        if (!user) {
+        if (!user && profile && profile.emails[0]) {
           user = new User({
             name: {
-              first: profile.name.givenName,
-              last: profile.name.familyName
+              first: profile.name.givenName || '',
+              last: profile.name.familyName || ''
             },
-            coverimg: profile.photos[0].value,
-            email: profile.emails[0].value,
+            coverimg: profile.photos[0].value || '',
+            email: profile.emails[0].value || '',
             role: 'user',
             username: profile.username.substring(0, 24) || profile.displayName.substring(0, 24),
             provider: 'facebook',
