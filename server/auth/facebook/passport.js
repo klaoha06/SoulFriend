@@ -38,7 +38,7 @@ exports.setup = function (User, config) {
           if (profile.photos) {
             user.coverimg = profile.photos[0].value
           }
-          if (profile.profile.emails) {
+          if (profile.emails) {
             user.email = profile.emails[0].value;
           }
           user.save(function(err) {
