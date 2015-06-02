@@ -73,7 +73,7 @@ angular.module('puanJaiApp')
       'active': false
     },
     {
-      'title': 'การปัฎิบัติธรรม',
+      'title': 'การปฎิบัติธรรม',
       'link': '/topics/การปัฎิบัติธรรม',
       'icon': 'fa-circle-thin',
       'active': false

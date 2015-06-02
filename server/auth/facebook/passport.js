@@ -17,18 +17,23 @@ exports.setup = function (User, config) {
           return done(err);
         }
         if (!user) {
+          console.log(profile)
           user = new User({
-            name: {
-              first: profile.name.givenName || '',
-              last: profile.name.familyName || ''
-            },
             role: 'user',
             provider: 'facebook',
             facebook: {
-                  link: profile.profileUrl,
                   id: profile.id
                 }
           });
+          if (profile.profileUrl){
+            user.facebook.link = profile.profileUrl
+          }
+          if (profile.name.givenName) {
+            user.name.first = profile.name.givenName
+          }
+          if (profile.name.familyName) {
+            user.name.last = profile.name.familyName
+          }
           if (profile.username) {
             user.username = profile.username.substring(0, 24)
           }
