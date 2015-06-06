@@ -17,9 +17,7 @@ angular.module('puanJaiApp', [
   'facebook',
   'textAngular.factories',
   'duParallax',
-  'viewhead',
-  'ngAnimate',
-  'scroll-animate-directive'
+  'viewhead'
   ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, FacebookProvider) {
     $urlRouterProvider
